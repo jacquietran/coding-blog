@@ -7,7 +7,7 @@ categories:
   - General ramblings
 tags:
   - sports analytics
-draft: yes
+draft: no
 ---
 
 I often get asked questions about how long I've been coding for, how I got started, whether I have completed any formal studies in programming / computer science, and so on. The reality is that my path is far from linear. Most of what I've learned to date has been more opportunistic than strategic, curiosity-driven rather than being part of a master plan to acquire professional skills for the workplace. To illustrate, it might help to go back to the beginning, to tell my coding origin story...
