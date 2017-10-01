@@ -1,15 +1,25 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>About on Under The Hood</title>
+    <title>Abouts on Under The Hood</title>
     <link>/about/</link>
-    <description>Recent content in About on Under The Hood</description>
+    <description>Recent content in Abouts on Under The Hood</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Tue, 26 Sep 2017 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/about/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>About</title>
+      <link>/about/</link>
+      <pubDate>Tue, 26 Sep 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/about/</guid>
+      <description>About the blog &amp;lsquo;Under The Hood&amp;rsquo; is a platform to demonstrate what is possible when we apply analytical techniques to solve problems that matter in sport. Drawing on my own professional experiences, this blog will showcase the many ways in which analytics can be used to discover new insights about the sports we love to play, watch, and support.
+About me My name is Jacquie Tran, and I am a sport scientist working in elite sport (Australian Football League).</description>
+    </item>
     
   </channel>
 </rss>
