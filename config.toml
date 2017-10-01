@@ -1,0 +1,125 @@
+baseurl = "/"
+languageCode = "en-us"
+title = "Under The Hood"
+theme = "hugo-future-imperfect"
+preserveTaxonomyNames = true
+paginate = 5
+googleAnalytics = ""
+enableEmoji = true
+
+[params]
+    # Sets the meta tag description, usually reserved for the main page
+    description          = "Dive into the processes and practices that underpin sports analytics. A blog by Jacquie Tran."
+    # This will appear on the top left of the navigation bar
+    navbarTitle          = "Under The Hood"
+    # set this to the section name if section is not post
+    viewMorePostLink     = "/blog/"
+    author							 = "Jacquie Tran"
+    dateFormat				   = "Mon, Jan 2, 2006"
+    ignoreFiles 				 = ["\\.Rmd$", "_files$", "_cache$"]
+
+# Optional Params
+    # This will match the navbarTitle to the section of the website
+    dynamicTitles        = true
+    # RSS icon that appear on the sidebar, next to the social media buttons
+    rssAppearAtTop       = true
+    rssAppearAtBottom    = true
+    # Social media buttons that appear on the sidebar
+    socialAppearAtTop    = true
+    socialAppearAtBottom = true
+    categoriesByCount    = true
+    includeReadingTime   = true
+    # The set of favicons used are based on the write-up from this link:
+    # https://github.com/audreyr/favicon-cheat-sheet
+    # Please see the favicon partial template for more information
+    loadFavicon          = false
+    faviconVersion       = ""
+
+    # Disable showing the social sharing links on blog posts
+    socialShareDisabled = true
+
+    # Load custom CSS or JavaScript files. The variable is an array so that you
+    # can load multiple files if necessary. You can also load the standard theme
+    # files by adding the value, "default".
+    # customCSS            = ["default", "/path/to/file"]
+    # customJS             = ["default", "/path/to/file"]
+
+    customCSS            = ["default"]
+    customJS             = ["default"]
+
+# parms.intro will appear on the sidebar
+# This is optional, but it's suggested to use
+[params.intro]
+    header    = "Under The Hood"
+
+    paragraph = "Dive into the processes and practices that underpin sports analytics. A blog by <a href=\"http://www.jacquietran.com\">Jacquie Tran</a>."
+
+    about     = "I am sport scientist working in elite sport and I code. This blog will showcase what can be achieved by applying programming to uncover patterns and solve problems that matter in sport settings."
+
+# This will also appear on the sidebar.
+# A width of less than 100px is recommended
+# This is optional
+[params.intro.pic]
+    src       = "/img/main/logo.png"
+    # modify your picture in the shape of a circle or
+    # future imperfect's hexagonal shape
+    circle    = true
+    imperfect = false
+    width     = ""
+    alt       = "Jacquie Tran"
+
+# Adjust the amount of recent posts on the sidebar.
+# This is optional. The default value 5 will be used
+[params.postAmount]
+    sidebar = 3
+
+# Set up your menu items in the navigation bar
+# You can use identifier to prepend a font awesome icon to your text
+
+[[menu.main]]
+    name = "Home"
+    url = "/"
+    identifier = "fa fa-home"
+    weight = 1
+
+[[menu.main]]
+    name = "About"
+    url = "/about/"
+    identifier = "fa fa-id-card-o"
+    weight = 2
+
+# Insert your username and the icon will apear on the page as long as
+# socialAppearAtTop or socialAppearAtBottom is set to true in the params area
+# The social media icons will appear on the sidebar
+[social]
+    github          = "jacquietran"
+    bitbucket       = ""
+    jsfiddle        = ""
+    codepen         = ""
+    foursquare      = ""
+    dribbble        = ""
+    deviantart      = ""
+    behance         = ""
+    flickr          = ""
+    instagram       = ""
+    youtube         = ""
+    vimeo           = ""
+    vine            = ""
+    medium          = ""
+    wordpress       = ""
+    tumblr          = ""
+    xing            = ""
+    linkedin        = ""
+    slideshare      = ""
+    stackoverflow   = ""
+    reddit          = ""
+    pinterest       = ""
+    googleplus      = ""
+    facebook        = ""
+    facebook_admin  = ""
+    twitter_domain  = ""
+    twitter         = "jacquietran"
+    email           = "jac@jacquietran.com"
+
+[permalinks]
+    post = "/:year/:month/:day/:slug/"
