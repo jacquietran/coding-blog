@@ -1,7 +1,8 @@
-+++
-title = "About"
-date = "2017-09-26"
-+++
+---
+title: "About"
+date: "2017-09-26"
+draft: no
+---
 
 
 ## About the blog
