@@ -4,7 +4,7 @@ title = "Under The Hood"
 theme = "hugo-future-imperfect"
 preserveTaxonomyNames = true
 paginate = 5
-googleAnalytics = ""
+googleAnalytics = "UA-23505591-3"
 enableEmoji = true
 
 [params]
