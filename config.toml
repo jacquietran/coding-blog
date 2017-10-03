@@ -1,4 +1,4 @@
-baseurl = "https://underthehood.jacquietran.com/"
+baseurl = "http://underthehood.jacquietran.com/"
 languageCode = "en-us"
 title = "Under The Hood"
 theme = "hugo-future-imperfect"
