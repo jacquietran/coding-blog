@@ -16,7 +16,7 @@ enableEmoji = true
     viewMorePostLink     = "/blog/"
     author							 = "Jacquie Tran"
     dateFormat				   = "Mon, Jan 2, 2006"
-    ignoreFiles 				 = ["\\.Rmd$", "_files$", "_cache$"]
+    ignoreFiles 				 = ["\\.Rmd$", "\\.Rmarkdown$", "_files$", "_cache$"]
 
 # Optional Params
     # This will match the navbarTitle to the section of the website
