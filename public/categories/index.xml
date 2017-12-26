@@ -19,5 +19,14 @@
       <description></description>
     </item>
     
+    <item>
+      <title>Random projects</title>
+      <link>/categories/random-projects/</link>
+      <pubDate>Tue, 26 Dec 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/categories/random-projects/</guid>
+      <description></description>
+    </item>
+    
   </channel>
 </rss>

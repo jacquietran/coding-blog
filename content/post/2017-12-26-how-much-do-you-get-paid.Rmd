@@ -1,0 +1,306 @@
+---
+title: How much do you get paid?
+author: Jacquie Tran
+date: '2017-12-26'
+slug: how-much-do-you-get-paid
+categories:
+  - Random projects
+tags:
+  - sport science
+  - strength and conditioning
+  - soccer
+  - football
+  - salaries
+draft: yes
+---
+
+It's a touchy subject for many. Yet this very question was posed by [Aiden Oakley](www.twitter.com/ajokaley) (**@ajoakley** on Twitter), and willingly answered by over 100 sport scientists and strength & conditioning coaches who currently work for football (soccer) clubs in the UK.
+
+Why?
+
+This job advert says it all...
+
+<center><blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr">This is shocking! &quot;Dear Candidate, please spend £27,000 on BSc, then £1000 on ASCC, to be paid less than half of this. Oh, and the players earn your salary in one week.&quot; 🤔🤔🤔 <a href="https://t.co/6efKtAaaQl">pic.twitter.com/6efKtAaaQl</a></p>&mdash; Rob Chave (@Robchave7) <a href="https://twitter.com/Robchave7/status/941234320034824192?ref_src=twsrc%5Etfw">December 14, 2017</a></blockquote></center>
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+Blackpool FC was roundly criticised for advertising such a position for a measly £12,000 per annum. The UK Strength & Conditioning Association then withdrew this job posting from their website. Regrettably, this is not a one-off. Blackpool happened to rightly draw the ire of the Twitter crowd on this occasion, but many of us working in sport have seen too many job ads just like this one.
+
+So what is the current state of play when it comes to salaries in UK soccer?
+
+Aiden set out to explore this question by surveying a sample of sport scientists and strength and conditioning coaches via Twitter:
+
+<center><blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr">Off the back of Blackpoolgate are any S&amp;C&#39;s/Sport Scientists willing to fill in a short questionnaire on salaries in football. Open to Premier League - League 2 and Scottish Premiership clubs,1st team &amp; Academy.Will be shared on Twitter anonymously. Plz RT <a href="https://t.co/Gcyqiu0MP2">https://t.co/Gcyqiu0MP2</a></p>&mdash; Aiden Oakley (@ajoakley) <a href="https://twitter.com/ajoakley/status/942004931279536128?ref_src=twsrc%5Etfw">December 16, 2017</a></blockquote>
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+</center>
+
+After a fortnight, 100+ responses were received. I put my hand up to help with visualising the data.
+
+# Getting started
+
+Firstly, let's load the cleaned data in and load the necessary libraries. _Note: Some variables were omitted during the data cleaning process to protect the anonymity of respondents._
+
+``` {r setup, echo = TRUE, warning = FALSE, message = FALSE}
+
+library(readr)
+library(knitr)
+library(kableExtra)
+library(ggplot2)
+library(dplyr)
+
+# Read the data into R
+dataSource <- "https://raw.githubusercontent.com/jacquietran/soccerSalariesDataPublic/master/soccerSalariesDataPublic.csv"
+soccerSalariesData <- read_delim(dataSource, delim = ",", col_names = TRUE, col_types = NULL)
+
+```
+
+Now that we have the cleaned data loaded in, we can begin to examine it. The data set has 16 variables and 102 responses. For pedants like me, you can scroll to the bottom of this post to see the data dictionary.
+
+``` {r checkData, echo = TRUE}
+
+# Examine first few observations of the data set
+head(soccerSalariesData)
+
+```
+
+
+# Salaries by league
+
+Let's start with a simple plot to answer a simple question: what are the reported salaries of performance support staff working in UK soccer clubs when categorised by league? (It's worth noting here that this refers to the league in which the club's first team plays, so it may not be the league that the respondent may predominantly work within, e.g., if they support the Academy programs.)
+
+``` {r plotByLeague, echo = TRUE, fig.align = 'center'}
+
+# Set factor levels
+soccerSalariesData$leagueOfFirstTeam <- factor(
+	soccerSalariesData$leagueOfFirstTeam,
+	levels = c(
+		"Premier League", "Scottish Premiership", "Championship", "League 1", "League 2"))
+
+# Create object to store axis labels with line breaks
+labelsLeague <- c(
+	"Premier\nLeague", "Scottish\nPremiership", "Championship", "League 1", "League 2")
+
+p <- ggplot(soccerSalariesData, aes(x = leagueOfFirstTeam, y = salaryGBP))
+p <- p + geom_boxplot(outlier.shape = NA, coef = 0)
+p <- p + geom_point(alpha = 1/4, size = 4, aes(colour = leagueOfFirstTeam))
+p <- p + scale_y_continuous(
+	limits = c(0, 60000),
+	breaks = seq(0, 60000, by = 10000))
+p <- p + scale_x_discrete(labels = labelsLeague)
+p <- p + labs(
+	title = "Soccer support staff salaries in the UK",
+	subtitle = "Categorised by league that the first team plays in",
+	y = "Salary (GBP)")
+p <- p + theme(
+	axis.title.x = element_blank(),
+	legend.position = "none")
+salaryByLeague <- p
+
+# Display the plot
+salaryByLeague
+
+```
+
+# Salaries by league and competitive level
+
+We can drill down further, plotting the data by league _and_ by competitive level; that is, whether respondents work for their club's first team or academy.
+
+``` {r plotByLeagueAndCompLevel, echo = TRUE, fig.align = 'center'}
+
+p <- ggplot(soccerSalariesData, aes(x = leagueOfFirstTeam, y = salaryGBP))
+p <- p + facet_wrap(~levelOfWork)
+p <- p + geom_boxplot(outlier.shape = NA, coef = 0)
+p <- p + geom_point(alpha = 1/4, size = 4, aes(colour = leagueOfFirstTeam))
+p <- p + scale_y_continuous(limits = c(0, 60000),
+														breaks = seq(0, 60000, by = 10000))
+p <- p + scale_x_discrete(labels = labelsLeague)
+p <- p + labs(title = "Soccer support staff salaries in the UK",
+							subtitle = "First Team vs. Academy",
+							y = "Salary (GBP)")
+p <- p + theme(axis.title.x = element_blank(),
+							 legend.position = "none")
+salaryByLeagueAndCompLevel <- p
+
+# Display the plot
+salaryByLeagueAndCompLevel
+
+```
+
+# Salaries by position
+
+What do we see when we categorise by job 'seniority' (and exclude responses from unpaid interns)?
+
+``` {r plotByPosition, echo = TRUE, fig.align = 'center'}
+
+# Subset of data frame to exclude position == NA | Intern
+soccerSalariesData2 <- soccerSalariesData %>%
+	filter(position != "Intern" & !is.na(position))
+# Set factor levels
+soccerSalariesData2$position <- factor(soccerSalariesData2$position,
+																			 levels = c("Head", "Lead", "Coach"))
+
+p <- ggplot(soccerSalariesData2, aes(x = position, y = salaryGBP))
+p <- p + geom_boxplot(outlier.shape = NA, coef = 0)
+p <- p + geom_point(alpha = 1/4, size = 4, aes(colour = position))
+p <- p + scale_y_continuous(limits = c(0, 60000),
+														breaks = seq(0, 60000, by = 10000))
+p <- p + labs(title = "Soccer support staff salaries in the UK",
+							subtitle = "Categorised by position: Department head, discipline lead, or 'coach'",
+							y = "Salary (GBP)")
+p <- p + theme(axis.title.x = element_blank(),
+							 legend.position = "none")
+salaryByPosition <- p
+
+# Display the plot
+salaryByPosition
+
+```
+
+# Salaries by league and by discipline
+
+Let's compare how sport scientists and S&C coaches are paid in the different leagues.
+
+``` {r plotByLeagueAndDiscipline, echo = TRUE, fig.align = 'center'}
+
+# Subset of data frame to exclude dept == NA
+soccerSalariesData3 <- soccerSalariesData %>%
+	filter(!is.na(dept))
+soccerSalariesData3$dept <- recode(soccerSalariesData3$dept,
+																	 `Physical Performance` = "S&C")
+# Set factor levels
+soccerSalariesData3$dept <- factor(soccerSalariesData3$dept,
+																	 levels = c("S&C", "Sport Science", "Both"))
+
+p <- ggplot(soccerSalariesData3, aes(x = leagueOfFirstTeam, y = salaryGBP))
+p <- p + facet_wrap(~dept)
+p <- p + geom_boxplot(outlier.shape = NA, coef = 0)
+p <- p + geom_point(alpha = 1/4, size = 4, aes(colour = leagueOfFirstTeam))
+p <- p + scale_y_continuous(limits = c(0, 60000),
+														breaks = seq(0, 60000, by = 10000))
+p <- p + scale_x_discrete(labels = labelsLeague)
+p <- p + labs(title = "Soccer support staff salaries in the UK",
+							subtitle = "Categorised by discipline",
+							y = "Salary (GBP)")
+p <- p + theme(axis.title.x = element_blank(),
+							 legend.position = "none")
+salaryByLeagueAndDept <- p
+
+# Display the plot
+salaryByLeagueAndDept
+
+```
+
+# Salaries by academy category
+
+The FA sets the academy status of all football clubs with academy programs. Budgets are somewhat dependent on guidelines that are category specific. How does academy category affect salary of strength and conditioning coaches and sport scientists?
+
+``` {r plotByAcademyCategory, echo = TRUE, fig.align = 'center'}
+
+# Subset of data frame to exclude academyCategory == NA
+soccerSalariesData4 <- soccerSalariesData %>%
+	filter(!is.na(academyCategory))
+
+# Set factor levels
+soccerSalariesData4$academyCategory <- factor(soccerSalariesData4$academyCategory,
+																							levels = c("1", "2", "3", "SFA Elite", "Development"))
+
+# Create object to store axis labels with line breaks
+labelsAcademyCategory <- c("England\nCategory 1", "England\nCategory 2", "England\nCategory 3",
+													 "Scotland\nSFA Elite", "Scotland\nDevelopment")
+
+p <- ggplot(soccerSalariesData4, aes(x = academyCategory, y = salaryGBP))
+p <- p + geom_boxplot(outlier.shape = NA, coef = 0)
+p <- p + geom_point(alpha = 1/4, size = 4, aes(colour = academyCategory))
+p <- p + scale_y_continuous(limits = c(0, 50000),
+														breaks = seq(0, 50000, by = 10000))
+p <- p + scale_x_discrete(labels = labelsAcademyCategory)
+p <- p + labs(title = "Soccer support staff salaries in the UK: Academy staff only",
+							subtitle = "Organised by Academy Category",
+							y = "Salary (GBP)")
+p <- p + theme(axis.title.x = element_blank(),
+							 legend.position = "none")
+salaryByAcademyCategory <- p
+
+# Display the plot
+salaryByAcademyCategory
+
+```
+
+# Salaries by highest qualification
+
+``` {r plotByHighestQual, echo = TRUE, figwarning = FALSE, message = FALSE, .align = 'center'}
+
+# Set factor levels
+soccerSalariesData$highestQualCategory <- factor(soccerSalariesData$highestQualCategory,
+																								 levels = c(
+																								 	"PhD", "Postgraduate", "Undergraduate", "Unclear"))
+
+p <- ggplot(soccerSalariesData, aes(x = highestQualCategory, y = salaryGBP))
+p <- p + geom_boxplot(outlier.shape = NA, coef = 0)
+p <- p + geom_point(alpha = 1/4, size = 4, aes(colour = highestQualCategory))
+p <- p + scale_y_continuous(limits = c(0, 50000),
+														breaks = seq(0, 50000, by = 10000))
+p <- p + labs(title = "Soccer support staff salaries in the UK",
+							subtitle = "Categorised by highest qualification",
+							y = "Salary (GBP)")
+p <- p + theme(axis.title.x = element_blank(),
+							 legend.position = "none")
+salaryByHighestQual <- p
+
+# Display the plot
+salaryByHighestQual
+
+```
+
+# Want ys to improve the questionnaire
+
+# Wato explore the data?
+
+If you'd like to take a look at the data and try your hand at creating / modifying these plots, visit this [GitHub repostiory](www.github.com/jacquietran/soccerSalariesDataPublic).
+
+Also, here's the data dictionary I promised earlier:
+
+``` {r dataDictionary, echo = FALSE}
+
+vars <- as.vector(names(soccerSalariesData))
+varDescriptions <- c(
+	"ID number for respondent",
+	"Country in which the respondent's club competes",
+	"League that the club's first team plays in",
+	"Level of respondent's work - categorical: 1st Team, Academy",
+	"Respondent's position",
+	"Respondent's department / discipline",
+	"Variable for identifying individuals who noted they are part-time employed at their club",
+	"For those working at Academy level, the Academy category status (according to designations by the Football Association (FA) or the Scottish Football Association",
+	"For those working at Academy level, whether they support athletes across all Academy phases (as per age group designations set by the FA)",
+	"For those working at Academy level, whether they support athletes in the Professional Development phase (U17s and older)",
+	"For those working at Academy level, whether they support athletes in the Youth Development phase (U12s to U16s, inclusive)",
+	"For those working at Academy level, whether they support athletes in the Foundation Phase (U9s to U11s, inclusive)",
+	"Reported salary",
+	"Salary, including reported values and estimated values based on additional comments provided by respondent (e.g., salary in GBP estimated based on conversion from another currency)",
+	"Respondent's highest qualification - text as entered by participant",
+	"Respondent's highest qualification (categorical format)")
+dataClasses <- c("Numeric",
+								 "Categorical - England, Scotland",
+								 "Categorical - Premier League, Scottish Premiership, Championship, League 1, League 2",
+								 "Categorical: 1st Team, Academy",
+								 "Categorical: Head (of department), Lead (senior staff member in a particular discipline), or Coach (not Head or Lead positions)",
+								 "Categorical: Sport Science, S&C (Strength & Conditioning), or Both",
+								 "String: Known part-time staff noted as 'Part Time'",
+								 "Categorical: 1, 2, 3, SFA Elite, Development",
+								 "Logical: TRUE, FALSE",
+								 "Logical: TRUE, FALSE",
+								 "Logical: TRUE, FALSE",
+								 "Logical: TRUE, FALSE",
+								 "Numeric - currency, GBP (£)",
+								 "Numeric - currency, (£)",
+								 "String",
+								 "Categorical: PhD, Postgraduate (higher than Bachelor but below PhD), Undergraduate, Unclear (based on respondent's entry)")
+
+dataDictionary <- cbind(vars, varDescriptions, dataClasses)
+colnames(dataDictionary) <- c("Variable name", "Description", "Data type")
+
+dataDictionary %>%
+	kable("html") %>%
+	kable_styling()
+
+```
