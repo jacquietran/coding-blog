@@ -84,7 +84,7 @@ enableEmoji = true
 
 [[menu.main]]
     name = "About"
-    url = "/about/index.html"
+    url = "/about/"
     identifier = "fa fa-id-card-o"
     weight = 2
 
