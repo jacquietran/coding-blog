@@ -41,8 +41,8 @@ Off the back of Blackpoolgate are any S&amp;C's/Sport Scientists willing to fill
 <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 </center>
 <p>After a fortnight, 100+ responses were received. I put my hand up to help with visualising the data.</p>
-<div id="getting-started" class="section level1">
-<h1>Getting started</h1>
+<div id="getting-started" class="section level2">
+<h2>Getting started</h2>
 <p>Firstly, let’s load the cleaned data in and load the necessary libraries. <em>Note: Some variables were omitted during the data cleaning process to protect the anonymity of respondents.</em></p>
 <pre class="r"><code>library(readr)
 library(knitr)
@@ -70,9 +70,10 @@ head(soccerSalariesData)</code></pre>
 ## #   ageGroupFPhase &lt;lgl&gt;, reportedSalaryGBP &lt;int&gt;, salaryGBP &lt;int&gt;,
 ## #   highestQual &lt;chr&gt;, highestQualCategory &lt;chr&gt;</code></pre>
 </div>
-<div id="salaries-by-league" class="section level1">
-<h1>Salaries by league</h1>
-<p>Let’s start with a simple plot to answer a simple question: what are the reported salaries of performance support staff working in UK soccer clubs when categorised by league? (It’s worth noting here that this refers to the league in which the club’s first team plays, so it may not be the league that the respondent may predominantly work within, e.g., if they support the Academy programs.)</p>
+<div id="salaries-by-league" class="section level2">
+<h2>Salaries by league</h2>
+<p>Let’s start with a simple plot to answer a simple question: <strong>what are the reported salaries of performance support staff working in UK soccer clubs when categorised by league?</strong> (It’s worth noting here that this refers to the league in which the club’s first team plays, so it may not be the league that the respondent may predominantly work within, e.g., if they support the Academy programs.)</p>
+<p>After a quick exploration when I first started working with this data set, I noticed that salaries varied considerably between respondents. To capture this, I decided to build box plots (to represent ‘typical’ salaries within a particular category), overlaid with a scatter plot where each dot represents one respondent. I also chose to present the the x axis categories such that the leagues progress from higher tier to lower tier as your gaze moves left to right.</p>
 <pre class="r"><code># Set factor levels
 soccerSalariesData$leagueOfFirstTeam &lt;- factor(
     soccerSalariesData$leagueOfFirstTeam,
@@ -82,6 +83,16 @@ soccerSalariesData$leagueOfFirstTeam &lt;- factor(
 # Create object to store axis labels with line breaks
 labelsLeague &lt;- c(
     &quot;Premier\nLeague&quot;, &quot;Scottish\nPremiership&quot;, &quot;Championship&quot;, &quot;League 1&quot;, &quot;League 2&quot;)
+
+# Create a list to store common theme options for use across plots
+plotFeatures &lt;- theme(
+    plot.title = element_text(size = 16),
+    plot.subtitle = element_text(size = 14),
+    axis.title.x = element_blank(),
+  axis.text.x = element_text(size = 11),
+    axis.title.y = element_text(size = 16),
+    axis.text.y = element_text(size = 11),
+    legend.position = &quot;none&quot;)
 
 p &lt;- ggplot(soccerSalariesData, aes(x = leagueOfFirstTeam, y = salaryGBP))
 p &lt;- p + geom_boxplot(outlier.shape = NA, coef = 0)
@@ -94,14 +105,92 @@ p &lt;- p + labs(
     title = &quot;Soccer support staff salaries in the UK&quot;,
     subtitle = &quot;Categorised by league that the first team plays in&quot;,
     y = &quot;Salary (GBP)&quot;)
-p &lt;- p + theme(
-    axis.title.x = element_blank(),
-    legend.position = &quot;none&quot;)
+p &lt;- p + plotFeatures
 salaryByLeague &lt;- p
 
 # Display the plot
 salaryByLeague</code></pre>
 <p><img src="/post/2017-12-26-how-much-do-you-get-paid_files/figure-html/plotByLeague-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>What about median reported salaries?</p>
+<pre class="r"><code># Calculate median salary by league in which first team plays
+medianSalariesByLeague &lt;- soccerSalariesData %&gt;%
+    group_by(leagueOfFirstTeam) %&gt;%
+    summarise(median = median(salaryGBP, na.rm = TRUE))
+
+# Rename variables for aesthetic purposes
+colnames(medianSalariesByLeague) &lt;- c(&quot;League in which first team plays&quot;, &quot;Median salary (GBP, £)&quot;)
+
+# Display the table
+medianSalariesByLeague %&gt;%
+    kable(&quot;html&quot;) %&gt;%
+    kable_styling()</code></pre>
+<table class="table" style="margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+League in which first team plays
+</th>
+<th style="text-align:right;">
+Median salary (GBP, £)
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Premier League
+</td>
+<td style="text-align:right;">
+23930
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Scottish Premiership
+</td>
+<td style="text-align:right;">
+26000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Championship
+</td>
+<td style="text-align:right;">
+22250
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+League 1
+</td>
+<td style="text-align:right;">
+21000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+League 2
+</td>
+<td style="text-align:right;">
+16000
+</td>
+</tr>
+</tbody>
+</table>
+<p>What do these results indicate?</p>
+<p><strong>1. Across the board, typical salaries are low.</strong></p>
+<ul>
+<li>Given that 80 respondents were qualified at Masters or PhD level, these figures seem low. Such individuals might be competitive for university lecturer positions. <a href="https://staffrecruitment.coventry.ac.uk/tlive_webrecruitment/wrd/run/ETREC107GF.open?VACANCY_ID=954467Gmbh&amp;WVID=1861420Izv&amp;LANG=USA&amp;utm_source=Indeed&amp;utm_medium=organic&amp;utm_campaign=Indeed">Coventry University</a> is advertising for an Assistant Lecturer in Sport and Exercise Science with a stated salary range of ~£26,000–£35,000 per annum. Meanwhile, a Lecturer / Senior Lecturer in Research Methods role at <a href="https://vacancies.ntu.ac.uk/displayjob.aspx?jobid=4698">Nottingham Trent</a> will pay somewhere in the range of ~£33,000–£48,000 per annum.</li>
+<li>FYI the <a href="https://www.gov.uk/national-minimum-wage-rates">UK’s National Living Wage</a> for individuals aged 25 and over is £7.50 per hour (as from April 2017). With some ‘back of the napkin’ math, this works out to a full-time salary of approximately £12,600 per annum - calculated as £7.50 per hour x (35 hours / week) x (48 weeks / year).</li>
+<li>For the Australians among us (<em>puts hand up</em>), the typical salary for a performance support staff member working for a Scottish Premiership team—£26,000—works out to roughly $45,000 AUD (based on the exchange rate on 28/12/2017). Level A academics are paid approximately $64,000–$86,000 and Level B academics are paid approximately $91,000–$18,000 (according to <a href="https://www.deakin.edu.au/__data/assets/pdf_file/0018/41472/salary-rates-academic.pdf">Deakin’s pay scales</a> from April 2016).</li>
+</ul>
+<p><strong>2. Performance support staff working for Scottish Premiership teams appear to be paid slghtly better than their counterparts in the Premier League.</strong> Having said that, it’s quite possible that this difference may be due to the small sub-sample of respondents in the Scottish Premiership category (n = 6).</p>
+<p><strong>3. There is considerable variation within most leagues.</strong></p>
+<ul>
+<li>The ‘£0’ salaries have been left in the data set as a handful of (unpaid!!!) interns completed the questionnaire. Even if you were to remove these data points, though, sizeable variation remains. Also, the median is robust to outliers, so typical salaries do not change or change by a negligible amount when interns are excluded from the data set.</li>
+<li>This is partially due to some respondents working part-time in their roles. It was possible to identify whether some individuals were working part-time, based on the data entered by some participants, but the questionnaire itself did not explicitly ask this question.</li>
+</ul>
 </div>
 <div id="salaries-by-league-and-competitive-level" class="section level1">
 <h1>Salaries by league and competitive level</h1>
@@ -110,22 +199,169 @@ salaryByLeague</code></pre>
 p &lt;- p + facet_wrap(~levelOfWork)
 p &lt;- p + geom_boxplot(outlier.shape = NA, coef = 0)
 p &lt;- p + geom_point(alpha = 1/4, size = 4, aes(colour = leagueOfFirstTeam))
-p &lt;- p + scale_y_continuous(limits = c(0, 60000),
-                                                        breaks = seq(0, 60000, by = 10000))
+p &lt;- p + scale_y_continuous(
+    limits = c(0, 60000),
+    breaks = seq(0, 60000, by = 10000))
 p &lt;- p + scale_x_discrete(labels = labelsLeague)
-p &lt;- p + labs(title = &quot;Soccer support staff salaries in the UK&quot;,
-                            subtitle = &quot;First Team vs. Academy&quot;,
-                            y = &quot;Salary (GBP)&quot;)
-p &lt;- p + theme(axis.title.x = element_blank(),
-                             legend.position = &quot;none&quot;)
+p &lt;- p + labs(
+    title = &quot;Soccer support staff salaries in the UK&quot;,
+    subtitle = &quot;First Team vs. Academy&quot;,
+    y = &quot;Salary (GBP)&quot;)
+p &lt;- p + plotFeatures
 salaryByLeagueAndCompLevel &lt;- p
 
 # Display the plot
 salaryByLeagueAndCompLevel</code></pre>
-<p><img src="/post/2017-12-26-how-much-do-you-get-paid_files/figure-html/plotByLeagueAndCompLevel-1.png" width="672" style="display: block; margin: auto;" /></p>
-</div>
-<div id="salaries-by-position" class="section level1">
-<h1>Salaries by position</h1>
+<p><img src="/post/2017-12-26-how-much-do-you-get-paid_files/figure-html/plotByLeagueAndCompLevel-1.png" width="960" style="display: block; margin: auto;" /></p>
+<p>Meanwhile, median salaries now look like this:</p>
+<pre class="r"><code># Calculate median salaries by league and competitive level
+medianSalariesByLeagueAndCompLevel &lt;- soccerSalariesData %&gt;%
+    group_by(leagueOfFirstTeam, levelOfWork) %&gt;%
+    summarise(median = median(salaryGBP, na.rm = TRUE))
+
+# Order by $levelOfWork, then $leagueOfFirstTeam
+medianSalariesByLeagueAndCompLevel &lt;- medianSalariesByLeagueAndCompLevel[order(
+    medianSalariesByLeagueAndCompLevel$levelOfWork,
+    medianSalariesByLeagueAndCompLevel$leagueOfFirstTeam), ]
+
+# Revalue duplicates in $levelOfWork for aesthetic purposes
+medianSalariesByLeagueAndCompLevel$levelOfWork &lt;- ifelse(
+    duplicated(medianSalariesByLeagueAndCompLevel$levelOfWork),
+    &quot;&quot;, medianSalariesByLeagueAndCompLevel$levelOfWork)
+
+# Rename variables for aesthetic purposes
+colnames(medianSalariesByLeagueAndCompLevel) &lt;- c(
+    &quot;League in which first team plays&quot;, &quot;Competitive level&quot;, &quot;Median salary (GBP, £)&quot;)
+
+# Display the table
+medianSalariesByLeagueAndCompLevel %&gt;%
+    kable(&quot;html&quot;) %&gt;%
+    kable_styling()</code></pre>
+<table class="table" style="margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+League in which first team plays
+</th>
+<th style="text-align:left;">
+Competitive level
+</th>
+<th style="text-align:right;">
+Median salary (GBP, £)
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Premier League
+</td>
+<td style="text-align:left;">
+1st Team
+</td>
+<td style="text-align:right;">
+40000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Scottish Premiership
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:right;">
+31250
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Championship
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:right;">
+28000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+League 1
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:right;">
+26000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+League 2
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:right;">
+16500
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Premier League
+</td>
+<td style="text-align:left;">
+Academy
+</td>
+<td style="text-align:right;">
+23860
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Scottish Premiership
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:right;">
+25000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Championship
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:right;">
+22000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+League 1
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:right;">
+18000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+League 2
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:right;">
+16000
+</td>
+</tr>
+</tbody>
+</table>
+<p>Categorising by league and what I’ve termed ‘competitive level’ (first team vs. academy) helps to better visualise the salary gradient across the different leagues. This segmentation of the data gives us a better look at salary breakdowns, but also divides the relatively small sample into even smaller sub-groups. For instance, there were only 2 respondents who work for a Scottish Premiership first team, and only 3 respondents who work for a League 2 academy. Anyway, the data is the data, so let’s press on while keeping in mind that <em>the results seen here may not hold with a larger sample and more representation within each sub-group.</em></p>
+<p>Caveats notwithstanding, the results show that:</p>
+<p><strong>1. The typical salary of Premier League first team support staff (£40,000) is higher than for those who work for Scottish Premiership first teams (£31,250).</strong></p>
+<p><strong>2. The differences between leagues are stark in terms of first team staff salaries, while the gradient is not so steep when it comes to academy staff salaries.</strong></p>
+<div id="salaries-by-position" class="section level2">
+<h2>Salaries by position</h2>
 <p>What do we see when we categorise by job ‘seniority’ (and exclude responses from unpaid interns)?</p>
 <pre class="r"><code># Subset of data frame to exclude position == NA | Intern
 soccerSalariesData2 &lt;- soccerSalariesData %&gt;%
@@ -142,16 +378,15 @@ p &lt;- p + scale_y_continuous(limits = c(0, 60000),
 p &lt;- p + labs(title = &quot;Soccer support staff salaries in the UK&quot;,
                             subtitle = &quot;Categorised by position: Department head, discipline lead, or &#39;coach&#39;&quot;,
                             y = &quot;Salary (GBP)&quot;)
-p &lt;- p + theme(axis.title.x = element_blank(),
-                             legend.position = &quot;none&quot;)
+p &lt;- p + plotFeatures
 salaryByPosition &lt;- p
 
 # Display the plot
 salaryByPosition</code></pre>
 <p><img src="/post/2017-12-26-how-much-do-you-get-paid_files/figure-html/plotByPosition-1.png" width="672" style="display: block; margin: auto;" /></p>
 </div>
-<div id="salaries-by-league-and-by-discipline" class="section level1">
-<h1>Salaries by league and by discipline</h1>
+<div id="salaries-by-league-and-by-discipline" class="section level2">
+<h2>Salaries by league and by discipline</h2>
 <p>Let’s compare how sport scientists and S&amp;C coaches are paid in the different leagues.</p>
 <pre class="r"><code># Subset of data frame to exclude dept == NA
 soccerSalariesData3 &lt;- soccerSalariesData %&gt;%
@@ -172,16 +407,15 @@ p &lt;- p + scale_x_discrete(labels = labelsLeague)
 p &lt;- p + labs(title = &quot;Soccer support staff salaries in the UK&quot;,
                             subtitle = &quot;Categorised by discipline&quot;,
                             y = &quot;Salary (GBP)&quot;)
-p &lt;- p + theme(axis.title.x = element_blank(),
-                             legend.position = &quot;none&quot;)
+p &lt;- p + plotFeatures
 salaryByLeagueAndDept &lt;- p
 
 # Display the plot
 salaryByLeagueAndDept</code></pre>
 <p><img src="/post/2017-12-26-how-much-do-you-get-paid_files/figure-html/plotByLeagueAndDiscipline-1.png" width="672" style="display: block; margin: auto;" /></p>
 </div>
-<div id="salaries-by-academy-category" class="section level1">
-<h1>Salaries by academy category</h1>
+<div id="salaries-by-academy-category" class="section level2">
+<h2>Salaries by academy category</h2>
 <p>The FA sets the academy status of all football clubs with academy programs. Budgets are somewhat dependent on guidelines that are category specific. How does academy category affect salary of strength and conditioning coaches and sport scientists?</p>
 <pre class="r"><code># Subset of data frame to exclude academyCategory == NA
 soccerSalariesData4 &lt;- soccerSalariesData %&gt;%
@@ -204,16 +438,15 @@ p &lt;- p + scale_x_discrete(labels = labelsAcademyCategory)
 p &lt;- p + labs(title = &quot;Soccer support staff salaries in the UK: Academy staff only&quot;,
                             subtitle = &quot;Organised by Academy Category&quot;,
                             y = &quot;Salary (GBP)&quot;)
-p &lt;- p + theme(axis.title.x = element_blank(),
-                             legend.position = &quot;none&quot;)
+p &lt;- p + plotFeatures
 salaryByAcademyCategory &lt;- p
 
 # Display the plot
 salaryByAcademyCategory</code></pre>
 <p><img src="/post/2017-12-26-how-much-do-you-get-paid_files/figure-html/plotByAcademyCategory-1.png" width="672" style="display: block; margin: auto;" /></p>
 </div>
-<div id="salaries-by-highest-qualification" class="section level1">
-<h1>Salaries by highest qualification</h1>
+<div id="salaries-by-highest-qualification" class="section level2">
+<h2>Salaries by highest qualification</h2>
 <pre class="r"><code># Set factor levels
 soccerSalariesData$highestQualCategory &lt;- factor(soccerSalariesData$highestQualCategory,
                                                                                                  levels = c(
@@ -227,21 +460,21 @@ p &lt;- p + scale_y_continuous(limits = c(0, 50000),
 p &lt;- p + labs(title = &quot;Soccer support staff salaries in the UK&quot;,
                             subtitle = &quot;Categorised by highest qualification&quot;,
                             y = &quot;Salary (GBP)&quot;)
-p &lt;- p + theme(axis.title.x = element_blank(),
-                             legend.position = &quot;none&quot;)
+p &lt;- p + plotFeatures
 salaryByHighestQual &lt;- p
 
 # Display the plot
 salaryByHighestQual</code></pre>
-<pre><code>## Warning: Removed 3 rows containing non-finite values (stat_boxplot).</code></pre>
-<pre><code>## Warning: Removed 3 rows containing missing values (geom_point).</code></pre>
-<p><img src="/post/2017-12-26-how-much-do-you-get-paid_files/figure-html/plotByHighestQual-1.png" width="672" /></p>
+<p><img src="/post/2017-12-26-how-much-do-you-get-paid_files/figure-html/plotByHighestQual-1.png" width="672" style="display: block; margin: auto;" /></p>
 </div>
-<div id="want-ys-to-improve-the-questionnaire" class="section level1">
-<h1>Want ys to improve the questionnaire</h1>
+<div id="ways-to-improve-the-questionnaire" class="section level2">
+<h2>Ways to improve the questionnaire</h2>
+<ul>
+<li>Future questionnaires need to specifically ask participants to identify the nature of their work in terms of whether they are full-time, part-time, casual, or volunteer / intern. It would also be helpful to know, for those not in full-time roles especially, an estimate of hours worked per week. This would allow pro rata annual salaries and hourly rates to be calculated.</li>
+</ul>
 </div>
-<div id="wato-explore-the-data" class="section level1">
-<h1>Wato explore the data?</h1>
+<div id="want-to-explore-the-data" class="section level2">
+<h2>Want to explore the data?</h2>
 <p>If you’d like to take a look at the data and try your hand at creating / modifying these plots, visit this <a href="www.github.com/jacquietran/soccerSalariesDataPublic">GitHub repostiory</a>.</p>
 <p>Also, here’s the data dictionary I promised earlier:</p>
 <table class="table" style="margin-left: auto; margin-right: auto;">
@@ -311,7 +544,7 @@ position
 Respondent’s position
 </td>
 <td style="text-align:left;">
-Categorical: Head (of department), Lead (senior staff member in a particular discipline), or Coach (not Head or Lead positions)
+Categorical: Head (of department), Lead (senior staff member in a particular discipline), Coach (not Head or Lead positions), Intern, NA
 </td>
 </tr>
 <tr>
@@ -437,4 +670,5 @@ Categorical: PhD, Postgraduate (higher than Bachelor but below PhD), Undergradua
 </tr>
 </tbody>
 </table>
+</div>
 </div>
