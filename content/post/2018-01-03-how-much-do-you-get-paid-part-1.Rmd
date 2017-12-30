@@ -52,6 +52,7 @@ knitr::opts_chunk$set(fig.width = 7,
 
 ``` {r setup}
 
+# Load libraries
 library(readr)
 library(knitr)
 library(kableExtra)
@@ -148,6 +149,7 @@ plotFeatures <- theme(
 	axis.text.y = element_text(size = 11),
 	legend.position = "none")
 
+# Build the plot
 p <- ggplot(soccerSalariesData, aes(x = leagueOfFirstTeam, y = salaryGBP))
 p <- p + geom_boxplot(outlier.shape = NA, coef = 0)
 p <- p + geom_point(alpha = 1/4, size = 4, aes(colour = leagueOfFirstTeam))
@@ -207,6 +209,7 @@ We can drill down further, plotting the data by league _and_ by competitive leve
 
 ``` {r plotByLeagueAndCompLevel, fig.width = 10, fig.height = 5}
 
+# Build the plot
 p <- ggplot(soccerSalariesData, aes(x = leagueOfFirstTeam, y = salaryGBP))
 p <- p + facet_wrap(~levelOfWork)
 p <- p + geom_boxplot(outlier.shape = NA, coef = 0)
