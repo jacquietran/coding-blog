@@ -64,7 +64,7 @@ This job advert says it all…
 
 <meta itemprop="datePublished" content="2017-12-26T00:00:00&#43;00:00" />
 <meta itemprop="dateModified" content="2017-12-26T00:00:00&#43;00:00" />
-<meta itemprop="wordCount" content="2650">
+<meta itemprop="wordCount" content="3270">
 
 
 
@@ -293,7 +293,7 @@ ga('send', 'pageview');
             December 26, 2017</time>
         <span class="author">Jacquie Tran</span>
         
-            <p>13 minute read</p>
+            <p>16 minute read</p>
         
         
     </div>
@@ -391,8 +391,8 @@ p &lt;- p + scale_y_continuous(
     breaks = seq(0, 60000, by = 10000))
 p &lt;- p + scale_x_discrete(labels = labelsLeague)
 p &lt;- p + labs(
-    title = &quot;Soccer support staff salaries in the UK&quot;,
-    subtitle = &quot;Categorised by league that the first team plays in&quot;,
+    title = &quot;UK soccer salaries of support staff&quot;,
+    subtitle = &quot;By league that the first team plays in&quot;,
     y = &quot;Salary (GBP)&quot;)
 p &lt;- p + plotFeatures
 salaryByLeague &lt;- p
@@ -493,7 +493,7 @@ p &lt;- p + scale_y_continuous(
     breaks = seq(0, 60000, by = 10000))
 p &lt;- p + scale_x_discrete(labels = labelsLeague)
 p &lt;- p + labs(
-    title = &quot;Soccer support staff salaries in the UK&quot;,
+    title = &quot;UK soccer salaries of support staff&quot;,
     subtitle = &quot;First Team vs. Academy&quot;,
     y = &quot;Salary (GBP)&quot;)
 p &lt;- p + plotFeatures
@@ -646,56 +646,135 @@ League 2
 </tbody>
 </table>
 <p>Categorising by league and what I’ve termed ‘competitive level’ (first team vs. academy) helps to better visualise the salary gradient across the different leagues. This segmentation of the data gives us a better look at salary breakdowns, but also divides the relatively small sample into even smaller sub-groups. For instance, there were only 2 respondents who work for a Scottish Premiership first team, and only 3 respondents who work for a League 2 academy. Anyway, the data is the data, so let’s press on while keeping in mind that <em>the results seen here may not hold with a larger sample and more representation within each sub-group.</em></p>
-<p>Caveats notwithstanding, the results show that:</p>
+<p>Keeping these caveats in mind, the results suggest that:</p>
 <p><strong>1. The typical salary of Premier League first team support staff (£40,000) is higher than for those who work for Scottish Premiership first teams (£31,250).</strong></p>
 <p><strong>2. The differences between leagues are stark in terms of first team staff salaries, while the gradient is not so steep when it comes to academy staff salaries.</strong></p>
 <div id="salaries-by-position" class="section level2">
 <h2>Salaries by position</h2>
-<p>What do we see when we categorise by job ‘seniority’ (and exclude responses from unpaid interns)?</p>
+<p>What do we see when we categorise by job ‘seniority? We can exclude responses from unpaid interns from this analysis since, well, they’re unpaid, so their ’typical salary’ works out to be £0.</p>
 <pre class="r"><code># Subset of data frame to exclude position == NA | Intern
 soccerSalariesData2 &lt;- soccerSalariesData %&gt;%
     filter(position != &quot;Intern&quot; &amp; !is.na(position))
 # Set factor levels
-soccerSalariesData2$position &lt;- factor(soccerSalariesData2$position,
-                                                                             levels = c(&quot;Head&quot;, &quot;Lead&quot;, &quot;Coach&quot;))
+soccerSalariesData2$position &lt;- factor(
+    soccerSalariesData2$position,
+    levels = c(&quot;Head&quot;, &quot;Lead&quot;, &quot;Coach&quot;))
 
 p &lt;- ggplot(soccerSalariesData2, aes(x = position, y = salaryGBP))
 p &lt;- p + geom_boxplot(outlier.shape = NA, coef = 0)
 p &lt;- p + geom_point(alpha = 1/4, size = 4, aes(colour = position))
-p &lt;- p + scale_y_continuous(limits = c(0, 60000),
-                                                        breaks = seq(0, 60000, by = 10000))
-p &lt;- p + labs(title = &quot;Soccer support staff salaries in the UK&quot;,
-                            subtitle = &quot;Categorised by position: Department head, discipline lead, or &#39;coach&#39;&quot;,
-                            y = &quot;Salary (GBP)&quot;)
+p &lt;- p + scale_y_continuous(
+    limits = c(0, 60000),
+    breaks = seq(0, 60000, by = 10000))
+p &lt;- p + labs(
+    title = &quot;UK soccer salaries of support staff&quot;,
+    subtitle = &quot;By position: Department head, discipline lead, or &#39;coach&#39;&quot;,
+    y = &quot;Salary (GBP)&quot;)
 p &lt;- p + plotFeatures
 salaryByPosition &lt;- p
 
 # Display the plot
 salaryByPosition</code></pre>
 <p><img src="/post/2017-12-26-how-much-do-you-get-paid_files/figure-html/plotByPosition-1.png" width="672" style="display: block; margin: auto;" /></p>
-</div>
-<div id="salaries-by-league-and-by-discipline" class="section level2">
-<h2>Salaries by league and by discipline</h2>
-<p>Let’s compare how sport scientists and S&amp;C coaches are paid in the different leagues.</p>
+<p>Let’s take a look at median salaries too:</p>
+<pre class="r"><code># Calculate median salaries by position
+medianSalariesByPosition &lt;- soccerSalariesData2 %&gt;%
+    group_by(position) %&gt;%
+    summarise(median = median(salaryGBP, na.rm = TRUE))
+
+# Rename variables for aesthetic purposes
+colnames(medianSalariesByPosition) &lt;- c(
+    &quot;Position&quot;, &quot;Median salary (GBP, £)&quot;)
+
+# Display the table
+medianSalariesByPosition %&gt;%
+    kable(&quot;html&quot;) %&gt;%
+    kable_styling() %&gt;%
+    add_footnote(c(&quot;Head = Department head (e.g., Head of Sport Science &amp; Sports Medicine); Lead = Discipline lead (e.g., Lead S&amp;C coach); Coach = S&amp;C coaches and sport scientists junior to their discipline lead or department head (e.g., Sport Science Assistant)&quot;), notation = &quot;symbol&quot;)</code></pre>
+<table class="table" style="margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+Position
+</th>
+<th style="text-align:right;">
+Median salary (GBP, £)
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Head
+</td>
+<td style="text-align:right;">
+29000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Lead
+</td>
+<td style="text-align:right;">
+20750
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Coach
+</td>
+<td style="text-align:right;">
+20000
+</td>
+</tr>
+</tbody>
+<tfoot>
+<tr>
+<td style="padding: 0; border:0;" colspan="100%">
+<sup>*</sup> Head = Department head (e.g., Head of Sport Science &amp; Sports Medicine); Lead = Discipline lead (e.g., Lead S&amp;C coach); Coach = S&amp;C coaches and sport scientists junior to their discipline lead or department head (e.g., Sport Science Assistant)
+</td>
+</tr>
+</tfoot>
+</table>
+<p>Hmm. Seems there’s quite a bit to take in; here are a few things that jump out at me:</p>
+<p><strong>1. Department heads are generally—but not always—paid more than staff at the Lead or Coach levels.</strong> A small number of respondents who are department heads are being paid less than some Leads and Coaches. We know that there is a descending gradient in the reported salaries by league, so these instances could be explained by Heads who work for teams in lower leagues (e.g., Championship, League 1, League 2), compared to Leads and Coaches who work for teams in higher leagues (e.g., Premier League, Scottish Premiership).</p>
+<p><strong>2. Typical salaries of Leads and Coaches are not remarkably different.</strong> Again, considerable variation is evident within each category. Even if we were to exclude the three upper outliers in the ‘Coach’ group, there are still many overlaps between the 2nd and 3rd categories here.</p>
+<p><strong>3. Some respondents working at the Coach level are unpaid or may be underpaid (depending on the time loading in their role).</strong> These data points are <em>not</em> explained by interns, since we excluded them from the data set before building the plot and table above. This data does include the following:</p>
+<ul>
+<li>One (1) sport scientist who reported earning £0, and another who reported earning £600,</li>
+<li>Six (6) respondents who reported earning less than £10,000 (including the two individuals mentioned in point 1 above), and</li>
+<li>Ten (10) respondents who reported earning less than £15,000. Of these individuals, eight reported having qualifications at the postgraduate (Masters, Postgraduate Certificate) or PhD level.</li>
+</ul>
+<p>I am not immune to cynicism. On its face, this does not make for positive reading, and it is tempting for me to cry foul. Importantly, whenever I am interpreting the results of any analysis, I work to actively think about alternative interpretations and possible explanatory factors:</p>
+<ul>
+<li>Two of these respondents self-identified that they are working part-time, although their weekly time commitment is not known. It is possible that more of these apparently unpaid / underpaid respondents may be working part-time for their respective clubs, however this could not be accurately discerned from their questionnaire responses.</li>
+<li>Some of these respondents may be current postgraduate students who are working and studying within a football club. For example, it’s common these days to see Masters and PhD students ‘embedded’ in applied settings. These students may be employed by a club in some capacity (or receiving a small remuneration / honorarium), while they are also conducting research within the same club or completing the placement hours needed to fulfil course requirements. In these instances, students may be receiving a stipend or scholarship to support their studies. This, in combination with a part-time wage, may add up to a sufficient living wage.</li>
+<li>Salaries by league and by discipline Let’s compare how sport scientists and S&amp;C coaches are paid in the different leagues.</li>
+</ul>
 <pre class="r"><code># Subset of data frame to exclude dept == NA
 soccerSalariesData3 &lt;- soccerSalariesData %&gt;%
     filter(!is.na(dept))
-soccerSalariesData3$dept &lt;- recode(soccerSalariesData3$dept,
-                                                                     `Physical Performance` = &quot;S&amp;C&quot;)
+soccerSalariesData3$dept &lt;- recode(
+    soccerSalariesData3$dept,
+    `Physical Performance` = &quot;S&amp;C&quot;)
+
 # Set factor levels
-soccerSalariesData3$dept &lt;- factor(soccerSalariesData3$dept,
-                                                                     levels = c(&quot;S&amp;C&quot;, &quot;Sport Science&quot;, &quot;Both&quot;))
+soccerSalariesData3$dept &lt;- factor(
+    soccerSalariesData3$dept,
+    levels = c(&quot;S&amp;C&quot;, &quot;Sport Science&quot;, &quot;Both&quot;))
 
 p &lt;- ggplot(soccerSalariesData3, aes(x = leagueOfFirstTeam, y = salaryGBP))
 p &lt;- p + facet_wrap(~dept)
 p &lt;- p + geom_boxplot(outlier.shape = NA, coef = 0)
 p &lt;- p + geom_point(alpha = 1/4, size = 4, aes(colour = leagueOfFirstTeam))
-p &lt;- p + scale_y_continuous(limits = c(0, 60000),
-                                                        breaks = seq(0, 60000, by = 10000))
+p &lt;- p + scale_y_continuous(
+    limits = c(0, 60000),
+    breaks = seq(0, 60000, by = 10000))
 p &lt;- p + scale_x_discrete(labels = labelsLeague)
-p &lt;- p + labs(title = &quot;Soccer support staff salaries in the UK&quot;,
-                            subtitle = &quot;Categorised by discipline&quot;,
-                            y = &quot;Salary (GBP)&quot;)
+p &lt;- p + labs(
+    title = &quot;UK soccer salaries of support staff&quot;,
+    subtitle = &quot;By discipline&quot;,
+    y = &quot;Salary (GBP)&quot;)
 p &lt;- p + plotFeatures
 salaryByLeagueAndDept &lt;- p
 
@@ -711,22 +790,26 @@ soccerSalariesData4 &lt;- soccerSalariesData %&gt;%
     filter(!is.na(academyCategory))
 
 # Set factor levels
-soccerSalariesData4$academyCategory &lt;- factor(soccerSalariesData4$academyCategory,
-                                                                                            levels = c(&quot;1&quot;, &quot;2&quot;, &quot;3&quot;, &quot;SFA Elite&quot;, &quot;Development&quot;))
+soccerSalariesData4$academyCategory &lt;- factor(
+    soccerSalariesData4$academyCategory,
+    levels = c(&quot;1&quot;, &quot;2&quot;, &quot;3&quot;, &quot;SFA Elite&quot;, &quot;Development&quot;))
 
 # Create object to store axis labels with line breaks
-labelsAcademyCategory &lt;- c(&quot;England\nCategory 1&quot;, &quot;England\nCategory 2&quot;, &quot;England\nCategory 3&quot;,
-                                                     &quot;Scotland\nSFA Elite&quot;, &quot;Scotland\nDevelopment&quot;)
+labelsAcademyCategory &lt;- c(
+    &quot;England\nCategory 1&quot;, &quot;England\nCategory 2&quot;, &quot;England\nCategory 3&quot;,
+    &quot;Scotland\nSFA Elite&quot;, &quot;Scotland\nDevelopment&quot;)
 
 p &lt;- ggplot(soccerSalariesData4, aes(x = academyCategory, y = salaryGBP))
 p &lt;- p + geom_boxplot(outlier.shape = NA, coef = 0)
 p &lt;- p + geom_point(alpha = 1/4, size = 4, aes(colour = academyCategory))
-p &lt;- p + scale_y_continuous(limits = c(0, 50000),
-                                                        breaks = seq(0, 50000, by = 10000))
+p &lt;- p + scale_y_continuous(
+    limits = c(0, 50000),
+    breaks = seq(0, 50000, by = 10000))
 p &lt;- p + scale_x_discrete(labels = labelsAcademyCategory)
-p &lt;- p + labs(title = &quot;Soccer support staff salaries in the UK: Academy staff only&quot;,
-                            subtitle = &quot;Organised by Academy Category&quot;,
-                            y = &quot;Salary (GBP)&quot;)
+p &lt;- p + labs(
+    title = &quot;UK soccer salaries of support staff: Academy staff only&quot;,
+    subtitle = &quot;By Academy Category&quot;,
+    y = &quot;Salary (GBP)&quot;)
 p &lt;- p + plotFeatures
 salaryByAcademyCategory &lt;- p
 
@@ -737,18 +820,20 @@ salaryByAcademyCategory</code></pre>
 <div id="salaries-by-highest-qualification" class="section level2">
 <h2>Salaries by highest qualification</h2>
 <pre class="r"><code># Set factor levels
-soccerSalariesData$highestQualCategory &lt;- factor(soccerSalariesData$highestQualCategory,
-                                                                                                 levels = c(
-                                                                                                    &quot;PhD&quot;, &quot;Postgraduate&quot;, &quot;Undergraduate&quot;, &quot;Unclear&quot;))
+soccerSalariesData$highestQualCategory &lt;- factor(
+    soccerSalariesData$highestQualCategory,
+    levels = c(&quot;PhD&quot;, &quot;Postgraduate&quot;, &quot;Undergraduate&quot;, &quot;Unclear&quot;))
 
 p &lt;- ggplot(soccerSalariesData, aes(x = highestQualCategory, y = salaryGBP))
 p &lt;- p + geom_boxplot(outlier.shape = NA, coef = 0)
 p &lt;- p + geom_point(alpha = 1/4, size = 4, aes(colour = highestQualCategory))
-p &lt;- p + scale_y_continuous(limits = c(0, 50000),
-                                                        breaks = seq(0, 50000, by = 10000))
-p &lt;- p + labs(title = &quot;Soccer support staff salaries in the UK&quot;,
-                            subtitle = &quot;Categorised by highest qualification&quot;,
-                            y = &quot;Salary (GBP)&quot;)
+p &lt;- p + scale_y_continuous(
+    limits = c(0, 50000),
+    breaks = seq(0, 50000, by = 10000))
+p &lt;- p + labs(
+    title = &quot;UK soccer salaries of support staff&quot;,
+    subtitle = &quot;By highest qualification&quot;,
+    y = &quot;Salary (GBP)&quot;)
 p &lt;- p + plotFeatures
 salaryByHighestQual &lt;- p
 
@@ -759,11 +844,11 @@ salaryByHighestQual</code></pre>
 <div id="ways-to-improve-the-questionnaire" class="section level2">
 <h2>Ways to improve the questionnaire</h2>
 <ul>
-<li>Future questionnaires need to specifically ask participants to identify the nature of their work in terms of whether they are full-time, part-time, casual, or volunteer / intern. It would also be helpful to know, for those not in full-time roles especially, an estimate of hours worked per week. This would allow pro rata annual salaries and hourly rates to be calculated.</li>
+<li>Ask participants to identify the nature of their work in terms of whether they are full-time, part-time, casual, or volunteer / intern. It would also be helpful to know, for those not in full-time roles especially, an estimate of hours worked per week. This would allow hourly rates and pro rata annual salaries (if appropriate) to be calculated.</li>
 </ul>
 </div>
-<div id="want-to-explore-the-data" class="section level2">
-<h2>Want to explore the data?</h2>
+<div id="explore-the-data-on-your-own" class="section level2">
+<h2>Explore the data on your own</h2>
 <p>If you’d like to take a look at the data and try your hand at creating / modifying these plots, visit this <a href="www.github.com/jacquietran/soccerSalariesDataPublic">GitHub repostiory</a>.</p>
 <p>Also, here’s the data dictionary I promised earlier:</p>
 <table class="table" style="margin-left: auto; margin-right: auto;">
