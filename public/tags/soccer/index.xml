@@ -6,21 +6,71 @@
     <description>Recent content in Soccer on Under The Hood</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Tue, 26 Dec 2017 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 09 Jan 2018 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/tags/soccer/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
-      <title>How much do you get paid?</title>
-      <link>/2017/12/26/how-much-do-you-get-paid/</link>
-      <pubDate>Tue, 26 Dec 2017 00:00:00 +0000</pubDate>
+      <title>How much do you get paid? Part VI - Next steps</title>
+      <link>/2018/01/09/how-much-do-you-get-paid-part-6/</link>
+      <pubDate>Tue, 09 Jan 2018 00:00:00 +0000</pubDate>
       
-      <guid>/2017/12/26/how-much-do-you-get-paid/</guid>
-      <description>It’s a touchy subject for many. Yet this very question was posed by Aiden Oakley (@ajoakley on Twitter), and willingly answered by over 100 sport scientists and strength &amp;amp; conditioning coaches who currently work for football (soccer) clubs in the UK.
+      <guid>/2018/01/09/how-much-do-you-get-paid-part-6/</guid>
+      <description>Introduction This post is the sixth and final in a series - go on and read the first, second, third, fourth, and fifth posts for background. In this series, I will show how I created the plots that Aiden published on Twitter here and here, alongside some commentary about the choices I made throughout the process and my own interpretations of the results.
+Ways to improve the questionnaire  Ask participants to identify the nature of their work in terms of whether they are full-time, part-time, casual, or volunteer / intern.</description>
+    </item>
+    
+    <item>
+      <title>How much do you get paid? Part V - Credential creep</title>
+      <link>/2018/01/08/how-much-do-you-get-paid-part-5/</link>
+      <pubDate>Mon, 08 Jan 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/2018/01/08/how-much-do-you-get-paid-part-5/</guid>
+      <description>IntroductionThis post is the fifth in a series - go on and read the first, second, third, and fourth posts for background. In this series, I will show how I created the plots that Aiden published on Twitter here and here, alongside some commentary about the choices I made throughout the process and my own interpretations of the results.
+Getting startedLoad the data and the libraries as we’ve done before.</description>
+    </item>
+    
+    <item>
+      <title>How much do you get paid? Part IV - Academies by category status</title>
+      <link>/2018/01/06/how-much-do-you-get-paid-part-4/</link>
+      <pubDate>Sat, 06 Jan 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/2018/01/06/how-much-do-you-get-paid-part-4/</guid>
+      <description>IntroductionThis post is the fourth in a series - I suggest reading the first, second, and third posts for background. In this series, I will show how I created the plots that Aiden published on Twitter here and here, alongside some commentary about the choices I made throughout the process and my own interpretations of the results.
+Getting startedLoad the data and the libraries as we’ve done before.</description>
+    </item>
+    
+    <item>
+      <title>How much do you get paid? Part II - Job seniority</title>
+      <link>/2018/01/04/how-much-do-you-get-paid-part-2/</link>
+      <pubDate>Thu, 04 Jan 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/2018/01/04/how-much-do-you-get-paid-part-2/</guid>
+      <description>IntroductionThis post is the second in a series; click here to read the first post if you haven’t already done so. In this series, I will show how I created the plots that Aiden published on Twitter here and here, alongside some commentary about the choices I made throughout the process and my own interpretations of the results.
+Getting startedWe’ll load the cleaned data in and load the necessary libraries as we did in the first post.</description>
+    </item>
+    
+    <item>
+      <title>How much do you get paid? Part I - An initial exploration</title>
+      <link>/2018/01/03/how-much-do-you-get-paid-part-1/</link>
+      <pubDate>Wed, 03 Jan 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/2018/01/03/how-much-do-you-get-paid-part-1/</guid>
+      <description>The backstoryIt’s a touchy subject for many. Yet this question—how much do you get paid?—is at the core of the online questionnaire that was recently administered by Aiden Oakley (@ajoakley on Twitter). And it is a question that was willingly answered by over 100 sport scientists and strength &amp;amp; conditioning coaches who currently work for football (soccer) clubs in the UK.
 Why?
 This job advert says it all…
-This is shocking! “Dear Candidate, please spend £27,000 on BSc, then £1000 on ASCC, to be paid less than half of this.</description>
+This is shocking!</description>
+    </item>
+    
+    <item>
+      <title>How much do you get paid? Part III - Comparison by discipline</title>
+      <link>/2017/01/05/how-much-do-you-get-paid-part-3/</link>
+      <pubDate>Thu, 05 Jan 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/2017/01/05/how-much-do-you-get-paid-part-3/</guid>
+      <description>IntroductionThis post is the third in a series - to get up to speed, here are some links so you can read the first post and the second post. In this series, I will show how I created the plots that Aiden published on Twitter here and here, alongside some commentary about the choices I made throughout the process and my own interpretations of the results.
+Getting startedLoad up the data and the libraries as we’ve done before.</description>
     </item>
     
   </channel>

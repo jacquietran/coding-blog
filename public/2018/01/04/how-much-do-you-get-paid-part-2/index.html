@@ -1,0 +1,806 @@
+<!DOCTYPE HTML>
+
+<html>
+    <head>
+        
+            
+                <title>How much do you get paid? Part II - Job seniority</title>
+            
+        
+
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta name="generator" content="Hugo 0.31.1" />
+        
+
+
+        
+            <meta name="author" content="Jacquie Tran">
+        
+        
+            
+                <meta name="description" content="Dive into the processes and practices that underpin sports analytics. A blog by Jacquie Tran.">
+            
+        
+
+        <meta name="twitter:card" content="summary"/><meta name="twitter:title" content="How much do you get paid? Part II - Job seniority"/>
+<meta name="twitter:description" content="IntroductionThis post is the second in a series; click here to read the first post if you haven’t already done so. In this series, I will show how I created the plots that Aiden published on Twitter here and here, alongside some commentary about the choices I made throughout the process and my own interpretations of the results.
+Getting startedWe’ll load the cleaned data in and load the necessary libraries as we did in the first post."/>
+<meta name="twitter:site" content="@jacquietran"/>
+
+        <meta property="og:title" content="How much do you get paid? Part II - Job seniority" />
+<meta property="og:description" content="IntroductionThis post is the second in a series; click here to read the first post if you haven’t already done so. In this series, I will show how I created the plots that Aiden published on Twitter here and here, alongside some commentary about the choices I made throughout the process and my own interpretations of the results.
+Getting startedWe’ll load the cleaned data in and load the necessary libraries as we did in the first post." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/2018/01/04/how-much-do-you-get-paid-part-2/" />
+
+
+
+<meta property="article:published_time" content="2018-01-04T00:00:00&#43;00:00"/>
+
+<meta property="article:modified_time" content="2018-01-04T00:00:00&#43;00:00"/>
+
+
+
+
+
+
+
+
+
+
+
+        
+<meta itemprop="name" content="How much do you get paid? Part II - Job seniority">
+<meta itemprop="description" content="IntroductionThis post is the second in a series; click here to read the first post if you haven’t already done so. In this series, I will show how I created the plots that Aiden published on Twitter here and here, alongside some commentary about the choices I made throughout the process and my own interpretations of the results.
+Getting startedWe’ll load the cleaned data in and load the necessary libraries as we did in the first post.">
+
+
+<meta itemprop="datePublished" content="2018-01-04T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2018-01-04T00:00:00&#43;00:00" />
+<meta itemprop="wordCount" content="1364">
+
+
+
+<meta itemprop="keywords" content="sport science,strength and conditioning,soccer,football,salaries," />
+
+        
+
+        
+            
+        
+
+        
+        
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/atom-one-light.min.css">
+            <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway:400,800,900|Source+Sans+Pro:400,700">
+            <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.1.20/jquery.fancybox.min.css" />
+            <link rel="stylesheet" href="/css/main.css">
+            <link rel="stylesheet" href="/css/add-on.css">
+        
+
+        
+
+        
+            
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-23505591-3', 'auto');
+ga('send', 'pageview');
+</script>
+
+        
+    </head>
+    <body>
+
+      
+      <div id="wrapper">
+
+    
+    
+<header id="header">
+    
+      
+          <h1><a href="/">post</a></h1>
+      
+    
+
+    <nav class="links">
+        <ul>
+            
+                <li>
+                    <a href="/">
+                            <i class="fa fa-home">&nbsp;</i>Home
+                    </a>
+                </li>
+            
+                <li>
+                    <a href="/about/">
+                            <i class="fa fa-id-card-o">&nbsp;</i>About
+                    </a>
+                </li>
+            
+        </ul>
+    </nav>
+    <nav class="main">
+        <ul>
+            
+            <li id="share-nav" class="share-menu" style="display:none;">
+                <a class="fa-share-alt" href="#share-menu">Share</a>
+            </li>
+            
+            <li class="search">
+                <a class="fa-search" href="#search">Search</a>
+                <form id="search" method="get" action="//google.com/search">
+                    <input type="text" name="q" placeholder="Search" />
+                    <input type="hidden" name="as_sitesearch" value="/">
+                </form>
+            </li>
+            <li class="menu">
+                <a class="fa-bars" href="#menu">Menu</a>
+            </li>
+        </ul>
+    </nav>
+</header>
+
+
+<section id="menu">
+
+    
+        <section>
+            <form class="search" method="get" action="//google.com/search">
+                <input type="text" name="q" placeholder="Search" />
+                <input type="hidden" name="q" value="site:/">
+            </form>
+        </section>
+
+    
+        <section>
+            <ul class="links">
+                
+                    <li>
+                        <a href="/">
+                            <h3>
+                                <i class="fa fa-home">&nbsp;</i>Home
+                            </h3>
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a href="/about/">
+                            <h3>
+                                <i class="fa fa-id-card-o">&nbsp;</i>About
+                            </h3>
+                        </a>
+                    </li>
+                
+            </ul>
+        </section>
+
+    
+        <section>
+            <ul class="links">
+                <header>
+                    <h3>Recent Posts</h3>
+                </header>
+                
+                    
+                
+
+                
+                    <li>
+                        <a href="/2018/01/09/how-much-do-you-get-paid-part-6/"><p>How much do you get paid? Part VI - Next steps</p></a>
+                    </li>
+                
+                    <li>
+                        <a href="/2018/01/08/how-much-do-you-get-paid-part-5/"><p>How much do you get paid? Part V - Credential creep</p></a>
+                    </li>
+                
+                    <li>
+                        <a href="/2018/01/06/how-much-do-you-get-paid-part-4/"><p>How much do you get paid? Part IV - Academies by category status</p></a>
+                    </li>
+                
+            </ul>
+        </section>
+
+    
+        
+</section>
+
+    <section id="share-menu">
+    <section id="social-share-nav">
+        <ul class="links">
+            <header>
+                <h3>Share this post <i class="fa fa-smile-o"></i></h3>
+            </header>
+            
+
+
+<li><a href="//twitter.com/share?url=%2f2018%2f01%2f04%2fhow-much-do-you-get-paid-part-2%2f&text=How%20much%20do%20you%20get%20paid%3f%20Part%20II%20-%20Job%20seniority&via=jacquietran" target="_blank" class="share-btn twitter">
+    <i class="fa fa-twitter"></i>
+    <p>Twitter</p>
+</a></li>
+
+
+<li><a href="//plus.google.com/share?url=%2f2018%2f01%2f04%2fhow-much-do-you-get-paid-part-2%2f" target="_blank" class="share-btn google-plus">
+    <i class="fa fa-google-plus"></i>
+    <p>Google+</p>
+</a></li>
+
+
+<li><a href="//www.facebook.com/sharer/sharer.php?u=%2f2018%2f01%2f04%2fhow-much-do-you-get-paid-part-2%2f" target="_blank" class="share-btn facebook">
+    <i class="fa fa-facebook"></i>
+    <p>Facebook</p>
+</a></li>
+
+
+<li><a href="//reddit.com/submit?url=%2f2018%2f01%2f04%2fhow-much-do-you-get-paid-part-2%2f&title=How%20much%20do%20you%20get%20paid%3f%20Part%20II%20-%20Job%20seniority" target="_blank" class="share-btn reddit">
+    <i class="fa fa-reddit-alien"></i>
+    <p>Reddit</p>
+</a></li>
+
+
+<li><a href="//www.linkedin.com/shareArticle?url=%2f2018%2f01%2f04%2fhow-much-do-you-get-paid-part-2%2f&title=How%20much%20do%20you%20get%20paid%3f%20Part%20II%20-%20Job%20seniority" target="_blank" class="share-btn linkedin">
+    <i class="fa fa-linkedin"></i>
+    <p>LinkedIn</p>
+</a></li>
+
+
+<li><a href="//www.stumbleupon.com/submit?url=%2f2018%2f01%2f04%2fhow-much-do-you-get-paid-part-2%2f&title=How%20much%20do%20you%20get%20paid%3f%20Part%20II%20-%20Job%20seniority" target="_blank" class="share-btn stumbleupon">
+    <i class="fa fa-stumbleupon"></i>
+    <p>StumbleUpon</p>
+</a></li>
+
+
+<li><a href="mailto:?subject=Check out this post by Jacquie%20Tran&body=%2f2018%2f01%2f04%2fhow-much-do-you-get-paid-part-2%2f" target="_blank" class="share-btn email">
+    <i class="fa fa-envelope"></i>
+    <p>Email</p>
+</a></li>
+
+        </ul>
+    </section>
+</section>
+
+    
+    <div id="main">
+        
+        
+        <article class="post">
+    <header>
+    <div class="title">
+        
+            <h1><a href="/2018/01/04/how-much-do-you-get-paid-part-2/">How much do you get paid? Part II - Job seniority</a></h1>
+            
+        
+        
+    </div>
+    <div class="meta">
+        
+
+        <time class="published"
+            datetime='2018-01-04'>
+            January 4, 2018</time>
+        <span class="author">Jacquie Tran</span>
+        
+            <p>7 minute read</p>
+        
+        
+    </div>
+</header>
+
+
+    
+
+    
+
+    <div id="content">
+        <div id="introduction" class="section level2">
+<h2>Introduction</h2>
+<p>This post is the second in a series; <strong>click here to read the first post</strong> if you haven’t already done so. In this series, I will show how I created the plots that Aiden published on Twitter <a href="www.twitter.com/ajoakley/status/944564698166513665">here</a> and <a href="https://twitter.com/ajoakley/status/944936008285552642">here</a>, alongside some commentary about the choices I made throughout the process and my own interpretations of the results.</p>
+</div>
+<div id="getting-started" class="section level2">
+<h2>Getting started</h2>
+<p>We’ll load the cleaned data in and load the necessary libraries <strong>as we did in the first post</strong>.</p>
+<pre class="r"><code>library(readr)
+library(knitr)
+library(kableExtra)
+library(ggplot2)
+library(dplyr)
+
+# Read the data into R
+dataSource &lt;- &quot;https://raw.githubusercontent.com/jacquietran/soccerSalariesDataPublic/master/soccerSalariesDataPublic.csv&quot;
+soccerSalariesData &lt;- read_delim(dataSource, delim = &quot;,&quot;, col_names = TRUE, col_types = NULL)</code></pre>
+</div>
+<div id="salaries-by-position" class="section level2">
+<h2>Salaries by position</h2>
+<p>What happens when we categorise responses by job ‘seniority’? We can exclude responses from unpaid interns from this analysis since, well, they’re unpaid, so their ‘typical salary’ works out to be £0.</p>
+<pre class="r"><code># Subset of data frame to exclude position == NA | Intern
+soccerSalariesData2 &lt;- soccerSalariesData %&gt;%
+    filter(position != &quot;Intern&quot; &amp; !is.na(position))
+# Set factor levels
+soccerSalariesData2$position &lt;- factor(
+    soccerSalariesData2$position,
+    levels = c(&quot;Head&quot;, &quot;Lead&quot;, &quot;Coach&quot;))
+
+# Create a list to store common theme options for use across plots
+plotFeatures &lt;- theme(
+    plot.title = element_text(size = 16),
+    plot.subtitle = element_text(size = 14),
+    axis.title.x = element_blank(),
+  axis.text.x = element_text(size = 11),
+    axis.title.y = element_text(size = 16),
+    axis.text.y = element_text(size = 11),
+    legend.position = &quot;none&quot;)
+
+p &lt;- ggplot(soccerSalariesData2, aes(x = position, y = salaryGBP))
+p &lt;- p + geom_boxplot(outlier.shape = NA, coef = 0)
+p &lt;- p + geom_point(alpha = 1/4, size = 4, aes(colour = position))
+p &lt;- p + scale_y_continuous(
+    limits = c(0, 60000),
+    breaks = seq(0, 60000, by = 10000))
+p &lt;- p + labs(
+    title = &quot;UK soccer salaries of support staff&quot;,
+    subtitle = &quot;By position: Department head, discipline lead, or &#39;coach&#39;&quot;,
+    y = &quot;Salary (GBP)&quot;)
+p &lt;- p + plotFeatures
+salaryByPosition &lt;- p
+
+# Display the plot
+salaryByPosition</code></pre>
+<p><img src="/post/2018-01-04-how-much-do-you-get-paid-part-2_files/figure-html/plotByPosition-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>Let’s take a look at median salaries too:</p>
+<pre class="r"><code># Calculate median salaries by position
+medianSalariesByPosition &lt;- soccerSalariesData2 %&gt;%
+    group_by(position) %&gt;%
+    summarise(median = median(salaryGBP, na.rm = TRUE))
+
+# Add variable for defining position categories
+medianSalariesByPosition$definition &lt;- c(
+    &quot;Department head (e.g., Head of Sport Science &amp; Sports Medicine)&quot;,
+    &quot;Discipline lead (e.g., Lead S&amp;C coach)&quot;,
+    &quot;Staff who are junior to the Lead or Head (e.g., Sport Science Assistant)&quot;)
+
+# Reorder columns
+medianSalariesByPosition &lt;- medianSalariesByPosition %&gt;%
+    select(position, definition, median)
+
+# Rename variables for aesthetic purposes
+colnames(medianSalariesByPosition) &lt;- c(
+    &quot;Position&quot;, &quot;Definition&quot;, &quot;Median salary (GBP, £)&quot;)
+
+# Display the table
+medianSalariesByPosition %&gt;%
+    kable(&quot;html&quot;) %&gt;%
+    kable_styling()</code></pre>
+<table class="table" style="margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+Position
+</th>
+<th style="text-align:left;">
+Definition
+</th>
+<th style="text-align:right;">
+Median salary (GBP, £)
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Head
+</td>
+<td style="text-align:left;">
+Department head (e.g., Head of Sport Science &amp; Sports Medicine)
+</td>
+<td style="text-align:right;">
+29000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Lead
+</td>
+<td style="text-align:left;">
+Discipline lead (e.g., Lead S&amp;C coach)
+</td>
+<td style="text-align:right;">
+20750
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Coach
+</td>
+<td style="text-align:left;">
+Staff who are junior to the Lead or Head (e.g., Sport Science Assistant)
+</td>
+<td style="text-align:right;">
+20000
+</td>
+</tr>
+</tbody>
+</table>
+<div id="key-findings" class="section level3">
+<h3>Key findings</h3>
+<p>Hmm. Seems there’s quite a bit to take in! This is what jumped out at me:</p>
+<p><strong>1. Department heads are generally—but not always—paid more than staff at the Lead or Coach levels.</strong> A small number of respondents who are department heads are being paid less than some Leads and Coaches. We know that there is a descending gradient in the reported salaries by league, so these instances could be explained by Heads who work for teams in lower leagues (e.g., Championship, League 1, League 2), compared to Leads and Coaches who work for teams in higher leagues (e.g., Premier League, Scottish Premiership).</p>
+<p><strong>2. Typical salaries of Leads and Coaches are not remarkably different.</strong> Again, considerable variation is evident within each category. Even if we were to exclude the three upper outliers in the ‘Coach’ group, there are still many overlaps between the 2nd and 3rd categories here.</p>
+<p><strong>3. Some respondents working at the Coach level are unpaid or may be underpaid (depending on the time loading in their role).</strong> These data points are <em>not</em> explained by interns, since we excluded them from the data set before building the plot and table above. This data does include the following:</p>
+<ul>
+<li>One (1) sport scientist who reported earning £0, and another who reported earning £600,</li>
+<li>Six (6) respondents who reported earning less than £10,000 (including the two individuals mentioned in point 1 above), and</li>
+<li>Ten (10) respondents who reported earning less than £15,000. Of these individuals, eight reported having qualifications at the postgraduate (Masters, Postgraduate Certificate) or PhD level.</li>
+</ul>
+</div>
+<div id="entertaining-alternative-possibilities" class="section level3">
+<h3>Entertaining alternative possibilities</h3>
+<p>I am not immune to cynicism. On its face, this does not make for positive reading, and it is tempting for me to cry foul. Importantly, whenever I am interpreting the results of any analysis, I work to actively think about alternative interpretations and possible explanatory factors. Here are a few:</p>
+<p><strong>1. Two of these respondents self-identified that they are working part-time, although their weekly time commitment is not known.</strong> It is possible that more of these apparently unpaid / underpaid respondents may be working part-time for their respective clubs, however this could not be accurately discerned from their questionnaire responses.</p>
+<p><strong>2. Some of these respondents may be current postgraduate students who are working and studying within a football club.</strong> For example, it’s common these days to see Masters and PhD students ‘embedded’ in applied settings. These students may be employed by a club in some capacity (or receiving a small remuneration / honorarium), while they are also conducting research within the same club or completing the placement hours needed to fulfil course requirements. In these instances, students may be receiving a stipend or scholarship to support their studies. This, in combination with a part-time wage, may add up to a sufficient living wage.</p>
+<p><strong>3. Perhaps many of the ‘Coaches’ happen to work for clubs competing in higher-paying leagues, while many of the ‘Leads’ happen to work in lower-paying leagues?</strong> We can attempt to discern this from the available data, a useful exercise that also highlights some of its limitations:</p>
+<ul>
+<li>Of the 26 Lead-level staff who completed the questionnaire, 7 work for clubs with first teams competing in either the Premier League or Scottish Premiership (7 / 26 = 27%). The remaining 19 work for clubs with first teams competing at Championship, League 1, or League 2 level (19 / 26 = 73%).</li>
+<li>Of the 47 Coach-level staff who completed the questionnaire, 19 work for clubs with first teams competing in either the Premier League or Scottish Premiership (19 / 47 = 40%). The remaining 28 work for clubs with first teams competing at Championship, League 1, or League 2 level (28 / 47 = 60%).</li>
+</ul>
+<p>With a very quick inspection of the data at the observation-by-observation level, we now know that fewer Lead-level staff completed the questionnaire than Coach-level staff (26 versus 46, respectively). We also know that fewer Lead-level staff are working for clubs with first teams in the top tier leagues, whereas there are more Coach-level staff working at this level (7 versus 19 in absolute terms, 27% versus 40% as a proportion of respondents at the same job level). Perhaps what we see in the plot and table—the <em>appearance</em> of no difference between these two job levels—is actually the ‘league-level’ effect obscuring real differences that may exist between the salaries of Coaches and Leads. Maybe?</p>
+<p>Scratching beneath the surface in this way, we have run into the eternal frustration of small samples. While a little over 100 responses might be enough to detect what appear to be fairly sizeable differences in staff salaries between leagues, it doesn’t give us enough clarity for answering more granular questions (e.g., ‘Given known differences between leagues, are there additional differences in staff salaries when categorising by job seniority?’).</p>
+</div>
+<div id="so-what" class="section level3">
+<h3>So what?</h3>
+<p>Where does that leave us? Is there a difference between Coach and Lead salaries, or not? The answer is…</p>
+<p>We don’t know. Not yet. With this data, we cannot confidently conclude that there is no difference but we also cannot conclude that there is a difference. We simply need more information and better information to arrive at a more definitive conclusion.</p>
+<p>Nevertheless, I think there is enough of a query here to warrrant further exploration.</p>
+</div>
+</div>
+<div id="whats-next" class="section level2">
+<h2>What’s next?</h2>
+<p>In the next post, I will examine how the salaries of S&amp;C coaches compare to those of sport scientists working for UK football clubs.</p>
+<p>Enjoying the series so far? Constructive feedback and comments welcome via <span class="citation">[Twitter: @jacquietran]</span>(www.twitter.com/jacquietran)</p>
+</div>
+
+    </div>
+
+    <footer>
+        <ul class="stats">
+    
+        
+
+        
+        
+            <li>
+                
+                
+                    
+
+                    
+                        Category
+                    
+                
+            </li>
+        
+    
+
+    
+    
+        <li><a href='/categories/random-projects'>Random projects</a></li>
+    
+</ul>
+
+    </footer>
+</article>
+<ul class="actions pagination">
+    
+        <li><a href="/2018/01/03/how-much-do-you-get-paid-part-1/"
+                class="button big previous">How much do you get paid? Part I - An initial exploration</a></li>
+    
+
+    
+        <li><a href="/2018/01/06/how-much-do-you-get-paid-part-4/"
+                class="button big next">How much do you get paid? Part IV - Academies by category status</a></li>
+    
+</ul>
+
+
+
+
+
+    </div>
+    
+<section id="sidebar">
+
+    
+        <section id="intro">
+            
+            
+                
+                    <img src="/img/main/logo.png" class="intro-circle" width="" alt="Jacquie Tran" />
+                
+            
+            
+                <header>
+                    <h2>Under The Hood</h2>
+                    <p>Dive into the processes and practices that underpin sports analytics. A blog by <a href="http://www.jacquietran.com">Jacquie Tran</a>.</p>
+                </header>
+            
+            <ul class="icons">
+                
+                
+                    
+<li><a href="//github.com/jacquietran" target="_blank" title="GitHub" class="fa fa-github"></a></li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<li><a href="//twitter.com/jacquietran" target="_blank" title="Twitter" class="fa fa-twitter"></a></li>
+
+
+
+<li><a href="mailto:jac@jacquietran.com" title="Email" class="fa fa-envelope"></a></li>
+
+
+                
+            </ul>
+        </section>
+
+    
+        <section id="recent-posts">
+            <ul class="posts">
+                <header>
+                    <h3>Recent Posts</h3>
+                </header>
+                
+
+                
+                    
+                
+
+                
+                    <li>
+                        <article>
+                            <header>
+                                <h3><a href="/2018/01/09/how-much-do-you-get-paid-part-6/">How much do you get paid? Part VI - Next steps</a></h3>
+                                
+                                <time class="published" datetime=
+                                    '2018-01-09'>
+                                    January 9, 2018</time>
+                            </header>
+                        </article>
+                    </li>
+                
+                    <li>
+                        <article>
+                            <header>
+                                <h3><a href="/2018/01/08/how-much-do-you-get-paid-part-5/">How much do you get paid? Part V - Credential creep</a></h3>
+                                
+                                <time class="published" datetime=
+                                    '2018-01-08'>
+                                    January 8, 2018</time>
+                            </header>
+                        </article>
+                    </li>
+                
+                    <li>
+                        <article>
+                            <header>
+                                <h3><a href="/2018/01/06/how-much-do-you-get-paid-part-4/">How much do you get paid? Part IV - Academies by category status</a></h3>
+                                
+                                <time class="published" datetime=
+                                    '2018-01-06'>
+                                    January 6, 2018</time>
+                            </header>
+                        </article>
+                    </li>
+                
+
+                
+                    <li>
+                        <ul class="actions">
+                            <li><a href=
+                            
+                                /blog/
+                            
+                            class="button">View more posts</a></li>
+                        </ul>
+                    </li>
+                
+            </ul>
+        </section>
+
+    
+    
+    
+    
+        <section id="categories">
+            <ul class="posts">
+                <header>
+                    <h3><a href="/categories/">Categories</a></h3>
+                </header>
+
+                
+                    
+                
+
+                
+                    <li>
+                        <article>
+                            <header>
+                                <a href="/categories/random-projects/">Random projects</a>
+                                <span style="float:right;">6</span>
+                            </header>
+                        </article>
+                    </li>
+                
+                    <li>
+                        <article>
+                            <header>
+                                <a href="/categories/general-ramblings/">General ramblings</a>
+                                <span style="float:right;">1</span>
+                            </header>
+                        </article>
+                    </li>
+                
+            </ul>
+        </section>
+    
+
+    
+        
+        <section class="blurb">
+            <h2>About</h2>
+            <p>I am sport scientist working in elite sport and I code. This blog will showcase what can be achieved by applying programming to uncover patterns and solve problems that matter in sport settings.</p>
+
+            <ul class="actions">
+                <li><a href="/about/" class="button">Learn More</a></li>
+            </ul>
+        </section>
+        
+
+    
+        <section id="footer">
+            <ul class="icons">
+                
+                
+                    
+<li><a href="//github.com/jacquietran" target="_blank" title="GitHub" class="fa fa-github"></a></li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<li><a href="//twitter.com/jacquietran" target="_blank" title="Twitter" class="fa fa-twitter"></a></li>
+
+
+
+<li><a href="mailto:jac@jacquietran.com" title="Email" class="fa fa-envelope"></a></li>
+
+
+                
+            </ul>
+
+            <p class="copyright">&copy; 2018 Jacquie Tran. Powered by <a href="//gohugo.io" target="_blank">Hugo</a></p>
+        </section>
+
+</section>
+
+      </div>
+      <a id="back-to-top" href="#" class="fa fa-arrow-up fa-border fa-2x"></a>
+      
+
+      
+        
+      
+
+      
+      
+        <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/skel/3.0.1/skel.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.1.20/jquery.fancybox.min.js"></script>
+        <script src="/js/util.js"></script>
+        <script src="/js/main.js"></script>
+        <script src="/js/backToTop.js"></script>
+      
+
+      
+
+      
+      <script>hljs.initHighlightingOnLoad();</script>
+    </body>
+</html>
+

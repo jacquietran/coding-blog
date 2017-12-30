@@ -1,0 +1,90 @@
+---
+title: How much do you get paid? Part V - Credential creep
+author: Jacquie Tran
+date: '2018-01-08'
+slug: how-much-do-you-get-paid-part-5
+categories:
+  - Random projects
+tags:
+  - football
+  - salaries
+  - soccer
+  - sport science
+  - strength and conditioning
+draft: yes
+---
+
+## Introduction
+This post is the fifth in a series - go on and read the **first**, **second**, **third**, and **fourth** posts for background. In this series, I will show how I created the plots that Aiden published on Twitter [here](www.twitter.com/ajoakley/status/944564698166513665) and [here](https://twitter.com/ajoakley/status/944936008285552642), alongside some commentary about the choices I made throughout the process and my own interpretations of the results.
+
+## Getting started
+Load the data and the libraries **as we've done before**.
+
+``` {r globalOptions, echo = FALSE}
+
+knitr::opts_chunk$set(fig.width = 7,
+											fig.height = 5,
+											fig.align = 'center',
+											echo = TRUE,
+											warning = FALSE,
+											message = FALSE)
+
+```
+
+``` {r setup}
+
+library(readr)
+library(knitr)
+library(kableExtra)
+library(ggplot2)
+library(dplyr)
+
+# Read the data into R
+dataSource <- "https://raw.githubusercontent.com/jacquietran/soccerSalariesDataPublic/master/soccerSalariesDataPublic.csv"
+soccerSalariesData <- read_delim(dataSource, delim = ",", col_names = TRUE, col_types = NULL)
+
+```
+
+## Salaries by highest qualification
+``` {r plotByHighestQual}
+
+# Set factor levels
+soccerSalariesData$highestQualCategory <- factor(
+	soccerSalariesData$highestQualCategory,
+	levels = c("PhD", "Postgraduate", "Undergraduate", "Unclear"))
+
+# Create a list to store common theme options for use across plots
+plotFeatures <- theme(
+	plot.title = element_text(size = 16),
+	plot.subtitle = element_text(size = 14),
+	axis.title.x = element_blank(),
+  axis.text.x = element_text(size = 11),
+	axis.title.y = element_text(size = 16),
+	axis.text.y = element_text(size = 11),
+	legend.position = "none")
+
+p <- ggplot(soccerSalariesData, aes(x = highestQualCategory, y = salaryGBP))
+p <- p + geom_boxplot(outlier.shape = NA, coef = 0)
+p <- p + geom_point(alpha = 1/4, size = 4, aes(colour = highestQualCategory))
+p <- p + scale_y_continuous(
+	limits = c(0, 50000),
+	breaks = seq(0, 50000, by = 10000))
+p <- p + labs(
+	title = "UK soccer salaries of support staff",
+	subtitle = "By highest qualification",
+	y = "Salary (GBP)")
+p <- p + plotFeatures
+salaryByHighestQual <- p
+
+# Display the plot
+salaryByHighestQual
+
+```
+
+### Key findings
+
+## What's next?
+
+In the six and final post in this series, I will outline how a thoughtful data analysis and interpretation workflow provides hints as to the ways we can improve future data collection.
+
+Constructive feedback and comments welcome - get in touch with me via [Twitter: @jacquietran](www.twitter.com/jacquietran)

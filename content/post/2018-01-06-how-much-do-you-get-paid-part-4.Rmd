@@ -1,0 +1,102 @@
+---
+title: How much do you get paid? Part IV - Academies by category status
+author: Jacquie Tran
+date: '2018-01-06'
+slug: how-much-do-you-get-paid-part-4
+categories:
+  - Random projects
+tags:
+  - football
+  - salaries
+  - soccer
+  - sport science
+  - strength and conditioning
+draft: yes
+---
+
+## Introduction
+This post is the fourth in a series - I suggest reading the **first**, **second**, and **third** posts for background. In this series, I will show how I created the plots that Aiden published on Twitter [here](www.twitter.com/ajoakley/status/944564698166513665) and [here](https://twitter.com/ajoakley/status/944936008285552642), alongside some commentary about the choices I made throughout the process and my own interpretations of the results.
+
+## Getting started
+Load the data and the libraries **as we've done before**.
+
+``` {r globalOptions, echo = FALSE}
+
+knitr::opts_chunk$set(fig.width = 7,
+											fig.height = 5,
+											fig.align = 'center',
+											echo = TRUE,
+											warning = FALSE,
+											message = FALSE)
+
+```
+
+``` {r setup}
+
+library(readr)
+library(knitr)
+library(kableExtra)
+library(ggplot2)
+library(dplyr)
+
+# Read the data into R
+dataSource <- "https://raw.githubusercontent.com/jacquietran/soccerSalariesDataPublic/master/soccerSalariesDataPublic.csv"
+soccerSalariesData <- read_delim(dataSource, delim = ",", col_names = TRUE, col_types = NULL)
+
+```
+
+## Salaries by academy category
+The FA sets the academy status of all football clubs with academy programs. Budgets are somewhat dependent on guidelines that are category specific. How does academy category affect salary of strength and conditioning coaches and sport scientists?
+
+``` {r plotByAcademyCategory}
+
+# Subset of data frame to exclude academyCategory == NA
+soccerSalariesData4 <- soccerSalariesData %>%
+	filter(!is.na(academyCategory))
+
+# Set factor levels
+soccerSalariesData4$academyCategory <- factor(
+	soccerSalariesData4$academyCategory,
+	levels = c("1", "2", "3", "SFA Elite", "Development"))
+
+# Create object to store axis labels with line breaks
+labelsAcademyCategory <- c(
+	"England\nCategory 1", "England\nCategory 2", "England\nCategory 3",
+	"Scotland\nSFA Elite", "Scotland\nDevelopment")
+
+# Create a list to store common theme options for use across plots
+plotFeatures <- theme(
+	plot.title = element_text(size = 16),
+	plot.subtitle = element_text(size = 14),
+	axis.title.x = element_blank(),
+  axis.text.x = element_text(size = 11),
+	axis.title.y = element_text(size = 16),
+	axis.text.y = element_text(size = 11),
+	legend.position = "none")
+
+p <- ggplot(soccerSalariesData4, aes(x = academyCategory, y = salaryGBP))
+p <- p + geom_boxplot(outlier.shape = NA, coef = 0)
+p <- p + geom_point(alpha = 1/4, size = 4, aes(colour = academyCategory))
+p <- p + scale_y_continuous(
+	limits = c(0, 50000),
+	breaks = seq(0, 50000, by = 10000))
+p <- p + scale_x_discrete(labels = labelsAcademyCategory)
+p <- p + labs(
+	title = "UK soccer salaries of support staff: Academy staff only",
+	subtitle = "By Academy Category",
+	y = "Salary (GBP)")
+p <- p + plotFeatures
+salaryByAcademyCategory <- p
+
+# Display the plot
+salaryByAcademyCategory
+
+```
+
+### Key findings
+
+## What's next?
+
+In the fifth (and penultimate) post, I will investigate whether higher qualifications mean higher pay.
+
+Constructive feedback and comments welcome - get in touch with me via [Twitter: @jacquietran](www.twitter.com/jacquietran)
