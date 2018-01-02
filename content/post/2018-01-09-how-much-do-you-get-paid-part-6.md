@@ -4,7 +4,7 @@ author: Jacquie Tran
 date: '2018-01-09'
 slug: how-much-do-you-get-paid-part-6
 categories:
-  - Random projects
+  - Off-field analyses
 tags:
   - football
   - soccer

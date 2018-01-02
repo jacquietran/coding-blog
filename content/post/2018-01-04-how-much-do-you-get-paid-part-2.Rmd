@@ -4,7 +4,7 @@ author: Jacquie Tran
 date: '2018-01-04'
 slug: how-much-do-you-get-paid-part-2
 categories:
-  - Random projects
+  - Off-field analyses
 tags:
   - sport science
   - strength and conditioning

@@ -1,17 +1,16 @@
 ---
 title: How much do you get paid? Part I - An initial exploration
 author: Jacquie Tran
-date: '2018-01-03'
+date: '2018-01-02'
 slug: how-much-do-you-get-paid-part-1
 categories:
-  - Random projects
+  - Off-field analyses
 tags:
   - sport science
   - strength and conditioning
   - soccer
   - football
   - salaries
-draft: yes
 ---
 
 # The backstory
@@ -191,12 +190,19 @@ medianSalariesByLeague %>%
 
 ## Key findings
 
-**1. Across the board, typical salaries are low.**
+**1. Across the board, typical reported salaries are low.**
 
 - Given that 80 respondents were qualified at Masters or PhD level, these figures seem low. Such individuals might be competitive for university lecturer positions. [Coventry University](https://staffrecruitment.coventry.ac.uk/tlive_webrecruitment/wrd/run/ETREC107GF.open?VACANCY_ID=954467Gmbh&WVID=1861420Izv&LANG=USA&utm_source=Indeed&utm_medium=organic&utm_campaign=Indeed) is advertising for an Assistant Lecturer in Sport and Exercise Science with a stated salary range of ~£26,000--£35,000 per annum. Meanwhile, a Lecturer / Senior Lecturer in Research Methods role at [Nottingham Trent](https://vacancies.ntu.ac.uk/displayjob.aspx?jobid=4698) will pay somewhere in the range of ~£33,000--£48,000 per annum.
 - FYI the [UK's National Living Wage](https://www.gov.uk/national-minimum-wage-rates) for individuals aged 25 and over is £7.50 per hour (as from April 2017). With some 'back of the napkin' math, this works out to a full-time salary of approximately £12,600 per annum - calculated as £7.50 per hour x (35 hours / week) x (48 weeks / year).
 - For the Australians among us (_puts hand up_), the typical salary for a performance support staff member working for a Scottish Premiership team—£26,000—works out to roughly $45,000 AUD (based on the exchange rate on 28/12/2017). Level A academics are paid approximately $64,000--$86,000 and Level B academics are paid approximately $91,000--$18,0000 (according to [Deakin's pay scales](https://www.deakin.edu.au/__data/assets/pdf_file/0018/41472/salary-rates-academic.pdf) froeffective m April 2016).
- 
+
+[Dave Carolan](https://twitter.com/davecarolan/status/947739503027998720) wrote on Twitter that the data set lacks representation from sport scientists and S&C coaches in English football who earn £100,000+ per annum. This is a fair critique of the data set. Several responses from higher-paid individuals certainly would increase the typical salaries seen here.
+
+<center><blockquote class="twitter-tweet" data-conversation="none" data-lang="en"><p lang="en" dir="ltr">Great work Aiden. I believe that the lack of representation of the £100k+ club should be acknowledged. They exist in the PL &amp; some Champ.</p>&mdash; Dave Carolan (@davecarolan) <a href="https://twitter.com/davecarolan/status/947739503027998720?ref_src=twsrc%5Etfw">January 1, 2018</a></blockquote>
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script></center>
+
+It's important to capture the true nature of things, but the existence of some better remunerated roles does not take away from the 41 individuals who completed this small survey and reported being paid £20,000 or less. I'd argue that the push for fair wages is chiefly about i) the sustainability and credibility of the industry entire (_"Pay peanuts, get monkeys!"_"), and ii) protecting the most vulnerable, such as those in the early stages of their career trying to get off the internship carousel. If you're in the '£100k+ club', being underpaid is probably not your personal current experience, although it may have been in the early days of your career. Hopefully, though, you care enough about the industry as a whole to want _all_ individuals to be fairly paid for the work they've done (to gain the skills, experience, and qualifications needed to succeed in a given role), and the work they do (in this case, looking after the health, well-being, development, and performance of young men and women through football).
+
 **2. Performance support staff working for Scottish Premiership teams appear to be paid slghtly better than their counterparts in the Premier League.** Having said that, it's quite possible that this difference may be due to the small sub-sample of respondents in the Scottish Premiership category (n = 6).
 
 **3. There is considerable variation within most leagues.**
