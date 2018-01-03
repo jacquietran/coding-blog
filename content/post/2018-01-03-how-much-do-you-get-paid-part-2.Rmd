@@ -1,7 +1,7 @@
 ---
 title: How much do you get paid? Part II - Job seniority
 author: Jacquie Tran
-date: '2018-01-04'
+date: '2018-01-03'
 slug: how-much-do-you-get-paid-part-2
 categories:
   - Off-field analyses
@@ -11,14 +11,14 @@ tags:
   - soccer
   - football
   - salaries
-draft: yes
+draft: no
 ---
 
 # Introduction
-This post is the **second** in a series; [click here to read the first post](underthehood.jacquietran.com/2018/01/03/how-much-do-you-get-paid-part-1/) if you haven't already done so. In this series, I will show how I created the plots that [Aiden Oakley](www.twitter.com/ajoakley) published on Twitter [here](www.twitter.com/ajoakley/status/944564698166513665) and [here](https://twitter.com/ajoakley/status/944936008285552642), alongside some commentary about the choices I made throughout the process and my own interpretations of the results.
+This post is the **second** in a series; [click here to read the first post](underthehood.jacquietran.com/2018/01/02/how-much-do-you-get-paid-part-1/) if you haven't already done so. In this series, I will show how I created the plots that [Aiden Oakley](www.twitter.com/ajoakley) published on Twitter [here](www.twitter.com/ajoakley/status/944564698166513665) and [here](https://twitter.com/ajoakley/status/944936008285552642), alongside some commentary about the choices I made throughout the process and my own interpretations of the results.
 
 # Getting started
-We'll load the cleaned data in and load the necessary libraries [as we did in the first post](underthehood.jacquietran.com/2018/01/03/how-much-do-you-get-paid-part-1/).
+We'll load the cleaned data in and load the necessary libraries [as we did in the first post](underthehood.jacquietran.com/2018/01/02/how-much-do-you-get-paid-part-1/).
 
 ``` {r globalOptions, echo = FALSE}
 
@@ -126,14 +126,14 @@ Hmm. Seems there's quite a bit to take in! This is what jumped out at me:
 
 **2. Typical salaries of Leads and Coaches are not remarkably different.** Again, considerable variation is evident within each category. Even if we were to exclude the three upper outliers in the 'Coach' group, there are still many overlaps between the 2nd and 3rd categories here.
 
-**3. Some respondents working at the Coach level are unpaid or may be underpaid (depending on the time loading in their role).** These data points are _not_ explained by interns, since we excluded them from the data set before building the plot and table above. This data does include the following:
+**3. Some respondents working at the Coach level are unpaid or may be underpaid (depending on the time loading in their role).** These data points are _not_ explained by interns, since we excluded them from the data set before building the plot and table above. However, this data _does include_ the following:
 
 - One (1) sport scientist who reported earning £0, and another who reported earning £600,
 - Six (6) respondents who reported earning less than £10,000, and
 - Ten (10) respondents who reported earning less than £15,000. Of these individuals, eight reported having qualifications at the postgraduate (Masters, Postgraduate Certificate) or PhD level.
 
 ## Entertaining alternative possibilities
-I am not immune to cynicism. On its face, this does not make for positive reading, and it is tempting for me to cry foul. Importantly, whenever I am interpreting the results of any analysis, I work to actively think about alternative interpretations and possible explanatory factors. Here are a few:
+On its face, these results do not make for positive reading. Importantly, whenever I am interpreting the results of any analysis, I work to actively think about alternative interpretations and possible explanatory factors. Here are a few:
 
 **1. Two of these respondents self-identified that they are working part-time, although their weekly time commitment is not known.** It is possible that more of these apparently unpaid / underpaid respondents may be working part-time for their respective clubs, however this could not be accurately discerned from their questionnaire responses.
 
@@ -151,9 +151,11 @@ Scratching beneath the surface in this way, we have run into the eternal frustra
 ## So what?
 Where does that leave us? **Is there a difference between Coach and Lead salaries, or not?** The answer is...
 
-We don't know. At least, we don't know _yet_. With this data, we cannot confidently conclude that there is no difference but we also cannot conclude that there is a difference. We need better information and probably more of it to arrive at a conclusive judgment.
+We don't know. At least, we don't know _yet_. With this data, we cannot confidently conclude that there is no difference but we also cannot conclude that there is a difference. We need better information and probably more of it to arrive at a conclusive judgment. Nevertheless, I think there is enough of a query here to warrant further exploration, further data capture, and further self-questioning (as an industry):
 
-Nevertheless, I think there is enough of a query here to warrrant further exploration.
+- Do we, as a professional community, think there is a real difference between what it takes to do the job of a 'Lead' compared to the 'Coach'-level roles?
+- If we think _there is a real difference_ between these two job levels, then why are the more senior 'Lead' staff not being paid commensurate to their higher experience, skill, qualifications, degree of accountability?
+- If we think _there is no real difference_ between these two job levels, then the lack of difference in their typical salaries is not an issue. But then, the question becomes: Why persist with 'Lead' designations for sport scientists and S&C coaches?
 
 # What's next?
 

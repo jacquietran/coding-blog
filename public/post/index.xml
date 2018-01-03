@@ -43,10 +43,10 @@ Ways to improve the questionnaire  Ask participants to identify the nature of th
     
     <item>
       <title>How much do you get paid? Part II - Job seniority</title>
-      <link>/2018/01/04/how-much-do-you-get-paid-part-2/</link>
-      <pubDate>Thu, 04 Jan 2018 00:00:00 +0000</pubDate>
+      <link>/2018/01/03/how-much-do-you-get-paid-part-2/</link>
+      <pubDate>Wed, 03 Jan 2018 00:00:00 +0000</pubDate>
       
-      <guid>/2018/01/04/how-much-do-you-get-paid-part-2/</guid>
+      <guid>/2018/01/03/how-much-do-you-get-paid-part-2/</guid>
       <description>IntroductionThis post is the second in a series; click here to read the first post if you haven’t already done so. In this series, I will show how I created the plots that Aiden Oakley published on Twitter here and here, alongside some commentary about the choices I made throughout the process and my own interpretations of the results.
 Getting startedWe’ll load the cleaned data in and load the necessary libraries as we did in the first post.</description>
     </item>

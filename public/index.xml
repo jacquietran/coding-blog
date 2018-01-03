@@ -43,10 +43,10 @@ Ways to improve the questionnaire  Ask participants to identify the nature of th
     
     <item>
       <title>How much do you get paid? Part II - Job seniority</title>
-      <link>/2018/01/04/how-much-do-you-get-paid-part-2/</link>
-      <pubDate>Thu, 04 Jan 2018 00:00:00 +0000</pubDate>
+      <link>/2018/01/03/how-much-do-you-get-paid-part-2/</link>
+      <pubDate>Wed, 03 Jan 2018 00:00:00 +0000</pubDate>
       
-      <guid>/2018/01/04/how-much-do-you-get-paid-part-2/</guid>
+      <guid>/2018/01/03/how-much-do-you-get-paid-part-2/</guid>
       <description>IntroductionThis post is the second in a series; click here to read the first post if you haven’t already done so. In this series, I will show how I created the plots that Aiden Oakley published on Twitter here and here, alongside some commentary about the choices I made throughout the process and my own interpretations of the results.
 Getting startedWe’ll load the cleaned data in and load the necessary libraries as we did in the first post.</description>
     </item>
@@ -61,6 +61,21 @@ Ways to improve the questionnaire  Ask participants to identify the nature of th
 Why?
 This job advert says it all…
 This is shocking!</description>
+    </item>
+    
+    <item>
+      <title>Learning R</title>
+      <link>/learningr/</link>
+      <pubDate>Tue, 02 Jan 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/learningr/</guid>
+      <description>So you wanna learn R? Ways to learn R  Complete courses to learn R in a structured curriculum.
+ Undertake a data project using R.
+  An in-the-browser tutorial for getting to know the R language - no software installation needed: http://tryr.codeschool.com
+Introductory course to R, from Data Camp: www.datacamp.com/courses/free-introduction-to-r
+Downloading the software R RStudio
+Suggestions from around the web Mark Sellors: http://fg2re.sellorm.com/
+Keith Lyons / Sport Informatics and Analytics: https://wikieducator.</description>
     </item>
     
     <item>

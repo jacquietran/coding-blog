@@ -18,12 +18,17 @@
   </url>
   
   <url>
-    <loc>/2018/01/04/how-much-do-you-get-paid-part-2/</loc>
-    <lastmod>2018-01-04T00:00:00+00:00</lastmod>
+    <loc>/2018/01/03/how-much-do-you-get-paid-part-2/</loc>
+    <lastmod>2018-01-03T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>/2018/01/02/how-much-do-you-get-paid-part-1/</loc>
+    <lastmod>2018-01-02T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/learningr/</loc>
     <lastmod>2018-01-02T00:00:00+00:00</lastmod>
   </url>
   
@@ -62,6 +67,12 @@
   <url>
     <loc>/categories/general-ramblings/</loc>
     <lastmod>2017-10-01T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/learningr/</loc>
+    <lastmod>2018-01-02T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
