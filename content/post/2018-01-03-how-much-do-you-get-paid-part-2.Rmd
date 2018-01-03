@@ -15,10 +15,10 @@ draft: no
 ---
 
 # Introduction
-This post is the **second** in a series; [click here to read the first post](underthehood.jacquietran.com/2018/01/02/how-much-do-you-get-paid-part-1/) if you haven't already done so. In this series, I will show how I created the plots that [Aiden Oakley](www.twitter.com/ajoakley) published on Twitter [here](www.twitter.com/ajoakley/status/944564698166513665) and [here](https://twitter.com/ajoakley/status/944936008285552642), alongside some commentary about the choices I made throughout the process and my own interpretations of the results.
+This post is the **second** in a series; [click here to read the first post](/2018/01/02/how-much-do-you-get-paid-part-1/) if you haven't already done so. In this series, I will show how I created the plots that [Aiden Oakley](https://www.twitter.com/ajoakley/) published on Twitter [here](https://www.twitter.com/ajoakley/status/944564698166513665/) and [here](https://twitter.com/ajoakley/status/944936008285552642/), alongside some commentary about the choices I made throughout the process and my own interpretations of the results.
 
 # Getting started
-We'll load the cleaned data in and load the necessary libraries [as we did in the first post](underthehood.jacquietran.com/2018/01/02/how-much-do-you-get-paid-part-1/).
+We'll load the cleaned data in and load the necessary libraries [as we did in the first post](/2018/01/02/how-much-do-you-get-paid-part-1/).
 
 ``` {r globalOptions, echo = FALSE}
 
@@ -161,4 +161,4 @@ We don't know. At least, we don't know _yet_. With this data, we cannot confiden
 
 In the next post, I will examine how the salaries of S&C coaches compare to those of sport scientists working for UK football clubs.
 
-Enjoying the series so far? [Constructive feedback and comments welcome via Twitter](www.twitter.com/jacquietran); my handle is **@jacquietran**.
+Enjoying the series so far? [Constructive feedback and comments welcome via Twitter](https://www.twitter.com/jacquietran/); my handle is **@jacquietran**.

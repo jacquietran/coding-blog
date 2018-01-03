@@ -14,7 +14,7 @@ tags:
 ---
 
 # The backstory
-It's a touchy subject for many. Yet this question—how much do you get paid?—is at the core of the online questionnaire that was recently administered by [Aiden Oakley](www.twitter.com/ajokaley) (**@ajoakley** on Twitter). And it is a question that was willingly answered by over 100 sport scientists and strength & conditioning coaches who currently work for football (soccer) clubs in the UK.
+It's a touchy subject for many. Yet this question—how much do you get paid?—is at the core of the online questionnaire that was recently administered by [Aiden Oakley](https://www.twitter.com/ajoakley/) (**@ajoakley** on Twitter). And it is a question that was willingly answered by over 100 sport scientists and strength & conditioning coaches who currently work for football (soccer) clubs in the UK.
 
 Why?
 
@@ -33,7 +33,7 @@ Aiden set out to explore this question via a simple survey:
 <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 </center>
 
-After a fortnight, 100+ responses were received. I put my hand up to help with visualising the data. This post is the first in a series where I will show how I created the plots that Aiden published on Twitter [here](www.twitter.com/ajoakley/status/944564698166513665) and [here](https://twitter.com/ajoakley/status/944936008285552642), alongside some commentary about the choices I made throughout the process and my own interpretations of the results.
+After a fortnight, 100+ responses were received. I put my hand up to help with visualising the data. This post is the first in a series where I will show how I created the plots that Aiden published on Twitter [here](https://www.twitter.com/ajoakley/status/944564698166513665/) and [here](https://twitter.com/ajoakley/status/944936008285552642/), alongside some commentary about the choices I made throughout the process and my own interpretations of the results.
 
 # Getting started
 Let's load the cleaned data in and load the necessary libraries. _Note: Some variables were omitted during the data cleaning process to protect the anonymity of respondents._
