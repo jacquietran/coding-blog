@@ -19,6 +19,12 @@ An in-the-browser tutorial for getting to know the R language - no software inst
 
 Introductory course to R, from Data Camp: www.datacamp.com/courses/free-introduction-to-r
 
+'R for Data Science', by Garrett Grolemund & Hadley Wickham: http://r4ds.had.co.nz/ (also available in hard copy if you prefer)
+
+Course materials from a unit taught at UBC by Jenny Bryan on 'Data wrangling, exploration, and analysis with R': http://stat545.com/
+
+The Data Science Guide is a very useful resource for finding content all over the web for learning different data science skills and programming languages. You can tailor your search to your current level of expertise in a given domain: http://www.datasciguide.com/find-content-2/
+
 ## Downloading the software
 R
 RStudio
