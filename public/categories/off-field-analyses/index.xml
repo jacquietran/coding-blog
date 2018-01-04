@@ -42,6 +42,16 @@ Ways to improve the questionnaire  Ask participants to identify the nature of th
     </item>
     
     <item>
+      <title>How much do you get paid? Part III - Comparison by discipline</title>
+      <link>/2018/01/04/how-much-do-you-get-paid-part-3/</link>
+      <pubDate>Thu, 04 Jan 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/2018/01/04/how-much-do-you-get-paid-part-3/</guid>
+      <description>IntroductionThis post is the third in a series - to get up to speed, have a read through the first post and the second post. In this series, I will show how I created the plots that Aiden published on Twitter here and here, alongside some commentary about the choices I made throughout the process and my own interpretations of the results.
+Getting startedLoad up the data and the libraries as we’ve done before.</description>
+    </item>
+    
+    <item>
       <title>How much do you get paid? Part II - Job seniority</title>
       <link>/2018/01/03/how-much-do-you-get-paid-part-2/</link>
       <pubDate>Wed, 03 Jan 2018 00:00:00 +0000</pubDate>
@@ -61,16 +71,6 @@ Ways to improve the questionnaire  Ask participants to identify the nature of th
 Why?
 This job advert says it all…
 This is shocking!</description>
-    </item>
-    
-    <item>
-      <title>How much do you get paid? Part III - Comparison by discipline</title>
-      <link>/2017/01/05/how-much-do-you-get-paid-part-3/</link>
-      <pubDate>Thu, 05 Jan 2017 00:00:00 +0000</pubDate>
-      
-      <guid>/2017/01/05/how-much-do-you-get-paid-part-3/</guid>
-      <description>IntroductionThis post is the third in a series - to get up to speed, here are some links so you can read the first post and the second post. In this series, I will show how I created the plots that Aiden published on Twitter here and here, alongside some commentary about the choices I made throughout the process and my own interpretations of the results.
-Getting startedLoad up the data and the libraries as we’ve done before.</description>
     </item>
     
   </channel>
