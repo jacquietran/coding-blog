@@ -35,6 +35,9 @@ enableEmoji = true
     loadFavicon          = false
     faviconVersion       = ""
 
+		# Add favicon.png to static/ and it will be copied to public/ on build
+    favicon = "/img/main/favicon.png"
+
     # Disable showing the social sharing links on blog posts
     socialShareDisabled = true
 

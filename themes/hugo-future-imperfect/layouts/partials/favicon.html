@@ -1,3 +1,9 @@
+<!DOCTYPE html>
+<html lang="{{ .Site.LanguageCode }}">
+  <head>
+    <link rel="icon" type="image/png" href="{{ .Site.Params.favicon }}" sizes="32x32">
+  </head>
+
 {{ if .Site.Params.loadFavicon }}
     {{ with .Site.Params.faviconVersion }}
         {{ $.Scratch.Set "favVer" "-" }}
