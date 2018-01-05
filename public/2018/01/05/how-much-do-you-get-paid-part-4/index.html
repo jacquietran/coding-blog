@@ -4,7 +4,7 @@
     <head>
         
             
-                <title>How much do you get paid? Part III - Comparison by discipline</title>
+                <title>How much do you get paid? Part IV - Academies by category status</title>
             
         
 
@@ -29,22 +29,22 @@
             
         
 
-        <meta name="twitter:card" content="summary"/><meta name="twitter:title" content="How much do you get paid? Part III - Comparison by discipline"/>
-<meta name="twitter:description" content="IntroductionThis post is the third in a series - to get up to speed, have a read through the first post and the second post. In this series, I will show how I created the plots that Aiden published on Twitter here and here, alongside some commentary about the choices I made throughout the process and my own interpretations of the results.
-Getting startedLoad up the data and the libraries as we’ve done before."/>
+        <meta name="twitter:card" content="summary"/><meta name="twitter:title" content="How much do you get paid? Part IV - Academies by category status"/>
+<meta name="twitter:description" content="IntroductionThis post is the fourth in a series - I suggest reading the first, second, and third posts for background. In this series, I will show how I created the plots that Aiden Oakley published on Twitter here and here, alongside some commentary about the choices I made throughout the process and my own interpretations of the results.
+Getting startedLoad the data and the libraries as we’ve done before."/>
 <meta name="twitter:site" content="@jacquietran"/>
 
-        <meta property="og:title" content="How much do you get paid? Part III - Comparison by discipline" />
-<meta property="og:description" content="IntroductionThis post is the third in a series - to get up to speed, have a read through the first post and the second post. In this series, I will show how I created the plots that Aiden published on Twitter here and here, alongside some commentary about the choices I made throughout the process and my own interpretations of the results.
-Getting startedLoad up the data and the libraries as we’ve done before." />
+        <meta property="og:title" content="How much do you get paid? Part IV - Academies by category status" />
+<meta property="og:description" content="IntroductionThis post is the fourth in a series - I suggest reading the first, second, and third posts for background. In this series, I will show how I created the plots that Aiden Oakley published on Twitter here and here, alongside some commentary about the choices I made throughout the process and my own interpretations of the results.
+Getting startedLoad the data and the libraries as we’ve done before." />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="/2018/01/04/how-much-do-you-get-paid-part-3/" />
+<meta property="og:url" content="/2018/01/05/how-much-do-you-get-paid-part-4/" />
 
 
 
-<meta property="article:published_time" content="2018-01-04T00:00:00&#43;00:00"/>
+<meta property="article:published_time" content="2018-01-05T00:00:00&#43;00:00"/>
 
-<meta property="article:modified_time" content="2018-01-04T00:00:00&#43;00:00"/>
+<meta property="article:modified_time" content="2018-01-05T00:00:00&#43;00:00"/>
 
 
 
@@ -57,18 +57,18 @@
 
 
         
-<meta itemprop="name" content="How much do you get paid? Part III - Comparison by discipline">
-<meta itemprop="description" content="IntroductionThis post is the third in a series - to get up to speed, have a read through the first post and the second post. In this series, I will show how I created the plots that Aiden published on Twitter here and here, alongside some commentary about the choices I made throughout the process and my own interpretations of the results.
-Getting startedLoad up the data and the libraries as we’ve done before.">
+<meta itemprop="name" content="How much do you get paid? Part IV - Academies by category status">
+<meta itemprop="description" content="IntroductionThis post is the fourth in a series - I suggest reading the first, second, and third posts for background. In this series, I will show how I created the plots that Aiden Oakley published on Twitter here and here, alongside some commentary about the choices I made throughout the process and my own interpretations of the results.
+Getting startedLoad the data and the libraries as we’ve done before.">
 
 
-<meta itemprop="datePublished" content="2018-01-04T00:00:00&#43;00:00" />
-<meta itemprop="dateModified" content="2018-01-04T00:00:00&#43;00:00" />
-<meta itemprop="wordCount" content="1141">
+<meta itemprop="datePublished" content="2018-01-05T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2018-01-05T00:00:00&#43;00:00" />
+<meta itemprop="wordCount" content="894">
 
 
 
-<meta itemprop="keywords" content="sport science,strength and conditioning,football,salaries,soccer," />
+<meta itemprop="keywords" content="football,salaries,soccer,sport science,strength and conditioning," />
 
         
 
@@ -227,43 +227,43 @@ ga('send', 'pageview');
             
 
 
-<li><a href="//twitter.com/share?url=%2f2018%2f01%2f04%2fhow-much-do-you-get-paid-part-3%2f&text=How%20much%20do%20you%20get%20paid%3f%20Part%20III%20-%20Comparison%20by%20discipline&via=jacquietran" target="_blank" class="share-btn twitter">
+<li><a href="//twitter.com/share?url=%2f2018%2f01%2f05%2fhow-much-do-you-get-paid-part-4%2f&text=How%20much%20do%20you%20get%20paid%3f%20Part%20IV%20-%20Academies%20by%20category%20status&via=jacquietran" target="_blank" class="share-btn twitter">
     <i class="fa fa-twitter"></i>
     <p>Twitter</p>
 </a></li>
 
 
-<li><a href="//plus.google.com/share?url=%2f2018%2f01%2f04%2fhow-much-do-you-get-paid-part-3%2f" target="_blank" class="share-btn google-plus">
+<li><a href="//plus.google.com/share?url=%2f2018%2f01%2f05%2fhow-much-do-you-get-paid-part-4%2f" target="_blank" class="share-btn google-plus">
     <i class="fa fa-google-plus"></i>
     <p>Google+</p>
 </a></li>
 
 
-<li><a href="//www.facebook.com/sharer/sharer.php?u=%2f2018%2f01%2f04%2fhow-much-do-you-get-paid-part-3%2f" target="_blank" class="share-btn facebook">
+<li><a href="//www.facebook.com/sharer/sharer.php?u=%2f2018%2f01%2f05%2fhow-much-do-you-get-paid-part-4%2f" target="_blank" class="share-btn facebook">
     <i class="fa fa-facebook"></i>
     <p>Facebook</p>
 </a></li>
 
 
-<li><a href="//reddit.com/submit?url=%2f2018%2f01%2f04%2fhow-much-do-you-get-paid-part-3%2f&title=How%20much%20do%20you%20get%20paid%3f%20Part%20III%20-%20Comparison%20by%20discipline" target="_blank" class="share-btn reddit">
+<li><a href="//reddit.com/submit?url=%2f2018%2f01%2f05%2fhow-much-do-you-get-paid-part-4%2f&title=How%20much%20do%20you%20get%20paid%3f%20Part%20IV%20-%20Academies%20by%20category%20status" target="_blank" class="share-btn reddit">
     <i class="fa fa-reddit-alien"></i>
     <p>Reddit</p>
 </a></li>
 
 
-<li><a href="//www.linkedin.com/shareArticle?url=%2f2018%2f01%2f04%2fhow-much-do-you-get-paid-part-3%2f&title=How%20much%20do%20you%20get%20paid%3f%20Part%20III%20-%20Comparison%20by%20discipline" target="_blank" class="share-btn linkedin">
+<li><a href="//www.linkedin.com/shareArticle?url=%2f2018%2f01%2f05%2fhow-much-do-you-get-paid-part-4%2f&title=How%20much%20do%20you%20get%20paid%3f%20Part%20IV%20-%20Academies%20by%20category%20status" target="_blank" class="share-btn linkedin">
     <i class="fa fa-linkedin"></i>
     <p>LinkedIn</p>
 </a></li>
 
 
-<li><a href="//www.stumbleupon.com/submit?url=%2f2018%2f01%2f04%2fhow-much-do-you-get-paid-part-3%2f&title=How%20much%20do%20you%20get%20paid%3f%20Part%20III%20-%20Comparison%20by%20discipline" target="_blank" class="share-btn stumbleupon">
+<li><a href="//www.stumbleupon.com/submit?url=%2f2018%2f01%2f05%2fhow-much-do-you-get-paid-part-4%2f&title=How%20much%20do%20you%20get%20paid%3f%20Part%20IV%20-%20Academies%20by%20category%20status" target="_blank" class="share-btn stumbleupon">
     <i class="fa fa-stumbleupon"></i>
     <p>StumbleUpon</p>
 </a></li>
 
 
-<li><a href="mailto:?subject=Check out this post by Jacquie%20Tran&body=%2f2018%2f01%2f04%2fhow-much-do-you-get-paid-part-3%2f" target="_blank" class="share-btn email">
+<li><a href="mailto:?subject=Check out this post by Jacquie%20Tran&body=%2f2018%2f01%2f05%2fhow-much-do-you-get-paid-part-4%2f" target="_blank" class="share-btn email">
     <i class="fa fa-envelope"></i>
     <p>Email</p>
 </a></li>
@@ -280,7 +280,7 @@ ga('send', 'pageview');
     <header>
     <div class="title">
         
-            <h1><a href="/2018/01/04/how-much-do-you-get-paid-part-3/">How much do you get paid? Part III - Comparison by discipline</a></h1>
+            <h1><a href="/2018/01/05/how-much-do-you-get-paid-part-4/">How much do you get paid? Part IV - Academies by category status</a></h1>
             
         
         
@@ -289,11 +289,11 @@ ga('send', 'pageview');
         
 
         <time class="published"
-            datetime='2018-01-04'>
-            January 4, 2018</time>
+            datetime='2018-01-05'>
+            January 5, 2018</time>
         <span class="author">Jacquie Tran</span>
         
-            <p>6 minute read</p>
+            <p>5 minute read</p>
         
         
     </div>
@@ -306,16 +306,16 @@ ga('send', 'pageview');
 
     <div id="content">
         <div class="figure">
-<img src="/img/post/170314-F-MA978-058.JPG" />
+<img src="/img/post/the-ball-stadion-football-the-pitch-47730.jpeg" />
 
 </div>
 <div id="introduction" class="section level1">
 <h1>Introduction</h1>
-<p>This post is the <strong>third</strong> in a series - to get up to speed, have a read through <a href="/2018/01/02/how-much-do-you-get-paid-part-1.html/">the first post</a> and <a href="/2018/01/03/how-much-do-you-get-paid-part-2.html/">the second post</a>. In this series, I will show how I created the plots that Aiden published on Twitter <a href="https://www.twitter.com/ajoakley/status/944564698166513665/">here</a> and <a href="https://twitter.com/ajoakley/status/944936008285552642/">here</a>, alongside some commentary about the choices I made throughout the process and my own interpretations of the results.</p>
+<p>This post is the <strong>fourth</strong> in a series - I suggest reading the <a href="/2018/01/02/how-much-do-you-get-paid-part-1/">first</a>, <a href="/2018/01/03/how-much-do-you-get-paid-part-2/">second</a>, and <a href="/2018/01/04/how-much-do-you-get-paid-part-3/">third</a> posts for background. In this series, I will show how I created the plots that <a href="https://www.twitter.com/ajoakley/">Aiden Oakley</a> published on Twitter <a href="https://www.twitter.com/ajoakley/status/944564698166513665/">here</a> and <a href="https://twitter.com/ajoakley/status/944936008285552642/">here</a>, alongside some commentary about the choices I made throughout the process and my own interpretations of the results.</p>
 </div>
 <div id="getting-started" class="section level1">
 <h1>Getting started</h1>
-<p>Load up the data and the libraries <a href="/2018/01/02/how-much-do-you-get-paid-part-1.html/">as we’ve done before</a>.</p>
+<p>Load the data and the libraries <a href="/2018/01/02/how-much-do-you-get-paid-part-1/">as we’ve done before</a>.</p>
 <pre class="r"><code>library(readr)
 library(knitr)
 library(kableExtra)
@@ -326,27 +326,33 @@ library(dplyr)
 dataSource &lt;- &quot;https://raw.githubusercontent.com/jacquietran/soccerSalariesDataPublic/master/soccerSalariesDataPublic.csv&quot;
 soccerSalariesData &lt;- read_delim(dataSource, delim = &quot;,&quot;, col_names = TRUE, col_types = NULL)</code></pre>
 </div>
-<div id="salaries-by-league-and-by-discipline" class="section level1">
-<h1>Salaries by league and by discipline</h1>
-<p>Let’s compare how sport scientists and S&amp;C coaches are paid in the different leagues.</p>
-<pre class="r"><code># Subset of data frame to exclude dept == NA
-soccerSalariesData3 &lt;- soccerSalariesData %&gt;%
-    filter(!is.na(dept))
-soccerSalariesData3$dept &lt;- recode(
-    soccerSalariesData3$dept,
-    `Physical Performance` = &quot;S&amp;C&quot;)
+<div id="salaries-by-academy-category" class="section level1">
+<h1>Salaries by academy category</h1>
+<p>In England, the Football Association (FA) sets the academy status of all football clubs with academy programs, as part of their <a href="http://www.thefa.com/~/media/C2FB1444624F4367AA477A72D94B50BF.ashx">Elite Player Performance Plan</a>. Club academies are audited and given a status of Category 1 to 4, with 1 being the highest tier possible. Meanwhile, in Scotland, <a href="http://www.youthfootballscotland.co.uk/gots/item/19915-scottish-fa-make-project-brave-announcement.html">a new academy structure has been recently introduced</a> with three levels: Elite (the highest tier), Progressive (the middle tier), and Performance (the lowest tier). In both countries, different levels of grant funding are awarded based on their academy category.</p>
+<p>For context (and my own understanding), I’ve patched together a range of news sources to collate the following information about category-specific funding:</p>
+<ul>
+<li>In England, grants are awarded to academies based on their category status and are scaled to a percentage of their operational budget, according to this <a href="http://www.hltco.org/2012/08/01/what-the-eppp-means-for-us/">source</a>. Therefore, the absolute values cited below are ‘ball-park’ figures.</li>
+<li><strong>Category 1</strong> academies received a minimum £775,000 per year as a grant from the Premier League’s youth development fund in 2013, according to <a href="http://www.goal.com/en-gb/news/2896/premier-league/2013/01/25/3699412/arsenal-liverpool-tottenham-win-top-academy-grade-but">an article by Wayne Veysey for Goal.com</a>.</li>
+<li>According to the <a href="http://www.goal.com/en-gb/news/2896/premier-league/2013/01/25/3699412/arsenal-liverpool-tottenham-win-top-academy-grade-but">Veysey article</a>, <strong>Category 2</strong> academies could expect a minimum of £480,000 in funding in 2013. <a href="https://www.ccfc.co.uk/news/2016/june/news-richard-stevens-on-what-it-means-to-have-a-category-ii-football-academy-/">In a news item from 2016 by Laura Hunter for the Coventry City FC website</a>, their Category 2 academy received ~£500,000 in funding that year.</li>
+<li>The <a href="http://www.goal.com/en-gb/news/2896/premier-league/2013/01/25/3699412/arsenal-liverpool-tottenham-win-top-academy-grade-but">Veysey article</a> states that <strong>Category 3</strong> academies received a minimum of £210,000 in funding in 2013.</li>
+<li><strong>Category 4</strong> academies received a minimum of £100,000 in funding in 2013, as per <a href="http://www.goal.com/en-gb/news/2896/premier-league/2013/01/25/3699412/arsenal-liverpool-tottenham-win-top-academy-grade-but">Veysey</a>.</li>
+<li>I couldn’t find any public information on funding for Scottish academies, which might be due to the fact that the new academy structure was finalised recently, <a href="https://www.scottishfa.co.uk/news/project-brave-update/">in November 2017</a>. Do you know of any reliable information sources on this topic? <a href="https://www.twitter.com/jacquietran">Send me links via Twitter!</a></li>
+</ul>
+<p>Knowing this, it makes sense to investigate whether academy category (read: academy budget) affects the salaries of performance support staff in the UK.</p>
+<p><em>Side note: Two respondents working in Scotland indicated that their category status was ‘Development’. This is not one of the three new academy categories set by the Scottish Football Association as I undersatnd it. Since it wasn’t clear which one of the three this text entry might correspond to, I have decided to leave it as is for this analysis. If anyone can give me clarity on which category this might be (perhaps someone reading this blog post might have provided this particular response?), then I can amend the plot and table below accordingly.</em></p>
+<pre class="r"><code># Subset of data frame to exclude academyCategory == NA
+soccerSalariesData4 &lt;- soccerSalariesData %&gt;%
+    filter(!is.na(academyCategory))
 
 # Set factor levels
-soccerSalariesData3$dept &lt;- factor(
-    soccerSalariesData3$dept,
-    levels = c(&quot;S&amp;C&quot;, &quot;Sport Science&quot;, &quot;Both&quot;))
-soccerSalariesData3$leagueOfFirstTeam &lt;- factor(
-    soccerSalariesData3$leagueOfFirstTeam,
-    levels = c(
-        &quot;Premier League&quot;, &quot;Scottish Premiership&quot;, &quot;Championship&quot;, &quot;League 1&quot;, &quot;League 2&quot;))
+soccerSalariesData4$academyCategory &lt;- factor(
+    soccerSalariesData4$academyCategory,
+    levels = c(&quot;1&quot;, &quot;2&quot;, &quot;3&quot;, &quot;SFA Elite&quot;, &quot;Development&quot;))
 
 # Create object to store axis labels with line breaks
-labelsLeague &lt;- c(&quot;PL&quot;, &quot;SP&quot;, &quot;C&quot;, &quot;L1&quot;, &quot;L2&quot;)
+labelsAcademyCategory &lt;- c(
+    &quot;England\nCategory 1&quot;, &quot;England\nCategory 2&quot;, &quot;England\nCategory 3&quot;,
+    &quot;Scotland\nElite&quot;, &quot;Scotland\n&#39;Development&#39;&quot;)
 
 # Create a list to store common theme options for use across plots
 plotFeatures &lt;- theme(
@@ -358,59 +364,47 @@ plotFeatures &lt;- theme(
     axis.text.y = element_text(size = 11),
     legend.position = &quot;none&quot;)
 
-p &lt;- ggplot(soccerSalariesData3, aes(x = leagueOfFirstTeam, y = salaryGBP))
-p &lt;- p + facet_wrap(~dept)
+p &lt;- ggplot(soccerSalariesData4, aes(x = academyCategory, y = salaryGBP))
 p &lt;- p + geom_boxplot(outlier.shape = NA, coef = 0)
-p &lt;- p + geom_point(alpha = 1/4, size = 4, aes(colour = leagueOfFirstTeam))
+p &lt;- p + geom_point(alpha = 1/4, size = 4, aes(colour = academyCategory))
 p &lt;- p + scale_y_continuous(
-    limits = c(0, 60000),
-    breaks = seq(0, 60000, by = 10000))
-p &lt;- p + scale_x_discrete(labels = labelsLeague)
+    limits = c(0, 50000),
+    breaks = seq(0, 50000, by = 10000))
+p &lt;- p + scale_x_discrete(labels = labelsAcademyCategory)
 p &lt;- p + labs(
-    title = &quot;UK soccer salaries of support staff&quot;,
-    subtitle = &quot;By league and by discipline&quot;,
+    title = &quot;UK soccer salaries of support staff: Academy staff only&quot;,
+    subtitle = &quot;By academy category&quot;,
     y = &quot;Salary (GBP)&quot;)
 p &lt;- p + plotFeatures
-salaryByLeagueAndDept &lt;- p
+salaryByAcademyCategory &lt;- p
 
 # Display the plot
-salaryByLeagueAndDept</code></pre>
-<p><img src="/post/2018-01-04-how-much-do-you-get-paid-part-3_files/figure-html/plotByLeagueAndDiscipline-1.png" width="864" style="display: block; margin: auto;" /></p>
-<center>
-Note: P = Premier League, SP = Scottish Premiership, C = Championship, L1 = League 1, L2 = League 2.
-</center>
-<p>Here is the breakdown of median salaries:</p>
-<pre class="r"><code># Calculate median salaries by league and discipline
-medianSalariesByLeagueAndDept &lt;- soccerSalariesData3 %&gt;%
-    group_by(leagueOfFirstTeam, dept) %&gt;%
+salaryByAcademyCategory</code></pre>
+<p><img src="/post/2018-01-05-how-much-do-you-get-paid-part-4_files/figure-html/plotByAcademyCategory-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>Let’s also tabulate median salaries by academy category:</p>
+<pre class="r"><code># Calculate median salaries by academy category
+medianSalariesByAcademyCategory &lt;- soccerSalariesData4 %&gt;%
+    group_by(academyCategory) %&gt;%
     summarise(median = median(salaryGBP, na.rm = TRUE))
 
-# Reorder values by $dept, then by $leagueOfFirstTeam
-medianSalariesByLeagueAndDept &lt;- medianSalariesByLeagueAndDept[order(
-    medianSalariesByLeagueAndDept$dept, medianSalariesByLeagueAndDept$leagueOfFirstTeam), ]
-
-# Remove duplicate values in $dept for aesthetic purposes
-medianSalariesByLeagueAndDept$dept &lt;- c(
-    &quot;S&amp;C&quot;, rep(&quot;&quot;, times = 3),
-    &quot;Sport Science&quot;, rep(&quot;&quot;, times = 4),
-    &quot;Both&quot;, rep(&quot;&quot;, times = 3))
+# Rename values in $academyCategory for aesthetic purposes
+medianSalariesByAcademyCategory$academyCategory &lt;- c(
+    &quot;England Category 1&quot;, &quot;England Category 2&quot;, &quot;England Category 3&quot;,
+    &quot;Scotland Elite&quot;, &quot;Scotland &#39;Development&#39;&quot;)
 
 # Rename variables for aesthetic purposes
-colnames(medianSalariesByLeagueAndDept) &lt;- c(
-    &quot;League in which first team plays&quot;, &quot;Discipline&quot;, &quot;Median salary (GBP, £)&quot;)
+colnames(medianSalariesByAcademyCategory) &lt;- c(
+    &quot;Academy category status&quot;, &quot;Median salary (GBP, £)&quot;)
 
 # Display the table
-medianSalariesByLeagueAndDept %&gt;%
+medianSalariesByAcademyCategory %&gt;%
     kable(&quot;html&quot;) %&gt;%
     kable_styling()</code></pre>
 <table class="table" style="margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
 <th style="text-align:left;">
-League in which first team plays
-</th>
-<th style="text-align:left;">
-Discipline
+Academy category status
 </th>
 <th style="text-align:right;">
 Median salary (GBP, £)
@@ -420,40 +414,15 @@ Median salary (GBP, £)
 <tbody>
 <tr>
 <td style="text-align:left;">
-Premier League
-</td>
-<td style="text-align:left;">
-S&amp;C
+England Category 1
 </td>
 <td style="text-align:right;">
-25000
+24250
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
-Championship
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:right;">
-26500
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-League 1
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:right;">
-25000
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-League 2
-</td>
-<td style="text-align:left;">
+England Category 2
 </td>
 <td style="text-align:right;">
 20000
@@ -461,118 +430,39 @@ League 2
 </tr>
 <tr>
 <td style="text-align:left;">
-Premier League
-</td>
-<td style="text-align:left;">
-Sport Science
+England Category 3
 </td>
 <td style="text-align:right;">
-20000
+19750
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
-Scottish Premiership
-</td>
-<td style="text-align:left;">
+Scotland Elite
 </td>
 <td style="text-align:right;">
-26000
+25500
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
-Championship
-</td>
-<td style="text-align:left;">
+Scotland ‘Development’
 </td>
 <td style="text-align:right;">
-21000
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-League 1
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:right;">
-18500
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-League 2
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:right;">
-13000
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Premier League
-</td>
-<td style="text-align:left;">
-Both
-</td>
-<td style="text-align:right;">
-7200
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Championship
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:right;">
-21000
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-League 1
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:right;">
-17000
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-League 2
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:right;">
-16000
+15300
 </td>
 </tr>
 </tbody>
 </table>
 <div id="key-findings" class="section level2">
 <h2>Key findings</h2>
-<p><strong>1. Within-league within-discipline variation is substantial in most cases.</strong> Where there is not considerable variation, it is probably due to limited representation within that particular sub-group (e.g., Scottish Premiership sport scientists). Some variation is to be expected, since respondents of different <a href="/2018/01/03/how-much-do-you-get-paid-part-2.html/">job seniority levels</a> completed the survey. However, the salary variation seen here is in tens of thousands of British Pounds! Seeing this does not breed confidence that a systematic process is used to set performance staff salaries.</p>
-<p>In real terms, this means that there are individuals performing similar duties for clubs competing in the same league, but somehow these individuals are being paid wildly different salaries. For instance, three respondents are Lead Academy S&amp;C Coaches for Premier League clubs with salaries of £19,000, £22,000, and £30,000. Similarly, several respondents are Head Academy Sport Scientists for Championship clubs; the lowest salary among them is £27,000 while the highest is £40,000.</p>
-<p>Within-league within-discipline variance could be partly accounted for by differences in qualifications, however 80 out of the 102 respondents hold postgraduate degrees (e.g., Postgraduate Certificate, Masters, PhD). It could also represent varying levels of experience or years of service at a particular club, but unfortunately these items were not included in the questionnaire.</p>
-<p><strong>2. Within four of the five leagues, S&amp;C coaches are generally paid higher salaries than sport scientists.</strong> For League 2, the comparison between disciplines is tenuous because of the small number of responses within each discipline (S&amp;C coaches at League 2 = 1, sport scientists at League 2 = 5). No respondents were S&amp;C coaches working for Scottish Premiership clubs.</p>
-<p><strong>3. For S&amp;C coaches and sport scientists, the typical salary for those working in League 1 clubs is not remarkably different to those working for clubs in higher tier leagues (e.g., Premier League, Championship).</strong> In <a href="/2018/01/02/how-much-do-you-get-paid-part-1/">part 1</a> of this series, we plotted salaries by league and by ‘competitive level’ (whether a respondent works for their club’s first team or academy program). This earlier analysis seemed to show a ‘salary gradient’, where typical salaries decreased linearly from higher to lower tier leagues. This pattern is <em>not</em> so clear in this case. However, the true nature of differences or non-differences between leagues would become more apparent with more survey responses, particularly from individuals who fit into the underrepresented sub-groups.</p>
-<p><strong>4. A small number of individuals fulfill roles than span both S&amp;C and sport science disciplines.</strong> Given that we’re talking about n = 6 here, I’m less focused on the reported salaries as such. What I <em>am</em> interested in is the nature of these dual roles. Is an individual’s workload split between the two disciplines (e.g., 0.5 S&amp;C and 0.5 sport science, or some other proportions)? Are such jobs, in reality, two jobs rolled into one, each of them requiring more than a typical half-time commitment? Or are we just more verbose with our job titles, while retaining the features of jobs from previous eras? Maybe the catch-all ‘Fitness Trainer’ title has simply been replaced by ‘S&amp;C Coach / Sport Scientist’!</p>
-<p>Giving consideration to these questions is not just an exercise in discussing semantics (although I do love semantics). Addressing them is crucial for ensuring that individuals in such roles:</p>
-<ul>
-<li>Have sustainable distribution of workloads;</li>
-<li>Are appropriately valued for their specialist knowledge and skills, and possibly wide-ranging responsibilities (e.g., are these individuals considered ‘expert’ in both disciplines, or are they considered to be ‘jacks of all trades’?); and</li>
-<li>Are paid at a level that corresponds with the breadth and depth of their skills, and appreciates the unique challenges faced by those employed in dual roles.</li>
-</ul>
+<p>For the record, I am not <em>super</em> familiar with the lay of the land when it comes to football in the UK, so my interpretations are based on the relevant texts I’ve read on the topic of stratifying football academies into ‘categories’. That said, this is what I see in the results above:</p>
 </div>
 </div>
 <div id="whats-next" class="section level1">
 <h1>What’s next?</h1>
-<p>In the fourth post of this series, I’ll take a look at salaries of football academy staff depending on their academy category.</p>
-<p><a href="https://www.twitter.com/jacquietran/">Constructive feedback and comments welcome</a> - get in touch with me via Twitter: <strong><span class="citation">@jacquietran</span></strong>.</p>
+<p>In the fifth (and penultimate) post, I will investigate whether higher qualifications mean higher pay.</p>
+<p><a href="https://www.twitter.com/jacquietran">Constructive feedback and comments welcome</a> - get in touch with me via Twitter: my handle is <strong><span class="citation">@jacquietran</span></strong>.</p>
 </div>
 
     </div>
@@ -607,13 +497,13 @@ League 2
 </article>
 <ul class="actions pagination">
     
-        <li><a href="/2018/01/03/how-much-do-you-get-paid-part-2/"
-                class="button big previous">How much do you get paid? Part II - Job seniority</a></li>
+        <li><a href="/2018/01/04/how-much-do-you-get-paid-part-3/"
+                class="button big previous">How much do you get paid? Part III - Comparison by discipline</a></li>
     
 
     
-        <li><a href="/2018/01/05/how-much-do-you-get-paid-part-4/"
-                class="button big next">How much do you get paid? Part IV - Academies by category status</a></li>
+        <li><a href="/2018/01/08/how-much-do-you-get-paid-part-5/"
+                class="button big next">How much do you get paid? Part V - Credential creep</a></li>
     
 </ul>
 

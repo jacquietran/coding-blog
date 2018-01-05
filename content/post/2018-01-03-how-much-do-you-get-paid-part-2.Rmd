@@ -14,6 +14,8 @@ tags:
 draft: no
 ---
 
+![](/img/post/100611-F-8832G-003.JPG)
+
 # Introduction
 This post is the **second** in a series; [click here to read the first post](/2018/01/02/how-much-do-you-get-paid-part-1/) if you haven't already done so. In this series, I will show how I created the plots that [Aiden Oakley](https://www.twitter.com/ajoakley/) published on Twitter [here](https://www.twitter.com/ajoakley/status/944564698166513665/) and [here](https://twitter.com/ajoakley/status/944936008285552642/), alongside some commentary about the choices I made throughout the process and my own interpretations of the results.
 
