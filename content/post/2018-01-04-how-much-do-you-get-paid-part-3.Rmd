@@ -152,8 +152,7 @@ Giving consideration to these questions is not just an exercise in discussing se
 - Are appropriately valued for their specialist knowledge and skills, and possibly wide-ranging responsibilities (e.g., are these individuals considered 'expert' in both disciplines, or are they considered to be 'jacks of all trades'?); and
 - Are paid at a level that corresponds with the breadth and depth of their skills, and appreciates the unique challenges faced by those employed in dual roles.
 
-# What's next?
-
-In the fourth post of this series, I'll take a look at salaries of football academy staff depending on their academy category.
+## Explore the data on your own
+If you'd like to take a look at the data and try your hand at creating / modifying these plots, visit this [GitHub repository](www.github.com/jacquietran/soccerSalariesDataPublic).
 
 [Constructive feedback and comments welcome](https://www.twitter.com/jacquietran/) - get in touch with me via Twitter: **@jacquietran**.
