@@ -127,5 +127,4 @@ enableEmoji = true
 [permalinks]
     post = "/:year/:month/:day/:slug/"
 
-[ignoreFiles]
     ignoreFiles = ["\\.Rmd$", "\\.Rmarkdown$", "_files$", "_cache$"]

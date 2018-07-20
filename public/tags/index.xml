@@ -21,6 +21,24 @@
     </item>
     
     <item>
+      <title>R stats</title>
+      <link>/tags/r-stats/</link>
+      <pubDate>Fri, 20 Jul 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/tags/r-stats/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Rtweet</title>
+      <link>/tags/rtweet/</link>
+      <pubDate>Fri, 20 Jul 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/tags/rtweet/</guid>
+      <description></description>
+    </item>
+    
+    <item>
       <title>Salaries</title>
       <link>/tags/salaries/</link>
       <pubDate>Thu, 04 Jan 2018 00:00:00 +0000</pubDate>
@@ -50,7 +68,7 @@
     <item>
       <title>Sports analytics</title>
       <link>/tags/sports-analytics/</link>
-      <pubDate>Sun, 01 Oct 2017 00:00:00 +0000</pubDate>
+      <pubDate>Fri, 20 Jul 2018 00:00:00 +0000</pubDate>
       
       <guid>/tags/sports-analytics/</guid>
       <description></description>
@@ -62,6 +80,33 @@
       <pubDate>Thu, 04 Jan 2018 00:00:00 +0000</pubDate>
       
       <guid>/tags/strength-and-conditioning/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Tennis</title>
+      <link>/tags/tennis/</link>
+      <pubDate>Fri, 20 Jul 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/tags/tennis/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Text mining</title>
+      <link>/tags/text-mining/</link>
+      <pubDate>Fri, 20 Jul 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/tags/text-mining/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Tidytext</title>
+      <link>/tags/tidytext/</link>
+      <pubDate>Fri, 20 Jul 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/tags/tidytext/</guid>
       <description></description>
     </item>
     

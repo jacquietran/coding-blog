@@ -1,0 +1,691 @@
+<!DOCTYPE HTML>
+
+<html>
+    <head>
+        
+            
+                <title>Text mining of Wimbledon tweets using rtweet and tidytext</title>
+            
+        
+
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta name="generator" content="Hugo 0.31.1" />
+        <!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <link rel="icon" type="image/png" href="/img/main/favicon.png" sizes="32x32">
+  </head>
+
+
+
+
+        
+            <meta name="author" content="Jacquie Tran">
+        
+        
+            
+                <meta name="description" content="Dive into the processes and practices that underpin sports analytics. A blog by Jacquie Tran.">
+            
+        
+
+        <meta name="twitter:card" content="summary"/><meta name="twitter:title" content="Text mining of Wimbledon tweets using rtweet and tidytext"/>
+<meta name="twitter:description" content="New job, new skillsThis year, I started in a new role as Senior Insights Researcher at High Performance Sport New Zealand. For me, one of the big drawcards of this role was the opportunity to learn and grow my skills and competencies as a performance sport professional.
+Our team regularly deals with qualitative data, so as an applied sport scientist with a strongly quantitative training, it has been a steep learning curve but also enjoyable to open my mind up to different ways of thinking and knowing."/>
+<meta name="twitter:site" content="@jacquietran"/>
+
+        <meta property="og:title" content="Text mining of Wimbledon tweets using rtweet and tidytext" />
+<meta property="og:description" content="New job, new skillsThis year, I started in a new role as Senior Insights Researcher at High Performance Sport New Zealand. For me, one of the big drawcards of this role was the opportunity to learn and grow my skills and competencies as a performance sport professional.
+Our team regularly deals with qualitative data, so as an applied sport scientist with a strongly quantitative training, it has been a steep learning curve but also enjoyable to open my mind up to different ways of thinking and knowing." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/2018/07/20/text-mining-of-wimbledon-tweets-using-rtweet-and-tidytext/" />
+
+
+
+<meta property="article:published_time" content="2018-07-20T00:00:00&#43;00:00"/>
+
+<meta property="article:modified_time" content="2018-07-20T00:00:00&#43;00:00"/>
+
+
+
+
+
+
+
+
+
+
+
+        
+<meta itemprop="name" content="Text mining of Wimbledon tweets using rtweet and tidytext">
+<meta itemprop="description" content="New job, new skillsThis year, I started in a new role as Senior Insights Researcher at High Performance Sport New Zealand. For me, one of the big drawcards of this role was the opportunity to learn and grow my skills and competencies as a performance sport professional.
+Our team regularly deals with qualitative data, so as an applied sport scientist with a strongly quantitative training, it has been a steep learning curve but also enjoyable to open my mind up to different ways of thinking and knowing.">
+
+
+<meta itemprop="datePublished" content="2018-07-20T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2018-07-20T00:00:00&#43;00:00" />
+<meta itemprop="wordCount" content="359">
+
+
+
+<meta itemprop="keywords" content="text mining,tennis,sports analytics,r stats,tidytext,rtweet," />
+
+        
+
+        
+            
+        
+
+        
+        
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/atom-one-light.min.css">
+            <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway:400,800,900|Source+Sans+Pro:400,700">
+            <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.1.20/jquery.fancybox.min.css" />
+            <link rel="stylesheet" href="/css/main.css">
+            <link rel="stylesheet" href="/css/add-on.css">
+        
+
+        
+
+        
+            
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-23505591-3', 'auto');
+ga('send', 'pageview');
+</script>
+
+        
+    </head>
+    <body>
+
+      
+      <div id="wrapper">
+
+    
+    
+<header id="header">
+    
+      
+          <h1><a href="/">post</a></h1>
+      
+    
+
+    <nav class="links">
+        <ul>
+            
+                <li>
+                    <a href="/">
+                            <i class="fa fa-home">&nbsp;</i>Home
+                    </a>
+                </li>
+            
+                <li>
+                    <a href="/about/">
+                            <i class="fa fa-id-card-o">&nbsp;</i>About
+                    </a>
+                </li>
+            
+        </ul>
+    </nav>
+    <nav class="main">
+        <ul>
+            
+            <li id="share-nav" class="share-menu" style="display:none;">
+                <a class="fa-share-alt" href="#share-menu">Share</a>
+            </li>
+            
+            <li class="search">
+                <a class="fa-search" href="#search">Search</a>
+                <form id="search" method="get" action="//google.com/search">
+                    <input type="text" name="q" placeholder="Search" />
+                    <input type="hidden" name="as_sitesearch" value="/">
+                </form>
+            </li>
+            <li class="menu">
+                <a class="fa-bars" href="#menu">Menu</a>
+            </li>
+        </ul>
+    </nav>
+</header>
+
+
+<section id="menu">
+
+    
+        <section>
+            <form class="search" method="get" action="//google.com/search">
+                <input type="text" name="q" placeholder="Search" />
+                <input type="hidden" name="q" value="site:/">
+            </form>
+        </section>
+
+    
+        <section>
+            <ul class="links">
+                
+                    <li>
+                        <a href="/">
+                            <h3>
+                                <i class="fa fa-home">&nbsp;</i>Home
+                            </h3>
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a href="/about/">
+                            <h3>
+                                <i class="fa fa-id-card-o">&nbsp;</i>About
+                            </h3>
+                        </a>
+                    </li>
+                
+            </ul>
+        </section>
+
+    
+        <section>
+            <ul class="links">
+                <header>
+                    <h3>Recent Posts</h3>
+                </header>
+                
+                    
+                
+
+                
+                    <li>
+                        <a href="/2018/07/20/text-mining-of-wimbledon-tweets-using-rtweet-and-tidytext/"><p>Text mining of Wimbledon tweets using rtweet and tidytext</p></a>
+                    </li>
+                
+                    <li>
+                        <a href="/2018/01/04/how-much-do-you-get-paid-part-3/"><p>How much do you get paid? Part III - Comparison by discipline</p></a>
+                    </li>
+                
+                    <li>
+                        <a href="/2018/01/03/how-much-do-you-get-paid-part-2/"><p>How much do you get paid? Part II - Job seniority</p></a>
+                    </li>
+                
+            </ul>
+        </section>
+
+    
+        
+</section>
+
+    <section id="share-menu">
+    <section id="social-share-nav">
+        <ul class="links">
+            <header>
+                <h3>Share this post <i class="fa fa-smile-o"></i></h3>
+            </header>
+            
+
+
+<li><a href="//twitter.com/share?url=%2f2018%2f07%2f20%2ftext-mining-of-wimbledon-tweets-using-rtweet-and-tidytext%2f&text=Text%20mining%20of%20Wimbledon%20tweets%20using%20rtweet%20and%20tidytext&via=jacquietran" target="_blank" class="share-btn twitter">
+    <i class="fa fa-twitter"></i>
+    <p>Twitter</p>
+</a></li>
+
+
+<li><a href="//plus.google.com/share?url=%2f2018%2f07%2f20%2ftext-mining-of-wimbledon-tweets-using-rtweet-and-tidytext%2f" target="_blank" class="share-btn google-plus">
+    <i class="fa fa-google-plus"></i>
+    <p>Google+</p>
+</a></li>
+
+
+<li><a href="//www.facebook.com/sharer/sharer.php?u=%2f2018%2f07%2f20%2ftext-mining-of-wimbledon-tweets-using-rtweet-and-tidytext%2f" target="_blank" class="share-btn facebook">
+    <i class="fa fa-facebook"></i>
+    <p>Facebook</p>
+</a></li>
+
+
+<li><a href="//reddit.com/submit?url=%2f2018%2f07%2f20%2ftext-mining-of-wimbledon-tweets-using-rtweet-and-tidytext%2f&title=Text%20mining%20of%20Wimbledon%20tweets%20using%20rtweet%20and%20tidytext" target="_blank" class="share-btn reddit">
+    <i class="fa fa-reddit-alien"></i>
+    <p>Reddit</p>
+</a></li>
+
+
+<li><a href="//www.linkedin.com/shareArticle?url=%2f2018%2f07%2f20%2ftext-mining-of-wimbledon-tweets-using-rtweet-and-tidytext%2f&title=Text%20mining%20of%20Wimbledon%20tweets%20using%20rtweet%20and%20tidytext" target="_blank" class="share-btn linkedin">
+    <i class="fa fa-linkedin"></i>
+    <p>LinkedIn</p>
+</a></li>
+
+
+<li><a href="//www.stumbleupon.com/submit?url=%2f2018%2f07%2f20%2ftext-mining-of-wimbledon-tweets-using-rtweet-and-tidytext%2f&title=Text%20mining%20of%20Wimbledon%20tweets%20using%20rtweet%20and%20tidytext" target="_blank" class="share-btn stumbleupon">
+    <i class="fa fa-stumbleupon"></i>
+    <p>StumbleUpon</p>
+</a></li>
+
+
+<li><a href="mailto:?subject=Check out this post by Jacquie%20Tran&body=%2f2018%2f07%2f20%2ftext-mining-of-wimbledon-tweets-using-rtweet-and-tidytext%2f" target="_blank" class="share-btn email">
+    <i class="fa fa-envelope"></i>
+    <p>Email</p>
+</a></li>
+
+        </ul>
+    </section>
+</section>
+
+    
+    <div id="main">
+        
+        
+        <article class="post">
+    <header>
+    <div class="title">
+        
+            <h1><a href="/2018/07/20/text-mining-of-wimbledon-tweets-using-rtweet-and-tidytext/">Text mining of Wimbledon tweets using rtweet and tidytext</a></h1>
+            
+        
+        
+    </div>
+    <div class="meta">
+        
+
+        <time class="published"
+            datetime='2018-07-20'>
+            July 20, 2018</time>
+        <span class="author">Jacquie Tran</span>
+        
+            <p>2 minute read</p>
+        
+        
+    </div>
+</header>
+
+
+    
+
+    
+
+    <div id="content">
+        <div id="new-job-new-skills" class="section level1">
+<h1>New job, new skills</h1>
+<p>This year, I started in a new role as Senior Insights Researcher at High Performance Sport New Zealand. For me, one of the big drawcards of this role was the opportunity to learn and grow my skills and competencies as a performance sport professional.</p>
+<p>Our team regularly deals with qualitative data, so as an applied sport scientist with a strongly quantitative training, it has been a steep learning curve but also enjoyable to open my mind up to different ways of thinking and knowing.</p>
+<p>Of what I have learned so far, the intersection of my old skills and new skills could be simply represented as: statistical programming + text data = text mining.</p>
+<p>Online discussions about sports analytics seem heavily focused on numbers and what we can do with quantitative data. I remain just as interested in these discussions as I was before starting my current job, but I also see opportunities for more of us in the sports analytics community to think about what else we can learn by capturing and analysing qualitative data. In that spirit, this post is a brief glimpse at what is possible when applying text mining methods.</p>
+</div>
+<div id="getting-the-data" class="section level1">
+<h1>Getting the data</h1>
+<p>I’ve been thinking about writing this post for a couple of months now, and every so often I trawl the internet looking for text corpuses that are relevant to sport - so far, my efforts have turned up fairly light results. (If anyone knowledgeable in this domain can point me to relevant open data sets, then <a href="">please get in touch!</a>)</p>
+<ul>
+<li>Introduce <code>rtweet</code> package, point to tutorial(s)</li>
+<li>Outline features / constraints of the data extraction (lang = en, conversion of list-columns tibble to flat data frame for exporting to CSV)</li>
+<li>Point to Github repo</li>
+<li>Import the CSVs</li>
+<li>Data dictionary</li>
+</ul>
+</div>
+<div id="cleaning-the-data" class="section level1">
+<h1>Cleaning the data</h1>
+<ul>
+<li>Introduce <code>tidytext</code> package, point to book and tutorial(s)</li>
+<li>Fix text encoding if needed</li>
+<li>Remove stop words</li>
+<li>Note duplicate tweets</li>
+</ul>
+</div>
+<div id="n-gram-frequency" class="section level1">
+<h1>n-gram frequency</h1>
+</div>
+<div id="sentiment-analysis" class="section level1">
+<h1>Sentiment analysis</h1>
+<ul>
+<li>bing (positive / negative binary categorisation)</li>
+<li>AFINN (positive to negative, continuous scale)</li>
+<li>nrc (multiple sentiment categories)</li>
+</ul>
+</div>
+<div id="what-else-can-text-mining-do" class="section level1">
+<h1>What else can text mining do?</h1>
+<ul>
+<li>Sentiment analysis at the sentence level</li>
+<li>n-gram network analysis</li>
+<li>Parts-of-speech tagging</li>
+<li>Topic modelling</li>
+</ul>
+</div>
+
+    </div>
+
+    <footer>
+        <ul class="stats">
+    
+        
+
+        
+        
+            <li>
+                
+                
+                    
+
+                    
+                        Category
+                    
+                
+            </li>
+        
+    
+
+    
+    
+        <li><a href='/categories/off-field-analyses'>Off-field analyses</a></li>
+    
+</ul>
+
+    </footer>
+</article>
+<ul class="actions pagination">
+    
+        <li><a href="/2018/01/04/how-much-do-you-get-paid-part-3/"
+                class="button big previous">How much do you get paid? Part III - Comparison by discipline</a></li>
+    
+
+    
+</ul>
+
+
+
+
+
+    </div>
+    
+<section id="sidebar">
+
+    
+        <section id="intro">
+            
+            
+                
+                    <img src="/img/main/logo.png" class="intro-circle" width="" alt="Jacquie Tran" />
+                
+            
+            
+                <header>
+                    <h2>Under The Hood</h2>
+                    <p>Dive into the processes and practices that underpin sports analytics. A blog by <a href="http://www.jacquietran.com">Jacquie Tran</a>.</p>
+                </header>
+            
+            <ul class="icons">
+                
+                
+                    
+<li><a href="//github.com/jacquietran" target="_blank" title="GitHub" class="fa fa-github"></a></li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<li><a href="//twitter.com/jacquietran" target="_blank" title="Twitter" class="fa fa-twitter"></a></li>
+
+
+
+<li><a href="mailto:jac@jacquietran.com" title="Email" class="fa fa-envelope"></a></li>
+
+
+                
+            </ul>
+        </section>
+
+    
+        <section id="recent-posts">
+            <ul class="posts">
+                <header>
+                    <h3>Recent Posts</h3>
+                </header>
+                
+
+                
+                    
+                
+
+                
+                    <li>
+                        <article>
+                            <header>
+                                <h3><a href="/2018/07/20/text-mining-of-wimbledon-tweets-using-rtweet-and-tidytext/">Text mining of Wimbledon tweets using rtweet and tidytext</a></h3>
+                                
+                                <time class="published" datetime=
+                                    '2018-07-20'>
+                                    July 20, 2018</time>
+                            </header>
+                        </article>
+                    </li>
+                
+                    <li>
+                        <article>
+                            <header>
+                                <h3><a href="/2018/01/04/how-much-do-you-get-paid-part-3/">How much do you get paid? Part III - Comparison by discipline</a></h3>
+                                
+                                <time class="published" datetime=
+                                    '2018-01-04'>
+                                    January 4, 2018</time>
+                            </header>
+                        </article>
+                    </li>
+                
+                    <li>
+                        <article>
+                            <header>
+                                <h3><a href="/2018/01/03/how-much-do-you-get-paid-part-2/">How much do you get paid? Part II - Job seniority</a></h3>
+                                
+                                <time class="published" datetime=
+                                    '2018-01-03'>
+                                    January 3, 2018</time>
+                            </header>
+                        </article>
+                    </li>
+                
+
+                
+                    <li>
+                        <ul class="actions">
+                            <li><a href=
+                            
+                                /blog/
+                            
+                            class="button">View more posts</a></li>
+                        </ul>
+                    </li>
+                
+            </ul>
+        </section>
+
+    
+    
+    
+    
+        <section id="categories">
+            <ul class="posts">
+                <header>
+                    <h3><a href="/categories/">Categories</a></h3>
+                </header>
+
+                
+                    
+                
+
+                
+                    <li>
+                        <article>
+                            <header>
+                                <a href="/categories/off-field-analyses/">Off-field analyses</a>
+                                <span style="float:right;">4</span>
+                            </header>
+                        </article>
+                    </li>
+                
+                    <li>
+                        <article>
+                            <header>
+                                <a href="/categories/general-ramblings/">General ramblings</a>
+                                <span style="float:right;">1</span>
+                            </header>
+                        </article>
+                    </li>
+                
+            </ul>
+        </section>
+    
+
+    
+        
+        <section class="blurb">
+            <h2>About</h2>
+            <p>I am sport scientist working in elite sport and I code. This blog will showcase what can be achieved by applying programming to uncover patterns and solve problems that matter in sport settings.</p>
+
+            <ul class="actions">
+                <li><a href="/about/" class="button">Learn More</a></li>
+            </ul>
+        </section>
+        
+
+    
+        <section id="footer">
+            <ul class="icons">
+                
+                
+                    
+<li><a href="//github.com/jacquietran" target="_blank" title="GitHub" class="fa fa-github"></a></li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<li><a href="//twitter.com/jacquietran" target="_blank" title="Twitter" class="fa fa-twitter"></a></li>
+
+
+
+<li><a href="mailto:jac@jacquietran.com" title="Email" class="fa fa-envelope"></a></li>
+
+
+                
+            </ul>
+
+            <p class="copyright">&copy; 2018 Jacquie Tran. Powered by <a href="//gohugo.io" target="_blank">Hugo</a></p>
+        </section>
+
+</section>
+
+      </div>
+      <a id="back-to-top" href="#" class="fa fa-arrow-up fa-border fa-2x"></a>
+      
+
+      
+        
+      
+
+      
+      
+        <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/skel/3.0.1/skel.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.1.20/jquery.fancybox.min.js"></script>
+        <script src="/js/util.js"></script>
+        <script src="/js/main.js"></script>
+        <script src="/js/backToTop.js"></script>
+      
+
+      
+
+      
+      <script>hljs.initHighlightingOnLoad();</script>
+    </body>
+</html>
+

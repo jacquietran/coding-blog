@@ -1,0 +1,66 @@
+---
+title: Text mining of Wimbledon tweets using rtweet and tidytext
+author: Jacquie Tran
+date: '2018-07-20'
+slug: text-mining-of-wimbledon-tweets-using-rtweet-and-tidytext
+categories:
+  - Off-field analyses
+tags:
+  - text mining
+  - tennis
+  - sports analytics
+  - r stats
+  - tidytext
+  - rtweet
+draft: yes
+---
+
+
+
+<div id="new-job-new-skills" class="section level1">
+<h1>New job, new skills</h1>
+<p>This year, I started in a new role as Senior Insights Researcher at High Performance Sport New Zealand. For me, one of the big drawcards of this role was the opportunity to learn and grow my skills and competencies as a performance sport professional.</p>
+<p>Our team regularly deals with qualitative data, so as an applied sport scientist with a strongly quantitative training, it has been a steep learning curve but also enjoyable to open my mind up to different ways of thinking and knowing.</p>
+<p>Of what I have learned so far, the intersection of my old skills and new skills could be simply represented as: statistical programming + text data = text mining.</p>
+<p>Online discussions about sports analytics seem heavily focused on numbers and what we can do with quantitative data. I remain just as interested in these discussions as I was before starting my current job, but I also see opportunities for more of us in the sports analytics community to think about what else we can learn by capturing and analysing qualitative data. In that spirit, this post is a brief glimpse at what is possible when applying text mining methods.</p>
+</div>
+<div id="getting-the-data" class="section level1">
+<h1>Getting the data</h1>
+<p>I’ve been thinking about writing this post for a couple of months now, and every so often I trawl the internet looking for text corpuses that are relevant to sport - so far, my efforts have turned up fairly light results. (If anyone knowledgeable in this domain can point me to relevant open data sets, then <a href="">please get in touch!</a>)</p>
+<ul>
+<li>Introduce <code>rtweet</code> package, point to tutorial(s)</li>
+<li>Outline features / constraints of the data extraction (lang = en, conversion of list-columns tibble to flat data frame for exporting to CSV)</li>
+<li>Point to Github repo</li>
+<li>Import the CSVs</li>
+<li>Data dictionary</li>
+</ul>
+</div>
+<div id="cleaning-the-data" class="section level1">
+<h1>Cleaning the data</h1>
+<ul>
+<li>Introduce <code>tidytext</code> package, point to book and tutorial(s)</li>
+<li>Fix text encoding if needed</li>
+<li>Remove stop words</li>
+<li>Note duplicate tweets</li>
+</ul>
+</div>
+<div id="n-gram-frequency" class="section level1">
+<h1>n-gram frequency</h1>
+</div>
+<div id="sentiment-analysis" class="section level1">
+<h1>Sentiment analysis</h1>
+<ul>
+<li>bing (positive / negative binary categorisation)</li>
+<li>AFINN (positive to negative, continuous scale)</li>
+<li>nrc (multiple sentiment categories)</li>
+</ul>
+</div>
+<div id="what-else-can-text-mining-do" class="section level1">
+<h1>What else can text mining do?</h1>
+<ul>
+<li>Sentiment analysis at the sentence level</li>
+<li>n-gram network analysis</li>
+<li>Parts-of-speech tagging</li>
+<li>Topic modelling</li>
+</ul>
+</div>

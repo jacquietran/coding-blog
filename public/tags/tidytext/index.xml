@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Sports analytics on Under The Hood</title>
-    <link>/tags/sports-analytics/</link>
-    <description>Recent content in Sports analytics on Under The Hood</description>
+    <title>Tidytext on Under The Hood</title>
+    <link>/tags/tidytext/</link>
+    <description>Recent content in Tidytext on Under The Hood</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Fri, 20 Jul 2018 00:00:00 +0000</lastBuildDate>
     
-	<atom:link href="/tags/sports-analytics/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="/tags/tidytext/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
@@ -19,15 +19,6 @@
       <guid>/2018/07/20/text-mining-of-wimbledon-tweets-using-rtweet-and-tidytext/</guid>
       <description>New job, new skillsThis year, I started in a new role as Senior Insights Researcher at High Performance Sport New Zealand. For me, one of the big drawcards of this role was the opportunity to learn and grow my skills and competencies as a performance sport professional.
 Our team regularly deals with qualitative data, so as an applied sport scientist with a strongly quantitative training, it has been a steep learning curve but also enjoyable to open my mind up to different ways of thinking and knowing.</description>
-    </item>
-    
-    <item>
-      <title>My coding origin story</title>
-      <link>/2017/10/01/my-coding-origin-story/</link>
-      <pubDate>Sun, 01 Oct 2017 00:00:00 +0000</pubDate>
-      
-      <guid>/2017/10/01/my-coding-origin-story/</guid>
-      <description>I often get asked questions about how long I&amp;rsquo;ve been coding for, how I got started, whether I have completed any formal studies in programming / computer science, and so on. The reality is that my path is far from linear. Most of what I&amp;rsquo;ve learned to date has been more opportunistic than strategic, curiosity-driven rather than being part of a master plan to acquire professional skills for the workplace.</description>
     </item>
     
   </channel>

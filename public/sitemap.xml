@@ -3,6 +3,11 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>/2018/07/20/text-mining-of-wimbledon-tweets-using-rtweet-and-tidytext/</loc>
+    <lastmod>2018-07-20T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
     <loc>/2018/01/04/how-much-do-you-get-paid-part-3/</loc>
     <lastmod>2018-01-04T00:00:00+00:00</lastmod>
   </url>
@@ -63,13 +68,25 @@
   
   <url>
     <loc>/categories/off-field-analyses/</loc>
-    <lastmod>2018-01-04T00:00:00+00:00</lastmod>
+    <lastmod>2018-07-20T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>/post/</loc>
-    <lastmod>2018-01-04T00:00:00+00:00</lastmod>
+    <lastmod>2018-07-20T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/tags/r-stats/</loc>
+    <lastmod>2018-07-20T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/tags/rtweet/</loc>
+    <lastmod>2018-07-20T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -93,7 +110,7 @@
   
   <url>
     <loc>/tags/sports-analytics/</loc>
-    <lastmod>2017-10-01T00:00:00+00:00</lastmod>
+    <lastmod>2018-07-20T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -110,8 +127,26 @@
   </url>
   
   <url>
+    <loc>/tags/tennis/</loc>
+    <lastmod>2018-07-20T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/tags/text-mining/</loc>
+    <lastmod>2018-07-20T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/tags/tidytext/</loc>
+    <lastmod>2018-07-20T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>/</loc>
-    <lastmod>2018-01-04T00:00:00+00:00</lastmod>
+    <lastmod>2018-07-20T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
