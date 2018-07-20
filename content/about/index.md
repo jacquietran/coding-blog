@@ -1,7 +1,7 @@
 ---
 title: "About"
-draft: no
-date: '2017-09-26'
+date: "2017-09-26"
+draft: yes
 ---
 
 _'Under The Hood'_ is a platform to demonstrate what is possible when we apply analytical techniques to solve problems that matter in sport. Drawing on my own professional experiences, this blog will showcase the many ways in which analytics can be used to discover new insights about the sports we love to play, watch, and support.

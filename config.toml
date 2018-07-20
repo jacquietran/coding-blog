@@ -50,14 +50,12 @@ enableEmoji = true
     customCSS            = ["default"]
     customJS             = ["default"]
 
-# parms.intro will appear on the sidebar
+# params.intro will appear on the sidebar
 # This is optional, but it's suggested to use
 [params.intro]
     header    = "Under The Hood"
 
     paragraph = "Dive into the processes and practices that underpin sports analytics. A blog by <a href=\"http://www.jacquietran.com\">Jacquie Tran</a>."
-
-    about     = "I am sport scientist working in elite sport and I code. This blog will showcase what can be achieved by applying programming to uncover patterns and solve problems that matter in sport settings."
 
 # This will also appear on the sidebar.
 # A width of less than 100px is recommended
@@ -84,12 +82,6 @@ enableEmoji = true
     url = "/"
     identifier = "fa fa-home"
     weight = 1
-
-[[menu.main]]
-    name = "About"
-    url = "/about/"
-    identifier = "fa fa-id-card-o"
-    weight = 2
 
 # Insert your username and the icon will apear on the page as long as
 # socialAppearAtTop or socialAppearAtBottom is set to true in the params area
