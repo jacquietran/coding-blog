@@ -64,7 +64,7 @@ Our team regularly deals with qualitative data, so as an applied sport scientist
 
 <meta itemprop="datePublished" content="2018-07-20T00:00:00&#43;00:00" />
 <meta itemprop="dateModified" content="2018-07-20T00:00:00&#43;00:00" />
-<meta itemprop="wordCount" content="359">
+<meta itemprop="wordCount" content="595">
 
 
 
@@ -279,7 +279,7 @@ ga('send', 'pageview');
             July 20, 2018</time>
         <span class="author">Jacquie Tran</span>
         
-            <p>2 minute read</p>
+            <p>3 minute read</p>
         
         
     </div>
@@ -295,22 +295,48 @@ ga('send', 'pageview');
 <h1>New job, new skills</h1>
 <p>This year, I started in a new role as Senior Insights Researcher at High Performance Sport New Zealand. For me, one of the big drawcards of this role was the opportunity to learn and grow my skills and competencies as a performance sport professional.</p>
 <p>Our team regularly deals with qualitative data, so as an applied sport scientist with a strongly quantitative training, it has been a steep learning curve but also enjoyable to open my mind up to different ways of thinking and knowing.</p>
-<p>Of what I have learned so far, the intersection of my old skills and new skills could be simply represented as: statistical programming + text data = text mining.</p>
 <p>Online discussions about sports analytics seem heavily focused on numbers and what we can do with quantitative data. I remain just as interested in these discussions as I was before starting my current job, but I also see opportunities for more of us in the sports analytics community to think about what else we can learn by capturing and analysing qualitative data. In that spirit, this post is a brief glimpse at what is possible when applying text mining methods.</p>
 </div>
 <div id="getting-the-data" class="section level1">
 <h1>Getting the data</h1>
-<p>I’ve been thinking about writing this post for a couple of months now, and every so often I trawl the internet looking for text corpuses that are relevant to sport - so far, my efforts have turned up fairly light results. (If anyone knowledgeable in this domain can point me to relevant open data sets, then <a href="">please get in touch!</a>)</p>
+<p>I’ve been thinking about writing this post for a couple of months now, and every so often I trawl the internet looking for text corpuses that are relevant to sport - so far, my efforts have turned up fairly light results. (If anyone knowledgeable in this domain can point me to relevant open data sets, then <a href="https://www.twitter.com/jacquietran">please get in touch!</a>)</p>
+<p>So…it’s <code>rtweet</code> to the rescue!</p>
+<blockquote>
+<code>rtweet</code> is a slick package by <a href="https://www.twitter.com/kearneymw">Mike Kearney</a> (<span class="citation">@kearneymw</span>) for downloading tweets and associated metadata. The package website is a great place to start if you want to give it a crack: <a href="https://rtweet.info/" class="uri">https://rtweet.info/</a>
+</blockquote>
+<p>When I started this blog post, Wimbledon 2018 was in its final days with the men’s singles playing quarter finals and the women’s singles playing semi finals. I used <a href="https://github.com/jacquietran/2018_wimbledon_tweets/blob/master/extract_wimby_tweets.R">this script</a> to download tweets that:</p>
 <ul>
-<li>Introduce <code>rtweet</code> package, point to tutorial(s)</li>
-<li>Outline features / constraints of the data extraction (lang = en, conversion of list-columns tibble to flat data frame for exporting to CSV)</li>
-<li>Point to Github repo</li>
-<li>Import the CSVs</li>
-<li>Data dictionary</li>
+<li>Included the keywords <em>‘federer’</em> or <em>‘serena williams’</em> (two separate searches),</li>
+<li>Were written in English, and</li>
+<li>Did not include retweets.</li>
 </ul>
+<p>All I need to do here is load the libraries I need for this analysis and read the data sets into R from the CSV files stored in <a href="https://github.com/jacquietran/2018_wimbledon_tweets">this Github repo</a>.</p>
+<pre class="r"><code># Load libraries
+library(readr)
+library(tidytext)</code></pre>
+<pre class="r"><code># Read data into R
+fed &lt;- read_delim(
+    &quot;https://raw.githubusercontent.com/jacquietran/2018_wimbledon_tweets/master/fed.csv&quot;,
+    delim = &quot;,&quot;, col_names = TRUE, col_types = NULL)
+
+serena &lt;- read_delim(
+    &quot;https://raw.githubusercontent.com/jacquietran/2018_wimbledon_tweets/master/serena.csv&quot;,
+    delim = &quot;,&quot;, col_names = TRUE, col_types = NULL)</code></pre>
 </div>
-<div id="cleaning-the-data" class="section level1">
-<h1>Cleaning the data</h1>
+<div id="examining-and-cleaning-the-data" class="section level1">
+<h1>Examining and cleaning the data</h1>
+<p>If you visually scan through the data set, you’ll see it has several variables. For the purposes of this post, I am most interested in the following:</p>
+<ul>
+<li><code>text</code>: The text content of a tweet.</li>
+<li><code>favorite_count</code>: The number of times a tweet has been ‘favourited’ (or in modern Twitter parlance, ‘liked’…ugh) by other user accounts</li>
+<li><code>retweet_count</code>: The number of times a tweet has been ‘retweeted’ (shared) by other user accounts</li>
+<li><code>followers_count</code>: The number of user accounts that follow the account who posted a tweet</li>
+</ul>
+<blockquote>
+Not familiar with Twitter? Here’s a quick primer that will help you get a lay of the land: <a href="http://www.momthisishowtwitterworks.com/">Mom, This is How Twitter Works</a>
+</blockquote>
+<p>We have our data and we know what variables we’re going to focus on. How do we get from raw tweet data to text mining?</p>
+<p>Enter: the <code>tidytext</code> package.</p>
 <ul>
 <li>Introduce <code>tidytext</code> package, point to book and tutorial(s)</li>
 <li>Fix text encoding if needed</li>
@@ -328,6 +354,9 @@ ga('send', 'pageview');
 <li>AFINN (positive to negative, continuous scale)</li>
 <li>nrc (multiple sentiment categories)</li>
 </ul>
+</div>
+<div id="correlating-sentiment-to-favourites-and-retweets" class="section level1">
+<h1>Correlating sentiment to favourites and retweets</h1>
 </div>
 <div id="what-else-can-text-mining-do" class="section level1">
 <h1>What else can text mining do?</h1>
