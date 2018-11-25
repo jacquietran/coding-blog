@@ -21,7 +21,7 @@ For what it's worth, this experience is incredibly common amongst those who work
 <center><blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr">Being a data scientist means cleaning data from 1 source with 7 files for 7 years of information 7 ways because the format is different every year...<br><br>It&#39;s almost biblical... almost... <a href="https://twitter.com/hashtag/rstats?src=hash&amp;ref_src=twsrc%5Etfw">#rstats</a> <a href="https://t.co/Tnv9N2853D">pic.twitter.com/Tnv9N2853D</a></p>&mdash; Kris Stevens (@kristophrdelane) <a href="https://twitter.com/kristophrdelane/status/986663543067107328?ref_src=twsrc%5Etfw">April 18, 2018</a></blockquote>
 <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script></center>
 
-Much to my dismay, the `fitzRoy` package was first published to Github in January 2018, mere days after I finished my stint at Geelong FC. No doubt it would have been a massive time-saver for me if it had existed back then!
+Much to my dismay, the `fitzRoy` package was first published to Github in January 2018, mere days after I finished up at Geelong FC. No doubt it would have been a massive time-saver for me if it had existed earlier!
 
 Being both curious and a masochist (a great combination, I highly recommend it), I decided it was about time I checked out what `fitzRoy` can do so I could grasp the reality of my potential time-savings had this package existed when footy analytics was part of my job. Onwards...
 
