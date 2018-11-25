@@ -39,7 +39,16 @@ draft: yes
 <p>All I need to do here is load the libraries I need for this analysis and read the data sets into R from the CSV files stored in <a href="https://github.com/jacquietran/2018_wimbledon_tweets">this Github repo</a>.</p>
 <pre class="r"><code># Load libraries
 library(readr)
-library(tidytext)</code></pre>
+library(dplyr)</code></pre>
+<pre><code>## 
+## Attaching package: &#39;dplyr&#39;</code></pre>
+<pre><code>## The following objects are masked from &#39;package:stats&#39;:
+## 
+##     filter, lag</code></pre>
+<pre><code>## The following objects are masked from &#39;package:base&#39;:
+## 
+##     intersect, setdiff, setequal, union</code></pre>
+<pre class="r"><code>library(tidytext)</code></pre>
 <pre class="r"><code># Read data into R
 fed &lt;- read_delim(
     &quot;https://raw.githubusercontent.com/jacquietran/2018_wimbledon_tweets/master/fed.csv&quot;,
@@ -65,10 +74,49 @@ Not familiar with Twitter? Here’s a quick primer that will help you get a lay 
 <p>Enter: the <code>tidytext</code> package.</p>
 <ul>
 <li>Introduce <code>tidytext</code> package, point to book and tutorial(s)</li>
-<li>Fix text encoding if needed</li>
+<li>Fix text encoding if needed / remove emojis</li>
 <li>Remove stop words</li>
 <li>Note duplicate tweets</li>
 </ul>
+<pre class="r"><code># Remove URLs using regex
+fed$text &lt;- gsub(&quot;http[[:alnum:][:punct:]]*&quot;, &quot;&quot;, fed$text)
+serena$text &lt;- gsub(&quot;http[[:alnum:][:punct:]]*&quot;, &quot;&quot;, serena$text)
+# Ref: http://www.rdatamining.com/books/rdm/faq/removeurlsfromtext
+
+# Remove emojis
+fed$text &lt;- gsub(&quot;[^\x01-\x7F]&quot;, &quot;&quot;, fed$text)
+serena$text &lt;- gsub(&quot;[^\x01-\x7F]&quot;, &quot;&quot;, serena$text)
+# Ref: https://stackoverflow.com/questions/44893354/remove-emoticons-in-r-using-tm-package
+
+# Unnest tokens using tidytext
+fed_tidy &lt;- fed %&gt;%
+    select(user_id, status_id, screen_name,
+                 favorite_count, retweet_count, followers_count, text) %&gt;%
+    unnest_tokens(word, text) %&gt;%
+    anti_join(stop_words)</code></pre>
+<pre><code>## Joining, by = &quot;word&quot;</code></pre>
+<pre class="r"><code>serena_tidy &lt;- serena %&gt;%
+    select(user_id, status_id, screen_name,
+                 favorite_count, retweet_count, followers_count, text) %&gt;%
+    unnest_tokens(word, text) %&gt;%
+    anti_join(stop_words)</code></pre>
+<pre><code>## Joining, by = &quot;word&quot;</code></pre>
+<pre class="r"><code># Count most frequently occurring words
+fed_tidy %&gt;% count(word, sort = TRUE) %&gt;% filter(!word %in% c(&quot;federer&quot;, &quot;wimbledon&quot;))</code></pre>
+<pre><code>## # A tibble: 14,791 x 2
+##    word         n
+##    &lt;chr&gt;    &lt;int&gt;
+##  1 anderson  9746
+##  2 roger     6596
+##  3 kevin     4781
+##  4 match     4126
+##  5 nadal     2893
+##  6 england   2670
+##  7 set       2503
+##  8 2         2322
+##  9 sets      2191
+## 10 lost      2084
+## # ... with 14,781 more rows</code></pre>
 </div>
 <div id="n-gram-frequency" class="section level1">
 <h1>n-gram frequency</h1>
