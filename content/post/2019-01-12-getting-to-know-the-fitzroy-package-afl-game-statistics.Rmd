@@ -1,7 +1,7 @@
 ---
 title: Getting to know the fitzRoy package (AFL game statistics)
 author: Jacquie Tran
-date: '2018-11-25'
+date: '2019-01-12'
 slug: getting-to-know-the-fitzroy-package-afl-game-statistics
 categories:
   - On-field analyses
@@ -139,8 +139,6 @@ How have attendance figures changed from year to year? Let's take a look at **re
 
 _^ I like to plot every data point available, at least in the exploratory phase of analysis, to get a sense for all of the data. If we only plot summary data (e.g., the box plots only - medians and interquartile ranges, totals per season, means with standard deviations), then we miss out on seeing the **spread** of the data._
 
-<details>
-<summary>Click here to view the code block.</summary>
 ``` {r plot_over_time_regular_season}
 
 # Subset to regular season matches only
@@ -179,7 +177,6 @@ plot_attendance_regular_season <- p
 plot_attendance_regular_season
 
 ```
-</details>
 
 A couple things that stood out to me on initial inspection of this plot:
 
