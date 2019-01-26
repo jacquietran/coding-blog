@@ -31,11 +31,183 @@ How will the [conference format](https://thewomensgame.com/news/opinion-aflw-con
 
 ## The analysis questions
 
-There's excitement in looking forward and lots to be learned from looking back too, so I decided to explore match data from the 2017 and 2018 AFLW seasons, with thanks to the excellent `fitzRoy` package for R, which I played around with in **[my last blog post](https://underthehood.jacquietran.com/2019/01/12/getting-to-know-the-fitzroy-package-afl-game-statistics/)**.
+There's excitement in looking forward and lots to be learned from looking back too, so I decided to explore match data from the 2017 and 2018 AFLW seasons. In this post, I'll use the available match data to:
+
+- Create team-by-team matchplay profiles; and
+- Investigate the game statistics that are associated with successful team outcomes.
+
+As an aside, I hope to demonstrate what is achievable with small data sets while being considerate of their limitations.
 
 ## Getting started
 
+In a new R session, load up the libraries (packages) to be used in this codethrough.
+
+``` {r libraries, message = FALSE}
+
+library(fitzRoy)
+library(dplyr)
+library(ggplot2)
+
+```
+
+Thanks to the excellent **[fitzRoy package](https://underthehood.jacquietran.com/2019/01/12/getting-to-know-the-fitzroy-package-afl-game-statistics/)**, retrieving AFLW match data is a cinch.
+
+``` {r import_data, message = FALSE}
+
+aflw_match_data <- get_aflw_match_data()
+
+```
+
 ## Data preparation
+
+``` {r prepare_data, message = FALSE}
+
+##### Wrangle data -------------------------------------------------------------
+
+home_teams <- aflw_match_data %>%
+  select(Match.Id, Round.Id, Competition.Id, Venue, Local.Start.Time,
+         Round.Number, Round.Abbreviation, Weather.Type, Weather.Description,
+         Temperature, starts_with("Home"), Away.Points) %>%
+  rename(team = Home.Team, goals = Home.Goals, behinds = Home.Behinds,
+         points_for = Home.Points, points_against = Away.Points,
+         behinds_left = Home.Left.Behinds, behinds_right = Home.Right.Behinds,
+         posters_left = Home.Left.Posters, posters_right = Home.Right.Posters,
+         behinds_rushed = Home.Rushed.Behinds,
+         behinds_touched = Home.Touched.Behinds) %>%
+  mutate(home_or_away = "Home")
+
+away_teams <- aflw_match_data %>%
+  select(Match.Id, Round.Id, Competition.Id, Venue, Local.Start.Time,
+         Round.Number, Round.Abbreviation, Weather.Type, Weather.Description,
+         Temperature, starts_with("Away"), Home.Points) %>%
+  rename(team = Away.Team, goals = Away.Goals, behinds = Away.Behinds,
+         points_for = Away.Points, points_against = Home.Points,
+         behinds_left = Away.Left.Behinds, behinds_right = Away.Right.Behinds,
+         posters_left = Away.Left.Posters, posters_right = Away.Right.Posters,
+         behinds_rushed = Away.Rushed.Behinds,
+         behinds_touched = Away.Touched.Behinds) %>%
+  mutate(home_or_away = "Away")
+
+aflw_match_data_clean <- rbind(home_teams, away_teams)
+aflw_match_data_clean <- aflw_match_data_clean[order(
+  aflw_match_data_clean$Match.Id,
+  rev(aflw_match_data_clean$home_or_away),
+  decreasing = FALSE), ]
+
+# Drop NA rows for fixtured matches that have not been played yet
+aflw_match_data_clean <- aflw_match_data_clean %>%
+  filter(!is.na(goals))
+
+# Create new variables for match outcomes
+aflw_match_data_clean <- aflw_match_data_clean %>%
+  mutate(score_margin = points_for - points_against,
+         match_outcome = case_when(
+           score_margin > 0 ~ "Win",
+           score_margin < 0 ~ "Loss",
+           TRUE             ~ "Draw"))
+
+##### Get detailed data --------------------------------------------------------
+
+match_id_vec <- unique(aflw_match_data_clean$Match.Id)
+
+aflw_detailed <- get_aflw_detailed_data(match_id_vec)
+
+##### Wrangle detailed data ----------------------------------------------------
+
+# Keep a subset of variables
+aflw_detailed_selected <- aflw_detailed %>%
+  select(Match.Id, contains("stats.totals"), contains("away.team"),
+         contains("home.team"), -contains("behinds"), -contains("goals"),
+         -contains("interChange"), -contains("lastUpdated"),
+         -contains("metresGained"), -contains("ranking"),
+         -contains("ratingPoints"), -contains("scoreInvolvements"),
+         -contains("superGoals"))
+
+aflw_detailed_home <- aflw_detailed_selected %>%
+  select(Match.Id, contains("home.team"),
+         contains("stats.totals"), -contains("away")) %>%
+  rename(team_abbr = home.team.teamAbbr, team_id = home.team.teamId,
+         team = home.team.teamName, team_nickname = home.team.teamNickname,
+         bounces = home.stats.totals.bounces,
+         clangers = home.stats.totals.clangers,
+         clearances_centre = home.stats.totals.clearances.centreClearances,
+         clearances_stoppage = home.stats.totals.clearances.stoppageClearances,
+         clearances_total = home.stats.totals.clearances.totalClearances,
+         marks_contested = home.stats.totals.contestedMarks,
+         possessions_contested = home.stats.totals.contestedPossessions,
+         disposals_efficiency = home.stats.totals.disposalEfficiency,
+         disposals = home.stats.totals.disposals,
+         dream_team_points = home.stats.totals.dreamTeamPoints,
+         frees_against = home.stats.totals.freesAgainst,
+         frees_for = home.stats.totals.freesFor,
+         goal_accuracy = home.stats.totals.goalAccuracy,
+         goal_assists = home.stats.totals.goalAssists,
+         goal_efficiency = home.stats.totals.goalEfficiency,
+         handballs = home.stats.totals.handballs,
+         hitouts = home.stats.totals.hitouts,
+         inside50s = home.stats.totals.inside50s,
+         intercepts = home.stats.totals.intercepts,
+         kicks = home.stats.totals.kicks, marks = home.stats.totals.marks,
+         marks_inside50 = home.stats.totals.marksInside50,
+         one_percenters = home.stats.totals.onePercenters,
+         rebound50s = home.stats.totals.rebound50s,
+         shot_efficiency = home.stats.totals.shotEfficiency,
+         shots_at_goal = home.stats.totals.shotsAtGoal,
+         tackles = home.stats.totals.tackles,
+         tackles_inside50 = home.stats.totals.tacklesInside50,
+         possessions_total = home.stats.totals.totalPossessions,
+         turnovers = home.stats.totals.turnovers,
+         possessions_uncontested = home.stats.totals.uncontestedPossessions)
+
+aflw_detailed_away <- aflw_detailed_selected %>%
+  select(Match.Id, contains("away.team"),
+         contains("stats.totals"), -contains("home")) %>%
+  rename(team_abbr = away.team.teamAbbr, team_id = away.team.teamId,
+         team = away.team.teamName, team_nickname = away.team.teamNickname,
+         bounces = away.stats.totals.bounces,
+         clangers = away.stats.totals.clangers,
+         clearances_centre = away.stats.totals.clearances.centreClearances,
+         clearances_stoppage = away.stats.totals.clearances.stoppageClearances,
+         clearances_total = away.stats.totals.clearances.totalClearances,
+         marks_contested = away.stats.totals.contestedMarks,
+         possessions_contested = away.stats.totals.contestedPossessions,
+         disposals_efficiency = away.stats.totals.disposalEfficiency,
+         disposals = away.stats.totals.disposals,
+         dream_team_points = away.stats.totals.dreamTeamPoints,
+         frees_against = away.stats.totals.freesAgainst,
+         frees_for = away.stats.totals.freesFor,
+         goal_accuracy = away.stats.totals.goalAccuracy,
+         goal_assists = away.stats.totals.goalAssists,
+         goal_efficiency = away.stats.totals.goalEfficiency,
+         handballs = away.stats.totals.handballs,
+         hitouts = away.stats.totals.hitouts,
+         inside50s = away.stats.totals.inside50s,
+         intercepts = away.stats.totals.intercepts,
+         kicks = away.stats.totals.kicks, marks = away.stats.totals.marks,
+         marks_inside50 = away.stats.totals.marksInside50,
+         one_percenters = away.stats.totals.onePercenters,
+         rebound50s = away.stats.totals.rebound50s,
+         shot_efficiency = away.stats.totals.shotEfficiency,
+         shots_at_goal = away.stats.totals.shotsAtGoal,
+         tackles = away.stats.totals.tackles,
+         tackles_inside50 = away.stats.totals.tacklesInside50,
+         possessions_total = away.stats.totals.totalPossessions,
+         turnovers = away.stats.totals.turnovers,
+         possessions_uncontested = away.stats.totals.uncontestedPossessions)
+
+aflw_detailed_clean <- rbind(aflw_detailed_home, aflw_detailed_away)
+
+##### Merge match data and detailed data ---------------------------------------
+
+aflw_merged <- left_join(aflw_match_data_clean, aflw_detailed_clean)
+
+```
+
+## Team matchplay profiles
+
+## Game statistics associated with team success
+
+## Where to next?
 
 ## References
 

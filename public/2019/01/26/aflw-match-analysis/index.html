@@ -67,7 +67,7 @@ How will Geelong and North Melbourne, new teams to the national league in 2019, 
 
 <meta itemprop="datePublished" content="2019-01-26T00:00:00&#43;00:00" />
 <meta itemprop="dateModified" content="2019-01-26T00:00:00&#43;00:00" />
-<meta itemprop="wordCount" content="203">
+<meta itemprop="wordCount" content="854">
 
 
 
@@ -282,7 +282,7 @@ ga('send', 'pageview');
             January 26, 2019</time>
         <span class="author">Jacquie Tran</span>
         
-            <p>1 minute read</p>
+            <p>5 minute read</p>
         
         
     </div>
@@ -306,13 +306,185 @@ ga('send', 'pageview');
 <p>How will the <a href="https://thewomensgame.com/news/opinion-aflw-conference-format-518039">conference format</a> and <a href="https://www.theguardian.com/sport/2018/nov/07/aflw-tweaks-rules-for-next-season-to-promote-more-scoring">rule changes</a> play out?</p>
 <div id="the-analysis-questions" class="section level2">
 <h2>The analysis questions</h2>
-<p>There’s excitement in looking forward and lots to be learned from looking back too, so I decided to explore match data from the 2017 and 2018 AFLW seasons, with thanks to the excellent <code>fitzRoy</code> package for R, which I played around with in <strong><a href="https://underthehood.jacquietran.com/2019/01/12/getting-to-know-the-fitzroy-package-afl-game-statistics/">my last blog post</a></strong>.</p>
+<p>There’s excitement in looking forward and lots to be learned from looking back too, so I decided to explore match data from the 2017 and 2018 AFLW seasons. In this post, I’ll use the available match data to:</p>
+<ul>
+<li>Create team-by-team matchplay profiles; and</li>
+<li>Investigate the game statistics that are associated with successful team outcomes.</li>
+</ul>
+<p>As an aside, I hope to demonstrate what is achievable with small data sets while being considerate of their limitations.</p>
 </div>
 <div id="getting-started" class="section level2">
 <h2>Getting started</h2>
+<p>In a new R session, load up the libraries (packages) to be used in this codethrough.</p>
+<pre class="r"><code>library(fitzRoy)
+library(dplyr)
+library(ggplot2)</code></pre>
+<p>Thanks to the excellent <strong><a href="https://underthehood.jacquietran.com/2019/01/12/getting-to-know-the-fitzroy-package-afl-game-statistics/">fitzRoy package</a></strong>, retrieving AFLW match data is a cinch.</p>
+<pre class="r"><code>aflw_match_data &lt;- get_aflw_match_data()</code></pre>
+<pre><code>## Warning in get_aflw_round_data(., cookie): Scores not present for round
+## CD_R201926401, returning match fixture information only.</code></pre>
+<pre><code>## Warning in get_aflw_round_data(., cookie): Scores not present for round
+## CD_R201926402, returning match fixture information only.</code></pre>
+<pre><code>## Warning in get_aflw_round_data(., cookie): Scores not present for round
+## CD_R201926403, returning match fixture information only.</code></pre>
+<pre><code>## Warning in get_aflw_round_data(., cookie): Scores not present for round
+## CD_R201926404, returning match fixture information only.</code></pre>
+<pre><code>## Warning in get_aflw_round_data(., cookie): Scores not present for round
+## CD_R201926405, returning match fixture information only.</code></pre>
+<pre><code>## Warning in get_aflw_round_data(., cookie): Scores not present for round
+## CD_R201926406, returning match fixture information only.</code></pre>
+<pre><code>## Warning in get_aflw_round_data(., cookie): Scores not present for round
+## CD_R201926407, returning match fixture information only.</code></pre>
 </div>
 <div id="data-preparation" class="section level2">
 <h2>Data preparation</h2>
+<pre class="r"><code>##### Wrangle data -------------------------------------------------------------
+
+home_teams &lt;- aflw_match_data %&gt;%
+  select(Match.Id, Round.Id, Competition.Id, Venue, Local.Start.Time,
+         Round.Number, Round.Abbreviation, Weather.Type, Weather.Description,
+         Temperature, starts_with(&quot;Home&quot;), Away.Points) %&gt;%
+  rename(team = Home.Team, goals = Home.Goals, behinds = Home.Behinds,
+         points_for = Home.Points, points_against = Away.Points,
+         behinds_left = Home.Left.Behinds, behinds_right = Home.Right.Behinds,
+         posters_left = Home.Left.Posters, posters_right = Home.Right.Posters,
+         behinds_rushed = Home.Rushed.Behinds,
+         behinds_touched = Home.Touched.Behinds) %&gt;%
+  mutate(home_or_away = &quot;Home&quot;)
+
+away_teams &lt;- aflw_match_data %&gt;%
+  select(Match.Id, Round.Id, Competition.Id, Venue, Local.Start.Time,
+         Round.Number, Round.Abbreviation, Weather.Type, Weather.Description,
+         Temperature, starts_with(&quot;Away&quot;), Home.Points) %&gt;%
+  rename(team = Away.Team, goals = Away.Goals, behinds = Away.Behinds,
+         points_for = Away.Points, points_against = Home.Points,
+         behinds_left = Away.Left.Behinds, behinds_right = Away.Right.Behinds,
+         posters_left = Away.Left.Posters, posters_right = Away.Right.Posters,
+         behinds_rushed = Away.Rushed.Behinds,
+         behinds_touched = Away.Touched.Behinds) %&gt;%
+  mutate(home_or_away = &quot;Away&quot;)
+
+aflw_match_data_clean &lt;- rbind(home_teams, away_teams)
+aflw_match_data_clean &lt;- aflw_match_data_clean[order(
+  aflw_match_data_clean$Match.Id,
+  rev(aflw_match_data_clean$home_or_away),
+  decreasing = FALSE), ]
+
+# Drop NA rows for fixtured matches that have not been played yet
+aflw_match_data_clean &lt;- aflw_match_data_clean %&gt;%
+  filter(!is.na(goals))
+
+# Create new variables for match outcomes
+aflw_match_data_clean &lt;- aflw_match_data_clean %&gt;%
+  mutate(score_margin = points_for - points_against,
+         match_outcome = case_when(
+           score_margin &gt; 0 ~ &quot;Win&quot;,
+           score_margin &lt; 0 ~ &quot;Loss&quot;,
+           TRUE             ~ &quot;Draw&quot;))
+
+##### Get detailed data --------------------------------------------------------
+
+match_id_vec &lt;- unique(aflw_match_data_clean$Match.Id)
+
+aflw_detailed &lt;- get_aflw_detailed_data(match_id_vec)
+
+##### Wrangle detailed data ----------------------------------------------------
+
+# Keep a subset of variables
+aflw_detailed_selected &lt;- aflw_detailed %&gt;%
+  select(Match.Id, contains(&quot;stats.totals&quot;), contains(&quot;away.team&quot;),
+         contains(&quot;home.team&quot;), -contains(&quot;behinds&quot;), -contains(&quot;goals&quot;),
+         -contains(&quot;interChange&quot;), -contains(&quot;lastUpdated&quot;),
+         -contains(&quot;metresGained&quot;), -contains(&quot;ranking&quot;),
+         -contains(&quot;ratingPoints&quot;), -contains(&quot;scoreInvolvements&quot;),
+         -contains(&quot;superGoals&quot;))
+
+aflw_detailed_home &lt;- aflw_detailed_selected %&gt;%
+  select(Match.Id, contains(&quot;home.team&quot;),
+         contains(&quot;stats.totals&quot;), -contains(&quot;away&quot;)) %&gt;%
+  rename(team_abbr = home.team.teamAbbr, team_id = home.team.teamId,
+         team = home.team.teamName, team_nickname = home.team.teamNickname,
+         bounces = home.stats.totals.bounces,
+         clangers = home.stats.totals.clangers,
+         clearances_centre = home.stats.totals.clearances.centreClearances,
+         clearances_stoppage = home.stats.totals.clearances.stoppageClearances,
+         clearances_total = home.stats.totals.clearances.totalClearances,
+         marks_contested = home.stats.totals.contestedMarks,
+         possessions_contested = home.stats.totals.contestedPossessions,
+         disposals_efficiency = home.stats.totals.disposalEfficiency,
+         disposals = home.stats.totals.disposals,
+         dream_team_points = home.stats.totals.dreamTeamPoints,
+         frees_against = home.stats.totals.freesAgainst,
+         frees_for = home.stats.totals.freesFor,
+         goal_accuracy = home.stats.totals.goalAccuracy,
+         goal_assists = home.stats.totals.goalAssists,
+         goal_efficiency = home.stats.totals.goalEfficiency,
+         handballs = home.stats.totals.handballs,
+         hitouts = home.stats.totals.hitouts,
+         inside50s = home.stats.totals.inside50s,
+         intercepts = home.stats.totals.intercepts,
+         kicks = home.stats.totals.kicks, marks = home.stats.totals.marks,
+         marks_inside50 = home.stats.totals.marksInside50,
+         one_percenters = home.stats.totals.onePercenters,
+         rebound50s = home.stats.totals.rebound50s,
+         shot_efficiency = home.stats.totals.shotEfficiency,
+         shots_at_goal = home.stats.totals.shotsAtGoal,
+         tackles = home.stats.totals.tackles,
+         tackles_inside50 = home.stats.totals.tacklesInside50,
+         possessions_total = home.stats.totals.totalPossessions,
+         turnovers = home.stats.totals.turnovers,
+         possessions_uncontested = home.stats.totals.uncontestedPossessions)
+
+aflw_detailed_away &lt;- aflw_detailed_selected %&gt;%
+  select(Match.Id, contains(&quot;away.team&quot;),
+         contains(&quot;stats.totals&quot;), -contains(&quot;home&quot;)) %&gt;%
+  rename(team_abbr = away.team.teamAbbr, team_id = away.team.teamId,
+         team = away.team.teamName, team_nickname = away.team.teamNickname,
+         bounces = away.stats.totals.bounces,
+         clangers = away.stats.totals.clangers,
+         clearances_centre = away.stats.totals.clearances.centreClearances,
+         clearances_stoppage = away.stats.totals.clearances.stoppageClearances,
+         clearances_total = away.stats.totals.clearances.totalClearances,
+         marks_contested = away.stats.totals.contestedMarks,
+         possessions_contested = away.stats.totals.contestedPossessions,
+         disposals_efficiency = away.stats.totals.disposalEfficiency,
+         disposals = away.stats.totals.disposals,
+         dream_team_points = away.stats.totals.dreamTeamPoints,
+         frees_against = away.stats.totals.freesAgainst,
+         frees_for = away.stats.totals.freesFor,
+         goal_accuracy = away.stats.totals.goalAccuracy,
+         goal_assists = away.stats.totals.goalAssists,
+         goal_efficiency = away.stats.totals.goalEfficiency,
+         handballs = away.stats.totals.handballs,
+         hitouts = away.stats.totals.hitouts,
+         inside50s = away.stats.totals.inside50s,
+         intercepts = away.stats.totals.intercepts,
+         kicks = away.stats.totals.kicks, marks = away.stats.totals.marks,
+         marks_inside50 = away.stats.totals.marksInside50,
+         one_percenters = away.stats.totals.onePercenters,
+         rebound50s = away.stats.totals.rebound50s,
+         shot_efficiency = away.stats.totals.shotEfficiency,
+         shots_at_goal = away.stats.totals.shotsAtGoal,
+         tackles = away.stats.totals.tackles,
+         tackles_inside50 = away.stats.totals.tacklesInside50,
+         possessions_total = away.stats.totals.totalPossessions,
+         turnovers = away.stats.totals.turnovers,
+         possessions_uncontested = away.stats.totals.uncontestedPossessions)
+
+aflw_detailed_clean &lt;- rbind(aflw_detailed_home, aflw_detailed_away)
+
+##### Merge match data and detailed data ---------------------------------------
+
+aflw_merged &lt;- left_join(aflw_match_data_clean, aflw_detailed_clean)</code></pre>
+</div>
+<div id="team-matchplay-profiles" class="section level2">
+<h2>Team matchplay profiles</h2>
+</div>
+<div id="game-statistics-associated-with-team-success" class="section level2">
+<h2>Game statistics associated with team success</h2>
+</div>
+<div id="where-to-next" class="section level2">
+<h2>Where to next?</h2>
 </div>
 <div id="references" class="section level2">
 <h2>References</h2>
