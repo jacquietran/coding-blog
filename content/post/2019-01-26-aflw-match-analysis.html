@@ -21,7 +21,7 @@ draft: yes
 (source: <strong><a href="https://commons.wikimedia.org/wiki/File:First_AFLW_Ball_Up_03.02.17.jpg">Wikimedia</a></strong>)
 </p>
 <p>The countdown is well and truly on.</p>
-<p>We are but 1 week away from the first bounce of AFLW 3.0, the 3rd season of the women’s national Australian football league. As an Aussie living abroad, a footy fan, and supporter of the increasing professionalisation of women’s sport, I’m excited to watch closely as the next chapter of the AFLW story unfolds.</p>
+<p>We are less than 1 week away from the first bounce of AFLW 3.0, the 3rd season of the women’s national Australian football league. As an Aussie living abroad, a footy fan, and supporter of the increasing professionalisation of women’s sport, I’m excited to watch closely as the next chapter of the AFLW story unfolds.</p>
 <p>How will Geelong and North Melbourne, new teams to the national league in 2019, fare against the 8 teams who have participated in AFLW seasons 1 and 2?</p>
 <p>What will the new draftees like <a href="https://www.youtube.com/watch?v=PAhPnRRsm0E">Maddie Prespakis</a> and <a href="http://www.geelongcats.com.au/video/2018-10-23/nina-morrison-highlights">Nina Morrison</a> bring to mix at senior-level?</p>
 <p>Which <a href="https://www.theguardian.com/sport/2018/sep/21/irelands-emerald-armada-set-to-take-the-aflw-by-storm">international players</a> and <a href="https://www.theguardian.com/sport/2018/sep/14/fearsome-sharni-layton-well-set-to-join-elite-band-of-sport-switchers">cross-coders</a> will show the potential success to be had in talent transfers?</p>
@@ -33,35 +33,89 @@ draft: yes
 <li>Create team-by-team matchplay profiles; and</li>
 <li>Investigate the game statistics that are associated with successful team outcomes.</li>
 </ul>
-<p>As an aside, I hope to demonstrate what is achievable with small data sets while being considerate of their limitations.</p>
+<p>As an aside, I hope to demonstrate what can be gleaned from a small sample, while also acknowledging their limitations.</p>
 </div>
 <div id="getting-started" class="section level2">
 <h2>Getting started</h2>
 <p>In a new R session, load up the libraries (packages) to be used in this codethrough.</p>
 <pre class="r"><code>library(fitzRoy)
 library(dplyr)
+library(stringr)
 library(ggplot2)</code></pre>
-<p>Thanks to the excellent <strong><a href="https://underthehood.jacquietran.com/2019/01/12/getting-to-know-the-fitzroy-package-afl-game-statistics/">fitzRoy package</a></strong>, retrieving AFLW match data is a cinch.</p>
-<pre class="r"><code>aflw_match_data &lt;- get_aflw_match_data()</code></pre>
-<pre><code>## Warning in get_aflw_round_data(., cookie): Scores not present for round
-## CD_R201926401, returning match fixture information only.</code></pre>
-<pre><code>## Warning in get_aflw_round_data(., cookie): Scores not present for round
-## CD_R201926402, returning match fixture information only.</code></pre>
-<pre><code>## Warning in get_aflw_round_data(., cookie): Scores not present for round
-## CD_R201926403, returning match fixture information only.</code></pre>
-<pre><code>## Warning in get_aflw_round_data(., cookie): Scores not present for round
-## CD_R201926404, returning match fixture information only.</code></pre>
-<pre><code>## Warning in get_aflw_round_data(., cookie): Scores not present for round
-## CD_R201926405, returning match fixture information only.</code></pre>
-<pre><code>## Warning in get_aflw_round_data(., cookie): Scores not present for round
-## CD_R201926406, returning match fixture information only.</code></pre>
-<pre><code>## Warning in get_aflw_round_data(., cookie): Scores not present for round
-## CD_R201926407, returning match fixture information only.</code></pre>
+<p>Thanks to the excellent <strong><a href="https://underthehood.jacquietran.com/2019/01/12/getting-to-know-the-fitzroy-package-afl-game-statistics/">fitzRoy package</a></strong>, retrieving AFLW match data is a cinch. The <code>get_aflw_match_data()</code> function</p>
+<pre class="r"><code>aflw_match_data &lt;- get_aflw_match_data()
+
+# I&#39;ve suppressed warnings from this code chunk, so if you run this code
+#   locally, don&#39;t be alarmed - warnings are returned for the listed Match.Id
+# values that correspond to matches yet to be played in 2019.</code></pre>
+</div>
+<div id="inspecting-the-match-data" class="section level2">
+<h2>Inspecting the match data</h2>
+<p>If you’re working in RStudio, the <code>View()</code> function is useful for looking at rectangular data sets in a spreadsheet-like format.</p>
+<pre class="r"><code># Run this in RStudio
+View(aflw_match_data)</code></pre>
+<div class="figure">
+<img src="/img/post/view_fx.png" />
+
+</div>
+<p>There are a range of useful R functions for retrieving meta-data about, well, the data you’re working with. For instance, we can use <code>str()</code> to find out useful details like the number of observations (rows), the number of variables (columns), the name of each variable, and the data type for each variable (e.g., character string, integer, numeric, and so on).</p>
+<pre class="r"><code>str(aflw_match_data)</code></pre>
+<pre><code>## Classes &#39;tbl_df&#39;, &#39;tbl&#39; and &#39;data.frame&#39;:    93 obs. of  30 variables:
+##  $ Match.Id            : chr  &quot;CD_M20172640101&quot; &quot;CD_M20172640102&quot; &quot;CD_M20172640103&quot; &quot;CD_M20172640104&quot; ...
+##  $ Round.Id            : chr  &quot;CD_R201726401&quot; &quot;CD_R201726401&quot; &quot;CD_R201726401&quot; &quot;CD_R201726401&quot; ...
+##  $ Competition.Id      : chr  &quot;CD_S2017264&quot; &quot;CD_S2017264&quot; &quot;CD_S2017264&quot; &quot;CD_S2017264&quot; ...
+##  $ Venue               : chr  &quot;Ikon Park&quot; &quot;Thebarton Oval&quot; &quot;VU Whitten Oval&quot; &quot;Casey Fields&quot; ...
+##  $ Local.Start.Time    : POSIXct, format: &quot;2017-02-03 19:45:00&quot; &quot;2017-02-04 16:35:00&quot; ...
+##  $ Round.Number        : int  1 1 1 1 2 2 2 2 3 3 ...
+##  $ Round.Abbreviation  : chr  &quot;Rd 1&quot; &quot;Rd 1&quot; &quot;Rd 1&quot; &quot;Rd 1&quot; ...
+##  $ Weather.Type        : chr  &quot;CLEAR_NIGHT&quot; &quot;RAIN&quot; &quot;RAIN&quot; &quot;RAIN&quot; ...
+##  $ Weather.Description : chr  &quot;Clear&quot; &quot;Rain at times&quot; &quot;Partly cloudy&quot; &quot;Rain Possible storm&quot; ...
+##  $ Temperature         : num  18 18 18 18 18 18 18 18 18 18 ...
+##  $ Home.Team           : chr  &quot;Carlton&quot; &quot;Adelaide Crows&quot; &quot;Western Bulldogs&quot; &quot;Melbourne&quot; ...
+##  $ Home.Goals          : int  7 7 6 1 2 7 4 3 7 4 ...
+##  $ Home.Behinds        : int  4 6 8 4 11 5 1 5 1 3 ...
+##  $ Home.Points         : int  46 48 44 10 23 47 25 23 43 27 ...
+##  $ Home.Left.Behinds   : int  1 2 2 1 2 1 0 0 0 0 ...
+##  $ Home.Right.Behinds  : int  2 2 4 2 5 2 1 1 0 2 ...
+##  $ Home.Left.Posters   : int  0 0 0 0 0 0 0 1 0 0 ...
+##  $ Home.Right.Posters  : int  0 0 0 0 0 0 0 1 0 0 ...
+##  $ Home.Rushed.Behinds : int  1 2 2 1 3 2 0 2 1 1 ...
+##  $ Home.Touched.Behinds: int  0 0 0 0 1 0 0 0 0 0 ...
+##  $ Away.Team           : chr  &quot;Collingwood&quot; &quot;GWS Giants&quot; &quot;Fremantle&quot; &quot;Brisbane Lions&quot; ...
+##  $ Away.Goals          : int  1 1 1 4 7 5 7 5 6 3 ...
+##  $ Away.Behinds        : int  5 6 6 1 6 4 2 6 7 5 ...
+##  $ Away.Points         : int  11 12 12 25 48 34 44 36 43 23 ...
+##  $ Away.Left.Behinds   : int  0 1 2 1 2 0 0 1 0 1 ...
+##  $ Away.Right.Behinds  : int  3 4 3 0 2 3 1 3 3 3 ...
+##  $ Away.Left.Posters   : int  0 0 0 0 0 0 0 1 1 0 ...
+##  $ Away.Right.Posters  : int  1 0 0 0 0 0 0 0 0 0 ...
+##  $ Away.Rushed.Behinds : int  1 1 1 0 2 1 0 1 2 1 ...
+##  $ Away.Touched.Behinds: int  0 0 0 0 0 0 1 0 1 0 ...</code></pre>
+<p>From visually inspecting the raw data and obtaining a meta-data summary, we know the following things about the AFLW match data set:</p>
+<ul>
+<li>The data is structured so that the information pertaining to each match is contained on one row. This means that the statistics for any two opposing teams are stored along the same row.</li>
+<li>Statistics for the home and away teams are distinguished by the prefix <em>‘Home.’</em> and <em>‘Away.’</em>.</li>
+<li>This data set includes ‘high-level’ information about each match, such as descriptors of the weather, the number of goals and behinds scored by each team, the total points scored by each team, and more.</li>
+<li>The data frame is wide, with each of the ‘measured’ variables presented in distinct columns. (For more on this, have a read of <strong><a href="https://mvuorre.github.io/toolbox/reshape.html">this article by Matti Vuorre on wide and long data.</a></strong>)</li>
+</ul>
+</div>
+<div id="obtaining-detailed-match-data" class="section level2">
+<h2>Obtaining detailed match data</h2>
+<p>To obtain game statistics for each team in each match (e.g., number of kicks, handballs, tackles, marks), the <code>fitzRoy</code> package again has a simple function for retrieving this data, which requires a vector of <code>Match.ID</code> values. Since I want game statistics data from all AFLW matches played to date, I’ll obtain 2017 and 2018 match IDs from the <code>aflw_match_data</code> set that we just retrieved.</p>
+<pre class="r"><code># Vector of match IDs to retrieve detailed game statistics for
+# Excluding match IDs for the 2019 season - yet to be played
+match_id_vec &lt;- aflw_match_data %&gt;%
+    select(Match.Id) %&gt;%
+    filter(!str_detect(Match.Id, &quot;2019&quot;))
+
+# Retrieve detailed statistics for match IDs specified in match_id_vec
+aflw_detailed &lt;- get_aflw_detailed_data(match_id_vec$Match.Id)</code></pre>
+<p>Again, the <code>View()</code> and <code>str()</code> functions are helpful for initially inspecting the data set so you can take a look at its structure and contents.</p>
 </div>
 <div id="data-preparation" class="section level2">
 <h2>Data preparation</h2>
-<pre class="r"><code>##### Wrangle data -------------------------------------------------------------
-
+<p>Some data wrangling is needed to modify the data structure to suit this analysis. The code below results in a data frame where every match has two rows, with one row for the home team’s game statistics and one row for the away team’s game statistics.</p>
+<pre class="r"><code># Wrangle match summary data
 home_teams &lt;- aflw_match_data %&gt;%
   select(Match.Id, Round.Id, Competition.Id, Venue, Local.Start.Time,
          Round.Number, Round.Abbreviation, Weather.Type, Weather.Description,
@@ -103,12 +157,6 @@ aflw_match_data_clean &lt;- aflw_match_data_clean %&gt;%
            score_margin &gt; 0 ~ &quot;Win&quot;,
            score_margin &lt; 0 ~ &quot;Loss&quot;,
            TRUE             ~ &quot;Draw&quot;))
-
-##### Get detailed data --------------------------------------------------------
-
-match_id_vec &lt;- unique(aflw_match_data_clean$Match.Id)
-
-aflw_detailed &lt;- get_aflw_detailed_data(match_id_vec)
 
 ##### Wrangle detailed data ----------------------------------------------------
 

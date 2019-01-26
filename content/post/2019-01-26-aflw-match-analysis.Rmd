@@ -19,7 +19,7 @@ draft: yes
 
 The countdown is well and truly on.
 
-We are but 1 week away from the first bounce of AFLW 3.0, the 3rd season of the women's national Australian football league. As an Aussie living abroad, a footy fan, and supporter of the increasing professionalisation of women's sport, I'm excited to watch closely as the next chapter of the AFLW story unfolds.
+We are less than 1 week away from the first bounce of AFLW 3.0, the 3rd season of the women's national Australian football league. As an Aussie living abroad, a footy fan, and supporter of the increasing professionalisation of women's sport, I'm excited to watch closely as the next chapter of the AFLW story unfolds.
 
 How will Geelong and North Melbourne, new teams to the national league in 2019, fare against the 8 teams who have participated in AFLW seasons 1 and 2?
 
@@ -36,7 +36,7 @@ There's excitement in looking forward and lots to be learned from looking back t
 - Create team-by-team matchplay profiles; and
 - Investigate the game statistics that are associated with successful team outcomes.
 
-As an aside, I hope to demonstrate what is achievable with small data sets while being considerate of their limitations.
+As an aside, I hope to demonstrate what can be gleaned from a small sample, while also acknowledging their limitations.
 
 ## Getting started
 
@@ -46,24 +46,77 @@ In a new R session, load up the libraries (packages) to be used in this codethro
 
 library(fitzRoy)
 library(dplyr)
+library(stringr)
 library(ggplot2)
 
 ```
 
-Thanks to the excellent **[fitzRoy package](https://underthehood.jacquietran.com/2019/01/12/getting-to-know-the-fitzroy-package-afl-game-statistics/)**, retrieving AFLW match data is a cinch.
+Thanks to the excellent **[fitzRoy package](https://underthehood.jacquietran.com/2019/01/12/getting-to-know-the-fitzroy-package-afl-game-statistics/)**, retrieving AFLW match data is a cinch. The `get_aflw_match_data()` function 
 
-``` {r import_data, message = FALSE}
+``` {r import_match_data, message = FALSE, warning = FALSE}
 
 aflw_match_data <- get_aflw_match_data()
 
+# I've suppressed warnings from this code chunk, so if you run this code
+#	locally, don't be alarmed - warnings are returned for the listed Match.Id
+# values that correspond to matches yet to be played in 2019.
+
 ```
+
+## Inspecting the match data
+
+If you're working in RStudio, the `View()` function is useful for looking at rectangular data sets in a spreadsheet-like format.
+
+``` {r view_fx, eval = FALSE}
+
+# Run this in RStudio
+View(aflw_match_data)
+
+```
+
+![](/img/post/view_fx.png)
+
+There are a range of useful R functions for retrieving meta-data about, well, the data you're working with. For instance, we can use `str()` to find out useful details like the number of observations (rows), the number of variables (columns), the name of each variable, and the data type for each variable (e.g., character string, integer, numeric, and so on).
+
+``` {r str_fx}
+
+str(aflw_match_data)
+
+```
+
+From visually inspecting the raw data and obtaining a meta-data summary, we know the following things about the AFLW match data set:
+
+- The data is structured so that the information pertaining to each match is contained on one row. This means that the statistics for any two opposing teams are stored along the same row.
+- Statistics for the home and away teams are distinguished by the prefix _'Home.'_ and _'Away.'_.
+- This data set includes 'high-level' information about each match, such as descriptors of the weather, the number of goals and behinds scored by each team, the total points scored by each team, and more.
+- The data frame is wide, with each of the 'measured' variables presented in distinct columns. (For more on this, have a read of **[this article by Matti Vuorre on wide and long data.](https://mvuorre.github.io/toolbox/reshape.html)**)
+
+## Obtaining detailed match data
+
+To obtain game statistics for each team in each match (e.g., number of kicks, handballs, tackles, marks), the `fitzRoy` package again has a simple function for retrieving this data, which requires a vector of `Match.ID` values. Since I want game statistics data from all AFLW matches played to date, I'll obtain 2017 and 2018 match IDs from the `aflw_match_data` set that we just retrieved.
+
+``` {r import_detailed_data, message = FALSE}
+
+# Vector of match IDs to retrieve detailed game statistics for
+# Excluding match IDs for the 2019 season - yet to be played
+match_id_vec <- aflw_match_data %>%
+	select(Match.Id) %>%
+	filter(!str_detect(Match.Id, "2019"))
+
+# Retrieve detailed statistics for match IDs specified in match_id_vec
+aflw_detailed <- get_aflw_detailed_data(match_id_vec$Match.Id)
+
+```
+
+Again, the `View()` and `str()` functions are helpful for initially inspecting the data set so you can take a look at its structure and contents.
 
 ## Data preparation
 
-``` {r prepare_data, message = FALSE}
+Some data wrangling is needed to modify the data structure to suit this analysis. The code below results in a data frame where every match has two rows, with one row for the home team's game statistics and one row for the away team's game statistics.
 
-##### Wrangle data -------------------------------------------------------------
+``` {r prepare_match_data, message = FALSE}
 
+# Wrangle match summary data
 home_teams <- aflw_match_data %>%
   select(Match.Id, Round.Id, Competition.Id, Venue, Local.Start.Time,
          Round.Number, Round.Abbreviation, Weather.Type, Weather.Description,
@@ -105,12 +158,6 @@ aflw_match_data_clean <- aflw_match_data_clean %>%
            score_margin > 0 ~ "Win",
            score_margin < 0 ~ "Loss",
            TRUE             ~ "Draw"))
-
-##### Get detailed data --------------------------------------------------------
-
-match_id_vec <- unique(aflw_match_data_clean$Match.Id)
-
-aflw_detailed <- get_aflw_detailed_data(match_id_vec)
 
 ##### Wrangle detailed data ----------------------------------------------------
 
