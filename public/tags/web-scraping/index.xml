@@ -6,10 +6,21 @@
     <description>Recent content in Web scraping on Under The Hood</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sat, 12 Jan 2019 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 26 Jan 2019 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/tags/web-scraping/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>AFLW &#43; fitzRoy: Analysing women&#39;s footy using match data</title>
+      <link>/2019/01/26/aflw-match-analysis/</link>
+      <pubDate>Sat, 26 Jan 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/2019/01/26/aflw-match-analysis/</guid>
+      <description>(source: Wikimedia)The countdown is well and truly on.
+We are but 1 week away from the first bounce of AFLW 3.0, the 3rd season of the women’s national Australian football league. As an Aussie living abroad, a footy fan, and supporter of the increasing professionalisation of women’s sport, I’m excited to watch closely as the next chapter of the AFLW story unfolds.
+How will Geelong and North Melbourne, new teams to the national league in 2019, fare against the 8 teams who have participated in AFLW seasons 1 and 2?</description>
+    </item>
     
     <item>
       <title>Getting to know the fitzRoy package (AFL game statistics)</title>

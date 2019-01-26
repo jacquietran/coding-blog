@@ -6,7 +6,7 @@
     <description>Recent content in Tags on Under The Hood</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sat, 12 Jan 2019 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 26 Jan 2019 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/tags/index.xml" rel="self" type="application/rss+xml" />
     
@@ -14,7 +14,7 @@
     <item>
       <title>Football</title>
       <link>/tags/football/</link>
-      <pubDate>Sat, 12 Jan 2019 00:00:00 +0000</pubDate>
+      <pubDate>Sat, 26 Jan 2019 00:00:00 +0000</pubDate>
       
       <guid>/tags/football/</guid>
       <description></description>
@@ -23,7 +23,7 @@
     <item>
       <title>R stats</title>
       <link>/tags/r-stats/</link>
-      <pubDate>Sat, 12 Jan 2019 00:00:00 +0000</pubDate>
+      <pubDate>Sat, 26 Jan 2019 00:00:00 +0000</pubDate>
       
       <guid>/tags/r-stats/</guid>
       <description></description>
@@ -59,7 +59,7 @@
     <item>
       <title>Sport science</title>
       <link>/tags/sport-science/</link>
-      <pubDate>Thu, 04 Jan 2018 00:00:00 +0000</pubDate>
+      <pubDate>Sat, 26 Jan 2019 00:00:00 +0000</pubDate>
       
       <guid>/tags/sport-science/</guid>
       <description></description>
@@ -68,7 +68,7 @@
     <item>
       <title>Sports analytics</title>
       <link>/tags/sports-analytics/</link>
-      <pubDate>Sat, 12 Jan 2019 00:00:00 +0000</pubDate>
+      <pubDate>Sat, 26 Jan 2019 00:00:00 +0000</pubDate>
       
       <guid>/tags/sports-analytics/</guid>
       <description></description>
@@ -113,9 +113,18 @@
     <item>
       <title>Web scraping</title>
       <link>/tags/web-scraping/</link>
-      <pubDate>Sat, 12 Jan 2019 00:00:00 +0000</pubDate>
+      <pubDate>Sat, 26 Jan 2019 00:00:00 +0000</pubDate>
       
       <guid>/tags/web-scraping/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Women&#39;s sport</title>
+      <link>/tags/womens-sport/</link>
+      <pubDate>Sat, 26 Jan 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/tags/womens-sport/</guid>
       <description></description>
     </item>
     

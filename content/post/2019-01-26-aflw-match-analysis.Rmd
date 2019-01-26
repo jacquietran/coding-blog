@@ -1,0 +1,43 @@
+---
+title: 'AFLW + fitzRoy: Analysing women''s footy using match data'
+author: Jacquie Tran
+date: '2019-01-26'
+slug: aflw-match-analysis
+categories:
+  - On-field analyses
+tags:
+  - football
+  - sport science
+  - sports analytics
+  - web scraping
+  - r stats
+draft: yes
+---
+
+![](/img/post/First_AFLW_Ball_Up_03.02.17.jpg)
+<p style="text-align: right">(source: **[Wikimedia](https://commons.wikimedia.org/wiki/File:First_AFLW_Ball_Up_03.02.17.jpg)**)</p>
+
+The countdown is well and truly on.
+
+We are but 1 week away from the first bounce of AFLW 3.0, the 3rd season of the women's national Australian football league. As an Aussie living abroad, a footy fan, and supporter of the increasing professionalisation of women's sport, I'm excited to watch closely as the next chapter of the AFLW story unfolds.
+
+How will Geelong and North Melbourne, new teams to the national league in 2019, fare against the 8 teams who have participated in AFLW seasons 1 and 2?
+
+What will the new draftees like [Maddie Prespakis](https://www.youtube.com/watch?v=PAhPnRRsm0E) and [Nina Morrison](http://www.geelongcats.com.au/video/2018-10-23/nina-morrison-highlights) bring to mix at senior-level?
+
+Which [international players](https://www.theguardian.com/sport/2018/sep/21/irelands-emerald-armada-set-to-take-the-aflw-by-storm) and [cross-coders](https://www.theguardian.com/sport/2018/sep/14/fearsome-sharni-layton-well-set-to-join-elite-band-of-sport-switchers) will show the potential success to be had in talent transfers?
+
+How will the [conference format](https://thewomensgame.com/news/opinion-aflw-conference-format-518039) and [rule changes](https://www.theguardian.com/sport/2018/nov/07/aflw-tweaks-rules-for-next-season-to-promote-more-scoring) play out?
+
+## The analysis questions
+
+There's excitement in looking forward and lots to be learned from looking back too, so I decided to explore match data from the 2017 and 2018 AFLW seasons, with thanks to the excellent `fitzRoy` package for R, which I played around with in **[my last blog post](https://underthehood.jacquietran.com/2019/01/12/getting-to-know-the-fitzroy-package-afl-game-statistics/)**.
+
+## Getting started
+
+## Data preparation
+
+## References
+
+- The Roar, ['The rule differences for the AFL women's competition'](https://www.theroar.com.au/2017/02/03/the-rule-differences-for-the-afl-womens-competition/)
+- AFL.com.au, ['AFLW rules for 2017'](http://www.fremantlefc.com.au/news/2016-10-19/afl-womens-rules-announced)

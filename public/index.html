@@ -38,7 +38,7 @@
 
 
 
-<meta property="og:updated_time" content="2019-01-12T00:00:00&#43;00:00"/>
+<meta property="og:updated_time" content="2019-01-26T00:00:00&#43;00:00"/>
 
 
 
@@ -170,15 +170,15 @@ ga('send', 'pageview');
 
                 
                     <li>
+                        <a href="/2019/01/26/aflw-match-analysis/"><p>AFLW &#43; fitzRoy: Analysing women&#39;s footy using match data</p></a>
+                    </li>
+                
+                    <li>
+                        <a href="/2019/01/26/women-sport-research-gaps-and-opportunities/"><p>Women&#39;s sport research: Gaps and opportunities</p></a>
+                    </li>
+                
+                    <li>
                         <a href="/2019/01/12/getting-to-know-the-fitzroy-package-afl-game-statistics/"><p>Getting to know the fitzRoy package (AFL game statistics)</p></a>
-                    </li>
-                
-                    <li>
-                        <a href="/2018/07/20/text-mining-of-wimbledon-tweets-using-rtweet-and-tidytext/"><p>Text mining of Wimbledon tweets using rtweet and tidytext</p></a>
-                    </li>
-                
-                    <li>
-                        <a href="/2018/01/04/how-much-do-you-get-paid-part-3/"><p>How much do you get paid? Part III - Comparison by discipline</p></a>
                     </li>
                 
             </ul>
@@ -195,7 +195,7 @@ ga('send', 'pageview');
     <header>
     <div class="title">
         
-            <h2><a href="/2019/01/12/getting-to-know-the-fitzroy-package-afl-game-statistics/">Getting to know the fitzRoy package (AFL game statistics)</a></h2>
+            <h2><a href="/2019/01/26/aflw-match-analysis/">AFLW &#43; fitzRoy: Analysing women&#39;s footy using match data</a></h2>
         
         
     </div>
@@ -203,11 +203,11 @@ ga('send', 'pageview');
         
 
         <time class="published"
-            datetime='2019-01-12'>
-            January 12, 2019</time>
+            datetime='2019-01-26'>
+            January 26, 2019</time>
         <span class="author">Jacquie Tran</span>
         
-            <p>9 minute read</p>
+            <p>1 minute read</p>
         
         
     </div>
@@ -219,465 +219,32 @@ ga('send', 'pageview');
     
 
     <div id="content">
-        <script src="/rmarkdown-libs/kePrint/kePrint.js"></script>
-
-
-<img src="/img/post/1280px-2017_AFL_Grand_Final_panorama_during_national_anthem.jpg" />
+        <img src="/img/post/First_AFLW_Ball_Up_03.02.17.jpg" />
 <p style="text-align: right">
-(source: <strong><a href="https://upload.wikimedia.org/wikipedia/commons/thumb/4/42/2017_AFL_Grand_Final_panorama_during_national_anthem.jpg/1280px-2017_AFL_Grand_Final_panorama_during_national_anthem.jpg">Wikimedia</a></strong>)
+(source: <strong><a href="https://commons.wikimedia.org/wiki/File:First_AFLW_Ball_Up_03.02.17.jpg">Wikimedia</a></strong>)
 </p>
-<p>I shifted across the ditch early in 2018 to take up a role with High Performance Sport New Zealand. Remarkably, the one-year anniversary of our arrival here is right on the door step; I’ve learned so much in that time, particularly around qualitative methods and analyses. I enjoy the richness of insight that can be drawn from analysing text data, but a part of me does miss getting to work with numbers as much as I used to. And so, I decided I’d scratch the quant itch and get to know the <code>fitzRoy</code> <strong><a href="https://github.com/jimmyday12/fitzRoy">R package by James Day</a></strong>.</p>
-<p>In my stint at the Geelong Cats Football Club (AFL), I spent a lot of time retrieving, cleaning, merging, and wrangling data sets. An eyeball estimate of my personal time tracking data suggests I spent 70-80% of my ‘analytics time’ doing data preparation in those years. Yikes.</p>
-<p>FWIW this experience is incredibly common amongst those who work with data:</p>
-<center>
-<blockquote class="twitter-tweet" data-lang="en">
-<p lang="en" dir="ltr">
-Being a data scientist means cleaning data from 1 source with 7 files for 7 years of information 7 ways because the format is different every year…<br><br>It's almost biblical… almost… <a href="https://twitter.com/hashtag/rstats?src=hash&amp;ref_src=twsrc%5Etfw">#rstats</a> <a href="https://t.co/Tnv9N2853D">pic.twitter.com/Tnv9N2853D</a>
-</p>
-— Kris Stevens (<span class="citation">@kristophrdelane</span>) <a href="https://twitter.com/kristophrdelane/status/986663543067107328?ref_src=twsrc%5Etfw">April 18, 2018</a>
-</blockquote>
-<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
-</center>
-<p>Much to my dismay, the <code>fitzRoy</code> package was first published to Github in January 2018, mere days after I finished up at Geelong FC. No doubt it would have been a massive time-saver for me if it had existed earlier!</p>
-<p>Being both curious and a masochist (a great combination, I highly recommend it), I decided it was about time I checked out what <code>fitzRoy</code> can do so I could grasp the reality of my potential time-savings had this package existed when footy analytics was part of my job. Onwards…</p>
-<hr />
-<div id="installing-the-fitzroy-package" class="section level1">
-<h1>Installing the fitzRoy package</h1>
-<p><code>fitzRoy</code> is not on listed on <strong><a href="https://cran.r-project.org/">CRAN</a></strong> yet, so you’ll need to install it with the help of the <code>devtools</code> package. To install both packages:</p>
-<pre class="r"><code>install.packages(&quot;devtools&quot;)
-devtools::install_github(&quot;jimmyday12/fitzRoy&quot;)</code></pre>
-<p>Once the <code>fitzRoy</code> package has been installed, we can load it into our R session, along with other packages that will be used in this code-through.</p>
-<pre class="r"><code>library(fitzRoy)
-library(dplyr)
-library(knitr)
-library(kableExtra)
-library(ggplot2)
-library(scales)</code></pre>
+<p>The countdown is well and truly on.</p>
+<p>We are but 1 week away from the first bounce of AFLW 3.0, the 3rd season of the women’s national Australian football league. As an Aussie living abroad, a footy fan, and supporter of the increasing professionalisation of women’s sport, I’m excited to watch closely as the next chapter of the AFLW story unfolds.</p>
+<p>How will Geelong and North Melbourne, new teams to the national league in 2019, fare against the 8 teams who have participated in AFLW seasons 1 and 2?</p>
+<p>What will the new draftees like <a href="https://www.youtube.com/watch?v=PAhPnRRsm0E">Maddie Prespakis</a> and <a href="http://www.geelongcats.com.au/video/2018-10-23/nina-morrison-highlights">Nina Morrison</a> bring to mix at senior-level?</p>
+<p>Which <a href="https://www.theguardian.com/sport/2018/sep/21/irelands-emerald-armada-set-to-take-the-aflw-by-storm">international players</a> and <a href="https://www.theguardian.com/sport/2018/sep/14/fearsome-sharni-layton-well-set-to-join-elite-band-of-sport-switchers">cross-coders</a> will show the potential success to be had in talent transfers?</p>
+<p>How will the <a href="https://thewomensgame.com/news/opinion-aflw-conference-format-518039">conference format</a> and <a href="https://www.theguardian.com/sport/2018/nov/07/aflw-tweaks-rules-for-next-season-to-promote-more-scoring">rule changes</a> play out?</p>
+<div id="the-analysis-questions" class="section level2">
+<h2>The analysis questions</h2>
+<p>There’s excitement in looking forward and lots to be learned from looking back too, so I decided to explore match data from the 2017 and 2018 AFLW seasons, with thanks to the excellent <code>fitzRoy</code> package for R, which I played around with in <strong><a href="https://underthehood.jacquietran.com/2019/01/12/getting-to-know-the-fitzroy-package-afl-game-statistics/">my last blog post</a></strong>.</p>
 </div>
-<div id="exploring-the-data" class="section level1">
-<h1>Exploring the data</h1>
-<p>Let’s take a look at AFL match data that has been catalogued on the invaluable <strong><a href="https://afltables.com">AFL Tables</a></strong> website. For this code-through, we’ll focus on matches played over the last 20 years.</p>
-<pre class="r"><code># Retrieve the data from AFL Tables
-afl_data_1998_2018 &lt;- get_afltables_stats(
-    start_date = &quot;1998-01-01&quot;, end_date = &quot;2018-11-25&quot;)
-
-# See variables in the data set
-names(afl_data_1998_2018)</code></pre>
-<pre><code>##  [1] &quot;Season&quot;                  &quot;Round&quot;                  
-##  [3] &quot;Date&quot;                    &quot;Local.start.time&quot;       
-##  [5] &quot;Venue&quot;                   &quot;Attendance&quot;             
-##  [7] &quot;Home.team&quot;               &quot;HQ1G&quot;                   
-##  [9] &quot;HQ1B&quot;                    &quot;HQ2G&quot;                   
-## [11] &quot;HQ2B&quot;                    &quot;HQ3G&quot;                   
-## [13] &quot;HQ3B&quot;                    &quot;HQ4G&quot;                   
-## [15] &quot;HQ4B&quot;                    &quot;Home.score&quot;             
-## [17] &quot;Away.team&quot;               &quot;AQ1G&quot;                   
-## [19] &quot;AQ1B&quot;                    &quot;AQ2G&quot;                   
-## [21] &quot;AQ2B&quot;                    &quot;AQ3G&quot;                   
-## [23] &quot;AQ3B&quot;                    &quot;AQ4G&quot;                   
-## [25] &quot;AQ4B&quot;                    &quot;Away.score&quot;             
-## [27] &quot;First.name&quot;              &quot;Surname&quot;                
-## [29] &quot;ID&quot;                      &quot;Jumper.No.&quot;             
-## [31] &quot;Playing.for&quot;             &quot;Kicks&quot;                  
-## [33] &quot;Marks&quot;                   &quot;Handballs&quot;              
-## [35] &quot;Goals&quot;                   &quot;Behinds&quot;                
-## [37] &quot;Hit.Outs&quot;                &quot;Tackles&quot;                
-## [39] &quot;Rebounds&quot;                &quot;Inside.50s&quot;             
-## [41] &quot;Clearances&quot;              &quot;Clangers&quot;               
-## [43] &quot;Frees.For&quot;               &quot;Frees.Against&quot;          
-## [45] &quot;Brownlow.Votes&quot;          &quot;Contested.Possessions&quot;  
-## [47] &quot;Uncontested.Possessions&quot; &quot;Contested.Marks&quot;        
-## [49] &quot;Marks.Inside.50&quot;         &quot;One.Percenters&quot;         
-## [51] &quot;Bounces&quot;                 &quot;Goal.Assists&quot;           
-## [53] &quot;Time.on.Ground..&quot;        &quot;Substitute&quot;             
-## [55] &quot;Umpire.1&quot;                &quot;Umpire.2&quot;               
-## [57] &quot;Umpire.3&quot;                &quot;Umpire.4&quot;               
-## [59] &quot;group_id&quot;</code></pre>
-<p>Heaps to dig into here! For the purposes of this quick exploration, I’m going to focus on learning more from the attendance data.</p>
+<div id="getting-started" class="section level2">
+<h2>Getting started</h2>
 </div>
-<div id="data-preparation" class="section level1">
-<h1>Data preparation</h1>
-<p>Before we get stuck into analysis, a little bit of data cleaning and wrangling is required. Firstly, let’s create a data subset that focuses on attendance and other variables that might be useful to consider alongside attendance figures.</p>
-<pre class="r"><code># Subset the data
-attendance_data &lt;- afl_data_1998_2018 %&gt;%
-    select(Season, Round, Date, Local.start.time, Venue,
-                 Attendance, Home.team, Away.team)</code></pre>
-<p>We also want the data organised so that one row = one match. To do this requires that each match is given a unique identifier.</p>
-<pre class="r"><code># Create unique match IDs
-attendance_data &lt;- attendance_data %&gt;%
-    mutate(match_id = 
-                    paste(Date, Home.team, Away.team, sep = &quot;-&quot;))
-
-# Identify duplicate instances of the same match ID
-attendance_data$dup &lt;- duplicated(attendance_data$match_id)
-
-# Organise the data so that one row = one match
-attendance_data &lt;- attendance_data %&gt;%
-    filter(dup == FALSE) %&gt;%
-    select(-dup)
-
-# Check the first few rows to see
-# what the data looks like now
-head(attendance_data) %&gt;%
-    kable(&quot;html&quot;) %&gt;%
-    kable_styling()</code></pre>
-<table class="table" style="margin-left: auto; margin-right: auto;">
-<thead>
-<tr>
-<th style="text-align:right;">
-Season
-</th>
-<th style="text-align:left;">
-Round
-</th>
-<th style="text-align:left;">
-Date
-</th>
-<th style="text-align:right;">
-Local.start.time
-</th>
-<th style="text-align:left;">
-Venue
-</th>
-<th style="text-align:right;">
-Attendance
-</th>
-<th style="text-align:left;">
-Home.team
-</th>
-<th style="text-align:left;">
-Away.team
-</th>
-<th style="text-align:left;">
-match_id
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:right;">
-1998
-</td>
-<td style="text-align:left;">
-1
-</td>
-<td style="text-align:left;">
-1998-03-28
-</td>
-<td style="text-align:right;">
-1410
-</td>
-<td style="text-align:left;">
-Princes Park
-</td>
-<td style="text-align:right;">
-20957
-</td>
-<td style="text-align:left;">
-Carlton
-</td>
-<td style="text-align:left;">
-Adelaide
-</td>
-<td style="text-align:left;">
-1998-03-28-Carlton-Adelaide
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-1998
-</td>
-<td style="text-align:left;">
-2
-</td>
-<td style="text-align:left;">
-1998-04-05
-</td>
-<td style="text-align:right;">
-1410
-</td>
-<td style="text-align:left;">
-Football Park
-</td>
-<td style="text-align:right;">
-40602
-</td>
-<td style="text-align:left;">
-Adelaide
-</td>
-<td style="text-align:left;">
-Fremantle
-</td>
-<td style="text-align:left;">
-1998-04-05-Adelaide-Fremantle
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-1998
-</td>
-<td style="text-align:left;">
-3
-</td>
-<td style="text-align:left;">
-1998-04-12
-</td>
-<td style="text-align:right;">
-1410
-</td>
-<td style="text-align:left;">
-Waverley Park
-</td>
-<td style="text-align:right;">
-20532
-</td>
-<td style="text-align:left;">
-St Kilda
-</td>
-<td style="text-align:left;">
-Adelaide
-</td>
-<td style="text-align:left;">
-1998-04-12-St Kilda-Adelaide
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-1998
-</td>
-<td style="text-align:left;">
-4
-</td>
-<td style="text-align:left;">
-1998-04-19
-</td>
-<td style="text-align:right;">
-1410
-</td>
-<td style="text-align:left;">
-Football Park
-</td>
-<td style="text-align:right;">
-41476
-</td>
-<td style="text-align:left;">
-Port Adelaide
-</td>
-<td style="text-align:left;">
-Adelaide
-</td>
-<td style="text-align:left;">
-1998-04-19-Port Adelaide-Adelaide
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-1998
-</td>
-<td style="text-align:left;">
-5
-</td>
-<td style="text-align:left;">
-1998-04-26
-</td>
-<td style="text-align:right;">
-1520
-</td>
-<td style="text-align:left;">
-Football Park
-</td>
-<td style="text-align:right;">
-39974
-</td>
-<td style="text-align:left;">
-Adelaide
-</td>
-<td style="text-align:left;">
-Geelong
-</td>
-<td style="text-align:left;">
-1998-04-26-Adelaide-Geelong
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-1998
-</td>
-<td style="text-align:left;">
-6
-</td>
-<td style="text-align:left;">
-1998-05-03
-</td>
-<td style="text-align:right;">
-1410
-</td>
-<td style="text-align:left;">
-M.C.G.
-</td>
-<td style="text-align:right;">
-23041
-</td>
-<td style="text-align:left;">
-North Melbourne
-</td>
-<td style="text-align:left;">
-Adelaide
-</td>
-<td style="text-align:left;">
-1998-05-03-North Melbourne-Adelaide
-</td>
-</tr>
-</tbody>
-</table>
-<p>Lastly, we want to distinguish regular season matches from finals, since attendance at finals matches is typically higher. We can do this by creating a new grouping variable that can be used to separate these competition phases during the analysis.</p>
-<pre class="r"><code># Standardise the naming of finals rounds
-attendance_data$Round &lt;- recode(
-    attendance_data$Round,
-    QF = &quot;Qualifying Final&quot;,
-    EF = &quot;Elimination Final&quot;,
-    SF = &quot;Semi Final&quot;,
-    PF = &quot;Preliminary Final&quot;,
-    GF = &quot;Grand Final&quot;,
-    .default = attendance_data$Round)
-
-# Create new variable for competition phase
-attendance_data &lt;- attendance_data %&gt;%
-    mutate(phase = case_when(
-        Round == &quot;Qualifying Final&quot;          ~ &quot;Finals&quot;,
-        Round == &quot;Elimination Final&quot;         ~ &quot;Finals&quot;,
-        Round == &quot;Semi Final&quot;                ~ &quot;Finals&quot;,
-        Round == &quot;Preliminary Final&quot;         ~ &quot;Finals&quot;,
-        Round == &quot;Grand Final&quot;               ~ &quot;Finals&quot;,
-        TRUE                                 ~ &quot;Regular season&quot;
-    ))</code></pre>
+<div id="data-preparation" class="section level2">
+<h2>Data preparation</h2>
 </div>
-<div id="match-attendances-over-time" class="section level1">
-<h1>Match attendances over time</h1>
-<p>How have attendance figures changed from year to year? Let’s take a look at <strong>regular season matches</strong> first. We can investigate this visually. One approach is to plot one data point for the attendance at every match in every season^. This will produce a lot of dots (4,051 dots to be precise!), so we can also use a box plot to get a sense of central tendency within any given season.</p>
-<p><em>^ I like to plot every data point available, at least in the exploratory phase of analysis, to get a sense for all of the data. If we only plot summary data (e.g., the box plots only - medians and interquartile ranges, totals per season, means with standard deviations), then we miss out on seeing the <strong>spread</strong> of the data.</em></p>
-<pre class="r"><code># Subset to regular season matches only
-attendance_regular_season &lt;- attendance_data %&gt;%
-    filter(phase == &quot;Regular season&quot;)
-
-# Create a list to store common theme options for use across plots
-plotFeatures &lt;- theme(
-    plot.title = element_text(size = 16),
-    plot.subtitle = element_text(size = 14),
-  axis.text.x = element_text(size = 11),
-    axis.title = element_text(size = 16),
-    axis.text.y = element_text(size = 11),
-    legend.position = &quot;none&quot;)
-
-# Build the plot
-p &lt;- ggplot(attendance_regular_season,
-                        aes(x = Season, y = Attendance, group = Season))
-p &lt;- p + geom_boxplot(outlier.shape = NA, coef = 0)
-p &lt;- p + geom_point(alpha = 0.1, size = 3, colour = &quot;#0072B2&quot;)
-p &lt;- p + scale_x_continuous(
-    breaks = seq(1998, 2018, by = 2))
-p &lt;- p + scale_y_continuous(
-      label = unit_format(unit = &quot;k&quot;, scale = 1e-3),
-      limits = c(0, 95000),
-    breaks = seq(0, 90000, by = 10000))
-p &lt;- p + labs(
-    title = &quot;Attendance at Australian Football League matches&quot;,
-    subtitle = &quot;Regular season matches only, from 1998 to 2018&quot;,
-    x = &quot;Season&quot;,
-    y = &quot;# in attendance&quot;)
-p &lt;- p + plotFeatures
-plot_attendance_regular_season &lt;- p
-
-# Display the plot
-plot_attendance_regular_season</code></pre>
-<p><img src="/post/2019-01-12-getting-to-know-the-fitzroy-package-afl-game-statistics_files/figure-html/plot_over_time_regular_season-1.png" width="672" /></p>
-<p>A couple things that stood out to me on initial inspection of this plot:</p>
+<div id="references" class="section level2">
+<h2>References</h2>
 <ul>
-<li>1999, 2003, 2004, and 2005 are notable for lacking extreme outliers as seen in all other seasons. The largest regular season crowd in these four seasons is under 75,000 (in 1999).</li>
-<li>The yearly median of regular season attendance has undulated over the last 20 years.</li>
+<li>The Roar, <a href="https://www.theroar.com.au/2017/02/03/the-rule-differences-for-the-afl-womens-competition/">‘The rule differences for the AFL women’s competition’</a></li>
+<li>AFL.com.au, <a href="http://www.fremantlefc.com.au/news/2016-10-19/afl-womens-rules-announced">‘AFLW rules for 2017’</a></li>
 </ul>
-<p>Ok, so what about attendance at finals matches? Let’s take a look:</p>
-<pre class="r"><code># Subset to finals matches only
-attendance_finals &lt;- attendance_data %&gt;%
-    filter(phase == &quot;Finals&quot;)
-
-# Build the plot
-p &lt;- ggplot(attendance_finals,
-                        aes(x = Season, y = Attendance, group = Season))
-p &lt;- p + geom_boxplot(outlier.shape = NA, coef = 0)
-p &lt;- p + geom_point(alpha = 0.5, size = 3, colour = &quot;#D55E00&quot;)
-p &lt;- p + scale_x_continuous(
-    breaks = seq(1998, 2018, by = 2))
-p &lt;- p + scale_y_continuous(
-      label = unit_format(unit = &quot;k&quot;, scale = 1e-3),
-      limits = c(0, 105000),
-    breaks = seq(0, 100000, by = 10000))
-p &lt;- p + labs(
-    title = &quot;Attendance at Australian Football League matches&quot;,
-    subtitle = &quot;Finals matches only, from 1998 to 2018&quot;,
-    x = &quot;Season&quot;,
-    y = &quot;# in attendance&quot;)
-p &lt;- p + plotFeatures
-plot_attendance_finals &lt;- p
-
-# Display the plot
-plot_attendance_finals</code></pre>
-<p><img src="/post/2019-01-12-getting-to-know-the-fitzroy-package-afl-game-statistics_files/figure-html/plot_over_time_finals-1.png" width="672" /></p>
-<p>With there being only a handful of finals matches in any given season, the year-to-year variation in median attendances is unsurprising, as is the within-season variation (as shown by the heights of the boxes, denoting interquartile ranges).</p>
-</div>
-<div id="crowd-size-exposure-by-team" class="section level1">
-<h1>Crowd size ‘exposure’ by team</h1>
-<p>Anyone who follows the AFL competition could quickly surmise that some teams (like Collingwood, Hawthorn, Essendon) would more often play in front of large crowds, compared to other teams (like North Melbourne, the Gold Coast Suns). With this data set, we can quantify how much teams differ from each other in terms of the crowd sizes they play in front of.</p>
-<p>For the histograms below, I’ve used bins of 2,500. Let’s take a look at crowd sizes when teams play at <strong>home</strong>:</p>
-<pre class="r"><code># Build the plot
-p &lt;- ggplot(attendance_regular_season,
-                        aes(x = Attendance, fill = Home.team))
-p &lt;- p + facet_wrap(~Home.team)
-p &lt;- p + geom_histogram(binwidth = 2500)
-p &lt;- p + plotFeatures
-p &lt;- p + scale_x_continuous(
-      label = unit_format(unit = &quot;k&quot;, scale = 1e-3),
-    breaks = seq(0, 100000, by = 20000))
-p &lt;- p + labs(
-    title = &quot;Distribution of crowd sizes when playing at HOME&quot;,
-    subtitle = &quot;Regular season matches only, from 1998 to 2018&quot;,
-    x = &quot;# in attendance&quot;,
-    y = &quot;Count of games played per bin&quot;)
-p &lt;- p + plotFeatures
-p &lt;- p + theme(strip.text = element_text(size = 10))
-plot_attendance_home &lt;- p
-
-# Display the plot
-plot_attendance_home</code></pre>
-<p><img src="/post/2019-01-12-getting-to-know-the-fitzroy-package-afl-game-statistics_files/figure-html/plot_attendance_home_team-1.png" width="864" /></p>
-<p>Similarly, we can look at crowd sizes when teams play away:</p>
-<pre class="r"><code># Build the plot
-p &lt;- ggplot(attendance_regular_season,
-                        aes(x = Attendance, fill = Away.team))
-p &lt;- p + facet_wrap(~Away.team)
-p &lt;- p + geom_histogram(binwidth = 2500)
-p &lt;- p + plotFeatures
-p &lt;- p + scale_x_continuous(
-      label = unit_format(unit = &quot;k&quot;, scale = 1e-3),
-    breaks = seq(0, 100000, by = 20000))
-p &lt;- p + labs(
-    title = &quot;Distribution of crowd sizes when playing AWAY&quot;,
-    subtitle = &quot;Regular season matches only, from 1998 to 2018&quot;,
-    x = &quot;# in attendance&quot;,
-    y = &quot;Count of games played per bin&quot;)
-p &lt;- p + plotFeatures
-p &lt;- p + theme(strip.text = element_text(size = 10))
-plot_attendance_away &lt;- p
-
-# Display the plot
-plot_attendance_away</code></pre>
-<p><img src="/post/2019-01-12-getting-to-know-the-fitzroy-package-afl-game-statistics_files/figure-html/plot_attendance_away_team-1.png" width="864" /></p>
-<hr />
-<p>Although I don’t work in footy now, I do feel a sense of calm that, through packages like <code>fitzRoy</code>, others may be saved from some of the <strong><a href="https://twitter.com/jacquietran/status/1064434673005162496">time-consuming, headache-inducing frustrations</a></strong> that can come with manually scraping, cleaning, and merging data sets across disparate sources…</p>
-<div class="figure">
-<img src="/img/post/manual-scraping-woes.png" />
-
-</div>
 </div>
 
     </div>
@@ -712,8 +279,8 @@ plot_attendance_away</code></pre>
 </article>
 <ul class="actions pagination">
     
-        <li><a href="/2018/07/20/text-mining-of-wimbledon-tweets-using-rtweet-and-tidytext/"
-                class="button big previous">Text mining of Wimbledon tweets using rtweet and tidytext</a></li>
+        <li><a href="/2019/01/26/women-sport-research-gaps-and-opportunities/"
+                class="button big previous">Women&#39;s sport research: Gaps and opportunities</a></li>
     
 
     
@@ -733,43 +300,43 @@ plot_attendance_away</code></pre>
             
 
 
-<li><a href="//twitter.com/share?url=%2f2019%2f01%2f12%2fgetting-to-know-the-fitzroy-package-afl-game-statistics%2f&text=Getting%20to%20know%20the%20fitzRoy%20package%20%28AFL%20game%20statistics%29&via=jacquietran" target="_blank" class="share-btn twitter">
+<li><a href="//twitter.com/share?url=%2f2019%2f01%2f26%2faflw-match-analysis%2f&text=AFLW%20%2b%20fitzRoy%3a%20Analysing%20women%27s%20footy%20using%20match%20data&via=jacquietran" target="_blank" class="share-btn twitter">
     <i class="fa fa-twitter"></i>
     <p>Twitter</p>
 </a></li>
 
 
-<li><a href="//plus.google.com/share?url=%2f2019%2f01%2f12%2fgetting-to-know-the-fitzroy-package-afl-game-statistics%2f" target="_blank" class="share-btn google-plus">
+<li><a href="//plus.google.com/share?url=%2f2019%2f01%2f26%2faflw-match-analysis%2f" target="_blank" class="share-btn google-plus">
     <i class="fa fa-google-plus"></i>
     <p>Google+</p>
 </a></li>
 
 
-<li><a href="//www.facebook.com/sharer/sharer.php?u=%2f2019%2f01%2f12%2fgetting-to-know-the-fitzroy-package-afl-game-statistics%2f" target="_blank" class="share-btn facebook">
+<li><a href="//www.facebook.com/sharer/sharer.php?u=%2f2019%2f01%2f26%2faflw-match-analysis%2f" target="_blank" class="share-btn facebook">
     <i class="fa fa-facebook"></i>
     <p>Facebook</p>
 </a></li>
 
 
-<li><a href="//reddit.com/submit?url=%2f2019%2f01%2f12%2fgetting-to-know-the-fitzroy-package-afl-game-statistics%2f&title=Getting%20to%20know%20the%20fitzRoy%20package%20%28AFL%20game%20statistics%29" target="_blank" class="share-btn reddit">
+<li><a href="//reddit.com/submit?url=%2f2019%2f01%2f26%2faflw-match-analysis%2f&title=AFLW%20%2b%20fitzRoy%3a%20Analysing%20women%27s%20footy%20using%20match%20data" target="_blank" class="share-btn reddit">
     <i class="fa fa-reddit-alien"></i>
     <p>Reddit</p>
 </a></li>
 
 
-<li><a href="//www.linkedin.com/shareArticle?url=%2f2019%2f01%2f12%2fgetting-to-know-the-fitzroy-package-afl-game-statistics%2f&title=Getting%20to%20know%20the%20fitzRoy%20package%20%28AFL%20game%20statistics%29" target="_blank" class="share-btn linkedin">
+<li><a href="//www.linkedin.com/shareArticle?url=%2f2019%2f01%2f26%2faflw-match-analysis%2f&title=AFLW%20%2b%20fitzRoy%3a%20Analysing%20women%27s%20footy%20using%20match%20data" target="_blank" class="share-btn linkedin">
     <i class="fa fa-linkedin"></i>
     <p>LinkedIn</p>
 </a></li>
 
 
-<li><a href="//www.stumbleupon.com/submit?url=%2f2019%2f01%2f12%2fgetting-to-know-the-fitzroy-package-afl-game-statistics%2f&title=Getting%20to%20know%20the%20fitzRoy%20package%20%28AFL%20game%20statistics%29" target="_blank" class="share-btn stumbleupon">
+<li><a href="//www.stumbleupon.com/submit?url=%2f2019%2f01%2f26%2faflw-match-analysis%2f&title=AFLW%20%2b%20fitzRoy%3a%20Analysing%20women%27s%20footy%20using%20match%20data" target="_blank" class="share-btn stumbleupon">
     <i class="fa fa-stumbleupon"></i>
     <p>StumbleUpon</p>
 </a></li>
 
 
-<li><a href="mailto:?subject=Check out this post by Jacquie%20Tran&body=%2f2019%2f01%2f12%2fgetting-to-know-the-fitzroy-package-afl-game-statistics%2f" target="_blank" class="share-btn email">
+<li><a href="mailto:?subject=Check out this post by Jacquie%20Tran&body=%2f2019%2f01%2f26%2faflw-match-analysis%2f" target="_blank" class="share-btn email">
     <i class="fa fa-envelope"></i>
     <p>Email</p>
 </a></li>
@@ -881,35 +448,35 @@ plot_attendance_away</code></pre>
                     <li>
                         <article>
                             <header>
+                                <h3><a href="/2019/01/26/aflw-match-analysis/">AFLW &#43; fitzRoy: Analysing women&#39;s footy using match data</a></h3>
+                                
+                                <time class="published" datetime=
+                                    '2019-01-26'>
+                                    January 26, 2019</time>
+                            </header>
+                        </article>
+                    </li>
+                
+                    <li>
+                        <article>
+                            <header>
+                                <h3><a href="/2019/01/26/women-sport-research-gaps-and-opportunities/">Women&#39;s sport research: Gaps and opportunities</a></h3>
+                                
+                                <time class="published" datetime=
+                                    '2019-01-26'>
+                                    January 26, 2019</time>
+                            </header>
+                        </article>
+                    </li>
+                
+                    <li>
+                        <article>
+                            <header>
                                 <h3><a href="/2019/01/12/getting-to-know-the-fitzroy-package-afl-game-statistics/">Getting to know the fitzRoy package (AFL game statistics)</a></h3>
                                 
                                 <time class="published" datetime=
                                     '2019-01-12'>
                                     January 12, 2019</time>
-                            </header>
-                        </article>
-                    </li>
-                
-                    <li>
-                        <article>
-                            <header>
-                                <h3><a href="/2018/07/20/text-mining-of-wimbledon-tweets-using-rtweet-and-tidytext/">Text mining of Wimbledon tweets using rtweet and tidytext</a></h3>
-                                
-                                <time class="published" datetime=
-                                    '2018-07-20'>
-                                    July 20, 2018</time>
-                            </header>
-                        </article>
-                    </li>
-                
-                    <li>
-                        <article>
-                            <header>
-                                <h3><a href="/2018/01/04/how-much-do-you-get-paid-part-3/">How much do you get paid? Part III - Comparison by discipline</a></h3>
-                                
-                                <time class="published" datetime=
-                                    '2018-01-04'>
-                                    January 4, 2018</time>
                             </header>
                         </article>
                     </li>
@@ -957,7 +524,7 @@ plot_attendance_away</code></pre>
                         <article>
                             <header>
                                 <a href="/categories/general-ramblings/">General ramblings</a>
-                                <span style="float:right;">1</span>
+                                <span style="float:right;">2</span>
                             </header>
                         </article>
                     </li>
@@ -966,7 +533,7 @@ plot_attendance_away</code></pre>
                         <article>
                             <header>
                                 <a href="/categories/on-field-analyses/">On-field analyses</a>
-                                <span style="float:right;">1</span>
+                                <span style="float:right;">2</span>
                             </header>
                         </article>
                     </li>
