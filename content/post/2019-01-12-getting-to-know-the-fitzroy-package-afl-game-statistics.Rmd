@@ -12,11 +12,14 @@ tags:
   - r stats
 ---
 
+![](/img/post/1280px-2017_AFL_Grand_Final_panorama_during_national_anthem.jpg)
+<p style="text-align: right">(source: **[Wikimedia](https://upload.wikimedia.org/wikipedia/commons/thumb/4/42/2017_AFL_Grand_Final_panorama_during_national_anthem.jpg/1280px-2017_AFL_Grand_Final_panorama_during_national_anthem.jpg)**)</p>
+
 I shifted across the ditch early in 2018 to take up a role with High Performance Sport New Zealand. Remarkably, the one-year anniversary of our arrival here is right on the door step; I've learned so much in that time, particularly around qualitative methods and analyses. I enjoy the richness of insight that can be drawn from analysing text data, but a part of me does miss getting to work with numbers as much as I used to. And so, I decided I'd scratch the quant itch and get to know the `fitzRoy` **[R package by James Day](https://github.com/jimmyday12/fitzRoy)**.
 
 In my stint at the Geelong Cats Football Club (AFL), I spent a lot of time retrieving, cleaning, merging, and wrangling data sets. An eyeball estimate of my personal time tracking data suggests I spent 70-80% of my 'analytics time' doing data preparation in those years. Yikes.
 
-For what it's worth, this experience is incredibly common amongst those who work with data:
+FWIW this experience is incredibly common amongst those who work with data:
 
 <center><blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr">Being a data scientist means cleaning data from 1 source with 7 files for 7 years of information 7 ways because the format is different every year...<br><br>It&#39;s almost biblical... almost... <a href="https://twitter.com/hashtag/rstats?src=hash&amp;ref_src=twsrc%5Etfw">#rstats</a> <a href="https://t.co/Tnv9N2853D">pic.twitter.com/Tnv9N2853D</a></p>&mdash; Kris Stevens (@kristophrdelane) <a href="https://twitter.com/kristophrdelane/status/986663543067107328?ref_src=twsrc%5Etfw">April 18, 2018</a></blockquote>
 <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script></center>
