@@ -1,0 +1,25 @@
+---
+title: 'AFLW + fitzRoy, Part II: Team-by-team matchplay profiles'
+author: Jacquie Tran
+date: '2019-01-27'
+slug: aflw-match-analysis-part-ii
+categories:
+  - On-field analyses
+tags:
+  - football
+  - aflw
+  - r stats
+  - sport science
+  - sports analytics
+  - web scraping
+  - women's sport
+draft: yes
+---
+
+I'll show how the available match data can be used to:
+
+1. Create team-by-team matchplay profiles; and
+2. Investigate the game statistics that are associated with successful team outcomes.
+
+As an aside, I hope to demonstrate what can be gleaned from a small sample, while also acknowledging their limitations.
+

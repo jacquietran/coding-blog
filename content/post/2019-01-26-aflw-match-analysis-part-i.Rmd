@@ -1,0 +1,374 @@
+---
+title: 'AFLW + fitzRoy, Part I: Obtaining women''s footy data for match analysis'
+author: Jacquie Tran
+date: '2019-01-27'
+slug: aflw-match-analysis-part-i
+categories:
+  - On-field analyses
+tags:
+  - football
+  - sport science
+  - sports analytics
+  - web scraping
+  - r stats
+draft: yes
+---
+
+![](/img/post/First_AFLW_Ball_Up_03.02.17.jpg)
+<p style="text-align: right">(source: **[Wikimedia](https://commons.wikimedia.org/wiki/File:First_AFLW_Ball_Up_03.02.17.jpg)**)</p>
+
+The countdown is well and truly on.
+
+We are less than 1 week away from the first bounce of AFLW 3.0, the 3rd season of the women's national Australian football league. As an Aussie living abroad, a footy fan, and a supporter of the increasing professionalisation of women's sport, I'm excited to watch closely as the next chapter of the AFLW story unfolds.
+
+How will Geelong and North Melbourne, new teams to the national league in 2019, fare against the 8 teams who have participated in AFLW seasons 1 and 2?
+
+What will new draftees like **[Maddie Prespakis](https://www.youtube.com/watch?v=PAhPnRRsm0E)** and **[Nina Morrison](http://www.geelongcats.com.au/video/2018-10-23/nina-morrison-highlights)** bring to the mix at senior-level?
+
+Which **[international players](https://www.theguardian.com/sport/2018/sep/21/irelands-emerald-armada-set-to-take-the-aflw-by-storm)** and **[cross-coders](https://www.theguardian.com/sport/2018/sep/14/fearsome-sharni-layton-well-set-to-join-elite-band-of-sport-switchers)** will show the potential success to be had in talent transfers?
+
+How will the **[conference format](https://thewomensgame.com/news/opinion-aflw-conference-format-518039)** and **[rule changes](https://www.theguardian.com/sport/2018/nov/07/aflw-tweaks-rules-for-next-season-to-promote-more-scoring)** play out?
+
+Fascinating possibilities abound, but there's lots to be learned from looking back too.
+
+## The analysis questions
+
+**[In my last post](https://underthehood.jacquietran.com/2019/01/12/getting-to-know-the-fitzroy-package-afl-game-statistics/)**, I played around with the `fitzRoy` package and made a mental note of its functionality around AFLW data.
+
+I decided to follow-up with a series of post exploring match data from the 2017 and 2018 AFLW seasons. In this post, I provide a codethrough that demonstrates how to obtain publicly available AFLW match data and prepare it for further analysis.
+
+## Getting started
+
+In a new R session, load up the libraries (packages) to be used in this codethrough.
+
+``` {r libraries, message = FALSE}
+
+library(fitzRoy)
+library(dplyr)
+library(stringr)
+library(knitr)
+library(kableExtra)
+library(tidyr)
+library(ggplot2)
+
+```
+
+## Obtaining match data
+
+Thanks to the excellent **[fitzRoy package](https://underthehood.jacquietran.com/2019/01/12/getting-to-know-the-fitzroy-package-afl-game-statistics/)**, retrieving AFLW match data is a cinch. The `get_aflw_match_data()` function 
+
+``` {r import_match_data, message = FALSE, warning = FALSE}
+
+aflw_match_data <- get_aflw_match_data()
+
+# I've suppressed warnings from this code chunk, so if you run this code
+# locally, don't be alarmed - warnings are returned for the listed Match.Id
+# values that correspond to matches yet to be played in 2019.
+
+```
+
+## Inspecting match data
+
+If you're working in RStudio, the `View()` function is useful for looking at rectangular data sets in a spreadsheet-like format.
+
+``` {r view_fx, eval = FALSE}
+
+# Run this in RStudio to produce the screenshot below
+# which is interactive: you can sort and filter on columns
+# within the tab that opens up
+View(aflw_match_data)
+
+```
+
+![](/img/post/view_fx.png)
+
+There are a range of useful R functions for retrieving meta-data about, well, the data you're working with. For instance, we can use `str()` to find out useful details like the number of observations (rows), the number of variables (columns), the name of each variable, and the data type for each variable (e.g., character string, integer, numeric, and so on).
+
+``` {r str_fx}
+
+str(aflw_match_data)
+
+```
+
+From visually inspecting the raw data and obtaining a meta-data summary, we know the following things about the AFLW match data set:
+
+- The data is structured so that the information pertaining to each match is contained on one row. This means that the statistics for any two opposing teams are stored along the same row.
+- Statistics for the home and away teams are distinguished by the prefix _'Home.'_ and _'Away.'_.
+- This data set includes 'high-level' information about each match, such as descriptors of the weather, the number of goals and behinds scored by each team, the total points scored by each team, and more.
+- The data frame is wide, with each of the 'measured' variables presented in distinct columns. (For more on this, have a read of **[this article by Matti Vuorre on wide and long data.](https://mvuorre.github.io/toolbox/reshape.html)**)
+
+Scrolling through the 'temperature' values, I also noticed that all matches in Rounds 1 to 3 of the 2017 season == 18. I am sceptical about the accuracy of this data given that weather is quite variable around Australia (as per the **[Bureau of Meteorology](http://www.bom.gov.au/jsp/ncc/climate_averages/temperature/index.jsp?maptype=1&period=feb#maps)**), and the AFLW season takes place in the summer months.
+
+## Obtaining detailed match data
+
+To obtain game statistics for each team in each match (e.g., number of kicks, handballs, tackles, marks), the `fitzRoy` package again has a simple function for retrieving this data, which requires a vector of `Match.ID` values. Since I want game statistics data from all AFLW matches played to date, I'll obtain 2017 and 2018 match IDs from the `aflw_match_data` set that we just retrieved.
+
+``` {r import_detailed_data, message = FALSE}
+
+# Vector of match IDs to retrieve detailed game statistics for
+# Excluding match IDs for the 2019 season - yet to be played
+match_id_vec <- aflw_match_data %>%
+	select(Match.Id) %>%
+	filter(!str_detect(Match.Id, "2019"))
+
+# Retrieve detailed statistics for match IDs specified in match_id_vec
+aflw_detailed <- get_aflw_detailed_data(match_id_vec$Match.Id)
+
+```
+
+## Inspecting the detailed match data
+
+Again, the `View()` and `str()` functions are helpful for initially inspecting the data set so you can take a look at its structure and contents. Using these functions, we learn that the AFLW detailed match data set has a similar structure to the 'high-level' match data we retrieved before (i.e., it's in wide format, with one row per match so that both team's statistics presented on the same row). This is handy because it means merging the data sets will be fairly straightforward.
+
+The `str()` includes information about all variables in the data set, including variable names, but sometimes you may be interested in looking at variable names _only_ - without additional meta-data such as the type of data stored in each variable. To do this, use the `names()` function like so:
+
+``` {r names_fx}
+
+names(aflw_detailed)
+
+```
+
+That loooooonnnng list of variables shows us that we now have a range of game statistics to analyse, thanks to the `fitzRoy::get_aflw_detailed_data()` function	. This data set primarily includes simple counts of game actions (e.g., total number of kicks), or derived variables that convey proportion and provide measures of accuracy or 'efficiency' (e.g., **[disposal efficiency](http://www.bom.gov.au/jsp/ncc/climate_averages/temperature/index.jsp?maptype=1&period=feb#maps)** is the number of disposals that are effectively received by a team-mate, divided by the total number of disposals).
+
+There are also some variables here like metres gained - a measure of the accumulated forward movement of the ball towards a team's goals. This variable and a few others in this data set are routinely measured in the AFL (the men's national competition) but not in the AFLW, so we will need to disregard these variables as we progress the analysis.
+
+By combining the 'high-level' information stored in the match data with the detailed game statistics data sets, we can use common match analysis approaches to understand AFLW team performance, by examining which game actions are associated (or not!) with game outcomes.
+
+## Data preparation
+
+Some data wrangling is needed to modify the data structure to suit this analysis, and tidy it up so it contains only the variables we will need.
+
+The code below wrangles `aflw_match_data` so that every match has two rows, with one row for the home team's game statistics and one row for the away team's game statistics.
+
+``` {r prepare_match_data, message = FALSE}
+
+# Create a subset of aflw_match_data for HOME teams
+home_teams <- aflw_match_data %>%
+  select(Match.Id, Round.Id, Competition.Id, Venue, Local.Start.Time,
+         Round.Number, Round.Abbreviation, Weather.Type, Weather.Description,
+         Temperature, starts_with("Home"), Away.Points) %>%
+	# Rename variables for ease of merging and analysis
+  rename(team = Home.Team, goals = Home.Goals, behinds = Home.Behinds,
+         points_for = Home.Points, points_against = Away.Points,
+         behinds_left = Home.Left.Behinds, behinds_right = Home.Right.Behinds,
+         posters_left = Home.Left.Posters, posters_right = Home.Right.Posters,
+         behinds_rushed = Home.Rushed.Behinds,
+         behinds_touched = Home.Touched.Behinds) %>%
+  mutate(home_or_away = "Home")
+
+# Create a subset of aflw_match_data for AWAY teams
+away_teams <- aflw_match_data %>%
+  select(Match.Id, Round.Id, Competition.Id, Venue, Local.Start.Time,
+         Round.Number, Round.Abbreviation, Weather.Type, Weather.Description,
+         Temperature, starts_with("Away"), Home.Points) %>%
+	# Rename variables for ease of merging and analysis
+  rename(team = Away.Team, goals = Away.Goals, behinds = Away.Behinds,
+         points_for = Away.Points, points_against = Home.Points,
+         behinds_left = Away.Left.Behinds, behinds_right = Away.Right.Behinds,
+         posters_left = Away.Left.Posters, posters_right = Away.Right.Posters,
+         behinds_rushed = Away.Rushed.Behinds,
+         behinds_touched = Away.Touched.Behinds) %>%
+  mutate(home_or_away = "Away")
+
+# Row-bind the home and away subsets to create new data structure
+# where one row == one team in each match, so each match will have two rows
+aflw_match_data_clean <- rbind(home_teams, away_teams)
+
+# Re-order the data set
+aflw_match_data_clean <- aflw_match_data_clean[order(
+  aflw_match_data_clean$Match.Id,
+  rev(aflw_match_data_clean$home_or_away),
+  decreasing = FALSE), ]
+
+# Drop NA rows for fixtured matches that have not been played yet
+aflw_match_data_clean <- aflw_match_data_clean %>%
+  filter(!is.na(goals))
+
+# Create new variables for match outcomes
+aflw_match_data_clean <- aflw_match_data_clean %>%
+  mutate(score_margin = points_for - points_against, # continuous variable
+         match_outcome = case_when(                  # categorical variable
+           score_margin > 0 ~ "Win",
+           score_margin < 0 ~ "Loss",
+           TRUE             ~ "Draw"))
+
+```
+
+We follow the same logic to wrangle `aflw_detailed_data` into the same structure as `aflw_match_data_clean`.
+
+``` {r prepare_detailed_data}
+
+# Subset to variables that will be useful for the analysis
+# Variables are excluded here because they don't contain useful or correct data
+aflw_detailed_selected <- aflw_detailed %>%
+  select(Match.Id, contains("stats.totals"), contains("away.team"),
+         contains("home.team"), -contains("behinds"), -contains("goals"),
+         -contains("interChange"), -contains("lastUpdated"),
+         -contains("metresGained"), -contains("ranking"),
+         -contains("ratingPoints"), -contains("scoreInvolvements"),
+         -contains("superGoals"))
+
+# Create a subset of aflw_detailed_selected for HOME teams
+aflw_detailed_home <- aflw_detailed_selected %>%
+  select(Match.Id, contains("home.team"),
+         contains("stats.totals"), -contains("away")) %>%
+	# Rename variables for ease of merging and analysis
+  rename(team_abbr = home.team.teamAbbr, team_id = home.team.teamId,
+         team = home.team.teamName, team_nickname = home.team.teamNickname,
+         bounces = home.stats.totals.bounces,
+         clangers = home.stats.totals.clangers,
+         clearances_centre = home.stats.totals.clearances.centreClearances,
+         clearances_stoppage = home.stats.totals.clearances.stoppageClearances,
+         clearances_total = home.stats.totals.clearances.totalClearances,
+         marks_contested = home.stats.totals.contestedMarks,
+         possessions_contested = home.stats.totals.contestedPossessions,
+         disposals_efficiency = home.stats.totals.disposalEfficiency,
+         disposals = home.stats.totals.disposals,
+         dream_team_points = home.stats.totals.dreamTeamPoints,
+         frees_against = home.stats.totals.freesAgainst,
+         frees_for = home.stats.totals.freesFor,
+         goal_accuracy = home.stats.totals.goalAccuracy,
+         goal_assists = home.stats.totals.goalAssists,
+         goal_efficiency = home.stats.totals.goalEfficiency,
+         handballs = home.stats.totals.handballs,
+         hitouts = home.stats.totals.hitouts,
+         inside50s = home.stats.totals.inside50s,
+         intercepts = home.stats.totals.intercepts,
+         kicks = home.stats.totals.kicks, marks = home.stats.totals.marks,
+         marks_inside50 = home.stats.totals.marksInside50,
+         one_percenters = home.stats.totals.onePercenters,
+         rebound50s = home.stats.totals.rebound50s,
+         shot_efficiency = home.stats.totals.shotEfficiency,
+         shots_at_goal = home.stats.totals.shotsAtGoal,
+         tackles = home.stats.totals.tackles,
+         tackles_inside50 = home.stats.totals.tacklesInside50,
+         possessions_total = home.stats.totals.totalPossessions,
+         turnovers = home.stats.totals.turnovers,
+         possessions_uncontested = home.stats.totals.uncontestedPossessions)
+
+# Create a subset of aflw_detailed_selected for AWAY teams
+aflw_detailed_away <- aflw_detailed_selected %>%
+  select(Match.Id, contains("away.team"),
+         contains("stats.totals"), -contains("home")) %>%
+	# Rename variables for ease of merging and analysis
+  rename(team_abbr = away.team.teamAbbr, team_id = away.team.teamId,
+         team = away.team.teamName, team_nickname = away.team.teamNickname,
+         bounces = away.stats.totals.bounces,
+         clangers = away.stats.totals.clangers,
+         clearances_centre = away.stats.totals.clearances.centreClearances,
+         clearances_stoppage = away.stats.totals.clearances.stoppageClearances,
+         clearances_total = away.stats.totals.clearances.totalClearances,
+         marks_contested = away.stats.totals.contestedMarks,
+         possessions_contested = away.stats.totals.contestedPossessions,
+         disposals_efficiency = away.stats.totals.disposalEfficiency,
+         disposals = away.stats.totals.disposals,
+         dream_team_points = away.stats.totals.dreamTeamPoints,
+         frees_against = away.stats.totals.freesAgainst,
+         frees_for = away.stats.totals.freesFor,
+         goal_accuracy = away.stats.totals.goalAccuracy,
+         goal_assists = away.stats.totals.goalAssists,
+         goal_efficiency = away.stats.totals.goalEfficiency,
+         handballs = away.stats.totals.handballs,
+         hitouts = away.stats.totals.hitouts,
+         inside50s = away.stats.totals.inside50s,
+         intercepts = away.stats.totals.intercepts,
+         kicks = away.stats.totals.kicks, marks = away.stats.totals.marks,
+         marks_inside50 = away.stats.totals.marksInside50,
+         one_percenters = away.stats.totals.onePercenters,
+         rebound50s = away.stats.totals.rebound50s,
+         shot_efficiency = away.stats.totals.shotEfficiency,
+         shots_at_goal = away.stats.totals.shotsAtGoal,
+         tackles = away.stats.totals.tackles,
+         tackles_inside50 = away.stats.totals.tacklesInside50,
+         possessions_total = away.stats.totals.totalPossessions,
+         turnovers = away.stats.totals.turnovers,
+         possessions_uncontested = away.stats.totals.uncontestedPossessions)
+
+# Row-bind the home and away subsets to create new data structure
+# where one row == one team in each match, so each match will have two rows
+aflw_detailed_clean <- rbind(aflw_detailed_home, aflw_detailed_away)
+
+```
+
+We have modified the data structure of `aflw_match_data_clean` and `aflw_detailed_clean` and simplified to include only the variables that are useful for this analysis. Now we can use the `left_join()` function from the `dplyr` package to merge the data sets.
+
+``` {r merge_data, message = FALSE}
+
+aflw_merged <- left_join(aflw_match_data_clean, aflw_detailed_clean)
+
+# Check the first few rows to see what the data looks like now
+head(aflw_merged) %>%
+	kable("html") %>%
+	kable_styling() %>%
+	scroll_box(width = "800px", height = "600px") 
+
+```
+
+**Side note:** Everytime I use `dplyr` to merge data sets, I feel immeasurable gratitude to have moved beyond the copy-paste and VLOOKUP approaches of my Excel-heavy past. These techniques are manual, tedious, and most importantly, prone to errors that can be difficult to debug and sometimes impossible to trace. In contrast, `dplyr` joins are elegant, efficient, and the type of join is clear from the name of the function. My go-to reference on this topic is the **[dplyr cheatsheet](https://stat545.com/bit001_dplyr-cheatsheet.html)** by **[Jenny Bryan](https://www.twitter.com/JennyBryan)**.
+
+## Team matchplay profiles
+
+A common way of profiling team attributes using game statistics is to organise actions into different matchplay categories. For this analysis, I'm grouping the actions as follows:
+
+- **Scoring:** Goals, behinds, points for, goal accuracy, goal assists, goal efficiency, shot efficiency, shots at goal.
+- **Offensive actions:** Clearances, marks, possessions, disposals, disposal efficiency, handballs, hitouts, inside 50s, kicks, rebound 50s.
+- **Defensive actions:** Tackles, intercepts, points against.
+- **Errors and penalties:** Clangers, turnovers, frees for and against.
+
+Grouping game statistics in this way allows us to retain detailed information from  variable-specific analyses, while also creating a framework to 'zoom out' and compare teams in terms of general areas of strength and weakness. For example, a team's profile might suggest that they are particularly strong (compared to other teams) in their defensive actions, but are sub-par when it comes to scoring actions.
+
+I like to analyse data in this manner as one of many elements in analysing opposition teams. This approach is useful because you can narrow the focus of your scouting through video. If the data indicates that a team's key strength is their defense, then you might choose to focus your attention on studying clips of their defensive tactics. The numbers alone don't tell the whole story, especially in the case of match data that is currently available in AFLW; the category of 'defensive actions' only includes measures related to tackling, intercepts, and points against (i.e., points allowed). The quantitative analysis gives you guiding information for follow-up analyses and efficiency gains, while watching and analysing game video provides important contextual information such as player positioning, team shape, timing, decisions made, and skill performance. Using the two together can provide a more well-rounded picture of a team's tactics and strategies.
+
+### Scoring actions
+
+``` {r team_profiles_scoring}
+
+# Subset to scoring variables
+aflw_scoring_wide <- aflw_merged %>%
+	select(contains(".Id"), Round.Number, Round.Abbreviation, team, points_for,
+				 goals, behinds, goal_accuracy, goal_assists, goal_efficiency,
+				 shot_efficiency, shots_at_goal)
+# Retain wide format for data summary
+
+# Reshape wide to long for plotting
+aflw_scoring_long <- aflw_scoring_wide %>%
+	gather(points_for, goals, behinds, goal_accuracy, goal_assists,
+				 goal_efficiency, shot_efficiency, shots_at_goal,
+				 key = "variable", value = "value") %>%
+	# Order factor levels within $variable
+	# to specify order of appearance when plotted
+		mutate(variable = factor(variable,
+													 levels = c("points_for", "goals", "behinds",
+													 					 "goal_accuracy", "goal_assists",
+													 					 "goal_efficiency", "shot_efficiency",
+													 					 "shots_at_goal")))
+
+# TODO: Create data summary
+# TODO: Identify top 3 teams for each metric
+
+# Plot
+p <- ggplot(aflw_scoring_long, aes(x = team, y = value))
+p <- p + facet_wrap(~variable, nrow = 2, scales = "free_x")
+p <- p + geom_boxplot(aes(group = team), outlier.shape = NA)
+p <- p + geom_point(alpha = 1/3, size = 3, aes(colour = team))
+p <- p + coord_flip()
+p <- p + theme(legend.position = "none")
+
+```
+
+### Offensive actions
+
+### Defensive actions
+
+### Errors and penalties
+
+### Summary of team profiles
+
+## Game statistics associated with team success
+
+## Where to next?
+
+## Links in this post
+
+- The Roar, ['The rule differences for the AFL women's competition'](https://www.theroar.com.au/2017/02/03/the-rule-differences-for-the-afl-womens-competition/)
+- AFL.com.au, ['AFLW rules for 2017'](http://www.fremantlefc.com.au/news/2016-10-19/afl-womens-rules-announced)
