@@ -1,0 +1,104 @@
+---
+title: 'AFLW + fitzRoy, Part II: Team-by-team matchplay profiles'
+author: Jacquie Tran
+date: '2019-01-28'
+slug: aflw-match-analysis-part-ii
+categories:
+  - On-field analyses
+tags:
+  - football
+  - aflw
+  - r stats
+  - sport science
+  - sports analytics
+  - web scraping
+  - women's sport
+draft: yes
+---
+
+
+
+<div id="introduction" class="section level2">
+<h2>Introduction</h2>
+<p>The focus of this post is on creating AFLW team matchplay profiles, using match data from the 2017 and 2018 seasons. For more details on retrieving and preparing AFLW match data, check out <strong><a href="">Part I</a></strong> of this series of posts or <strong><a href="https://github.com/jacquietran/aflw_data_retrieval">this GitHub repo</a></strong>.</p>
+</div>
+<div id="getting-started" class="section level2">
+<h2>Getting started</h2>
+<pre class="r"><code>library(readr)
+library(dplyr)
+library(tidyr)
+library(ggplot2)</code></pre>
+<pre class="r"><code># Here, in the interest of making some time-savings, I am importing from a
+# cleaned CSV file that includes match data from the 2017 and 2018 AFLW seasons.
+
+# Ordinarly, my preference is to obtain data from live connections or
+# &#39;re-scrape&#39; the data to ensure I am accessing the most up-to-date version.
+
+# Import aflw_merged data set from GitHub repo
+aflw_merged &lt;- read_csv(
+    &quot;https://raw.githubusercontent.com/jacquietran/aflw_data_retrieval/master/output/aflw_merged.csv&quot;, col_names = TRUE, col_types = NULL)</code></pre>
+</div>
+<div id="team-matchplay-profiles" class="section level2">
+<h2>Team matchplay profiles</h2>
+<p>A common way of profiling team attributes using game statistics is to organise actions into different matchplay categories. For this analysis, I’m grouping the actions as follows:</p>
+<ul>
+<li><strong>Scoring:</strong> Goals, behinds, points for, goal accuracy, goal assists, goal efficiency, shot efficiency, shots at goal.</li>
+<li><strong>Offensive actions:</strong> Clearances, marks, possessions, disposals, disposal efficiency, handballs, hitouts, inside 50s, kicks, rebound 50s.</li>
+<li><strong>Defensive actions:</strong> Tackles, intercepts, points against.</li>
+<li><strong>Errors and penalties:</strong> Clangers, turnovers, frees for and against.</li>
+</ul>
+<p>Grouping game statistics in this way allows us to retain detailed information from variable-specific analyses, while also creating a framework to ‘zoom out’ and compare teams in terms of general areas of strength and weakness. For example, a team’s profile might suggest that they are particularly strong (compared to other teams) in their defensive actions, but are sub-par when it comes to scoring actions.</p>
+<p>I like to analyse data in this manner as one of many elements in analysing opposition teams. This approach is useful because you can narrow the focus of your scouting through video. If the data indicates that a team’s key strength is their defense, then you might choose to focus your attention on studying clips of their defensive tactics. The numbers alone don’t tell the whole story, especially in the case of match data that is currently available in AFLW; the category of ‘defensive actions’ only includes measures related to tackling, intercepts, and points against (i.e., points allowed). The quantitative analysis gives you guiding information for follow-up analyses and efficiency gains, while watching and analysing game video provides important contextual information such as player positioning, team shape, timing, decisions made, and skill performance. Using the two together can provide a more well-rounded picture of a team’s tactics and strategies.</p>
+<div id="scoring-actions" class="section level3">
+<h3>Scoring actions</h3>
+<pre class="r"><code># Subset to scoring variables
+aflw_scoring_wide &lt;- aflw_merged %&gt;%
+    select(contains(&quot;.Id&quot;), Round.Number, Round.Abbreviation, team, points_for,
+                 goals, behinds, goal_accuracy, goal_assists, goal_efficiency,
+                 shot_efficiency, shots_at_goal)
+# Retain wide format for data summary
+
+# Reshape wide to long for plotting
+aflw_scoring_long &lt;- aflw_scoring_wide %&gt;%
+    gather(points_for, goals, behinds, goal_accuracy, goal_assists,
+                 goal_efficiency, shot_efficiency, shots_at_goal,
+                 key = &quot;variable&quot;, value = &quot;value&quot;) %&gt;%
+    # Order factor levels within $variable
+    # to specify order of appearance when plotted
+        mutate(variable = factor(variable,
+                                                     levels = c(&quot;points_for&quot;, &quot;goals&quot;, &quot;behinds&quot;,
+                                                                         &quot;goal_accuracy&quot;, &quot;goal_assists&quot;,
+                                                                         &quot;goal_efficiency&quot;, &quot;shot_efficiency&quot;,
+                                                                         &quot;shots_at_goal&quot;)))
+
+# TODO: Create data summary
+# TODO: Identify top 3 teams for each metric
+
+# Plot
+p &lt;- ggplot(aflw_scoring_long, aes(x = team, y = value))
+p &lt;- p + facet_wrap(~variable, nrow = 2, scales = &quot;free_x&quot;)
+p &lt;- p + geom_boxplot(aes(group = team), outlier.shape = NA)
+p &lt;- p + geom_point(alpha = 1/3, size = 3, aes(colour = team))
+p &lt;- p + coord_flip()
+p &lt;- p + theme(legend.position = &quot;none&quot;)</code></pre>
+</div>
+<div id="offensive-actions" class="section level3">
+<h3>Offensive actions</h3>
+</div>
+<div id="defensive-actions" class="section level3">
+<h3>Defensive actions</h3>
+</div>
+<div id="errors-and-penalties" class="section level3">
+<h3>Errors and penalties</h3>
+</div>
+<div id="summary-of-team-profiles" class="section level3">
+<h3>Summary of team profiles</h3>
+</div>
+</div>
+<div id="references" class="section level2">
+<h2>References</h2>
+<ul>
+<li>The Roar, <a href="https://www.theroar.com.au/2017/02/03/the-rule-differences-for-the-afl-womens-competition/">‘The rule differences for the AFL women’s competition’</a></li>
+<li>AFL.com.au, <a href="http://www.fremantlefc.com.au/news/2016-10-19/afl-womens-rules-announced">‘AFLW rules for 2017’</a></li>
+</ul>
+</div>

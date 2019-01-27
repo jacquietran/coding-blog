@@ -44,7 +44,7 @@
 
 
 
-<meta property="og:updated_time" content="2019-01-26T00:00:00&#43;00:00"/>
+<meta property="og:updated_time" content="2019-01-28T00:00:00&#43;00:00"/>
 
 
 
@@ -171,15 +171,15 @@ ga('send', 'pageview');
 
                 
                     <li>
-                        <a href="/2019/01/26/aflw-match-analysis/"><p>AFLW &#43; fitzRoy: Preparing women&#39;s footy data for match analysis</p></a>
+                        <a href="/2019/01/28/aflw-match-analysis-part-ii/"><p>AFLW &#43; fitzRoy, Part II: Team-by-team matchplay profiles</p></a>
+                    </li>
+                
+                    <li>
+                        <a href="/2019/01/27/aflw-match-analysis-part-i/"><p>AFLW &#43; fitzRoy, Part I: Obtaining game statistics from women&#39;s footy matches</p></a>
                     </li>
                 
                     <li>
                         <a href="/2019/01/26/women-sport-research-gaps-and-opportunities/"><p>Women&#39;s sport research: Gaps and opportunities</p></a>
-                    </li>
-                
-                    <li>
-                        <a href="/2019/01/12/getting-to-know-the-fitzroy-package-afl-game-statistics/"><p>Getting to know the fitzRoy package (AFL game statistics)</p></a>
                     </li>
                 
             </ul>
@@ -197,7 +197,7 @@ ga('send', 'pageview');
     <header>
     <div class="title">
         
-            <h2><a href="/2019/01/26/aflw-match-analysis/">AFLW &#43; fitzRoy: Preparing women&#39;s footy data for match analysis</a></h2>
+            <h2><a href="/2019/01/28/aflw-match-analysis-part-ii/">AFLW &#43; fitzRoy, Part II: Team-by-team matchplay profiles</a></h2>
         
         
     </div>
@@ -205,11 +205,82 @@ ga('send', 'pageview');
         
 
         <time class="published"
-            datetime='2019-01-26'>
-            January 26, 2019</time>
+            datetime='2019-01-28'>
+            January 28, 2019</time>
         <span class="author">Jacquie Tran</span>
         
-            <p>18 minute read</p>
+            <p>3 minute read</p>
+        
+        
+    </div>
+</header>
+
+    
+
+    <p><p>Introduction
+The focus of this post is on creating AFLW team matchplay profiles, using match data from the 2017 and 2018 seasons. For more details on retrieving and preparing AFLW match data, check out Part I of this series of posts or this GitHub repo.</p>
+
+<p>Getting started
+library(readr)
+library(dplyr)
+library(tidyr)
+library(ggplot2)</p>
+
+<h1 id="here-in-the-interest-of-making-some-time-savings-i-am-importing-from-a">Here, in the interest of making some time-savings, I am importing from a</h1>
+
+<h1 id="cleaned-csv-file-that-includes-match-data-from-the-2017-and-2018-aflw-seasons">cleaned CSV file that includes match data from the 2017 and 2018 AFLW seasons.</h1>
+</p>
+
+    <footer>
+        <ul class="actions">
+            <li><a href="/2019/01/28/aflw-match-analysis-part-ii/" class="button big">Continue Reading</a></li>
+        </ul>
+        <ul class="stats">
+    
+        
+
+        
+        
+            <li>
+                
+                
+                    
+
+                    
+                        Category
+                    
+                
+            </li>
+        
+    
+
+    
+    
+        <li><a href='/categories/on-field-analyses'>On-field analyses</a></li>
+    
+</ul>
+
+    </footer>
+</article>
+
+        
+            <article class="post">
+    <header>
+    <div class="title">
+        
+            <h2><a href="/2019/01/27/aflw-match-analysis-part-i/">AFLW &#43; fitzRoy, Part I: Obtaining game statistics from women&#39;s footy matches</a></h2>
+        
+        
+    </div>
+    <div class="meta">
+        
+
+        <time class="published"
+            datetime='2019-01-27'>
+            January 27, 2019</time>
+        <span class="author">Jacquie Tran</span>
+        
+            <p>16 minute read</p>
         
         
     </div>
@@ -224,7 +295,7 @@ How will Geelong and North Melbourne, new teams to the national league in 2019, 
 
     <footer>
         <ul class="actions">
-            <li><a href="/2019/01/26/aflw-match-analysis/" class="button big">Continue Reading</a></li>
+            <li><a href="/2019/01/27/aflw-match-analysis-part-i/" class="button big">Continue Reading</a></li>
         </ul>
         <ul class="stats">
     
@@ -429,11 +500,23 @@ I shifted across the ditch early in 2018 to take up a role with High Performance
                     <li>
                         <article>
                             <header>
-                                <h3><a href="/2019/01/26/aflw-match-analysis/">AFLW &#43; fitzRoy: Preparing women&#39;s footy data for match analysis</a></h3>
+                                <h3><a href="/2019/01/28/aflw-match-analysis-part-ii/">AFLW &#43; fitzRoy, Part II: Team-by-team matchplay profiles</a></h3>
                                 
                                 <time class="published" datetime=
-                                    '2019-01-26'>
-                                    January 26, 2019</time>
+                                    '2019-01-28'>
+                                    January 28, 2019</time>
+                            </header>
+                        </article>
+                    </li>
+                
+                    <li>
+                        <article>
+                            <header>
+                                <h3><a href="/2019/01/27/aflw-match-analysis-part-i/">AFLW &#43; fitzRoy, Part I: Obtaining game statistics from women&#39;s footy matches</a></h3>
+                                
+                                <time class="published" datetime=
+                                    '2019-01-27'>
+                                    January 27, 2019</time>
                             </header>
                         </article>
                     </li>
@@ -446,18 +529,6 @@ I shifted across the ditch early in 2018 to take up a role with High Performance
                                 <time class="published" datetime=
                                     '2019-01-26'>
                                     January 26, 2019</time>
-                            </header>
-                        </article>
-                    </li>
-                
-                    <li>
-                        <article>
-                            <header>
-                                <h3><a href="/2019/01/12/getting-to-know-the-fitzroy-package-afl-game-statistics/">Getting to know the fitzRoy package (AFL game statistics)</a></h3>
-                                
-                                <time class="published" datetime=
-                                    '2019-01-12'>
-                                    January 12, 2019</time>
                             </header>
                         </article>
                     </li>
@@ -504,8 +575,8 @@ I shifted across the ditch early in 2018 to take up a role with High Performance
                     <li>
                         <article>
                             <header>
-                                <a href="/categories/general-ramblings/">General ramblings</a>
-                                <span style="float:right;">2</span>
+                                <a href="/categories/on-field-analyses/">On-field analyses</a>
+                                <span style="float:right;">3</span>
                             </header>
                         </article>
                     </li>
@@ -513,7 +584,7 @@ I shifted across the ditch early in 2018 to take up a role with High Performance
                     <li>
                         <article>
                             <header>
-                                <a href="/categories/on-field-analyses/">On-field analyses</a>
+                                <a href="/categories/general-ramblings/">General ramblings</a>
                                 <span style="float:right;">2</span>
                             </header>
                         </article>

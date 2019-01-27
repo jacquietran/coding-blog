@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>R stats on Under The Hood</title>
-    <link>/tags/r-stats/</link>
-    <description>Recent content in R stats on Under The Hood</description>
+    <title>Aflw on Under The Hood</title>
+    <link>/tags/aflw/</link>
+    <description>Recent content in Aflw on Under The Hood</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Mon, 28 Jan 2019 00:00:00 +0000</lastBuildDate>
     
-	<atom:link href="/tags/r-stats/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="/tags/aflw/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
@@ -30,25 +30,6 @@
       <description>(source: Wikimedia)The countdown is well and truly on.
 We are less than 1 week away from the first bounce of AFLW 3.0, the 3rd season of the women’s national Australian football league. As an Aussie living abroad, a footy fan, and a supporter of the increasing professionalisation of women’s sport, I’m excited to watch closely as the next chapter of the AFLW story unfolds.
 How will Geelong and North Melbourne, new teams to the national league in 2019, fare against the 8 teams who have participated in AFLW seasons 1 and 2?</description>
-    </item>
-    
-    <item>
-      <title>Getting to know the fitzRoy package (AFL game statistics)</title>
-      <link>/2019/01/12/getting-to-know-the-fitzroy-package-afl-game-statistics/</link>
-      <pubDate>Sat, 12 Jan 2019 00:00:00 +0000</pubDate>
-      
-      <guid>/2019/01/12/getting-to-know-the-fitzroy-package-afl-game-statistics/</guid>
-      <description>(source: Wikimedia)I shifted across the ditch early in 2018 to take up a role with High Performance Sport New Zealand. Remarkably, the one-year anniversary of our arrival here is right on the door step; I’ve learned so much in that time, particularly around qualitative methods and analyses. I enjoy the richness of insight that can be drawn from analysing text data, but a part of me does miss getting to work with numbers as much as I used to.</description>
-    </item>
-    
-    <item>
-      <title>Text mining of Wimbledon tweets using rtweet and tidytext</title>
-      <link>/2018/07/20/text-mining-of-wimbledon-tweets-using-rtweet-and-tidytext/</link>
-      <pubDate>Fri, 20 Jul 2018 00:00:00 +0000</pubDate>
-      
-      <guid>/2018/07/20/text-mining-of-wimbledon-tweets-using-rtweet-and-tidytext/</guid>
-      <description>New job, new skillsThis year, I started in a new role as Senior Insights Researcher at High Performance Sport New Zealand. For me, one of the big drawcards of this role was the opportunity to learn and grow my skills and competencies as a performance sport professional.
-Our team regularly deals with qualitative data, so as an applied sport scientist with a strongly quantitative training, it has been a steep learning curve but also enjoyable to open my mind up to different ways of thinking and knowing.</description>
     </item>
     
   </channel>

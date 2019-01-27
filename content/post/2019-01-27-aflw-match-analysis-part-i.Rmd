@@ -1,5 +1,5 @@
 ---
-title: 'AFLW + fitzRoy, Part I: Obtaining women''s footy data for match analysis'
+title: 'AFLW + fitzRoy, Part I: Obtaining game statistics from women''s footy matches'
 author: Jacquie Tran
 date: '2019-01-27'
 slug: aflw-match-analysis-part-i
@@ -11,7 +11,7 @@ tags:
   - sports analytics
   - web scraping
   - r stats
-draft: yes
+  - aflw
 ---
 
 ![](/img/post/First_AFLW_Ball_Up_03.02.17.jpg)
@@ -33,9 +33,16 @@ Fascinating possibilities abound, but there's lots to be learned from looking ba
 
 ## The analysis questions
 
-**[In my last post](https://underthehood.jacquietran.com/2019/01/12/getting-to-know-the-fitzroy-package-afl-game-statistics/)**, I played around with the `fitzRoy` package and made a mental note of its functionality around AFLW data.
+Following on from **[my last post](https://underthehood.jacquietran.com/2019/01/12/getting-to-know-the-fitzroy-package-afl-game-statistics/)**, I wanted to work with the `fitzRoy` package to obtain and explore match data from the 2017 and 2018 AFLW seasons.
 
-I decided to follow-up with a series of post exploring match data from the 2017 and 2018 AFLW seasons. In this post, I provide a codethrough that demonstrates how to obtain publicly available AFLW match data and prepare it for further analysis.
+In this post, _Part I_, I provide a codethrough that demonstrates how to obtain publicly available AFLW match data and prepare it for further analysis.
+
+Over a series of posts, I'll show how the available match data can be used to:
+
+1. Create team-by-team matchplay profiles; and
+2. Investigate the game statistics that are associated with successful team outcomes.
+
+As an aside, I hope to demonstrate what can be gleaned from a small sample, while also acknowledging their limitations.
 
 ## Getting started
 
@@ -48,14 +55,12 @@ library(dplyr)
 library(stringr)
 library(knitr)
 library(kableExtra)
-library(tidyr)
-library(ggplot2)
 
 ```
 
 ## Obtaining match data
 
-Thanks to the excellent **[fitzRoy package](https://underthehood.jacquietran.com/2019/01/12/getting-to-know-the-fitzroy-package-afl-game-statistics/)**, retrieving AFLW match data is a cinch. The `get_aflw_match_data()` function 
+Thanks to the excellent **[fitzRoy package](https://underthehood.jacquietran.com/2019/01/12/getting-to-know-the-fitzroy-package-afl-game-statistics/)**, retrieving AFLW match data is a cinch with the `get_aflw_match_data()` function.
 
 ``` {r import_match_data, message = FALSE, warning = FALSE}
 
@@ -304,71 +309,14 @@ head(aflw_merged) %>%
 
 ```
 
-**Side note:** Everytime I use `dplyr` to merge data sets, I feel immeasurable gratitude to have moved beyond the copy-paste and VLOOKUP approaches of my Excel-heavy past. These techniques are manual, tedious, and most importantly, prone to errors that can be difficult to debug and sometimes impossible to trace. In contrast, `dplyr` joins are elegant, efficient, and the type of join is clear from the name of the function. My go-to reference on this topic is the **[dplyr cheatsheet](https://stat545.com/bit001_dplyr-cheatsheet.html)** by **[Jenny Bryan](https://www.twitter.com/JennyBryan)**.
-
-## Team matchplay profiles
-
-A common way of profiling team attributes using game statistics is to organise actions into different matchplay categories. For this analysis, I'm grouping the actions as follows:
-
-- **Scoring:** Goals, behinds, points for, goal accuracy, goal assists, goal efficiency, shot efficiency, shots at goal.
-- **Offensive actions:** Clearances, marks, possessions, disposals, disposal efficiency, handballs, hitouts, inside 50s, kicks, rebound 50s.
-- **Defensive actions:** Tackles, intercepts, points against.
-- **Errors and penalties:** Clangers, turnovers, frees for and against.
-
-Grouping game statistics in this way allows us to retain detailed information from  variable-specific analyses, while also creating a framework to 'zoom out' and compare teams in terms of general areas of strength and weakness. For example, a team's profile might suggest that they are particularly strong (compared to other teams) in their defensive actions, but are sub-par when it comes to scoring actions.
-
-I like to analyse data in this manner as one of many elements in analysing opposition teams. This approach is useful because you can narrow the focus of your scouting through video. If the data indicates that a team's key strength is their defense, then you might choose to focus your attention on studying clips of their defensive tactics. The numbers alone don't tell the whole story, especially in the case of match data that is currently available in AFLW; the category of 'defensive actions' only includes measures related to tackling, intercepts, and points against (i.e., points allowed). The quantitative analysis gives you guiding information for follow-up analyses and efficiency gains, while watching and analysing game video provides important contextual information such as player positioning, team shape, timing, decisions made, and skill performance. Using the two together can provide a more well-rounded picture of a team's tactics and strategies.
-
-### Scoring actions
-
-``` {r team_profiles_scoring}
-
-# Subset to scoring variables
-aflw_scoring_wide <- aflw_merged %>%
-	select(contains(".Id"), Round.Number, Round.Abbreviation, team, points_for,
-				 goals, behinds, goal_accuracy, goal_assists, goal_efficiency,
-				 shot_efficiency, shots_at_goal)
-# Retain wide format for data summary
-
-# Reshape wide to long for plotting
-aflw_scoring_long <- aflw_scoring_wide %>%
-	gather(points_for, goals, behinds, goal_accuracy, goal_assists,
-				 goal_efficiency, shot_efficiency, shots_at_goal,
-				 key = "variable", value = "value") %>%
-	# Order factor levels within $variable
-	# to specify order of appearance when plotted
-		mutate(variable = factor(variable,
-													 levels = c("points_for", "goals", "behinds",
-													 					 "goal_accuracy", "goal_assists",
-													 					 "goal_efficiency", "shot_efficiency",
-													 					 "shots_at_goal")))
-
-# TODO: Create data summary
-# TODO: Identify top 3 teams for each metric
-
-# Plot
-p <- ggplot(aflw_scoring_long, aes(x = team, y = value))
-p <- p + facet_wrap(~variable, nrow = 2, scales = "free_x")
-p <- p + geom_boxplot(aes(group = team), outlier.shape = NA)
-p <- p + geom_point(alpha = 1/3, size = 3, aes(colour = team))
-p <- p + coord_flip()
-p <- p + theme(legend.position = "none")
-
-```
-
-### Offensive actions
-
-### Defensive actions
-
-### Errors and penalties
-
-### Summary of team profiles
-
-## Game statistics associated with team success
+**Side note:** Everytime I use `dplyr` to merge data sets, I feel immeasurable gratitude to have moved beyond the copy-paste approach of my Excel-heavy past - this technique is manual, tedious, and most importantly, prone to errors that can be difficult if not impossible to trace. In contrast, `dplyr` joins are elegant, efficient, and the type of join is clear from the name of the function. My go-to reference on this topic is the **[dplyr cheatsheet](https://stat545.com/bit001_dplyr-cheatsheet.html)** by **[Jenny Bryan](https://www.twitter.com/JennyBryan)**.
 
 ## Where to next?
 
-## Links in this post
+Following this codethrough produces a tidy data set that contains detailed information about every match played in the 2017 and 2018 AFLW seasons.
 
-- The Roar, ['The rule differences for the AFL women's competition'](https://www.theroar.com.au/2017/02/03/the-rule-differences-for-the-afl-womens-competition/)
-- AFL.com.au, ['AFLW rules for 2017'](http://www.fremantlefc.com.au/news/2016-10-19/afl-womens-rules-announced)
+For the next step in this analysis, we'll begin exploring this data set using data summaries and visualisations to compare match statistics between AFLW teams.
+
+_[ puts on Ira Glass voice ]_
+
+Stay. Tuned.

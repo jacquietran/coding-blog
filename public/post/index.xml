@@ -6,17 +6,27 @@
     <description>Recent content in Posts on Under The Hood</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sat, 26 Jan 2019 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 28 Jan 2019 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/post/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
-      <title>AFLW &#43; fitzRoy: Preparing women&#39;s footy data for match analysis</title>
-      <link>/2019/01/26/aflw-match-analysis/</link>
-      <pubDate>Sat, 26 Jan 2019 00:00:00 +0000</pubDate>
+      <title>AFLW &#43; fitzRoy, Part II: Team-by-team matchplay profiles</title>
+      <link>/2019/01/28/aflw-match-analysis-part-ii/</link>
+      <pubDate>Mon, 28 Jan 2019 00:00:00 +0000</pubDate>
       
-      <guid>/2019/01/26/aflw-match-analysis/</guid>
+      <guid>/2019/01/28/aflw-match-analysis-part-ii/</guid>
+      <description>IntroductionThe focus of this post is on creating AFLW team matchplay profiles, using match data from the 2017 and 2018 seasons. For more details on retrieving and preparing AFLW match data, check out Part I of this series of posts or this GitHub repo.
+Getting startedlibrary(readr)library(dplyr)library(tidyr)library(ggplot2)# Here, in the interest of making some time-savings, I am importing from a# cleaned CSV file that includes match data from the 2017 and 2018 AFLW seasons.</description>
+    </item>
+    
+    <item>
+      <title>AFLW &#43; fitzRoy, Part I: Obtaining game statistics from women&#39;s footy matches</title>
+      <link>/2019/01/27/aflw-match-analysis-part-i/</link>
+      <pubDate>Sun, 27 Jan 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/2019/01/27/aflw-match-analysis-part-i/</guid>
       <description>(source: Wikimedia)The countdown is well and truly on.
 We are less than 1 week away from the first bounce of AFLW 3.0, the 3rd season of the women’s national Australian football league. As an Aussie living abroad, a footy fan, and a supporter of the increasing professionalisation of women’s sport, I’m excited to watch closely as the next chapter of the AFLW story unfolds.
 How will Geelong and North Melbourne, new teams to the national league in 2019, fare against the 8 teams who have participated in AFLW seasons 1 and 2?</description>

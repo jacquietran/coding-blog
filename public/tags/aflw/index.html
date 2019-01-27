@@ -11,7 +11,7 @@
 <html>
     <head>
         
-            <title>Tidytext - Under The Hood</title>
+            <title>Aflw - Under The Hood</title>
         
 
         <meta charset="utf-8" />
@@ -33,18 +33,18 @@
             
         
 
-        <meta name="twitter:card" content="summary"/><meta name="twitter:title" content="Tidytext"/>
+        <meta name="twitter:card" content="summary"/><meta name="twitter:title" content="Aflw"/>
 <meta name="twitter:description" content="Dive into the processes and practices that underpin sports analytics. A blog by Jacquie Tran."/>
 <meta name="twitter:site" content="@jacquietran"/>
 
-        <meta property="og:title" content="Tidytext" />
+        <meta property="og:title" content="Aflw" />
 <meta property="og:description" content="Dive into the processes and practices that underpin sports analytics. A blog by Jacquie Tran." />
 <meta property="og:type" content="website" />
-<meta property="og:url" content="/tags/tidytext/" />
+<meta property="og:url" content="/tags/aflw/" />
 
 
 
-<meta property="og:updated_time" content="2018-07-20T00:00:00&#43;00:00"/>
+<meta property="og:updated_time" content="2019-01-28T00:00:00&#43;00:00"/>
 
 
 
@@ -56,7 +56,7 @@
 
 
         
-<meta itemprop="name" content="Tidytext">
+<meta itemprop="name" content="Aflw">
 <meta itemprop="description" content="Dive into the processes and practices that underpin sports analytics. A blog by Jacquie Tran.">
 
 
@@ -197,7 +197,7 @@ ga('send', 'pageview');
     <header>
     <div class="title">
         
-            <h2><a href="/2018/07/20/text-mining-of-wimbledon-tweets-using-rtweet-and-tidytext/">Text mining of Wimbledon tweets using rtweet and tidytext</a></h2>
+            <h2><a href="/2019/01/28/aflw-match-analysis-part-ii/">AFLW &#43; fitzRoy, Part II: Team-by-team matchplay profiles</a></h2>
         
         
     </div>
@@ -205,11 +205,11 @@ ga('send', 'pageview');
         
 
         <time class="published"
-            datetime='2018-07-20'>
-            July 20, 2018</time>
+            datetime='2019-01-28'>
+            January 28, 2019</time>
         <span class="author">Jacquie Tran</span>
         
-            <p>4 minute read</p>
+            <p>3 minute read</p>
         
         
     </div>
@@ -217,13 +217,23 @@ ga('send', 'pageview');
 
     
 
-    <p>New job, new skills
-This year, I started in a new role as Senior Insights Researcher at High Performance Sport New Zealand. For me, one of the big drawcards of this role was the opportunity to learn and grow my skills and competencies as a performance sport professional.
-Our team regularly deals with qualitative data, so as an applied sport scientist with a strongly quantitative training, it has been a steep learning curve but also enjoyable to open my mind up to different ways of thinking and knowing.</p>
+    <p><p>Introduction
+The focus of this post is on creating AFLW team matchplay profiles, using match data from the 2017 and 2018 seasons. For more details on retrieving and preparing AFLW match data, check out Part I of this series of posts or this GitHub repo.</p>
+
+<p>Getting started
+library(readr)
+library(dplyr)
+library(tidyr)
+library(ggplot2)</p>
+
+<h1 id="here-in-the-interest-of-making-some-time-savings-i-am-importing-from-a">Here, in the interest of making some time-savings, I am importing from a</h1>
+
+<h1 id="cleaned-csv-file-that-includes-match-data-from-the-2017-and-2018-aflw-seasons">cleaned CSV file that includes match data from the 2017 and 2018 AFLW seasons.</h1>
+</p>
 
     <footer>
         <ul class="actions">
-            <li><a href="/2018/07/20/text-mining-of-wimbledon-tweets-using-rtweet-and-tidytext/" class="button big">Continue Reading</a></li>
+            <li><a href="/2019/01/28/aflw-match-analysis-part-ii/" class="button big">Continue Reading</a></li>
         </ul>
         <ul class="stats">
     
@@ -246,7 +256,69 @@ Our team regularly deals with qualitative data, so as an applied sport scientist
 
     
     
-        <li><a href='/categories/off-field-analyses'>Off-field analyses</a></li>
+        <li><a href='/categories/on-field-analyses'>On-field analyses</a></li>
+    
+</ul>
+
+    </footer>
+</article>
+
+        
+            <article class="post">
+    <header>
+    <div class="title">
+        
+            <h2><a href="/2019/01/27/aflw-match-analysis-part-i/">AFLW &#43; fitzRoy, Part I: Obtaining game statistics from women&#39;s footy matches</a></h2>
+        
+        
+    </div>
+    <div class="meta">
+        
+
+        <time class="published"
+            datetime='2019-01-27'>
+            January 27, 2019</time>
+        <span class="author">Jacquie Tran</span>
+        
+            <p>16 minute read</p>
+        
+        
+    </div>
+</header>
+
+    
+
+    <p>(source: Wikimedia)
+The countdown is well and truly on.
+We are less than 1 week away from the first bounce of AFLW 3.0, the 3rd season of the women’s national Australian football league. As an Aussie living abroad, a footy fan, and a supporter of the increasing professionalisation of women’s sport, I’m excited to watch closely as the next chapter of the AFLW story unfolds.
+How will Geelong and North Melbourne, new teams to the national league in 2019, fare against the 8 teams who have participated in AFLW seasons 1 and 2?</p>
+
+    <footer>
+        <ul class="actions">
+            <li><a href="/2019/01/27/aflw-match-analysis-part-i/" class="button big">Continue Reading</a></li>
+        </ul>
+        <ul class="stats">
+    
+        
+
+        
+        
+            <li>
+                
+                
+                    
+
+                    
+                        Category
+                    
+                
+            </li>
+        
+    
+
+    
+    
+        <li><a href='/categories/on-field-analyses'>On-field analyses</a></li>
     
 </ul>
 
@@ -286,7 +358,7 @@ Our team regularly deals with qualitative data, so as an applied sport scientist
             
             <ul class="icons">
                 
-                    <li><a href="/tags/tidytext/index.xml" type="application/rss+xml"
+                    <li><a href="/tags/aflw/index.xml" type="application/rss+xml"
                         target="_blank" title="RSS" class="fa fa-rss"></a></li>
                 
                 
@@ -469,7 +541,7 @@ Our team regularly deals with qualitative data, so as an applied sport scientist
         <section id="footer">
             <ul class="icons">
                 
-                    <li><a href="/tags/tidytext/index.xml" type="application/rss+xml"
+                    <li><a href="/tags/aflw/index.xml" type="application/rss+xml"
                         target="_blank" title="RSS" class="fa fa-rss"></a></li>
                 
                 
