@@ -1,0 +1,1146 @@
+<!DOCTYPE HTML>
+
+<html>
+    <head>
+        
+            
+                <title>AFLW &#43; fitzRoy, Part II: Team-by-team matchplay profiles</title>
+            
+        
+
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta name="generator" content="Hugo 0.31.1" />
+        <!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <link rel="icon" type="image/png" href="/img/main/favicon.png" sizes="32x32">
+  </head>
+
+
+
+
+        
+            <meta name="author" content="Jacquie Tran">
+        
+        
+            
+                <meta name="description" content="Dive into the processes and practices that underpin sports analytics. A blog by Jacquie Tran.">
+            
+        
+
+        <meta name="twitter:card" content="summary"/><meta name="twitter:title" content="AFLW &#43; fitzRoy, Part II: Team-by-team matchplay profiles"/>
+<meta name="twitter:description" content="(source: AFL Nation)IntroductionThe focus of this post is on creating AFLW team matchplay profiles, using match data from the 2017 and 2018 seasons. By drawing on match data from the 2 completed AFLW seasons thus far, this post also outlines how I think about, analyse, and present insights from small data sets.
+For more on retrieving and preparing AFLW match data, check out Part I of this series of posts or this GitHub repo."/>
+<meta name="twitter:site" content="@jacquietran"/>
+
+        <meta property="og:title" content="AFLW &#43; fitzRoy, Part II: Team-by-team matchplay profiles" />
+<meta property="og:description" content="(source: AFL Nation)IntroductionThe focus of this post is on creating AFLW team matchplay profiles, using match data from the 2017 and 2018 seasons. By drawing on match data from the 2 completed AFLW seasons thus far, this post also outlines how I think about, analyse, and present insights from small data sets.
+For more on retrieving and preparing AFLW match data, check out Part I of this series of posts or this GitHub repo." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/2019/02/17/aflw-match-analysis-part-ii/" />
+
+
+
+<meta property="article:published_time" content="2019-02-17T00:00:00&#43;00:00"/>
+
+<meta property="article:modified_time" content="2019-02-17T00:00:00&#43;00:00"/>
+
+
+
+
+
+
+
+
+
+
+
+        
+<meta itemprop="name" content="AFLW &#43; fitzRoy, Part II: Team-by-team matchplay profiles">
+<meta itemprop="description" content="(source: AFL Nation)IntroductionThe focus of this post is on creating AFLW team matchplay profiles, using match data from the 2017 and 2018 seasons. By drawing on match data from the 2 completed AFLW seasons thus far, this post also outlines how I think about, analyse, and present insights from small data sets.
+For more on retrieving and preparing AFLW match data, check out Part I of this series of posts or this GitHub repo.">
+
+
+<meta itemprop="datePublished" content="2019-02-17T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2019-02-17T00:00:00&#43;00:00" />
+<meta itemprop="wordCount" content="1565">
+
+
+
+<meta itemprop="keywords" content="football,aflw,r stats,sport science,sports analytics,web scraping,women&#39;s sport," />
+
+        
+
+        
+            
+        
+
+        
+        
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/atom-one-light.min.css">
+            <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway:400,800,900|Source+Sans+Pro:400,700">
+            <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.1.20/jquery.fancybox.min.css" />
+            <link rel="stylesheet" href="/css/main.css">
+            <link rel="stylesheet" href="/css/add-on.css">
+        
+
+        
+
+        
+            
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-23505591-3', 'auto');
+ga('send', 'pageview');
+</script>
+
+        
+    </head>
+    <body>
+
+      
+      <div id="wrapper">
+
+    
+    
+<header id="header">
+    
+      
+          <h1><a href="/">post</a></h1>
+      
+    
+
+    <nav class="links">
+        <ul>
+            
+                <li>
+                    <a href="/">
+                            <i class="fa fa-home">&nbsp;</i>Home
+                    </a>
+                </li>
+            
+        </ul>
+    </nav>
+    <nav class="main">
+        <ul>
+            
+            <li id="share-nav" class="share-menu" style="display:none;">
+                <a class="fa-share-alt" href="#share-menu">Share</a>
+            </li>
+            
+            <li class="search">
+                <a class="fa-search" href="#search">Search</a>
+                <form id="search" method="get" action="//google.com/search">
+                    <input type="text" name="q" placeholder="Search" />
+                    <input type="hidden" name="as_sitesearch" value="/">
+                </form>
+            </li>
+            <li class="menu">
+                <a class="fa-bars" href="#menu">Menu</a>
+            </li>
+        </ul>
+    </nav>
+</header>
+
+
+<section id="menu">
+
+    
+        <section>
+            <form class="search" method="get" action="//google.com/search">
+                <input type="text" name="q" placeholder="Search" />
+                <input type="hidden" name="q" value="site:/">
+            </form>
+        </section>
+
+    
+        <section>
+            <ul class="links">
+                
+                    <li>
+                        <a href="/">
+                            <h3>
+                                <i class="fa fa-home">&nbsp;</i>Home
+                            </h3>
+                        </a>
+                    </li>
+                
+            </ul>
+        </section>
+
+    
+        <section>
+            <ul class="links">
+                <header>
+                    <h3>Recent Posts</h3>
+                </header>
+                
+                    
+                
+
+                
+                    <li>
+                        <a href="/2019/02/17/aflw-match-analysis-part-ii/"><p>AFLW &#43; fitzRoy, Part II: Team-by-team matchplay profiles</p></a>
+                    </li>
+                
+                    <li>
+                        <a href="/2019/01/27/aflw-match-analysis-part-i/"><p>AFLW &#43; fitzRoy, Part I: Obtaining game statistics from women&#39;s footy matches</p></a>
+                    </li>
+                
+                    <li>
+                        <a href="/2019/01/26/women-sport-research-gaps-and-opportunities/"><p>Women&#39;s sport research: Gaps and opportunities</p></a>
+                    </li>
+                
+            </ul>
+        </section>
+
+    
+        
+</section>
+
+    <section id="share-menu">
+    <section id="social-share-nav">
+        <ul class="links">
+            <header>
+                <h3>Share this post <i class="fa fa-smile-o"></i></h3>
+            </header>
+            
+
+
+<li><a href="//twitter.com/share?url=%2f2019%2f02%2f17%2faflw-match-analysis-part-ii%2f&text=AFLW%20%2b%20fitzRoy%2c%20Part%20II%3a%20Team-by-team%20matchplay%20profiles&via=jacquietran" target="_blank" class="share-btn twitter">
+    <i class="fa fa-twitter"></i>
+    <p>Twitter</p>
+</a></li>
+
+
+<li><a href="//plus.google.com/share?url=%2f2019%2f02%2f17%2faflw-match-analysis-part-ii%2f" target="_blank" class="share-btn google-plus">
+    <i class="fa fa-google-plus"></i>
+    <p>Google+</p>
+</a></li>
+
+
+<li><a href="//www.facebook.com/sharer/sharer.php?u=%2f2019%2f02%2f17%2faflw-match-analysis-part-ii%2f" target="_blank" class="share-btn facebook">
+    <i class="fa fa-facebook"></i>
+    <p>Facebook</p>
+</a></li>
+
+
+<li><a href="//reddit.com/submit?url=%2f2019%2f02%2f17%2faflw-match-analysis-part-ii%2f&title=AFLW%20%2b%20fitzRoy%2c%20Part%20II%3a%20Team-by-team%20matchplay%20profiles" target="_blank" class="share-btn reddit">
+    <i class="fa fa-reddit-alien"></i>
+    <p>Reddit</p>
+</a></li>
+
+
+<li><a href="//www.linkedin.com/shareArticle?url=%2f2019%2f02%2f17%2faflw-match-analysis-part-ii%2f&title=AFLW%20%2b%20fitzRoy%2c%20Part%20II%3a%20Team-by-team%20matchplay%20profiles" target="_blank" class="share-btn linkedin">
+    <i class="fa fa-linkedin"></i>
+    <p>LinkedIn</p>
+</a></li>
+
+
+<li><a href="//www.stumbleupon.com/submit?url=%2f2019%2f02%2f17%2faflw-match-analysis-part-ii%2f&title=AFLW%20%2b%20fitzRoy%2c%20Part%20II%3a%20Team-by-team%20matchplay%20profiles" target="_blank" class="share-btn stumbleupon">
+    <i class="fa fa-stumbleupon"></i>
+    <p>StumbleUpon</p>
+</a></li>
+
+
+<li><a href="mailto:?subject=Check out this post by Jacquie%20Tran&body=%2f2019%2f02%2f17%2faflw-match-analysis-part-ii%2f" target="_blank" class="share-btn email">
+    <i class="fa fa-envelope"></i>
+    <p>Email</p>
+</a></li>
+
+        </ul>
+    </section>
+</section>
+
+    
+    <div id="main">
+        
+        
+        <article class="post">
+    <header>
+    <div class="title">
+        
+            <h1><a href="/2019/02/17/aflw-match-analysis-part-ii/">AFLW &#43; fitzRoy, Part II: Team-by-team matchplay profiles</a></h1>
+            
+        
+        
+    </div>
+    <div class="meta">
+        
+
+        <time class="published"
+            datetime='2019-02-17'>
+            February 17, 2019</time>
+        <span class="author">Jacquie Tran</span>
+        
+            <p>8 minute read</p>
+        
+        
+    </div>
+</header>
+
+
+    
+
+    
+
+    <div id="content">
+        <script src="/rmarkdown-libs/kePrint/kePrint.js"></script>
+
+
+<img src="/img/post/W01MeGW18MW0489.jpg" />
+<p style="text-align: right">
+(source: <strong><a href="http://aflnation.com.au/2018/02/05/daisy-pearce-this-is-not-womens-football-its-just-football/">AFL Nation</a></strong>)
+</p>
+<div id="introduction" class="section level2">
+<h2>Introduction</h2>
+<p>The focus of this post is on creating AFLW team matchplay profiles, using match data from the 2017 and 2018 seasons. By drawing on match data from the 2 completed AFLW seasons thus far, this post also outlines how I think about, analyse, and present insights from small data sets.</p>
+<p>For more on retrieving and preparing AFLW match data, check out <strong><a href="https://underthehood.jacquietran.com/2019/01/27/aflw-match-analysis-part-i/">Part I</a></strong> of this series of posts or <strong><a href="https://github.com/jacquietran/aflw_data_retrieval">this GitHub repo</a></strong>.</p>
+</div>
+<div id="getting-started" class="section level2">
+<h2>Getting started</h2>
+<p>Load up those R packages and import the data. Here, for convenience, I am importing from a cleaned CSV file that includes match data from the 2017 and 2018 AFLW seasons.</p>
+<p><em>Ordinarly, my preference is to obtain data from APIs (live connections) or to ‘re-scrape’ the data to ensure I am accessing the most up-to-date version.</em></p>
+<pre class="r"><code>library(readr)
+library(dplyr)
+library(stringr)
+library(knitr)
+library(kableExtra)
+library(tidyr)
+library(ggplot2)
+library(ggridges)</code></pre>
+<pre class="r"><code># Import aflw_merged data set from GitHub repo
+aflw_merged &lt;- read_csv(
+    &quot;https://raw.githubusercontent.com/jacquietran/aflw_data_retrieval/master/output/aflw_merged.csv&quot;, col_names = TRUE, col_types = NULL)</code></pre>
+</div>
+<div id="inspecting-the-data" class="section level2">
+<h2>Inspecting the data</h2>
+<p>This data set is small in the sense that we have:</p>
+<ul>
+<li>2 seasons’ worth of matches played,</li>
+<li>8 teams in each season,</li>
+<li>7 rounds in the regular season,</li>
+<li>Every team playing 1 match per round, for a total of 4 matches per round,</li>
+<li>Plus 1 grand final each year.</li>
+</ul>
+<p>We can do the simple math:</p>
+<p>2 seasons x ((7 rounds x 4 matches per round) + 1 grand final) = 58 matches</p>
+<p>…and we can check that we have the same number of matches represented in the data set:</p>
+<pre class="r"><code>length(unique(aflw_merged$Match.Id))</code></pre>
+<pre><code>## [1] 58</code></pre>
+<p>By documenting simple features and constraints of a data set, we as responsible analysts can rule out (or temporarily park) certain analyses since they won’t produce reliable results.</p>
+<p>For example, we can’t use this data to identify common patterns when Team A plays Team B. At most, a pairing of Team A and Team B will appear only twice in a season if both Team A and Team B both make it to the grand final. All other pairings will appear only once per season.</p>
+<p>So what <em>can</em> we do with small data sets like this one?</p>
+<p>With small samples, the key is to use as much of the data as possible - don’t slice it up in too many ways! More specifically, this means:</p>
+<ol style="list-style-type: decimal">
+<li>Addressing whole-of-group questions;</li>
+<li>Working with continuous variables in their continuous form (and resisting the temptation to categorically define continuous variables where this is not warranted by the data structure); and</li>
+<li>Using or defining categorical variables with a small number of levels or ‘bins’ or subgroups.</li>
+</ol>
+</div>
+<div id="league-wide-benchmarks" class="section level2">
+<h2>League-wide benchmarks</h2>
+<p>One typical from of whole-group analysis is to produce league-wide summary statistics. By including all match data from both seasons, we get to include 116 records in this analysis (58 matches x 2 teams per match = 116).</p>
+<p>These days, my ‘default’ approach is to calculate medians and interquartile ranges, rather than means and standard deviations. You may recall from your high school maths classes: The former measures (median and interquartile range) are less affected by outliers that exist in skewed data sets, and in normally distributed data sets, the median will approximate the mean anyway.</p>
+<pre class="r"><code># Calculate summary stats for goals, behinds, and points scored
+# Both seasons combined
+aflw_league_scoring &lt;- aflw_merged %&gt;%
+    summarise(num_matches = length(Match.Id),
+                        goals_median = median(goals),
+                        goals_IQR = IQR(goals),
+                        behinds_median = median(behinds),
+                        behinds_IQR = IQR(behinds),
+                        points_for_median = median(points_for),
+                        points_for_IQR = IQR(points_for)) %&gt;%
+    mutate(team = &quot;All teams combined&quot;) %&gt;%
+    select(team, everything()) # Reorder the columns
+
+# Display table
+aflw_league_scoring %&gt;%
+    kable(&quot;html&quot;) %&gt;%
+    kable_styling()</code></pre>
+<table class="table" style="margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+team
+</th>
+<th style="text-align:right;">
+num_matches
+</th>
+<th style="text-align:right;">
+goals_median
+</th>
+<th style="text-align:right;">
+goals_IQR
+</th>
+<th style="text-align:right;">
+behinds_median
+</th>
+<th style="text-align:right;">
+behinds_IQR
+</th>
+<th style="text-align:right;">
+points_for_median
+</th>
+<th style="text-align:right;">
+points_for_IQR
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+All teams combined
+</td>
+<td style="text-align:right;">
+116
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+32.5
+</td>
+<td style="text-align:right;">
+20.25
+</td>
+</tr>
+</tbody>
+</table>
+<p>We can adapt this code chunk by using the <code>group_by()</code> and <code>ungroup()</code> functions to generate team-specific summary statistics, like so:</p>
+<pre class="r"><code># Calculate team-specific scoring summary stats
+aflw_team_scoring &lt;- aflw_merged %&gt;%
+    group_by(team) %&gt;%
+    summarise(num_matches = length(Match.Id),
+                        goals_median = median(goals),
+                        goals_IQR = IQR(goals),
+                        behinds_median = median(behinds),
+                        behinds_IQR = IQR(behinds),
+                        points_for_median = median(points_for),
+                        points_for_IQR = IQR(points_for)) %&gt;%
+    # Sort by median points scored, descending
+    arrange(desc(points_for_median))
+
+# Display table
+aflw_team_scoring %&gt;%
+    kable(&quot;html&quot;) %&gt;%
+    kable_styling()</code></pre>
+<table class="table" style="margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+team
+</th>
+<th style="text-align:right;">
+num_matches
+</th>
+<th style="text-align:right;">
+goals_median
+</th>
+<th style="text-align:right;">
+goals_IQR
+</th>
+<th style="text-align:right;">
+behinds_median
+</th>
+<th style="text-align:right;">
+behinds_IQR
+</th>
+<th style="text-align:right;">
+points_for_median
+</th>
+<th style="text-align:right;">
+points_for_IQR
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Melbourne
+</td>
+<td style="text-align:right;">
+14
+</td>
+<td style="text-align:right;">
+5.5
+</td>
+<td style="text-align:right;">
+3.00
+</td>
+<td style="text-align:right;">
+6.5
+</td>
+<td style="text-align:right;">
+3.75
+</td>
+<td style="text-align:right;">
+38.0
+</td>
+<td style="text-align:right;">
+13.75
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Adelaide Crows
+</td>
+<td style="text-align:right;">
+15
+</td>
+<td style="text-align:right;">
+5.0
+</td>
+<td style="text-align:right;">
+2.50
+</td>
+<td style="text-align:right;">
+6.0
+</td>
+<td style="text-align:right;">
+3.00
+</td>
+<td style="text-align:right;">
+35.0
+</td>
+<td style="text-align:right;">
+20.00
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Collingwood
+</td>
+<td style="text-align:right;">
+14
+</td>
+<td style="text-align:right;">
+5.0
+</td>
+<td style="text-align:right;">
+3.00
+</td>
+<td style="text-align:right;">
+4.5
+</td>
+<td style="text-align:right;">
+2.75
+</td>
+<td style="text-align:right;">
+33.5
+</td>
+<td style="text-align:right;">
+25.75
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Western Bulldogs
+</td>
+<td style="text-align:right;">
+15
+</td>
+<td style="text-align:right;">
+5.0
+</td>
+<td style="text-align:right;">
+3.00
+</td>
+<td style="text-align:right;">
+6.0
+</td>
+<td style="text-align:right;">
+3.50
+</td>
+<td style="text-align:right;">
+33.0
+</td>
+<td style="text-align:right;">
+21.00
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Brisbane Lions
+</td>
+<td style="text-align:right;">
+16
+</td>
+<td style="text-align:right;">
+4.0
+</td>
+<td style="text-align:right;">
+1.25
+</td>
+<td style="text-align:right;">
+4.5
+</td>
+<td style="text-align:right;">
+3.25
+</td>
+<td style="text-align:right;">
+30.0
+</td>
+<td style="text-align:right;">
+12.75
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Carlton
+</td>
+<td style="text-align:right;">
+14
+</td>
+<td style="text-align:right;">
+3.5
+</td>
+<td style="text-align:right;">
+3.75
+</td>
+<td style="text-align:right;">
+4.5
+</td>
+<td style="text-align:right;">
+2.75
+</td>
+<td style="text-align:right;">
+28.5
+</td>
+<td style="text-align:right;">
+23.25
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Fremantle
+</td>
+<td style="text-align:right;">
+14
+</td>
+<td style="text-align:right;">
+3.5
+</td>
+<td style="text-align:right;">
+3.00
+</td>
+<td style="text-align:right;">
+5.0
+</td>
+<td style="text-align:right;">
+2.00
+</td>
+<td style="text-align:right;">
+27.0
+</td>
+<td style="text-align:right;">
+17.50
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+GWS Giants
+</td>
+<td style="text-align:right;">
+14
+</td>
+<td style="text-align:right;">
+3.0
+</td>
+<td style="text-align:right;">
+3.75
+</td>
+<td style="text-align:right;">
+3.0
+</td>
+<td style="text-align:right;">
+3.25
+</td>
+<td style="text-align:right;">
+22.0
+</td>
+<td style="text-align:right;">
+20.00
+</td>
+</tr>
+</tbody>
+</table>
+<p>We could also supplement these data summaries with a plot.</p>
+<p>Note that we are using the <code>aflw_merged</code> data set for the plot, rather than plotting the summary statistics stored in <code>aflw_league_scoring</code> and <code>aflw_team_scoring</code>. <strong><a href="https://journals.plos.org/plosbiology/article?id=10.1371/journal.pbio.1002128">Tracey Weissgerber</a></strong> explains the thinking behind this with respect to bar and line charts, but the underlying concepts that she emphasises apply here too.</p>
+<center>
+<blockquote class="twitter-tweet" data-lang="en">
+<p lang="en" dir="ltr">
+Designing better figures for small studies: Why you shouldn’t use bar graphs for continuous data and what to do instead (A visual Q&amp;A thread)<a href="https://t.co/vnLdq4I9zT">https://t.co/vnLdq4I9zT</a> <a href="https://t.co/rAC4Axk3Lo">pic.twitter.com/rAC4Axk3Lo</a>
+</p>
+— Tracey Weissgerber (<span class="citation">@T_Weissgerber</span>) <a href="https://twitter.com/T_Weissgerber/status/1087646461548998657?ref_src=twsrc%5Etfw">January 22, 2019</a>
+</blockquote>
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+</center>
+<center>
+<pre class="r"><code># Create an ordered data set for plotting purposes
+aflw_scoring_team_ordered &lt;- aflw_merged %&gt;%
+    group_by(team) %&gt;%
+    mutate(points_for_median = median(points_for)) %&gt;%
+    ungroup() %&gt;%
+    arrange(desc(points_for_median)) %&gt;%
+    mutate(team = factor(team, levels = rev(unique(team))))
+
+# Build plot
+p &lt;- ggplot(aflw_scoring_team_ordered,
+                        aes(x = points_for, y = team, fill = team))
+p &lt;- p + geom_vline(
+    xintercept = aflw_league_scoring$points_for_median,
+    size = 2, colour = &quot;grey&quot;)
+p &lt;- p + geom_density_ridges(quantile_lines = TRUE, quantiles = 2,
+    scale = 0.9, jittered_points = TRUE,
+    position = position_points_jitter(width = 0.05, height = 0),
+    point_shape = &#39;|&#39;, point_size = 3, point_alpha = 1, alpha = 0.7)
+p &lt;- p + geom_text(
+    aes(label = paste0(&quot;League median = &quot;,
+                                         aflw_league_scoring$points_for_median,
+                                         &quot; points&quot;),
+            x = 32, y = &quot;Melbourne&quot;), hjust = -0.1, vjust = -4.75,
+    colour = &quot;darkgrey&quot;)
+p &lt;- p + labs(
+    title = &quot;Distribution of total points scored by AFLW teams&quot;,
+    subtitle = &quot;All matches, 2017 &amp; 2018 AFLW seasons&quot;,
+    x = &quot;Points scored&quot;)
+p &lt;- p + scale_y_discrete(
+    expand = expand_scale(add = c(0.5, 1.25)))
+p &lt;- p + theme_minimal()
+p &lt;- p + theme(
+    legend.position = &quot;none&quot;,
+    panel.grid.minor = element_blank(),
+    plot.title = element_text(size = 14),
+    plot.subtitle = element_text(size = 12),
+    axis.title.x = element_text(size = 14),
+    axis.title.y = element_blank(),
+    axis.text = element_text(size = 12))
+
+# Display plot
+p</code></pre>
+<img src="/post/2019-01-27-aflw-match-analysis-part-ii_files/figure-html/plot_team_scoring-1.png" width="672" />
+</center>
+</div>
+<div id="team-matchplay-profiles" class="section level2">
+<h2>Team matchplay profiles</h2>
+<p>A common way of profiling team attributes using game statistics is to organise actions into different matchplay categories. For this analysis, I’m grouping the actions as follows:</p>
+<ul>
+<li><strong>Scoring:</strong> Goals, behinds, points for, goal accuracy, goal assists, goal efficiency, shot efficiency, shots at goal.</li>
+<li><strong>Offensive actions:</strong> Clearances, marks, possessions, disposals, disposal efficiency, handballs, hitouts, inside 50s, kicks, rebound 50s.</li>
+<li><strong>Defensive actions:</strong> Tackles, intercepts, points against.</li>
+<li><strong>Errors and penalties:</strong> Clangers, turnovers, frees for and against.</li>
+</ul>
+<p>Grouping game statistics in this way allows us to retain detailed information from variable-specific analyses, while also creating a framework to ‘zoom out’ and compare teams in terms of general areas of strength and weakness. For example, a team’s profile might suggest that they are particularly strong (compared to other teams) in their defensive actions, but are sub-par when it comes to scoring actions.</p>
+<p>I like to analyse data in this manner as one of many elements in analysing opposition teams. This approach is useful because you can narrow the focus of your scouting through video. If the data indicates that a team’s key strength is their defense, then you might choose to focus your attention on studying clips of their defensive tactics. The numbers alone don’t tell the whole story, especially in the case of match data that is currently available in AFLW; the category of ‘defensive actions’ only includes measures related to tackling, intercepts, and points against (i.e., points allowed). The quantitative analysis gives you guiding information for follow-up analyses and efficiency gains, while watching and analysing game video provides important contextual information such as player positioning, team shape, timing, decisions made, and skill performance. Using the two together can provide a more well-rounded picture of a team’s tactics and strategies.</p>
+<div id="scoring-actions" class="section level3">
+<h3>Scoring actions</h3>
+<pre class="r"><code># Subset to scoring variables
+aflw_scoring_wide &lt;- aflw_merged %&gt;%
+    select(contains(&quot;.Id&quot;), Round.Number, Round.Abbreviation, team, points_for,
+                 goals, behinds, goal_accuracy, goal_assists, goal_efficiency,
+                 shot_efficiency, shots_at_goal)
+# Retain wide format for data summary
+
+# Reshape wide to long for plotting
+aflw_scoring_long &lt;- aflw_scoring_wide %&gt;%
+    gather(points_for, goals, behinds, goal_accuracy, goal_assists,
+                 goal_efficiency, shot_efficiency, shots_at_goal,
+                 key = &quot;variable&quot;, value = &quot;value&quot;) %&gt;%
+    # Order factor levels within $variable
+    # to specify order of appearance when plotted
+        mutate(variable = factor(variable,
+                                                     levels = c(&quot;points_for&quot;, &quot;goals&quot;, &quot;behinds&quot;,
+                                                                         &quot;goal_accuracy&quot;, &quot;goal_assists&quot;,
+                                                                         &quot;goal_efficiency&quot;, &quot;shot_efficiency&quot;,
+                                                                         &quot;shots_at_goal&quot;)))
+
+# TODO: Create data summary
+# TODO: Identify top 3 teams for each metric
+
+# Plot
+p &lt;- ggplot(aflw_scoring_long, aes(x = team, y = value))
+p &lt;- p + facet_wrap(~variable, nrow = 2, scales = &quot;free_x&quot;)
+p &lt;- p + geom_boxplot(aes(group = team), outlier.shape = NA)
+p &lt;- p + geom_point(alpha = 1/3, size = 3, aes(colour = team))
+p &lt;- p + coord_flip()
+p &lt;- p + theme(legend.position = &quot;none&quot;)</code></pre>
+</div>
+<div id="offensive-actions" class="section level3">
+<h3>Offensive actions</h3>
+</div>
+<div id="defensive-actions" class="section level3">
+<h3>Defensive actions</h3>
+</div>
+<div id="errors-and-penalties" class="section level3">
+<h3>Errors and penalties</h3>
+</div>
+<div id="summary-of-team-profiles" class="section level3">
+<h3>Summary of team profiles</h3>
+</div>
+<div id="communicating-observations" class="section level3">
+<h3>Communicating observations</h3>
+<p>Perhaps the most important part of working with small data sets is to take a conservative approach when interpreting your results and communicating your observations to others. The goal of data analysis is to use information to <strong><a href="https://www.jstor.org/stable/30227200?seq=1#page_scan_tab_contents">approximate the truth</a></strong> (Weston, 1987), to understand ‘the way things are’.</p>
+</div>
+</div>
+<div id="references" class="section level2">
+<h2>References</h2>
+<ul>
+<li>The Roar, <a href="https://www.theroar.com.au/2017/02/03/the-rule-differences-for-the-afl-womens-competition/">‘The rule differences for the AFL women’s competition’</a></li>
+<li>AFL.com.au, <a href="http://www.fremantlefc.com.au/news/2016-10-19/afl-womens-rules-announced">‘AFLW rules for 2017’</a></li>
+<li><a href="https://cran.r-project.org/web/packages/ggridges/vignettes/introduction.html">Introduction to ggridges</a></li>
+</ul>
+</div>
+
+    </div>
+
+    <footer>
+        <ul class="stats">
+    
+        
+
+        
+        
+            <li>
+                
+                
+                    
+
+                    
+                        Category
+                    
+                
+            </li>
+        
+    
+
+    
+    
+        <li><a href='/categories/on-field-analyses'>On-field analyses</a></li>
+    
+</ul>
+
+    </footer>
+</article>
+<ul class="actions pagination">
+    
+        <li><a href="/2019/01/27/aflw-match-analysis-part-i/"
+                class="button big previous">AFLW &#43; fitzRoy, Part I: Obtaining game statistics from women&#39;s footy matches</a></li>
+    
+
+    
+</ul>
+
+
+
+
+
+    </div>
+    
+<section id="sidebar">
+
+    
+        <section id="intro">
+            
+            
+                
+                    <img src="/img/main/logo.png" class="intro-circle" width="" alt="Jacquie Tran" />
+                
+            
+            
+                <header>
+                    <h2>Under The Hood</h2>
+                    <p>Dive into the processes and practices that underpin sports analytics. A blog by <a href="http://www.jacquietran.com">Jacquie Tran</a>.</p>
+                </header>
+            
+            <ul class="icons">
+                
+                
+                    
+<li><a href="//github.com/jacquietran" target="_blank" title="GitHub" class="fa fa-github"></a></li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<li><a href="//twitter.com/jacquietran" target="_blank" title="Twitter" class="fa fa-twitter"></a></li>
+
+
+
+<li><a href="mailto:jac@jacquietran.com" title="Email" class="fa fa-envelope"></a></li>
+
+
+                
+            </ul>
+        </section>
+
+    
+        <section id="recent-posts">
+            <ul class="posts">
+                <header>
+                    <h3>Recent Posts</h3>
+                </header>
+                
+
+                
+                    
+                
+
+                
+                    <li>
+                        <article>
+                            <header>
+                                <h3><a href="/2019/02/17/aflw-match-analysis-part-ii/">AFLW &#43; fitzRoy, Part II: Team-by-team matchplay profiles</a></h3>
+                                
+                                <time class="published" datetime=
+                                    '2019-02-17'>
+                                    February 17, 2019</time>
+                            </header>
+                        </article>
+                    </li>
+                
+                    <li>
+                        <article>
+                            <header>
+                                <h3><a href="/2019/01/27/aflw-match-analysis-part-i/">AFLW &#43; fitzRoy, Part I: Obtaining game statistics from women&#39;s footy matches</a></h3>
+                                
+                                <time class="published" datetime=
+                                    '2019-01-27'>
+                                    January 27, 2019</time>
+                            </header>
+                        </article>
+                    </li>
+                
+                    <li>
+                        <article>
+                            <header>
+                                <h3><a href="/2019/01/26/women-sport-research-gaps-and-opportunities/">Women&#39;s sport research: Gaps and opportunities</a></h3>
+                                
+                                <time class="published" datetime=
+                                    '2019-01-26'>
+                                    January 26, 2019</time>
+                            </header>
+                        </article>
+                    </li>
+                
+
+                
+                    <li>
+                        <ul class="actions">
+                            <li><a href=
+                            
+                                /blog/
+                            
+                            class="button">View more posts</a></li>
+                        </ul>
+                    </li>
+                
+            </ul>
+        </section>
+
+    
+    
+    
+    
+        <section id="categories">
+            <ul class="posts">
+                <header>
+                    <h3><a href="/categories/">Categories</a></h3>
+                </header>
+
+                
+                    
+                
+
+                
+                    <li>
+                        <article>
+                            <header>
+                                <a href="/categories/off-field-analyses/">Off-field analyses</a>
+                                <span style="float:right;">4</span>
+                            </header>
+                        </article>
+                    </li>
+                
+                    <li>
+                        <article>
+                            <header>
+                                <a href="/categories/on-field-analyses/">On-field analyses</a>
+                                <span style="float:right;">3</span>
+                            </header>
+                        </article>
+                    </li>
+                
+                    <li>
+                        <article>
+                            <header>
+                                <a href="/categories/general-ramblings/">General ramblings</a>
+                                <span style="float:right;">2</span>
+                            </header>
+                        </article>
+                    </li>
+                
+            </ul>
+        </section>
+    
+
+    
+        
+
+    
+        <section id="footer">
+            <ul class="icons">
+                
+                
+                    
+<li><a href="//github.com/jacquietran" target="_blank" title="GitHub" class="fa fa-github"></a></li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<li><a href="//twitter.com/jacquietran" target="_blank" title="Twitter" class="fa fa-twitter"></a></li>
+
+
+
+<li><a href="mailto:jac@jacquietran.com" title="Email" class="fa fa-envelope"></a></li>
+
+
+                
+            </ul>
+
+            <p class="copyright">&copy; 2019 Jacquie Tran. Powered by <a href="//gohugo.io" target="_blank">Hugo</a></p>
+        </section>
+
+</section>
+
+      </div>
+      <a id="back-to-top" href="#" class="fa fa-arrow-up fa-border fa-2x"></a>
+      
+
+      
+        
+      
+
+      
+      
+        <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/skel/3.0.1/skel.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.1.20/jquery.fancybox.min.js"></script>
+        <script src="/js/util.js"></script>
+        <script src="/js/main.js"></script>
+        <script src="/js/backToTop.js"></script>
+      
+
+      
+
+      
+      <script>hljs.initHighlightingOnLoad();</script>
+    </body>
+</html>
+

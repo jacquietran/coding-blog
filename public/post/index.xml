@@ -6,19 +6,19 @@
     <description>Recent content in Posts on Under The Hood</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 28 Jan 2019 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 17 Feb 2019 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/post/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>AFLW &#43; fitzRoy, Part II: Team-by-team matchplay profiles</title>
-      <link>/2019/01/28/aflw-match-analysis-part-ii/</link>
-      <pubDate>Mon, 28 Jan 2019 00:00:00 +0000</pubDate>
+      <link>/2019/02/17/aflw-match-analysis-part-ii/</link>
+      <pubDate>Sun, 17 Feb 2019 00:00:00 +0000</pubDate>
       
-      <guid>/2019/01/28/aflw-match-analysis-part-ii/</guid>
-      <description>IntroductionThe focus of this post is on creating AFLW team matchplay profiles, using match data from the 2017 and 2018 seasons. For more details on retrieving and preparing AFLW match data, check out Part I of this series of posts or this GitHub repo.
-Getting startedlibrary(readr)library(dplyr)library(tidyr)library(ggplot2)# Here, in the interest of making some time-savings, I am importing from a# cleaned CSV file that includes match data from the 2017 and 2018 AFLW seasons.</description>
+      <guid>/2019/02/17/aflw-match-analysis-part-ii/</guid>
+      <description>(source: AFL Nation)IntroductionThe focus of this post is on creating AFLW team matchplay profiles, using match data from the 2017 and 2018 seasons. By drawing on match data from the 2 completed AFLW seasons thus far, this post also outlines how I think about, analyse, and present insights from small data sets.
+For more on retrieving and preparing AFLW match data, check out Part I of this series of posts or this GitHub repo.</description>
     </item>
     
     <item>
