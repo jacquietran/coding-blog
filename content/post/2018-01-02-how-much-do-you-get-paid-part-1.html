@@ -7,12 +7,19 @@ categories:
   - Off-field analyses
 tags:
   - sport science
-  - strength and conditioning
   - soccer
-  - football
+  - strength and conditioning
   - salaries
+  - football
+description: ''
+featured: ''
+featuredalt: ''
+featuredpath: ''
+linktitle: ''
+type: post
 ---
 
+<script src="/rmarkdown-libs/kePrint/kePrint.js"></script>
 
 
 <div id="the-backstory" class="section level1">
@@ -60,17 +67,17 @@ soccerSalariesData &lt;- read_delim(dataSource, delim = &quot;,&quot;, col_names
 <pre class="r"><code># Examine first few observations of the data set
 head(soccerSalariesData)</code></pre>
 <pre><code>## # A tibble: 6 x 16
-##   responseID country leagueOfFirstTeam levelOfWork position          dept
-##        &lt;int&gt;   &lt;chr&gt;             &lt;chr&gt;       &lt;chr&gt;    &lt;chr&gt;         &lt;chr&gt;
-## 1          1 England      Championship    1st Team    Coach Sport Science
-## 2          2 England      Championship    1st Team     Head           S&amp;C
-## 3          3 England      Championship    1st Team    Coach           S&amp;C
-## 4          4 England      Championship    1st Team     &lt;NA&gt;          &lt;NA&gt;
-## 5          5 England      Championship    1st Team     Head Sport Science
-## 6          6 England      Championship     Academy     Head Sport Science
-## # ... with 10 more variables: partTime &lt;chr&gt;, academyCategory &lt;chr&gt;,
+##   responseID country leagueOfFirstTe~ levelOfWork position dept  partTime
+##        &lt;dbl&gt; &lt;chr&gt;   &lt;chr&gt;            &lt;chr&gt;       &lt;chr&gt;    &lt;chr&gt; &lt;chr&gt;   
+## 1          1 England Championship     1st Team    Coach    Spor~ &lt;NA&gt;    
+## 2          2 England Championship     1st Team    Head     S&amp;C   &lt;NA&gt;    
+## 3          3 England Championship     1st Team    Coach    S&amp;C   &lt;NA&gt;    
+## 4          4 England Championship     1st Team    &lt;NA&gt;     &lt;NA&gt;  &lt;NA&gt;    
+## 5          5 England Championship     1st Team    Head     Spor~ &lt;NA&gt;    
+## 6          6 England Championship     Academy     Head     Spor~ &lt;NA&gt;    
+## # ... with 9 more variables: academyCategory &lt;chr&gt;,
 ## #   ageGroupAllPhases &lt;lgl&gt;, ageGroupPDPhase &lt;lgl&gt;, ageGroupYDPhase &lt;lgl&gt;,
-## #   ageGroupFPhase &lt;lgl&gt;, reportedSalaryGBP &lt;int&gt;, salaryGBP &lt;int&gt;,
+## #   ageGroupFPhase &lt;lgl&gt;, reportedSalaryGBP &lt;dbl&gt;, salaryGBP &lt;dbl&gt;,
 ## #   highestQual &lt;chr&gt;, highestQualCategory &lt;chr&gt;</code></pre>
 <table class="table" style="margin-left: auto; margin-right: auto;">
 <thead>
@@ -395,7 +402,7 @@ Great work Aiden. I believe that the lack of representation of the £100k+ club 
 </blockquote>
 <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 </center>
-<p>It’s important to capture the true nature of things, but the existence of some better remunerated roles does not take away from the 41 individuals who completed this small survey and reported being paid £20,000 or less. I’d argue that the push for fair wages is chiefly about i) the sustainability and credibility of the industry entire (<em>“Pay peanuts, get monkeys!”</em>“), and ii) protecting the most vulnerable, such as those in the early stages of their career trying to get off the internship carousel. If you’re in the ‘£100k+ club’, being underpaid is probably not your personal current experience, although it may have been in the early days of your career. Hopefully, though, you care enough about the industry as a whole to want <em>all</em> individuals to be fairly paid for the work they’ve done (to gain the skills, experience, and qualifications needed to succeed in a given role), and the work they do (in this case, looking after the health, well-being, development, and performance of young men and women through football).</p>
+<p>It’s important to capture the true nature of things, but the existence of some better remunerated roles does not take away from the 41 individuals who completed this small survey and reported being paid £20,000 or less. I’d argue that the push for fair wages is chiefly about i) the sustainability and credibility of the industry entire (<em>“Pay peanuts, get monkeys!”</em>"), and ii) protecting the most vulnerable, such as those in the early stages of their career trying to get off the internship carousel. If you’re in the ‘£100k+ club’, being underpaid is probably not your personal current experience, although it may have been in the early days of your career. Hopefully, though, you care enough about the industry as a whole to want <em>all</em> individuals to be fairly paid for the work they’ve done (to gain the skills, experience, and qualifications needed to succeed in a given role), and the work they do (in this case, looking after the health, well-being, development, and performance of young men and women through football).</p>
 <p><strong>2. Performance support staff working for Scottish Premiership teams appear to be paid slghtly better than their counterparts in the Premier League.</strong> Having said that, it’s quite possible that this difference may be due to the small sub-sample of respondents in the Scottish Premiership category (n = 6).</p>
 <p><strong>3. There is considerable variation within most leagues.</strong></p>
 <ul>

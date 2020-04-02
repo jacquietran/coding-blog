@@ -7,6 +7,12 @@ categories:
   - General ramblings
 tags:
   - sports analytics
+description: ''
+featured: ''
+featuredalt: ''
+featuredpath: ''
+linktitle: ''
+type: post
 draft: no
 ---
 

@@ -8,6 +8,12 @@ categories:
 tags:
   - sport science
   - women's sport
+description: ''
+featured: ''
+featuredalt: ''
+featuredpath: ''
+linktitle: ''
+type: post
 draft: yes
 ---
 

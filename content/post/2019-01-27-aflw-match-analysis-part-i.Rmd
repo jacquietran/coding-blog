@@ -1,17 +1,16 @@
 ---
-title: 'AFLW + fitzRoy, Part I: Obtaining game statistics from women''s footy matches'
+title: "AFLW + fitzRoy, Part I: Obtaining game statistics from women''s footy matches"
 author: Jacquie Tran
 date: '2019-01-27'
 slug: aflw-match-analysis-part-i
-categories:
-  - On-field analyses
-tags:
-  - football
-  - sport science
-  - sports analytics
-  - web scraping
-  - r stats
-  - aflw
+categories: ["On-field analyses"]
+tags: ["football", "sport science", "sports analytics", "web scraping", "r stats", "aflw"]
+description: ''
+featured: ''
+featuredalt: ''
+featuredpath: ''
+linktitle: ''
+type: post
 ---
 
 ![](/img/post/First_AFLW_Ball_Up_03.02.17.jpg)

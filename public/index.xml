@@ -5,7 +5,7 @@
     <link>/</link>
     <description>Recent content on Under The Hood</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>en-us</language>
+    <language>en-GB</language>
     <lastBuildDate>Sun, 17 Feb 2019 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/index.xml" rel="self" type="application/rss+xml" />
@@ -13,20 +13,20 @@
     
     <item>
       <title>AFLW &#43; fitzRoy, Part II: Team-by-team matchplay profiles</title>
-      <link>/2019/02/17/aflw-match-analysis-part-ii/</link>
+      <link>/post/aflw-match-analysis-part-ii/</link>
       <pubDate>Sun, 17 Feb 2019 00:00:00 +0000</pubDate>
       
-      <guid>/2019/02/17/aflw-match-analysis-part-ii/</guid>
+      <guid>/post/aflw-match-analysis-part-ii/</guid>
       <description>(source: AFL Nation)IntroductionThe focus of this post is on creating AFLW team matchplay profiles, using match data from the 2017 and 2018 seasons. By drawing on match data from the 2 completed AFLW seasons thus far, this post also outlines how I think about, analyse, and present insights from small data sets.
 For more on retrieving and preparing AFLW match data, check out Part I of this series of posts or this GitHub repo.</description>
     </item>
     
     <item>
-      <title>AFLW &#43; fitzRoy, Part I: Obtaining game statistics from women&#39;s footy matches</title>
-      <link>/2019/01/27/aflw-match-analysis-part-i/</link>
+      <title>AFLW &#43; fitzRoy, Part I: Obtaining game statistics from women&#39;&#39;s footy matches</title>
+      <link>/post/aflw-match-analysis-part-i/</link>
       <pubDate>Sun, 27 Jan 2019 00:00:00 +0000</pubDate>
       
-      <guid>/2019/01/27/aflw-match-analysis-part-i/</guid>
+      <guid>/post/aflw-match-analysis-part-i/</guid>
       <description>(source: Wikimedia)The countdown is well and truly on.
 We are less than 1 week away from the first bounce of AFLW 3.0, the 3rd season of the women’s national Australian football league. As an Aussie living abroad, a footy fan, and a supporter of the increasing professionalisation of women’s sport, I’m excited to watch closely as the next chapter of the AFLW story unfolds.
 How will Geelong and North Melbourne, new teams to the national league in 2019, fare against the 8 teams who have participated in AFLW seasons 1 and 2?</description>
@@ -34,10 +34,10 @@ How will Geelong and North Melbourne, new teams to the national league in 2019, 
     
     <item>
       <title>Women&#39;s sport research: Gaps and opportunities</title>
-      <link>/2019/01/26/women-sport-research-gaps-and-opportunities/</link>
+      <link>/post/women-sport-research-gaps-and-opportunities/</link>
       <pubDate>Sat, 26 Jan 2019 00:00:00 +0000</pubDate>
       
-      <guid>/2019/01/26/women-sport-research-gaps-and-opportunities/</guid>
+      <guid>/post/women-sport-research-gaps-and-opportunities/</guid>
       <description>There remains a huge amount of work to be done to explore and understand athlete and team performance in women&amp;rsquo;s sport. This is true for sports that have had professional or elite women&amp;rsquo;s competitions for some time. It&amp;rsquo;s especially pertinent in sports like Australian football, in which the top-tier women&amp;rsquo;s competition was only established in 2017.
 Here&amp;rsquo;s a snapshot of the available knowledge about AFLW matchplay:
  I conducted Google and Google Scholar searches for &amp;lsquo;aflw&amp;rsquo; and &amp;lsquo;women australian football&amp;rsquo;.</description>
@@ -45,85 +45,61 @@ Here&amp;rsquo;s a snapshot of the available knowledge about AFLW matchplay:
     
     <item>
       <title>Getting to know the fitzRoy package (AFL game statistics)</title>
-      <link>/2019/01/12/getting-to-know-the-fitzroy-package-afl-game-statistics/</link>
+      <link>/post/getting-to-know-the-fitzroy-package-afl-game-statistics/</link>
       <pubDate>Sat, 12 Jan 2019 00:00:00 +0000</pubDate>
       
-      <guid>/2019/01/12/getting-to-know-the-fitzroy-package-afl-game-statistics/</guid>
+      <guid>/post/getting-to-know-the-fitzroy-package-afl-game-statistics/</guid>
       <description>(source: Wikimedia)I shifted across the ditch early in 2018 to take up a role with High Performance Sport New Zealand. Remarkably, the one-year anniversary of our arrival here is right on the door step; I’ve learned so much in that time, particularly around qualitative methods and analyses. I enjoy the richness of insight that can be drawn from analysing text data, but a part of me does miss getting to work with numbers as much as I used to.</description>
     </item>
     
     <item>
       <title>Text mining of Wimbledon tweets using rtweet and tidytext</title>
-      <link>/2018/07/20/text-mining-of-wimbledon-tweets-using-rtweet-and-tidytext/</link>
+      <link>/post/text-mining-of-wimbledon-tweets-using-rtweet-and-tidytext/</link>
       <pubDate>Fri, 20 Jul 2018 00:00:00 +0000</pubDate>
       
-      <guid>/2018/07/20/text-mining-of-wimbledon-tweets-using-rtweet-and-tidytext/</guid>
+      <guid>/post/text-mining-of-wimbledon-tweets-using-rtweet-and-tidytext/</guid>
       <description>New job, new skillsThis year, I started in a new role as Senior Insights Researcher at High Performance Sport New Zealand. For me, one of the big drawcards of this role was the opportunity to learn and grow my skills and competencies as a performance sport professional.
 Our team regularly deals with qualitative data, so as an applied sport scientist with a strongly quantitative training, it has been a steep learning curve but also enjoyable to open my mind up to different ways of thinking and knowing.</description>
     </item>
     
     <item>
       <title>How much do you get paid? Part III - Comparison by discipline</title>
-      <link>/2018/01/04/how-much-do-you-get-paid-part-3/</link>
+      <link>/post/how-much-do-you-get-paid-part-3/</link>
       <pubDate>Thu, 04 Jan 2018 00:00:00 +0000</pubDate>
       
-      <guid>/2018/01/04/how-much-do-you-get-paid-part-3/</guid>
+      <guid>/post/how-much-do-you-get-paid-part-3/</guid>
       <description>IntroductionThis post is the third in a series - to get up to speed, have a read through the first post and the second post. In this series, I will show how I created the plots that Aiden published on Twitter here and here, alongside some commentary about the choices I made throughout the process and my own interpretations of the results.
 Getting startedLoad up the data and the libraries as we’ve done before.</description>
     </item>
     
     <item>
       <title>How much do you get paid? Part II - Job seniority</title>
-      <link>/2018/01/03/how-much-do-you-get-paid-part-2/</link>
+      <link>/post/how-much-do-you-get-paid-part-2/</link>
       <pubDate>Wed, 03 Jan 2018 00:00:00 +0000</pubDate>
       
-      <guid>/2018/01/03/how-much-do-you-get-paid-part-2/</guid>
+      <guid>/post/how-much-do-you-get-paid-part-2/</guid>
       <description>IntroductionThis post is the second in a series; click here to read the first post if you haven’t already done so. In this series, I will show how I created the plots that Aiden Oakley published on Twitter here and here, alongside some commentary about the choices I made throughout the process and my own interpretations of the results.
 Getting startedWe’ll load the cleaned data in and load the necessary libraries as we did in the first post.</description>
     </item>
     
     <item>
       <title>How much do you get paid? Part I - An initial exploration</title>
-      <link>/2018/01/02/how-much-do-you-get-paid-part-1/</link>
+      <link>/post/how-much-do-you-get-paid-part-1/</link>
       <pubDate>Tue, 02 Jan 2018 00:00:00 +0000</pubDate>
       
-      <guid>/2018/01/02/how-much-do-you-get-paid-part-1/</guid>
+      <guid>/post/how-much-do-you-get-paid-part-1/</guid>
       <description>The backstoryIt’s a touchy subject for many. Yet this question—how much do you get paid?—is at the core of the online questionnaire that was recently administered by Aiden Oakley (@ajoakley on Twitter). And it is a question that was willingly answered by over 100 sport scientists and strength &amp;amp; conditioning coaches who currently work for football (soccer) clubs in the UK.
 Why?
-This job advert says it all…
-This is shocking!</description>
-    </item>
-    
-    <item>
-      <title>Learning R</title>
-      <link>/learningr/</link>
-      <pubDate>Tue, 02 Jan 2018 00:00:00 +0000</pubDate>
-      
-      <guid>/learningr/</guid>
-      <description>So you wanna learn R? Ways to learn R  Complete courses to learn R in a structured curriculum.
- Undertake a data project using R.
-  An in-the-browser tutorial for getting to know the R language - no software installation needed: http://tryr.codeschool.com
-Introductory course to R, from Data Camp: www.datacamp.com/courses/free-introduction-to-r
-&amp;lsquo;R for Data Science&amp;rsquo;, by Garrett Grolemund &amp;amp; Hadley Wickham: http://r4ds.had.co.nz/ (also available in hard copy if you prefer)</description>
+This job advert says it all…</description>
     </item>
     
     <item>
       <title>My coding origin story</title>
-      <link>/2017/10/01/my-coding-origin-story/</link>
+      <link>/post/my-coding-origin-story/</link>
       <pubDate>Sun, 01 Oct 2017 00:00:00 +0000</pubDate>
       
-      <guid>/2017/10/01/my-coding-origin-story/</guid>
+      <guid>/post/my-coding-origin-story/</guid>
       <description>I often get asked questions about how long I&amp;rsquo;ve been coding for, how I got started, whether I have completed any formal studies in programming / computer science, and so on. The reality is that my path is far from linear. Most of what I&amp;rsquo;ve learned to date has been more opportunistic than strategic, curiosity-driven rather than being part of a master plan to acquire professional skills for the workplace.</description>
-    </item>
-    
-    <item>
-      <title>About</title>
-      <link>/about/</link>
-      <pubDate>Tue, 26 Sep 2017 00:00:00 +0000</pubDate>
-      
-      <guid>/about/</guid>
-      <description>&amp;lsquo;Under The Hood&amp;rsquo; is a platform to demonstrate what is possible when we apply analytical techniques to solve problems that matter in sport. Drawing on my own professional experiences, this blog will showcase the many ways in which analytics can be used to discover new insights about the sports we love to play, watch, and support.
-My name is Jacquie Tran, and I am a sport scientist working in elite sport.</description>
     </item>
     
   </channel>

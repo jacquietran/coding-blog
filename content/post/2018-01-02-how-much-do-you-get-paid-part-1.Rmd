@@ -7,10 +7,16 @@ categories:
   - Off-field analyses
 tags:
   - sport science
-  - strength and conditioning
   - soccer
-  - football
+  - strength and conditioning
   - salaries
+  - football
+description: ''
+featured: ''
+featuredalt: ''
+featuredpath: ''
+linktitle: ''
+type: post
 ---
 
 # The backstory

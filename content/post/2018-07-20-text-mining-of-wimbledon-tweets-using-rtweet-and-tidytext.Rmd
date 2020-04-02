@@ -12,6 +12,12 @@ tags:
   - r stats
   - tidytext
   - rtweet
+description: ''
+featured: ''
+featuredalt: ''
+featuredpath: ''
+linktitle: ''
+type: post
 draft: yes
 ---
 

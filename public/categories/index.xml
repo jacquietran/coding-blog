@@ -5,10 +5,20 @@
     <link>/categories/</link>
     <description>Recent content in Categories on Under The Hood</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>en-us</language>
+    <language>en-GB</language>
+    <lastBuildDate>Sun, 17 Feb 2019 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/categories/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>On-field analyses</title>
+      <link>/categories/on-field-analyses/</link>
+      <pubDate>Sun, 17 Feb 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/categories/on-field-analyses/</guid>
+      <description></description>
+    </item>
     
     <item>
       <title>General ramblings</title>
@@ -25,15 +35,6 @@
       <pubDate>Fri, 20 Jul 2018 00:00:00 +0000</pubDate>
       
       <guid>/categories/off-field-analyses/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>On-field analyses</title>
-      <link>/categories/on-field-analyses/</link>
-      <pubDate>Sun, 17 Feb 2019 00:00:00 +0000</pubDate>
-      
-      <guid>/categories/on-field-analyses/</guid>
       <description></description>
     </item>
     

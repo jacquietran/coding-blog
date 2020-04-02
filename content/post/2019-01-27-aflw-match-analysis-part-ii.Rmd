@@ -13,6 +13,12 @@ tags:
   - sports analytics
   - web scraping
   - women's sport
+description: ''
+featured: ''
+featuredalt: ''
+featuredpath: ''
+linktitle: ''
+type: post
 draft: yes
 ---
 

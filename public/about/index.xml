@@ -5,20 +5,18 @@
     <link>/about/</link>
     <description>Recent content in Abouts on Under The Hood</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>en-us</language>
-    <lastBuildDate>Tue, 26 Sep 2017 00:00:00 +0000</lastBuildDate>
+    <language>en-GB</language>
     
 	<atom:link href="/about/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
-      <title>About</title>
-      <link>/about/</link>
-      <pubDate>Tue, 26 Sep 2017 00:00:00 +0000</pubDate>
+      <title></title>
+      <link>/about/about/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>/about/</guid>
-      <description>&amp;lsquo;Under The Hood&amp;rsquo; is a platform to demonstrate what is possible when we apply analytical techniques to solve problems that matter in sport. Drawing on my own professional experiences, this blog will showcase the many ways in which analytics can be used to discover new insights about the sports we love to play, watch, and support.
-My name is Jacquie Tran, and I am a sport scientist working in elite sport.</description>
+      <guid>/about/about/</guid>
+      <description></description>
     </item>
     
   </channel>

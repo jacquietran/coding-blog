@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Salaries on Under The Hood</title>
+    <title>salaries on Under The Hood</title>
     <link>/tags/salaries/</link>
-    <description>Recent content in Salaries on Under The Hood</description>
+    <description>Recent content in salaries on Under The Hood</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>en-us</language>
+    <language>en-GB</language>
     <lastBuildDate>Thu, 04 Jan 2018 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/tags/salaries/index.xml" rel="self" type="application/rss+xml" />
@@ -13,34 +13,33 @@
     
     <item>
       <title>How much do you get paid? Part III - Comparison by discipline</title>
-      <link>/2018/01/04/how-much-do-you-get-paid-part-3/</link>
+      <link>/post/how-much-do-you-get-paid-part-3/</link>
       <pubDate>Thu, 04 Jan 2018 00:00:00 +0000</pubDate>
       
-      <guid>/2018/01/04/how-much-do-you-get-paid-part-3/</guid>
+      <guid>/post/how-much-do-you-get-paid-part-3/</guid>
       <description>IntroductionThis post is the third in a series - to get up to speed, have a read through the first post and the second post. In this series, I will show how I created the plots that Aiden published on Twitter here and here, alongside some commentary about the choices I made throughout the process and my own interpretations of the results.
 Getting startedLoad up the data and the libraries as we’ve done before.</description>
     </item>
     
     <item>
       <title>How much do you get paid? Part II - Job seniority</title>
-      <link>/2018/01/03/how-much-do-you-get-paid-part-2/</link>
+      <link>/post/how-much-do-you-get-paid-part-2/</link>
       <pubDate>Wed, 03 Jan 2018 00:00:00 +0000</pubDate>
       
-      <guid>/2018/01/03/how-much-do-you-get-paid-part-2/</guid>
+      <guid>/post/how-much-do-you-get-paid-part-2/</guid>
       <description>IntroductionThis post is the second in a series; click here to read the first post if you haven’t already done so. In this series, I will show how I created the plots that Aiden Oakley published on Twitter here and here, alongside some commentary about the choices I made throughout the process and my own interpretations of the results.
 Getting startedWe’ll load the cleaned data in and load the necessary libraries as we did in the first post.</description>
     </item>
     
     <item>
       <title>How much do you get paid? Part I - An initial exploration</title>
-      <link>/2018/01/02/how-much-do-you-get-paid-part-1/</link>
+      <link>/post/how-much-do-you-get-paid-part-1/</link>
       <pubDate>Tue, 02 Jan 2018 00:00:00 +0000</pubDate>
       
-      <guid>/2018/01/02/how-much-do-you-get-paid-part-1/</guid>
+      <guid>/post/how-much-do-you-get-paid-part-1/</guid>
       <description>The backstoryIt’s a touchy subject for many. Yet this question—how much do you get paid?—is at the core of the online questionnaire that was recently administered by Aiden Oakley (@ajoakley on Twitter). And it is a question that was willingly answered by over 100 sport scientists and strength &amp;amp; conditioning coaches who currently work for football (soccer) clubs in the UK.
 Why?
-This job advert says it all…
-This is shocking!</description>
+This job advert says it all…</description>
     </item>
     
   </channel>

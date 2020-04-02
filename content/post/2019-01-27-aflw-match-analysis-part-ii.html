@@ -13,6 +13,12 @@ tags:
   - sports analytics
   - web scraping
   - women's sport
+description: ''
+featured: ''
+featuredalt: ''
+featuredpath: ''
+linktitle: ''
+type: post
 draft: yes
 ---
 
@@ -55,7 +61,8 @@ aflw_merged &lt;- read_csv(
 <li>Plus 1 grand final each year.</li>
 </ul>
 <p>We can do the simple math:</p>
-<p>2 seasons x ((7 rounds x 4 matches per round) + 1 grand final) = 58 matches</p>
+<p>2 seasons x ((7 rounds x 4 matches per round) + 1 grand final)
+= 58 matches</p>
 <p>…and we can check that we have the same number of matches represented in the data set:</p>
 <pre class="r"><code>length(unique(aflw_merged$Match.Id))</code></pre>
 <pre><code>## [1] 58</code></pre>

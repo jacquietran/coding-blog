@@ -10,6 +10,12 @@ tags:
   - sports analytics
   - web scraping
   - r stats
+description: ''
+featured: ''
+featuredalt: ''
+featuredpath: ''
+linktitle: ''
+type: post
 ---
 
 ![](/img/post/1280px-2017_AFL_Grand_Final_panorama_during_national_anthem.jpg)
