@@ -1,11 +1,11 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Women&#39;s sport on Under The Hood</title>
+    <title>women&#39;s sport on Under The Hood</title>
     <link>/tags/womens-sport/</link>
-    <description>Recent content in Women&#39;s sport on Under The Hood</description>
+    <description>Recent content in women&#39;s sport on Under The Hood</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>en-us</language>
+    <language>en</language>
     <lastBuildDate>Sun, 17 Feb 2019 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/tags/womens-sport/index.xml" rel="self" type="application/rss+xml" />
@@ -13,20 +13,20 @@
     
     <item>
       <title>AFLW &#43; fitzRoy, Part II: Team-by-team matchplay profiles</title>
-      <link>/2019/02/17/aflw-match-analysis-part-ii/</link>
+      <link>/post/aflw-match-analysis-part-ii/</link>
       <pubDate>Sun, 17 Feb 2019 00:00:00 +0000</pubDate>
       
-      <guid>/2019/02/17/aflw-match-analysis-part-ii/</guid>
+      <guid>/post/aflw-match-analysis-part-ii/</guid>
       <description>(source: AFL Nation)IntroductionThe focus of this post is on creating AFLW team matchplay profiles, using match data from the 2017 and 2018 seasons. By drawing on match data from the 2 completed AFLW seasons thus far, this post also outlines how I think about, analyse, and present insights from small data sets.
 For more on retrieving and preparing AFLW match data, check out Part I of this series of posts or this GitHub repo.</description>
     </item>
     
     <item>
       <title>Women&#39;s sport research: Gaps and opportunities</title>
-      <link>/2019/01/26/women-sport-research-gaps-and-opportunities/</link>
+      <link>/post/women-sport-research-gaps-and-opportunities/</link>
       <pubDate>Sat, 26 Jan 2019 00:00:00 +0000</pubDate>
       
-      <guid>/2019/01/26/women-sport-research-gaps-and-opportunities/</guid>
+      <guid>/post/women-sport-research-gaps-and-opportunities/</guid>
       <description>There remains a huge amount of work to be done to explore and understand athlete and team performance in women&amp;rsquo;s sport. This is true for sports that have had professional or elite women&amp;rsquo;s competitions for some time. It&amp;rsquo;s especially pertinent in sports like Australian football, in which the top-tier women&amp;rsquo;s competition was only established in 2017.
 Here&amp;rsquo;s a snapshot of the available knowledge about AFLW matchplay:
  I conducted Google and Google Scholar searches for &amp;lsquo;aflw&amp;rsquo; and &amp;lsquo;women australian football&amp;rsquo;.</description>

@@ -16,7 +16,6 @@ tags:
 draft: yes
 ---
 
-<script src="/rmarkdown-libs/kePrint/kePrint.js"></script>
 
 
 <img src="/img/post/W01MeGW18MW0489.jpg" />
@@ -32,7 +31,9 @@ draft: yes
 <h2>Getting started</h2>
 <p>Load up those R packages and import the data. Here, for convenience, I am importing from a cleaned CSV file that includes match data from the 2017 and 2018 AFLW seasons.</p>
 <p><em>Ordinarly, my preference is to obtain data from APIs (live connections) or to ‘re-scrape’ the data to ensure I am accessing the most up-to-date version.</em></p>
-<pre class="r"><code>library(readr)
+<pre class="r"><code>knitr::opts_chunk$set(eval = FALSE)
+
+library(readr)
 library(dplyr)
 library(stringr)
 library(knitr)
@@ -55,10 +56,10 @@ aflw_merged &lt;- read_csv(
 <li>Plus 1 grand final each year.</li>
 </ul>
 <p>We can do the simple math:</p>
-<p>2 seasons x ((7 rounds x 4 matches per round) + 1 grand final) = 58 matches</p>
+<p>2 seasons x ((7 rounds x 4 matches per round) + 1 grand final)
+= 58 matches</p>
 <p>…and we can check that we have the same number of matches represented in the data set:</p>
 <pre class="r"><code>length(unique(aflw_merged$Match.Id))</code></pre>
-<pre><code>## [1] 58</code></pre>
 <p>By documenting simple features and constraints of a data set, we as responsible analysts can rule out (or temporarily park) certain analyses since they won’t produce reliable results.</p>
 <p>For example, we can’t use this data to identify common patterns when Team A plays Team B. At most, a pairing of Team A and Team B will appear only twice in a season if both Team A and Team B both make it to the grand final. All other pairings will appear only once per season.</p>
 <p>So what <em>can</em> we do with small data sets like this one?</p>
@@ -90,64 +91,6 @@ aflw_league_scoring &lt;- aflw_merged %&gt;%
 aflw_league_scoring %&gt;%
     kable(&quot;html&quot;) %&gt;%
     kable_styling()</code></pre>
-<table class="table" style="margin-left: auto; margin-right: auto;">
-<thead>
-<tr>
-<th style="text-align:left;">
-team
-</th>
-<th style="text-align:right;">
-num_matches
-</th>
-<th style="text-align:right;">
-goals_median
-</th>
-<th style="text-align:right;">
-goals_IQR
-</th>
-<th style="text-align:right;">
-behinds_median
-</th>
-<th style="text-align:right;">
-behinds_IQR
-</th>
-<th style="text-align:right;">
-points_for_median
-</th>
-<th style="text-align:right;">
-points_for_IQR
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:left;">
-All teams combined
-</td>
-<td style="text-align:right;">
-116
-</td>
-<td style="text-align:right;">
-5
-</td>
-<td style="text-align:right;">
-3
-</td>
-<td style="text-align:right;">
-5
-</td>
-<td style="text-align:right;">
-4
-</td>
-<td style="text-align:right;">
-32.5
-</td>
-<td style="text-align:right;">
-20.25
-</td>
-</tr>
-</tbody>
-</table>
 <p>We can adapt this code chunk by using the <code>group_by()</code> and <code>ungroup()</code> functions to generate team-specific summary statistics, like so:</p>
 <pre class="r"><code># Calculate team-specific scoring summary stats
 aflw_team_scoring &lt;- aflw_merged %&gt;%
@@ -166,246 +109,6 @@ aflw_team_scoring &lt;- aflw_merged %&gt;%
 aflw_team_scoring %&gt;%
     kable(&quot;html&quot;) %&gt;%
     kable_styling()</code></pre>
-<table class="table" style="margin-left: auto; margin-right: auto;">
-<thead>
-<tr>
-<th style="text-align:left;">
-team
-</th>
-<th style="text-align:right;">
-num_matches
-</th>
-<th style="text-align:right;">
-goals_median
-</th>
-<th style="text-align:right;">
-goals_IQR
-</th>
-<th style="text-align:right;">
-behinds_median
-</th>
-<th style="text-align:right;">
-behinds_IQR
-</th>
-<th style="text-align:right;">
-points_for_median
-</th>
-<th style="text-align:right;">
-points_for_IQR
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:left;">
-Melbourne
-</td>
-<td style="text-align:right;">
-14
-</td>
-<td style="text-align:right;">
-5.5
-</td>
-<td style="text-align:right;">
-3.00
-</td>
-<td style="text-align:right;">
-6.5
-</td>
-<td style="text-align:right;">
-3.75
-</td>
-<td style="text-align:right;">
-38.0
-</td>
-<td style="text-align:right;">
-13.75
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Adelaide Crows
-</td>
-<td style="text-align:right;">
-15
-</td>
-<td style="text-align:right;">
-5.0
-</td>
-<td style="text-align:right;">
-2.50
-</td>
-<td style="text-align:right;">
-6.0
-</td>
-<td style="text-align:right;">
-3.00
-</td>
-<td style="text-align:right;">
-35.0
-</td>
-<td style="text-align:right;">
-20.00
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Collingwood
-</td>
-<td style="text-align:right;">
-14
-</td>
-<td style="text-align:right;">
-5.0
-</td>
-<td style="text-align:right;">
-3.00
-</td>
-<td style="text-align:right;">
-4.5
-</td>
-<td style="text-align:right;">
-2.75
-</td>
-<td style="text-align:right;">
-33.5
-</td>
-<td style="text-align:right;">
-25.75
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Western Bulldogs
-</td>
-<td style="text-align:right;">
-15
-</td>
-<td style="text-align:right;">
-5.0
-</td>
-<td style="text-align:right;">
-3.00
-</td>
-<td style="text-align:right;">
-6.0
-</td>
-<td style="text-align:right;">
-3.50
-</td>
-<td style="text-align:right;">
-33.0
-</td>
-<td style="text-align:right;">
-21.00
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Brisbane Lions
-</td>
-<td style="text-align:right;">
-16
-</td>
-<td style="text-align:right;">
-4.0
-</td>
-<td style="text-align:right;">
-1.25
-</td>
-<td style="text-align:right;">
-4.5
-</td>
-<td style="text-align:right;">
-3.25
-</td>
-<td style="text-align:right;">
-30.0
-</td>
-<td style="text-align:right;">
-12.75
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Carlton
-</td>
-<td style="text-align:right;">
-14
-</td>
-<td style="text-align:right;">
-3.5
-</td>
-<td style="text-align:right;">
-3.75
-</td>
-<td style="text-align:right;">
-4.5
-</td>
-<td style="text-align:right;">
-2.75
-</td>
-<td style="text-align:right;">
-28.5
-</td>
-<td style="text-align:right;">
-23.25
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Fremantle
-</td>
-<td style="text-align:right;">
-14
-</td>
-<td style="text-align:right;">
-3.5
-</td>
-<td style="text-align:right;">
-3.00
-</td>
-<td style="text-align:right;">
-5.0
-</td>
-<td style="text-align:right;">
-2.00
-</td>
-<td style="text-align:right;">
-27.0
-</td>
-<td style="text-align:right;">
-17.50
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-GWS Giants
-</td>
-<td style="text-align:right;">
-14
-</td>
-<td style="text-align:right;">
-3.0
-</td>
-<td style="text-align:right;">
-3.75
-</td>
-<td style="text-align:right;">
-3.0
-</td>
-<td style="text-align:right;">
-3.25
-</td>
-<td style="text-align:right;">
-22.0
-</td>
-<td style="text-align:right;">
-20.00
-</td>
-</tr>
-</tbody>
-</table>
 <p>We could also supplement these data summaries with a plot.</p>
 <p>Note that we are using the <code>aflw_merged</code> data set for the plot, rather than plotting the summary statistics stored in <code>aflw_league_scoring</code> and <code>aflw_team_scoring</code>. <strong><a href="https://journals.plos.org/plosbiology/article?id=10.1371/journal.pbio.1002128">Tracey Weissgerber</a></strong> explains the thinking behind this with respect to bar and line charts, but the underlying concepts that she emphasises apply here too.</p>
 <center>
@@ -460,7 +163,6 @@ p &lt;- p + theme(
 
 # Display plot
 p</code></pre>
-<img src="/post/2019-01-27-aflw-match-analysis-part-ii_files/figure-html/plot_team_scoring-1.png" width="672" />
 </center>
 </div>
 <div id="team-matchplay-profiles" class="section level2">
