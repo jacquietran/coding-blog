@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>AFLW &#43; fitzRoy, Part I: Obtaining game statistics from women&#39;s footy matches // Under The Hood</title>
+
+    <meta charset="utf-8">
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+    
+    
+    
+
+        <meta property="og:title" content="AFLW &#43; fitzRoy, Part I: Obtaining game statistics from women&#39;s footy matches" />
+    <meta property="og:description" content="" />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="en" />
+    <meta property="og:url" content="/post/aflw-match-analysis-part-i/" />
+    
+
+    <link rel="shortcut icon" href="/favicon.ico">
+
+    <link href="/webfonts/ptserif/main.css" rel='stylesheet' type='text/css'>
+    <link href="/webfonts/source-code-pro/main.css" rel="stylesheet" type="text/css">
+
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+    <meta name="generator" content="Hugo 0.69.0" />
+</head>
+
+
+<body>
+<div id="container">
+    <header id="header">
+    <div id="header-outer" class="outer">
+        <div id="header-inner" class="inner">
+            <a id="main-nav-toggle" class="nav-icon" href="javascript:;"></a>
+            <a id="logo" class="logo-text" href="/">Under The Hood</a>
+            <nav id="main-nav">
+                
+                <a class="main-nav-link" href="/">Home</a>
+                
+                <a class="main-nav-link" href="/about/">About</a>
+                
+                <a class="main-nav-link" href="/post/">Posts</a>
+                
+                <a class="main-nav-link" href="/tags/">Tags</a>
+                
+            </nav>
+            <nav id="sub-nav">
+                <div id="search-form-wrap">
+                </div>
+            </nav>
+        </div>
+    </div>
+</header>
+
+    <section id="main" class="outer">
+        <article class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        <header class="article-header">
+            <h1 class="article-title" itemprop="name">AFLW &#43; fitzRoy, Part I: Obtaining game statistics from women&#39;s footy matches</h1>
+        </header>
+        
+        <div class="article-meta">
+            <a href="/post/aflw-match-analysis-part-i/" class="article-date">
+                <time datetime='2019-01-27T00:00:00.000&#43;00:00' itemprop="datePublished">2019-01-27</time>
+            </a>
+            
+            
+            <div class="post-categories">
+                <div class="article-category">
+                    
+                    
+                    <a class="article-category-link" href="//categories/on-field-analyses">On-field analyses</a>
+                    
+                </div>
+            </div>
+            
+            
+        </div>
+        <div class="article-entry" itemprop="articleBody">
+            
+
+
+<img src="/img/post/First_AFLW_Ball_Up_03.02.17.jpg" />
+<p style="text-align: right">
+(source: <strong><a href="https://commons.wikimedia.org/wiki/File:First_AFLW_Ball_Up_03.02.17.jpg">Wikimedia</a></strong>)
+</p>
+<p>The countdown is well and truly on.</p>
+<p>We are less than 1 week away from the first bounce of AFLW 3.0, the 3rd season of the women’s national Australian football league. As an Aussie living abroad, a footy fan, and a supporter of the increasing professionalisation of women’s sport, I’m excited to watch closely as the next chapter of the AFLW story unfolds.</p>
+<p>How will Geelong and North Melbourne, new teams to the national league in 2019, fare against the 8 teams who have participated in AFLW seasons 1 and 2?</p>
+<p>What will new draftees like <strong><a href="https://www.youtube.com/watch?v=PAhPnRRsm0E">Maddie Prespakis</a></strong> and <strong><a href="http://www.geelongcats.com.au/video/2018-10-23/nina-morrison-highlights">Nina Morrison</a></strong> bring to the mix at senior-level?</p>
+<p>Which <strong><a href="https://www.theguardian.com/sport/2018/sep/21/irelands-emerald-armada-set-to-take-the-aflw-by-storm">international players</a></strong> and <strong><a href="https://www.theguardian.com/sport/2018/sep/14/fearsome-sharni-layton-well-set-to-join-elite-band-of-sport-switchers">cross-coders</a></strong> will show the potential success to be had in talent transfers?</p>
+<p>How will the <strong><a href="https://thewomensgame.com/news/opinion-aflw-conference-format-518039">conference format</a></strong> and <strong><a href="https://www.theguardian.com/sport/2018/nov/07/aflw-tweaks-rules-for-next-season-to-promote-more-scoring">rule changes</a></strong> play out?</p>
+<p>Fascinating possibilities abound, but there’s lots to be learned from looking back too.</p>
+<div id="the-analysis-questions" class="section level2">
+<h2>The analysis questions</h2>
+<p>Following on from <strong><a href="https://underthehood.jacquietran.com/2019/01/12/getting-to-know-the-fitzroy-package-afl-game-statistics/">my last post</a></strong>, I wanted to work with the <code>fitzRoy</code> package to obtain and explore match data from the 2017 and 2018 AFLW seasons.</p>
+<p>In this post, <em>Part I</em>, I provide a codethrough that demonstrates how to obtain publicly available AFLW match data and prepare it for further analysis.</p>
+<p>Over a series of posts, I’ll show how the available match data can be used to:</p>
+<ol style="list-style-type: decimal">
+<li>Create team-by-team matchplay profiles; and</li>
+<li>Investigate the game statistics that are associated with successful team outcomes.</li>
+</ol>
+<p>As an aside, I hope to demonstrate what can be gleaned from a small sample, while also acknowledging their limitations.</p>
+</div>
+<div id="getting-started" class="section level2">
+<h2>Getting started</h2>
+<p>In a new R session, load up the libraries (packages) to be used in this codethrough.</p>
+<pre class="r"><code>knitr::opts_chunk$set(eval = FALSE)
+
+library(fitzRoy)
+library(dplyr)
+library(stringr)
+library(knitr)
+library(kableExtra)</code></pre>
+</div>
+<div id="obtaining-match-data" class="section level2">
+<h2>Obtaining match data</h2>
+<p>Thanks to the excellent <strong><a href="https://underthehood.jacquietran.com/2019/01/12/getting-to-know-the-fitzroy-package-afl-game-statistics/">fitzRoy package</a></strong>, retrieving AFLW match data is a cinch with the <code>get_aflw_match_data()</code> function.</p>
+<pre class="r"><code>aflw_match_data &lt;- get_aflw_match_data()
+
+# I&#39;ve suppressed warnings from this code chunk, so if you run this code
+# locally, don&#39;t be alarmed - warnings are returned for the listed Match.Id
+# values that correspond to matches yet to be played in 2019.</code></pre>
+</div>
+<div id="inspecting-match-data" class="section level2">
+<h2>Inspecting match data</h2>
+<p>If you’re working in RStudio, the <code>View()</code> function is useful for looking at rectangular data sets in a spreadsheet-like format.</p>
+<pre class="r"><code># Run this in RStudio to produce the screenshot below
+# which is interactive: you can sort and filter on columns
+# within the tab that opens up
+View(aflw_match_data)</code></pre>
+<p><img src="/img/post/view_fx.png" /></p>
+<p>There are a range of useful R functions for retrieving meta-data about, well, the data you’re working with. For instance, we can use <code>str()</code> to find out useful details like the number of observations (rows), the number of variables (columns), the name of each variable, and the data type for each variable (e.g., character string, integer, numeric, and so on).</p>
+<pre class="r"><code>str(aflw_match_data)</code></pre>
+<p>From visually inspecting the raw data and obtaining a meta-data summary, we know the following things about the AFLW match data set:</p>
+<ul>
+<li>The data is structured so that the information pertaining to each match is contained on one row. This means that the statistics for any two opposing teams are stored along the same row.</li>
+<li>Statistics for the home and away teams are distinguished by the prefix <em>‘Home.’</em> and <em>‘Away.’</em>.</li>
+<li>This data set includes ‘high-level’ information about each match, such as descriptors of the weather, the number of goals and behinds scored by each team, the total points scored by each team, and more.</li>
+<li>The data frame is wide, with each of the ‘measured’ variables presented in distinct columns. (For more on this, have a read of <strong><a href="https://mvuorre.github.io/toolbox/reshape.html">this article by Matti Vuorre on wide and long data.</a></strong>)</li>
+</ul>
+<p>Scrolling through the ‘temperature’ values, I also noticed that all matches in Rounds 1 to 3 of the 2017 season == 18. I am sceptical about the accuracy of this data given that weather is quite variable around Australia (as per the <strong><a href="http://www.bom.gov.au/jsp/ncc/climate_averages/temperature/index.jsp?maptype=1&amp;period=feb#maps">Bureau of Meteorology</a></strong>), and the AFLW season takes place in the summer months.</p>
+</div>
+<div id="obtaining-detailed-match-data" class="section level2">
+<h2>Obtaining detailed match data</h2>
+<p>To obtain game statistics for each team in each match (e.g., number of kicks, handballs, tackles, marks), the <code>fitzRoy</code> package again has a simple function for retrieving this data, which requires a vector of <code>Match.ID</code> values. Since I want game statistics data from all AFLW matches played to date, I’ll obtain 2017 and 2018 match IDs from the <code>aflw_match_data</code> set that we just retrieved.</p>
+<pre class="r"><code># Vector of match IDs to retrieve detailed game statistics for
+# Excluding match IDs for the 2019 season - yet to be played
+match_id_vec &lt;- aflw_match_data %&gt;%
+    select(Match.Id) %&gt;%
+    filter(!str_detect(Match.Id, &quot;2019&quot;))
+
+# Retrieve detailed statistics for match IDs specified in match_id_vec
+aflw_detailed &lt;- get_aflw_detailed_data(match_id_vec$Match.Id)</code></pre>
+</div>
+<div id="inspecting-the-detailed-match-data" class="section level2">
+<h2>Inspecting the detailed match data</h2>
+<p>Again, the <code>View()</code> and <code>str()</code> functions are helpful for initially inspecting the data set so you can take a look at its structure and contents. Using these functions, we learn that the AFLW detailed match data set has a similar structure to the ‘high-level’ match data we retrieved before (i.e., it’s in wide format, with one row per match so that both team’s statistics presented on the same row). This is handy because it means merging the data sets will be fairly straightforward.</p>
+<p>The <code>str()</code> includes information about all variables in the data set, including variable names, but sometimes you may be interested in looking at variable names <em>only</em> - without additional meta-data such as the type of data stored in each variable. To do this, use the <code>names()</code> function like so:</p>
+<pre class="r"><code>names(aflw_detailed)</code></pre>
+<p>That loooooonnnng list of variables shows us that we now have a range of game statistics to analyse, thanks to the <code>fitzRoy::get_aflw_detailed_data()</code> function . This data set primarily includes simple counts of game actions (e.g., total number of kicks), or derived variables that convey proportion and provide measures of accuracy or ‘efficiency’ (e.g., <strong><a href="http://www.bom.gov.au/jsp/ncc/climate_averages/temperature/index.jsp?maptype=1&amp;period=feb#maps">disposal efficiency</a></strong> is the number of disposals that are effectively received by a team-mate, divided by the total number of disposals).</p>
+<p>There are also some variables here like metres gained - a measure of the accumulated forward movement of the ball towards a team’s goals. This variable and a few others in this data set are routinely measured in the AFL (the men’s national competition) but not in the AFLW, so we will need to disregard these variables as we progress the analysis.</p>
+<p>By combining the ‘high-level’ information stored in the match data with the detailed game statistics data sets, we can use common match analysis approaches to understand AFLW team performance, by examining which game actions are associated (or not!) with game outcomes.</p>
+</div>
+<div id="data-preparation" class="section level2">
+<h2>Data preparation</h2>
+<p>Some data wrangling is needed to modify the data structure to suit this analysis, and tidy it up so it contains only the variables we will need.</p>
+<p>The code below wrangles <code>aflw_match_data</code> so that every match has two rows, with one row for the home team’s game statistics and one row for the away team’s game statistics.</p>
+<pre class="r"><code># Create a subset of aflw_match_data for HOME teams
+home_teams &lt;- aflw_match_data %&gt;%
+  select(Match.Id, Round.Id, Competition.Id, Venue, Local.Start.Time,
+         Round.Number, Round.Abbreviation, Weather.Type, Weather.Description,
+         Temperature, starts_with(&quot;Home&quot;), Away.Points) %&gt;%
+    # Rename variables for ease of merging and analysis
+  rename(team = Home.Team, goals = Home.Goals, behinds = Home.Behinds,
+         points_for = Home.Points, points_against = Away.Points,
+         behinds_left = Home.Left.Behinds, behinds_right = Home.Right.Behinds,
+         posters_left = Home.Left.Posters, posters_right = Home.Right.Posters,
+         behinds_rushed = Home.Rushed.Behinds,
+         behinds_touched = Home.Touched.Behinds) %&gt;%
+  mutate(home_or_away = &quot;Home&quot;)
+
+# Create a subset of aflw_match_data for AWAY teams
+away_teams &lt;- aflw_match_data %&gt;%
+  select(Match.Id, Round.Id, Competition.Id, Venue, Local.Start.Time,
+         Round.Number, Round.Abbreviation, Weather.Type, Weather.Description,
+         Temperature, starts_with(&quot;Away&quot;), Home.Points) %&gt;%
+    # Rename variables for ease of merging and analysis
+  rename(team = Away.Team, goals = Away.Goals, behinds = Away.Behinds,
+         points_for = Away.Points, points_against = Home.Points,
+         behinds_left = Away.Left.Behinds, behinds_right = Away.Right.Behinds,
+         posters_left = Away.Left.Posters, posters_right = Away.Right.Posters,
+         behinds_rushed = Away.Rushed.Behinds,
+         behinds_touched = Away.Touched.Behinds) %&gt;%
+  mutate(home_or_away = &quot;Away&quot;)
+
+# Row-bind the home and away subsets to create new data structure
+# where one row == one team in each match, so each match will have two rows
+aflw_match_data_clean &lt;- rbind(home_teams, away_teams)
+
+# Re-order the data set
+aflw_match_data_clean &lt;- aflw_match_data_clean[order(
+  aflw_match_data_clean$Match.Id,
+  rev(aflw_match_data_clean$home_or_away),
+  decreasing = FALSE), ]
+
+# Drop NA rows for fixtured matches that have not been played yet
+aflw_match_data_clean &lt;- aflw_match_data_clean %&gt;%
+  filter(!is.na(goals))
+
+# Create new variables for match outcomes
+aflw_match_data_clean &lt;- aflw_match_data_clean %&gt;%
+  mutate(score_margin = points_for - points_against, # continuous variable
+         match_outcome = case_when(                  # categorical variable
+           score_margin &gt; 0 ~ &quot;Win&quot;,
+           score_margin &lt; 0 ~ &quot;Loss&quot;,
+           TRUE             ~ &quot;Draw&quot;))</code></pre>
+<p>We follow the same logic to wrangle <code>aflw_detailed_data</code> into the same structure as <code>aflw_match_data_clean</code>.</p>
+<pre class="r"><code># Subset to variables that will be useful for the analysis
+# Variables are excluded here because they don&#39;t contain useful or correct data
+aflw_detailed_selected &lt;- aflw_detailed %&gt;%
+  select(Match.Id, contains(&quot;stats.totals&quot;), contains(&quot;away.team&quot;),
+         contains(&quot;home.team&quot;), -contains(&quot;behinds&quot;), -contains(&quot;goals&quot;),
+         -contains(&quot;interChange&quot;), -contains(&quot;lastUpdated&quot;),
+         -contains(&quot;metresGained&quot;), -contains(&quot;ranking&quot;),
+         -contains(&quot;ratingPoints&quot;), -contains(&quot;scoreInvolvements&quot;),
+         -contains(&quot;superGoals&quot;))
+
+# Create a subset of aflw_detailed_selected for HOME teams
+aflw_detailed_home &lt;- aflw_detailed_selected %&gt;%
+  select(Match.Id, contains(&quot;home.team&quot;),
+         contains(&quot;stats.totals&quot;), -contains(&quot;away&quot;)) %&gt;%
+    # Rename variables for ease of merging and analysis
+  rename(team_abbr = home.team.teamAbbr, team_id = home.team.teamId,
+         team = home.team.teamName, team_nickname = home.team.teamNickname,
+         bounces = home.stats.totals.bounces,
+         clangers = home.stats.totals.clangers,
+         clearances_centre = home.stats.totals.clearances.centreClearances,
+         clearances_stoppage = home.stats.totals.clearances.stoppageClearances,
+         clearances_total = home.stats.totals.clearances.totalClearances,
+         marks_contested = home.stats.totals.contestedMarks,
+         possessions_contested = home.stats.totals.contestedPossessions,
+         disposals_efficiency = home.stats.totals.disposalEfficiency,
+         disposals = home.stats.totals.disposals,
+         dream_team_points = home.stats.totals.dreamTeamPoints,
+         frees_against = home.stats.totals.freesAgainst,
+         frees_for = home.stats.totals.freesFor,
+         goal_accuracy = home.stats.totals.goalAccuracy,
+         goal_assists = home.stats.totals.goalAssists,
+         goal_efficiency = home.stats.totals.goalEfficiency,
+         handballs = home.stats.totals.handballs,
+         hitouts = home.stats.totals.hitouts,
+         inside50s = home.stats.totals.inside50s,
+         intercepts = home.stats.totals.intercepts,
+         kicks = home.stats.totals.kicks, marks = home.stats.totals.marks,
+         marks_inside50 = home.stats.totals.marksInside50,
+         one_percenters = home.stats.totals.onePercenters,
+         rebound50s = home.stats.totals.rebound50s,
+         shot_efficiency = home.stats.totals.shotEfficiency,
+         shots_at_goal = home.stats.totals.shotsAtGoal,
+         tackles = home.stats.totals.tackles,
+         tackles_inside50 = home.stats.totals.tacklesInside50,
+         possessions_total = home.stats.totals.totalPossessions,
+         turnovers = home.stats.totals.turnovers,
+         possessions_uncontested = home.stats.totals.uncontestedPossessions)
+
+# Create a subset of aflw_detailed_selected for AWAY teams
+aflw_detailed_away &lt;- aflw_detailed_selected %&gt;%
+  select(Match.Id, contains(&quot;away.team&quot;),
+         contains(&quot;stats.totals&quot;), -contains(&quot;home&quot;)) %&gt;%
+    # Rename variables for ease of merging and analysis
+  rename(team_abbr = away.team.teamAbbr, team_id = away.team.teamId,
+         team = away.team.teamName, team_nickname = away.team.teamNickname,
+         bounces = away.stats.totals.bounces,
+         clangers = away.stats.totals.clangers,
+         clearances_centre = away.stats.totals.clearances.centreClearances,
+         clearances_stoppage = away.stats.totals.clearances.stoppageClearances,
+         clearances_total = away.stats.totals.clearances.totalClearances,
+         marks_contested = away.stats.totals.contestedMarks,
+         possessions_contested = away.stats.totals.contestedPossessions,
+         disposals_efficiency = away.stats.totals.disposalEfficiency,
+         disposals = away.stats.totals.disposals,
+         dream_team_points = away.stats.totals.dreamTeamPoints,
+         frees_against = away.stats.totals.freesAgainst,
+         frees_for = away.stats.totals.freesFor,
+         goal_accuracy = away.stats.totals.goalAccuracy,
+         goal_assists = away.stats.totals.goalAssists,
+         goal_efficiency = away.stats.totals.goalEfficiency,
+         handballs = away.stats.totals.handballs,
+         hitouts = away.stats.totals.hitouts,
+         inside50s = away.stats.totals.inside50s,
+         intercepts = away.stats.totals.intercepts,
+         kicks = away.stats.totals.kicks, marks = away.stats.totals.marks,
+         marks_inside50 = away.stats.totals.marksInside50,
+         one_percenters = away.stats.totals.onePercenters,
+         rebound50s = away.stats.totals.rebound50s,
+         shot_efficiency = away.stats.totals.shotEfficiency,
+         shots_at_goal = away.stats.totals.shotsAtGoal,
+         tackles = away.stats.totals.tackles,
+         tackles_inside50 = away.stats.totals.tacklesInside50,
+         possessions_total = away.stats.totals.totalPossessions,
+         turnovers = away.stats.totals.turnovers,
+         possessions_uncontested = away.stats.totals.uncontestedPossessions)
+
+# Row-bind the home and away subsets to create new data structure
+# where one row == one team in each match, so each match will have two rows
+aflw_detailed_clean &lt;- rbind(aflw_detailed_home, aflw_detailed_away)</code></pre>
+<p>We have modified the data structure of <code>aflw_match_data_clean</code> and <code>aflw_detailed_clean</code> and simplified to include only the variables that are useful for this analysis. Now we can use the <code>left_join()</code> function from the <code>dplyr</code> package to merge the data sets.</p>
+<pre class="r"><code>aflw_merged &lt;- left_join(aflw_match_data_clean, aflw_detailed_clean)
+
+# Check the first few rows to see what the data looks like now
+head(aflw_merged) %&gt;%
+    kable(&quot;html&quot;) %&gt;%
+    kable_styling() %&gt;%
+    scroll_box(width = &quot;800px&quot;, height = &quot;600px&quot;) </code></pre>
+<p><strong>Side note:</strong> Everytime I use <code>dplyr</code> to merge data sets, I feel immeasurable gratitude to have moved beyond the copy-paste approach of my Excel-heavy past - this technique is manual, tedious, and most importantly, prone to errors that can be difficult if not impossible to trace. In contrast, <code>dplyr</code> joins are elegant, efficient, and the type of join is clear from the name of the function. My go-to reference on this topic is the <strong><a href="https://stat545.com/bit001_dplyr-cheatsheet.html">dplyr cheatsheet</a></strong> by <strong><a href="https://www.twitter.com/JennyBryan">Jenny Bryan</a></strong>.</p>
+</div>
+<div id="where-to-next" class="section level2">
+<h2>Where to next?</h2>
+<p>Following this codethrough produces a tidy data set that contains detailed information about every match played in the 2017 and 2018 AFLW seasons.</p>
+<p>For the next step in this analysis, we’ll begin exploring this data set using data summaries and visualisations to compare match statistics between AFLW teams.</p>
+<p><em>[ puts on Ira Glass voice ]</em></p>
+<p>Stay. Tuned.</p>
+</div>
+
+        </div>
+
+        
+        
+        
+
+        
+
+
+        
+        <footer class="article-footer">
+            <ul class="article-tag-list">
+                
+                <li class="article-tag-list-item">
+                    <a class="article-tag-list-link" href="//tags/football">football
+                    </a>
+                </li>
+                
+                <li class="article-tag-list-item">
+                    <a class="article-tag-list-link" href="//tags/sport-science">sport science
+                    </a>
+                </li>
+                
+                <li class="article-tag-list-item">
+                    <a class="article-tag-list-link" href="//tags/sports-analytics">sports analytics
+                    </a>
+                </li>
+                
+                <li class="article-tag-list-item">
+                    <a class="article-tag-list-link" href="//tags/web-scraping">web scraping
+                    </a>
+                </li>
+                
+                <li class="article-tag-list-item">
+                    <a class="article-tag-list-link" href="//tags/r-stats">r stats
+                    </a>
+                </li>
+                
+                <li class="article-tag-list-item">
+                    <a class="article-tag-list-link" href="//tags/aflw">aflw
+                    </a>
+                </li>
+                
+            </ul>
+        </footer>
+        
+    </div>
+    <nav id="article-nav">
+    
+    <a href="/post/aflw-match-analysis-part-ii/" id="article-nav-newer" class="article-nav-link-wrap">
+        <div class="article-nav-title"><span>&lt;</span>&nbsp;
+            AFLW &#43; fitzRoy, Part II: Team-by-team matchplay profiles
+        </div>
+    </a>
+    
+    
+    <a href="/post/women-sport-research-gaps-and-opportunities/" id="article-nav-older" class="article-nav-link-wrap">
+        <div class="article-nav-title">Women&#39;s sport research: Gaps and opportunities&nbsp;<span>&gt;</span></div>
+    </a>
+    
+</nav>
+
+</article>
+
+        
+    </section>
+    <footer id="footer">
+    <div class="outer">
+        <div id="footer-info" class="inner">
+            &copy; 2020 Under The Hood
+            <br />
+            Powered by <a href="https://gohugo.io" target="_blank">Hugo</a> with theme <a href="https://github.com/carsonip/hugo-theme-minos" target="_blank">Minos</a>
+        </div>
+    </div>
+    
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-123-45', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/styles/tomorrow-night.min.css" integrity="sha256-2wL88NKUqvJi/ExflDzkzUumjUM73mcK2gBvBBeLvTk=" crossorigin="anonymous" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/highlight.min.js" integrity="sha256-KbfTjB0WZ8vvXngdpJGY3Yp3xKk+tttbqClO11anCIU=" crossorigin="anonymous"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+
+    
+    <script>
+        document.getElementById('main-nav-toggle').addEventListener('click', function () {
+            var header = document.getElementById('header');
+            if (header.classList.contains('mobile-on')) {
+                header.classList.remove('mobile-on');
+            } else {
+                header.classList.add('mobile-on');
+            }
+        });
+    </script>
+</footer>
+
+</div>
+</body>
+</html>

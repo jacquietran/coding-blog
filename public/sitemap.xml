@@ -1,197 +1,165 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
-    <loc>/2019/02/17/aflw-match-analysis-part-ii/</loc>
+    <loc>/tags/aflw/</loc>
     <lastmod>2019-02-17T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>/2019/01/27/aflw-match-analysis-part-i/</loc>
+    <loc>/post/aflw-match-analysis-part-ii/</loc>
+    <lastmod>2019-02-17T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/categories/</loc>
+    <lastmod>2019-02-17T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/tags/football/</loc>
+    <lastmod>2019-02-17T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/categories/on-field-analyses/</loc>
+    <lastmod>2019-02-17T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/post/</loc>
+    <lastmod>2019-02-17T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/tags/r-stats/</loc>
+    <lastmod>2019-02-17T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/tags/sport-science/</loc>
+    <lastmod>2019-02-17T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/tags/sports-analytics/</loc>
+    <lastmod>2019-02-17T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/tags/</loc>
+    <lastmod>2019-02-17T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/tags/web-scraping/</loc>
+    <lastmod>2019-02-17T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/tags/womens-sport/</loc>
+    <lastmod>2019-02-17T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/post/aflw-match-analysis-part-i/</loc>
     <lastmod>2019-01-27T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>/2019/01/26/women-sport-research-gaps-and-opportunities/</loc>
+    <loc>/categories/general-ramblings/</loc>
     <lastmod>2019-01-26T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>/2019/01/12/getting-to-know-the-fitzroy-package-afl-game-statistics/</loc>
+    <loc>/post/women-sport-research-gaps-and-opportunities/</loc>
+    <lastmod>2019-01-26T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/post/getting-to-know-the-fitzroy-package-afl-game-statistics/</loc>
     <lastmod>2019-01-12T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>/2018/07/20/text-mining-of-wimbledon-tweets-using-rtweet-and-tidytext/</loc>
+    <loc>/categories/off-field-analyses/</loc>
     <lastmod>2018-07-20T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>/2018/01/04/how-much-do-you-get-paid-part-3/</loc>
+    <loc>/tags/rtweet/</loc>
+    <lastmod>2018-07-20T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/tags/tennis/</loc>
+    <lastmod>2018-07-20T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/tags/text-mining/</loc>
+    <lastmod>2018-07-20T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/post/text-mining-of-wimbledon-tweets-using-rtweet-and-tidytext/</loc>
+    <lastmod>2018-07-20T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/tags/tidytext/</loc>
+    <lastmod>2018-07-20T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/post/how-much-do-you-get-paid-part-3/</loc>
     <lastmod>2018-01-04T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>/2018/01/03/how-much-do-you-get-paid-part-2/</loc>
+    <loc>/tags/salaries/</loc>
+    <lastmod>2018-01-04T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/tags/soccer/</loc>
+    <lastmod>2018-01-04T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/tags/strength-and-conditioning/</loc>
+    <lastmod>2018-01-04T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/post/how-much-do-you-get-paid-part-2/</loc>
     <lastmod>2018-01-03T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>/2018/01/02/how-much-do-you-get-paid-part-1/</loc>
+    <loc>/post/how-much-do-you-get-paid-part-1/</loc>
     <lastmod>2018-01-02T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>/learningr/</loc>
+    <loc>/learning_r/</loc>
     <lastmod>2018-01-02T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>/2017/10/01/my-coding-origin-story/</loc>
+    <loc>/</loc>
+    <lastmod>2018-01-02T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/post/my-coding-origin-story/</loc>
     <lastmod>2017-10-01T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>/about/</loc>
     <lastmod>2017-09-26T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/about/</loc>
-    <lastmod>2017-09-26T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>/tags/aflw/</loc>
-    <lastmod>2019-02-17T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>/categories/</loc>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>/tags/football/</loc>
-    <lastmod>2019-02-17T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>/categories/general-ramblings/</loc>
-    <lastmod>2019-01-26T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>/learningr/</loc>
-    <lastmod>2018-01-02T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>/categories/off-field-analyses/</loc>
-    <lastmod>2018-07-20T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>/categories/on-field-analyses/</loc>
-    <lastmod>2019-02-17T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>/post/</loc>
-    <lastmod>2019-02-17T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>/tags/r-stats/</loc>
-    <lastmod>2019-02-17T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>/tags/rtweet/</loc>
-    <lastmod>2018-07-20T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>/tags/salaries/</loc>
-    <lastmod>2018-01-04T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>/tags/soccer/</loc>
-    <lastmod>2018-01-04T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>/tags/sport-science/</loc>
-    <lastmod>2019-02-17T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>/tags/sports-analytics/</loc>
-    <lastmod>2019-02-17T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>/tags/strength-and-conditioning/</loc>
-    <lastmod>2018-01-04T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>/tags/</loc>
-    <lastmod>2019-02-17T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>/tags/tennis/</loc>
-    <lastmod>2018-07-20T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>/tags/text-mining/</loc>
-    <lastmod>2018-07-20T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>/tags/tidytext/</loc>
-    <lastmod>2018-07-20T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>/</loc>
-    <lastmod>2019-02-17T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>/tags/web-scraping/</loc>
-    <lastmod>2019-02-17T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>/tags/womens-sport/</loc>
-    <lastmod>2019-02-17T00:00:00+00:00</lastmod>
-    <priority>0</priority>
   </url>
   
 </urlset>

@@ -1,11 +1,11 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Rtweet on Under The Hood</title>
+    <title>rtweet on Under The Hood</title>
     <link>/tags/rtweet/</link>
-    <description>Recent content in Rtweet on Under The Hood</description>
+    <description>Recent content in rtweet on Under The Hood</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>en-us</language>
+    <language>en</language>
     <lastBuildDate>Fri, 20 Jul 2018 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/tags/rtweet/index.xml" rel="self" type="application/rss+xml" />
@@ -13,10 +13,10 @@
     
     <item>
       <title>Text mining of Wimbledon tweets using rtweet and tidytext</title>
-      <link>/2018/07/20/text-mining-of-wimbledon-tweets-using-rtweet-and-tidytext/</link>
+      <link>/post/text-mining-of-wimbledon-tweets-using-rtweet-and-tidytext/</link>
       <pubDate>Fri, 20 Jul 2018 00:00:00 +0000</pubDate>
       
-      <guid>/2018/07/20/text-mining-of-wimbledon-tweets-using-rtweet-and-tidytext/</guid>
+      <guid>/post/text-mining-of-wimbledon-tweets-using-rtweet-and-tidytext/</guid>
       <description>New job, new skillsThis year, I started in a new role as Senior Insights Researcher at High Performance Sport New Zealand. For me, one of the big drawcards of this role was the opportunity to learn and grow my skills and competencies as a performance sport professional.
 Our team regularly deals with qualitative data, so as an applied sport scientist with a strongly quantitative training, it has been a steep learning curve but also enjoyable to open my mind up to different ways of thinking and knowing.</description>
     </item>
