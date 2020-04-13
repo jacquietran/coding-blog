@@ -6,10 +6,20 @@
     <description>Recent content in sports analytics on Under The Hood</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Sun, 17 Feb 2019 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 13 Apr 2020 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/tags/sports-analytics/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Giving back to sport science</title>
+      <link>/post/giving-back-to-sport-science/</link>
+      <pubDate>Mon, 13 Apr 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/post/giving-back-to-sport-science/</guid>
+      <description>There’s no doubt that we, globally, are going through tough times as the COVID-19 pandemic sweeps through many countries. Every aspect of life has been affected, and this includes sport.
+While I live in NZ (and am so grateful to be here, now more than ever), I’ve been keeping a close eye on the news from back home in Australia and elsewhere around the world. Friends and colleagues throughout sport have been heavily impacted - many having been stood down without pay or made redundant altogether.</description>
+    </item>
     
     <item>
       <title>AFLW &#43; fitzRoy, Part II: Team-by-team matchplay profiles</title>

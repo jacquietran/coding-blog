@@ -6,10 +6,37 @@
     <description>Recent content in Tags on Under The Hood</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Sun, 17 Feb 2019 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 13 Apr 2020 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/tags/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>r stats</title>
+      <link>/tags/r-stats/</link>
+      <pubDate>Mon, 13 Apr 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/tags/r-stats/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>sport science</title>
+      <link>/tags/sport-science/</link>
+      <pubDate>Mon, 13 Apr 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/tags/sport-science/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>sports analytics</title>
+      <link>/tags/sports-analytics/</link>
+      <pubDate>Mon, 13 Apr 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/tags/sports-analytics/</guid>
+      <description></description>
+    </item>
     
     <item>
       <title>aflw</title>
@@ -26,33 +53,6 @@
       <pubDate>Sun, 17 Feb 2019 00:00:00 +0000</pubDate>
       
       <guid>/tags/football/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>r stats</title>
-      <link>/tags/r-stats/</link>
-      <pubDate>Sun, 17 Feb 2019 00:00:00 +0000</pubDate>
-      
-      <guid>/tags/r-stats/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>sport science</title>
-      <link>/tags/sport-science/</link>
-      <pubDate>Sun, 17 Feb 2019 00:00:00 +0000</pubDate>
-      
-      <guid>/tags/sport-science/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>sports analytics</title>
-      <link>/tags/sports-analytics/</link>
-      <pubDate>Sun, 17 Feb 2019 00:00:00 +0000</pubDate>
-      
-      <guid>/tags/sports-analytics/</guid>
       <description></description>
     </item>
     

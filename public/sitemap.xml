@@ -3,6 +3,46 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>/categories/</loc>
+    <lastmod>2020-04-13T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/categories/general-ramblings/</loc>
+    <lastmod>2020-04-13T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/post/giving-back-to-sport-science/</loc>
+    <lastmod>2020-04-13T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/post/</loc>
+    <lastmod>2020-04-13T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/tags/r-stats/</loc>
+    <lastmod>2020-04-13T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/tags/sport-science/</loc>
+    <lastmod>2020-04-13T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/tags/sports-analytics/</loc>
+    <lastmod>2020-04-13T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/tags/</loc>
+    <lastmod>2020-04-13T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
     <loc>/tags/aflw/</loc>
     <lastmod>2019-02-17T00:00:00+00:00</lastmod>
   </url>
@@ -13,42 +53,12 @@
   </url>
   
   <url>
-    <loc>/categories/</loc>
-    <lastmod>2019-02-17T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
     <loc>/tags/football/</loc>
     <lastmod>2019-02-17T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>/categories/on-field-analyses/</loc>
-    <lastmod>2019-02-17T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/post/</loc>
-    <lastmod>2019-02-17T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/tags/r-stats/</loc>
-    <lastmod>2019-02-17T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/tags/sport-science/</loc>
-    <lastmod>2019-02-17T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/tags/sports-analytics/</loc>
-    <lastmod>2019-02-17T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/tags/</loc>
     <lastmod>2019-02-17T00:00:00+00:00</lastmod>
   </url>
   
@@ -65,11 +75,6 @@
   <url>
     <loc>/post/aflw-match-analysis-part-i/</loc>
     <lastmod>2019-01-27T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/categories/general-ramblings/</loc>
-    <lastmod>2019-01-26T00:00:00+00:00</lastmod>
   </url>
   
   <url>
