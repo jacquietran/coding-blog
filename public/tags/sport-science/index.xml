@@ -1,11 +1,11 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Sport science on Under The Hood</title>
+    <title>sport science on Under The Hood</title>
     <link>/tags/sport-science/</link>
-    <description>Recent content in Sport science on Under The Hood</description>
+    <description>Recent content in sport science on Under The Hood</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>en-us</language>
+    <language>en</language>
     <lastBuildDate>Sun, 17 Feb 2019 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/tags/sport-science/index.xml" rel="self" type="application/rss+xml" />
@@ -13,20 +13,20 @@
     
     <item>
       <title>AFLW &#43; fitzRoy, Part II: Team-by-team matchplay profiles</title>
-      <link>/2019/02/17/aflw-match-analysis-part-ii/</link>
+      <link>/post/aflw-match-analysis-part-ii/</link>
       <pubDate>Sun, 17 Feb 2019 00:00:00 +0000</pubDate>
       
-      <guid>/2019/02/17/aflw-match-analysis-part-ii/</guid>
+      <guid>/post/aflw-match-analysis-part-ii/</guid>
       <description>(source: AFL Nation)IntroductionThe focus of this post is on creating AFLW team matchplay profiles, using match data from the 2017 and 2018 seasons. By drawing on match data from the 2 completed AFLW seasons thus far, this post also outlines how I think about, analyse, and present insights from small data sets.
 For more on retrieving and preparing AFLW match data, check out Part I of this series of posts or this GitHub repo.</description>
     </item>
     
     <item>
       <title>AFLW &#43; fitzRoy, Part I: Obtaining game statistics from women&#39;s footy matches</title>
-      <link>/2019/01/27/aflw-match-analysis-part-i/</link>
+      <link>/post/aflw-match-analysis-part-i/</link>
       <pubDate>Sun, 27 Jan 2019 00:00:00 +0000</pubDate>
       
-      <guid>/2019/01/27/aflw-match-analysis-part-i/</guid>
+      <guid>/post/aflw-match-analysis-part-i/</guid>
       <description>(source: Wikimedia)The countdown is well and truly on.
 We are less than 1 week away from the first bounce of AFLW 3.0, the 3rd season of the women’s national Australian football league. As an Aussie living abroad, a footy fan, and a supporter of the increasing professionalisation of women’s sport, I’m excited to watch closely as the next chapter of the AFLW story unfolds.
 How will Geelong and North Melbourne, new teams to the national league in 2019, fare against the 8 teams who have participated in AFLW seasons 1 and 2?</description>
@@ -34,10 +34,10 @@ How will Geelong and North Melbourne, new teams to the national league in 2019, 
     
     <item>
       <title>Women&#39;s sport research: Gaps and opportunities</title>
-      <link>/2019/01/26/women-sport-research-gaps-and-opportunities/</link>
+      <link>/post/women-sport-research-gaps-and-opportunities/</link>
       <pubDate>Sat, 26 Jan 2019 00:00:00 +0000</pubDate>
       
-      <guid>/2019/01/26/women-sport-research-gaps-and-opportunities/</guid>
+      <guid>/post/women-sport-research-gaps-and-opportunities/</guid>
       <description>There remains a huge amount of work to be done to explore and understand athlete and team performance in women&amp;rsquo;s sport. This is true for sports that have had professional or elite women&amp;rsquo;s competitions for some time. It&amp;rsquo;s especially pertinent in sports like Australian football, in which the top-tier women&amp;rsquo;s competition was only established in 2017.
 Here&amp;rsquo;s a snapshot of the available knowledge about AFLW matchplay:
  I conducted Google and Google Scholar searches for &amp;lsquo;aflw&amp;rsquo; and &amp;lsquo;women australian football&amp;rsquo;.</description>
@@ -45,34 +45,33 @@ Here&amp;rsquo;s a snapshot of the available knowledge about AFLW matchplay:
     
     <item>
       <title>How much do you get paid? Part III - Comparison by discipline</title>
-      <link>/2018/01/04/how-much-do-you-get-paid-part-3/</link>
+      <link>/post/how-much-do-you-get-paid-part-3/</link>
       <pubDate>Thu, 04 Jan 2018 00:00:00 +0000</pubDate>
       
-      <guid>/2018/01/04/how-much-do-you-get-paid-part-3/</guid>
+      <guid>/post/how-much-do-you-get-paid-part-3/</guid>
       <description>IntroductionThis post is the third in a series - to get up to speed, have a read through the first post and the second post. In this series, I will show how I created the plots that Aiden published on Twitter here and here, alongside some commentary about the choices I made throughout the process and my own interpretations of the results.
 Getting startedLoad up the data and the libraries as we’ve done before.</description>
     </item>
     
     <item>
       <title>How much do you get paid? Part II - Job seniority</title>
-      <link>/2018/01/03/how-much-do-you-get-paid-part-2/</link>
+      <link>/post/how-much-do-you-get-paid-part-2/</link>
       <pubDate>Wed, 03 Jan 2018 00:00:00 +0000</pubDate>
       
-      <guid>/2018/01/03/how-much-do-you-get-paid-part-2/</guid>
+      <guid>/post/how-much-do-you-get-paid-part-2/</guid>
       <description>IntroductionThis post is the second in a series; click here to read the first post if you haven’t already done so. In this series, I will show how I created the plots that Aiden Oakley published on Twitter here and here, alongside some commentary about the choices I made throughout the process and my own interpretations of the results.
 Getting startedWe’ll load the cleaned data in and load the necessary libraries as we did in the first post.</description>
     </item>
     
     <item>
       <title>How much do you get paid? Part I - An initial exploration</title>
-      <link>/2018/01/02/how-much-do-you-get-paid-part-1/</link>
+      <link>/post/how-much-do-you-get-paid-part-1/</link>
       <pubDate>Tue, 02 Jan 2018 00:00:00 +0000</pubDate>
       
-      <guid>/2018/01/02/how-much-do-you-get-paid-part-1/</guid>
+      <guid>/post/how-much-do-you-get-paid-part-1/</guid>
       <description>The backstoryIt’s a touchy subject for many. Yet this question—how much do you get paid?—is at the core of the online questionnaire that was recently administered by Aiden Oakley (@ajoakley on Twitter). And it is a question that was willingly answered by over 100 sport scientists and strength &amp;amp; conditioning coaches who currently work for football (soccer) clubs in the UK.
 Why?
-This job advert says it all…
-This is shocking!</description>
+This job advert says it all…</description>
     </item>
     
   </channel>

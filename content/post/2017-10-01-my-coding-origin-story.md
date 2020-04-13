@@ -12,6 +12,8 @@ draft: no
 
 I often get asked questions about how long I've been coding for, how I got started, whether I have completed any formal studies in programming / computer science, and so on. The reality is that my path is far from linear. Most of what I've learned to date has been more opportunistic than strategic, curiosity-driven rather than being part of a master plan to acquire professional skills for the workplace. To illustrate, it might help to go back to the beginning, to tell my coding origin story...
 
+*TL;DR I am a massive nerd and have been coding in some form since primary school.*
+
 ## Kid-coder
 
 My first foray into programming was in the late 1990s. These were heady times; public access to the internet was just becoming a thing, yet the security protections on school and business computers were remarkably poor. I began learning to code when I figured out how to access the MS-DOS prompt on my primary school's computer to change settings at my leisure.
@@ -41,7 +43,3 @@ For the unitiated, it was quite the introduction and one that admittedly scared 
 In 2015, I put those experiences behind me and dedicated much of my time and effort to learning R. The impetus was to learn R well enough so that I could provide adequate support to my Honours student and her research. I think I managed to do this (just), and in the process I was able to develop a new skill set that has served me well in subsequent years. Now, in my work as a sport scientist and researcher, I use R nearly every day to clean and merge data sets, conduct simple calculations and build models, create static plots and interactive data visualisations, generate reproducible reports, and build dashboards.
 
 Of course, learning never stops for a perpetual student like me. I'm keen to further develop my skills in R and other languages, and launching this blog is a big part of that process.
-
-----------
-
-TL;DR I am a massive nerd and have been coding in some form since primary school.
