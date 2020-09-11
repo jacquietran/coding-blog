@@ -1,6 +1,6 @@
 ---
 title: "About"
-date: "Updated 2020-09-12"
+date: "2020-09-12"
 ---
 
 [**Under The Hood**](https://underthehood.jacquietran.com) is a platform to demonstrate what is possible when we apply analytical techniques to solve problems that matter in sport. Drawing on my own professional experiences, this blog will showcase the many ways in which analytics can be used to discover new insights about the sports we love to play, watch, and support.
