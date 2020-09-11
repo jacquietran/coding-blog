@@ -22,6 +22,17 @@ My name is Jacquie Tran. I&amp;rsquo;m a sport scientist and researcher working 
     </item>
     
     <item>
+      <title>Exploring music data with {spotifyr}</title>
+      <link>/post/exploring-music-data-with-spotifyr/</link>
+      <pubDate>Sat, 12 Sep 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/post/exploring-music-data-with-spotifyr/</guid>
+      <description>Load up the necessary R packages.
+library(spotifyr)library(dplyr)library(tidyr)library(ggplot2)Retrieve data using the Spotify API.
+# API authentication details already stored as environment variables# Retrieve access tokenaccess_token &amp;lt;- get_spotify_access_token()# Retrieve audio features of selected playlists# that I listen to while runningplaylists_for_running &amp;lt;- get_playlist_audio_features(username = &amp;quot;jacquietran&amp;quot;,playlist_uris = c(&amp;quot;51vGYzueZGouaZm1ZqcKDP&amp;quot;, # Aug 2020&amp;quot;0KZbG6sTuMvBMNVc6g0Xbt&amp;quot;, # Summer runnin&amp;#39;&amp;quot;66mV0cj4SIGF89AfyP2UKM&amp;quot;), # Run thingsauthorization = access_token)Tidy up the data we’ve retrieved to focus on only the variables we need.</description>
+    </item>
+    
+    <item>
       <title>Giving back to sport science</title>
       <link>/post/giving-back-to-sport-science/</link>
       <pubDate>Mon, 13 Apr 2020 00:00:00 +0000</pubDate>

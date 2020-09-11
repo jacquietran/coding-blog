@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Giving back to sport science // Under The Hood</title>
+    <title>Exploring music data with {spotifyr} // Under The Hood</title>
 
     <meta charset="utf-8">
     <meta http-equiv="content-type" content="text/html; charset=utf-8">
@@ -10,11 +10,11 @@
     
     
 
-        <meta property="og:title" content="Giving back to sport science" />
+        <meta property="og:title" content="Exploring music data with {spotifyr}" />
     <meta property="og:description" content="" />
     <meta property="og:type" content="website" />
     <meta property="og:locale" content="en" />
-    <meta property="og:url" content="/post/giving-back-to-sport-science/" />
+    <meta property="og:url" content="/post/exploring-music-data-with-spotifyr/" />
     
 
     <link rel="shortcut icon" href="/favicon.ico">
@@ -60,12 +60,12 @@
     <div class="article-inner">
         
         <header class="article-header">
-            <h1 class="article-title" itemprop="name">Giving back to sport science</h1>
+            <h1 class="article-title" itemprop="name">Exploring music data with {spotifyr}</h1>
         </header>
         
         <div class="article-meta">
-            <a href="/post/giving-back-to-sport-science/" class="article-date">
-                <time datetime='2020-04-13T00:00:00.000&#43;00:00' itemprop="datePublished">2020-04-13</time>
+            <a href="/post/exploring-music-data-with-spotifyr/" class="article-date">
+                <time datetime='2020-09-12T00:00:00.000&#43;00:00' itemprop="datePublished">2020-09-12</time>
             </a>
             
             
@@ -73,7 +73,7 @@
                 <div class="article-category">
                     
                     
-                    <a class="article-category-link" href="//categories/general-ramblings">General ramblings</a>
+                    <a class="article-category-link" href="//categories/music">Music</a>
                     
                 </div>
             </div>
@@ -84,29 +84,64 @@
             
 
 
-<p>There’s no doubt that we, globally, are going through tough times as the COVID-19 pandemic sweeps through many countries. Every aspect of life has been affected, and this includes sport.</p>
-<p>While I live in NZ (and am <em>so</em> grateful to be here, now more than ever), I’ve been keeping a close eye on the news from back home in Australia and elsewhere around the world. Friends and colleagues throughout sport have been heavily impacted - many having been stood down without pay or made redundant altogether.</p>
-<p>In these times, I want to give back to the sport science community. So I posted this call-out on Twitter recently:</p>
-<center>
-<blockquote class="twitter-tweet">
-<p lang="en" dir="ltr">
-Sport science friends interested in learning R:<br><br>I want to give back to our community which is going through a super tough time. Thinking of preparing <a href="https://twitter.com/hashtag/rstats?src=hash&amp;ref_src=twsrc%5Etfw">#rstats</a> tutorials, webinars, screencasts…<br><br>What topics would be useful to cover? RTs welcome 😊<a href="https://twitter.com/Benita_Lalor?ref_src=twsrc%5Etfw"><span class="citation">@Benita_Lalor</span></a> <a href="https://twitter.com/alicesweeting?ref_src=twsrc%5Etfw"><span class="citation">@alicesweeting</span></a>
-</p>
-— Jacquie Tran (<span class="citation">@jacquietran</span>) <a href="https://twitter.com/jacquietran/status/1247445854610313216?ref_src=twsrc%5Etfw">April 7, 2020</a>
-</blockquote>
-<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
-</center>
-<p>Lots of people pitched in with great suggestions - thank you! - so the list below reflects key topic areas mentioned by those who tweeted me back :)</p>
-<ul>
-<li>“The basics”</li>
-<li>Cleaning data and using the tidyverse</li>
-<li>Visualising data</li>
-<li>Learning R as an Excel / SPSS user</li>
-<li>Web scraping and working with APIs</li>
-<li>Working with sports data</li>
-<li>Statistical analysis using R</li>
-<li>Using code-generated slide decks</li>
-</ul>
+<p>Load up the necessary R packages.</p>
+<pre class="r"><code>library(spotifyr)
+library(dplyr)
+library(tidyr)
+library(ggplot2)</code></pre>
+<p>Retrieve data using the Spotify API.</p>
+<pre class="r"><code># API authentication details already stored as environment variables
+
+# Retrieve access token
+access_token &lt;- get_spotify_access_token()
+
+# Retrieve audio features of selected playlists
+# that I listen to while running
+playlists_for_running &lt;- get_playlist_audio_features(
+  username = &quot;jacquietran&quot;,
+  playlist_uris = c(&quot;51vGYzueZGouaZm1ZqcKDP&quot;, # Aug 2020
+                    &quot;0KZbG6sTuMvBMNVc6g0Xbt&quot;, # Summer runnin&#39;
+                    &quot;66mV0cj4SIGF89AfyP2UKM&quot;), # Run things
+    authorization = access_token)</code></pre>
+<p>Tidy up the data we’ve retrieved to focus on only the variables we need.</p>
+<pre class="r"><code>playlists_for_running %&gt;%
+  select(playlist_id, playlist_name, danceability, energy, key, key_name, mode,
+         mode_name, key_mode, loudness, speechiness, acousticness,
+         instrumentalness, liveness, valence, tempo, track.id, time_signature,
+         track.artists, track.name) %&gt;%
+  unnest(track.artists) %&gt;%
+  select(-href, -id, -type, -uri, -external_urls.spotify) %&gt;%
+  rename(track_artists = name) -&gt; playlists_for_running_tidy</code></pre>
+<p>Create a subset of the tidy data that focuses on the audio feature variables, and reshapes it into long format for plotting.</p>
+<pre class="r"><code># Subset to audio features -----------------------------------------------------
+
+playlists_for_running_tidy %&gt;%
+  select(-contains(&quot;key&quot;), -contains(&quot;mode&quot;), -time_signature) %&gt;%
+  pivot_longer(
+    cols = c(&quot;danceability&quot;, &quot;energy&quot;, &quot;loudness&quot;, &quot;speechiness&quot;,
+             &quot;acousticness&quot;, &quot;instrumentalness&quot;, &quot;liveness&quot;, &quot;valence&quot;,
+             &quot;tempo&quot;),
+    names_to = &quot;audio_feature_name&quot;,
+    values_to = &quot;audio_feature_value&quot;) -&gt; playlists_audio_features_long</code></pre>
+<p>Build a plot to compare the audio features of the 3 playlists I usually choose from when I’m going for a run.</p>
+<pre class="r"><code># Build plot -------------------------------------------------------------------
+
+p &lt;- ggplot(
+  playlists_audio_features_long,
+  aes(x = audio_feature_value, y = playlist_name,
+      group = playlist_name, colour = audio_feature_name))
+p &lt;- p + facet_wrap(~ audio_feature_name, nrow = 3, scales = &quot;free_x&quot;)
+p &lt;- p + geom_boxplot(
+  width = 0.75, size = 1, outlier.size = -1)
+p &lt;- p + geom_jitter(
+  height = 0.2, alpha = 0.25)
+p &lt;- p + theme(
+  legend.position = &quot;none&quot;,
+  panel.spacing = unit(&quot;1&quot;, &quot;lines&quot;))
+
+# Display plot -----------------------------------------------------------------
+p</code></pre>
+<p><img src="/post/2020-09-12-exploring-music-data-with-spotifyr_files/figure-html/plot-1.png" width="672" /></p>
 
         </div>
 
@@ -122,17 +157,12 @@ Sport science friends interested in learning R:<br><br>I want to give back to ou
             <ul class="article-tag-list">
                 
                 <li class="article-tag-list-item">
-                    <a class="article-tag-list-link" href="//tags/r-stats">r stats
+                    <a class="article-tag-list-link" href="//tags/music">music
                     </a>
                 </li>
                 
                 <li class="article-tag-list-item">
-                    <a class="article-tag-list-link" href="//tags/sport-science">sport science
-                    </a>
-                </li>
-                
-                <li class="article-tag-list-item">
-                    <a class="article-tag-list-link" href="//tags/sports-analytics">sports analytics
+                    <a class="article-tag-list-link" href="//tags/spotifyr">spotifyr
                     </a>
                 </li>
                 
@@ -142,15 +172,15 @@ Sport science friends interested in learning R:<br><br>I want to give back to ou
     </div>
     <nav id="article-nav">
     
-    <a href="/post/exploring-music-data-with-spotifyr/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/about/" id="article-nav-newer" class="article-nav-link-wrap">
         <div class="article-nav-title"><span>&lt;</span>&nbsp;
-            Exploring music data with {spotifyr}
+            About
         </div>
     </a>
     
     
-    <a href="/post/aflw-match-analysis-part-ii/" id="article-nav-older" class="article-nav-link-wrap">
-        <div class="article-nav-title">AFLW &#43; fitzRoy, Part II: Team-by-team matchplay profiles&nbsp;<span>&gt;</span></div>
+    <a href="/post/giving-back-to-sport-science/" id="article-nav-older" class="article-nav-link-wrap">
+        <div class="article-nav-title">Giving back to sport science&nbsp;<span>&gt;</span></div>
     </a>
     
 </nav>

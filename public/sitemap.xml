@@ -8,13 +8,43 @@
   </url>
   
   <url>
-    <loc>/</loc>
+    <loc>/categories/</loc>
     <lastmod>2020-09-12T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>/categories/</loc>
-    <lastmod>2020-04-13T00:00:00+00:00</lastmod>
+    <loc>/post/exploring-music-data-with-spotifyr/</loc>
+    <lastmod>2020-09-12T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/categories/music/</loc>
+    <lastmod>2020-09-12T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/tags/music/</loc>
+    <lastmod>2020-09-12T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/post/</loc>
+    <lastmod>2020-09-12T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/tags/spotifyr/</loc>
+    <lastmod>2020-09-12T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/tags/</loc>
+    <lastmod>2020-09-12T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/</loc>
+    <lastmod>2020-09-12T00:00:00+00:00</lastmod>
   </url>
   
   <url>
@@ -24,11 +54,6 @@
   
   <url>
     <loc>/post/giving-back-to-sport-science/</loc>
-    <lastmod>2020-04-13T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/post/</loc>
     <lastmod>2020-04-13T00:00:00+00:00</lastmod>
   </url>
   
@@ -44,11 +69,6 @@
   
   <url>
     <loc>/tags/sports-analytics/</loc>
-    <lastmod>2020-04-13T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/tags/</loc>
     <lastmod>2020-04-13T00:00:00+00:00</lastmod>
   </url>
   
