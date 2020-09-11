@@ -6,10 +6,20 @@
     <description>Recent content on Under The Hood</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Tue, 02 Jan 2018 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 12 Sep 2020 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>About</title>
+      <link>/about/</link>
+      <pubDate>Sat, 12 Sep 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/about/</guid>
+      <description>Under The Hood is a platform to demonstrate what is possible when we apply analytical techniques to solve problems that matter in sport. Drawing on my own professional experiences, this blog will showcase the many ways in which analytics can be used to discover new insights about the sports we love to play, watch, and support.
+My name is Jacquie Tran. I&amp;rsquo;m a sport scientist and researcher working in elite sport.</description>
+    </item>
     
     <item>
       <title>Giving back to sport science</title>
@@ -123,16 +133,6 @@ Introductory course to R, from Data Camp: www.datacamp.com/courses/free-introduc
       
       <guid>/post/my-coding-origin-story/</guid>
       <description>I often get asked questions about how long I&amp;rsquo;ve been coding for, how I got started, whether I have completed any formal studies in programming / computer science, and so on. The reality is that my path is far from linear. Most of what I&amp;rsquo;ve learned to date has been more opportunistic than strategic, curiosity-driven rather than being part of a master plan to acquire professional skills for the workplace. To illustrate, it might help to go back to the beginning, to tell my coding origin story&amp;hellip;</description>
-    </item>
-    
-    <item>
-      <title>About</title>
-      <link>/about/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>/about/</guid>
-      <description>Under The Hood is a platform to demonstrate what is possible when we apply analytical techniques to solve problems that matter1in sport (mostly2). Drawing on my own professional experiences, this blog will showcase the many ways in which analytics can be used to discover new insights about the sports we love to play, watch, and support.
-My name is Jacquie Tran. I&amp;rsquo;m a sport scientist and researcher working in elite sport.</description>
     </item>
     
   </channel>
