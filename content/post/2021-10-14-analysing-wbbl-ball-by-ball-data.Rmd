@@ -1,0 +1,130 @@
+---
+title: 'It''s #WBBL07 time! Analysing ball-by-ball data from past seasons'
+author: Jacquie Tran
+date: '2021-10-14'
+slug: analysing-wbbl-ball-by-ball-data
+categories:
+  - On-field analyses
+tags:
+  - women's sport
+  - r stats
+  - sports analytics
+  - cricket
+draft: yes
+---
+
+# Getting started
+
+I downloaded ball-by-ball match data from Cricsheet for the 6 preceding seasons of the Women's Big Bash League (264 matches). I chose to use the CSV "Ashwin" format.
+
+```{r load_libraries, message = FALSE}
+
+library(here)
+library(readr)
+library(dplyr)
+library(showtext)
+library(ggplot2)
+library(gghighlight)
+library(ggtext)
+library(paletteer)
+
+```
+
+```{r import_data}
+
+all_matches <- read_csv(
+  here("static/data/wbbl_01_to_06/all_matches.csv"),
+  show_col_types = FALSE)
+
+```
+
+# Alyssa Healy
+
+Per season batting totals, for players who batted in 3+ innings
+
+```{r batting_per_season}
+
+batting_per_season <- all_matches %>%
+  # Exclude 2015/16 data - incomplete
+  filter(season != "2015/16") %>%
+  group_by(season, striker) %>%
+  summarise(
+    innings_total = length(unique(match_id)),
+    runs_off_bat_total = sum(runs_off_bat),
+    balls_faced_total = length(ball),
+    dismissal_total = sum(!is.na(wicket_type)),
+    .groups = "keep") %>%
+  mutate(
+    runs_per_innings_avg = round(runs_off_bat_total / innings_total, 1),
+    batting_avg = round(runs_off_bat_total / dismissal_total, 1),
+    strike_rate = round(runs_off_bat_total / balls_faced_total * 100, 1)) %>%
+  filter(innings_total > 2)
+
+```
+
+```{r batting_per_season_healy}
+
+batting_per_season_healy <- batting_per_season %>%
+  mutate(
+    is_healy = case_when(
+      striker == "AJ Healy" ~ 1,
+      TRUE                  ~ 0))
+
+```
+
+```{r add_google_fonts}
+
+font_add_google("Roboto Condensed", "roboto_con")
+font_add_google("Staatliches", "staat")
+
+```
+
+```{r plot_healy_per_season, warning = FALSE, fig.width = 10, fig.height = 8}
+
+showtext_auto()
+
+p <- ggplot(batting_per_season_healy,
+            aes(x = season, y = runs_per_innings_avg, group = striker, colour = is_healy))
+p <- p + geom_line(size = 3, colour = paletteer_d("beyonce::X25")[5])
+p <- p + gghighlight(
+  is_healy > 0,
+  label_key = striker,
+  label_params = aes(
+    size = 16, force_pull = 0.1, nudge_y = 10, label.size = 2,
+    family = "roboto_con", label.padding = 0.5,
+    fill = paletteer_d("beyonce::X116")[4],
+    colour = paletteer_d("beyonce::X25")[5]),
+  unhighlighted_params = aes(size = 1),
+  unhighlighted_colour = paletteer_d("beyonce::X73")[7])
+p <- p + labs(
+  title = "WBBL: Average runs scored per innings (3+ innings)",
+  x = NULL, y = NULL,
+  caption = "**Source:** Cricsheet.org // **Plot:** @jacquietran")
+p <- p + theme_minimal()
+p <- p + theme(
+  text = element_text(
+    size = 48, family = "roboto_con",
+    colour = "#FFFFFF"),
+  plot.title = element_text(family = "staat", margin=margin(0,0,15,0)),
+  plot.caption = element_markdown(size = NULL, margin=margin(15,0,0,0)),
+  axis.text = element_text(colour = "#FFFFFF"),
+  legend.position = "none",
+  panel.grid.major = element_line(linetype = "dashed"),
+  panel.grid.minor = element_blank(),
+  plot.background = element_rect(
+      fill = paletteer_d("beyonce::X116")[3],
+      colour = NA),
+  panel.spacing = unit(2, "lines"),
+  plot.margin = unit(c(0.5,0.5,0.5,0.5), "cm"))
+plot_healy_per_season <- p
+
+plot_healy_per_season
+
+ggsave(
+  here("static/figs/runs_per_innings_healy.png"),
+  last_plot(), device = "png", dpi = 300,
+  width = 8, height = 6, units = "in")
+
+showtext_auto(FALSE)
+
+```

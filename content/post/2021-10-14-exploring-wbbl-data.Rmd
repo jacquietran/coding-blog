@@ -1,0 +1,138 @@
+---
+title: 'EXPLORATION: It''s #WBBL07 time! Analysing ball-by-ball data from past seasons'
+author: Jacquie Tran
+date: '2021-10-14'
+slug: analysing-wbbl-ball-by-ball-data
+categories:
+  - On-field analyses
+tags:
+  - women's sport
+  - r stats
+  - sports analytics
+  - cricket
+draft: yes
+---
+
+# Getting started
+
+I downloaded ball-by-ball match data from Cricsheet for the 6 preceding seasons of the Women's Big Bash League (264 matches). I chose to use the CSV "Ashwin" format.
+
+```{r load_libraries, message = FALSE}
+
+library(here)
+library(readr)
+library(dplyr)
+library(ggplot2)
+
+```
+
+```{r import_data}
+
+all_matches <- read_csv(
+  here("static/data/wbbl_01_to_06/all_matches.csv"),
+  show_col_types = FALSE)
+
+```
+
+# Batting
+
+## Alyssa Healy
+
+```{r batting_healy}
+
+batting_healy <- all_matches %>%
+  filter(striker == "AJ Healy")
+
+```
+
+Batting totals
+
+```{r batting_totals_healy}
+
+batting_totals_healy <- batting_healy %>%
+  summarise(
+    innings_total = length(unique(match_id)),
+    runs_off_bat_total = sum(runs_off_bat),
+    dismissal_total = sum(!is.na(wicket_type)))
+
+```
+
+Per season totals
+
+```{r batting_per_season_healy}
+
+batting_per_season_healy <- batting_healy %>%
+  group_by(season) %>%
+  summarise(
+    innings_total = length(unique(match_id)),
+    runs_off_bat_total = sum(runs_off_bat),
+    dismissal_total = sum(!is.na(wicket_type))) %>%
+  mutate(
+    runs_per_innings_avg = runs_off_bat_total / innings_total,
+    batting_avg = runs_off_bat_total / dismissal_total)
+
+```
+
+Most frequent modes of dismissal
+
+```{r batting_healy_dismissals}
+
+dismissal_summary_healy <- batting_healy %>%
+  filter(!is.na(wicket_type)) %>%
+  group_by(wicket_type) %>%
+  summarise(n = n())
+
+```
+
+Wickets lost to specific bowlers
+
+```{r}
+
+wickets_to_bowlers_healy <- batting_healy %>%
+  filter(!is.na(wicket_type)) %>%
+  group_by(bowler) %>%
+  summarise(n = n()) %>%
+  arrange(desc(n))
+
+```
+
+## Sophie Devine
+
+```{r batting_devine}
+
+batting_devine <- all_matches %>%
+  filter(striker == "SFM Devine")
+
+```
+
+Batting totals
+
+```{r batting_totals_devine}
+
+batting_totals_devine <- batting_devine %>%
+  summarise(
+    innings_total = length(unique(match_id)),
+    runs_off_bat_total = sum(runs_off_bat),
+    dismissal_total = sum(!is.na(wicket_type)))
+
+```
+
+```{r batting_per_season_devine}
+
+batting_per_season_devine <- batting_devine %>%
+  group_by(season) %>%
+  summarise(
+    innings_total = length(unique(match_id)),
+    runs_off_bat_total = sum(runs_off_bat),
+    dismissal_total = sum(!is.na(wicket_type))) %>%
+  mutate(
+    runs_per_innings_avg = runs_off_bat_total / innings_total,
+    batting_avg = runs_off_bat_total / dismissal_total)
+
+```
+
+# Bowling
+
+## Molly Strano
+
+## Annabel Sutherland
