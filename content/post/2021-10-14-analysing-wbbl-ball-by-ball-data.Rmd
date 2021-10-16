@@ -22,11 +22,13 @@ I downloaded ball-by-ball match data from Cricsheet for the 6 preceding seasons 
 library(here)
 library(readr)
 library(dplyr)
+library(stringr)
 library(showtext)
 library(ggplot2)
 library(gghighlight)
 library(ggtext)
 library(paletteer)
+library(patchwork)
 
 ```
 
@@ -38,9 +40,20 @@ all_matches <- read_csv(
 
 ```
 
+```{r add_google_fonts}
+
+font_add_google("Roboto Condensed", "roboto_con")
+font_add_google("Staatliches", "staat")
+
+```
+
 # Alyssa Healy
 
-Per season batting totals, for players who batted in 3+ innings
+## Per season production
+
+Alyssa Healy compared to all players who have batted in 3+ innings in a season.
+
+Data from 2015/16 (WBBL01) excluded due to only having 10 matches worth of data in the Cricsheet spreadsheet.
 
 ```{r batting_per_season}
 
@@ -69,13 +82,6 @@ batting_per_season_healy <- batting_per_season %>%
     is_healy = case_when(
       striker == "AJ Healy" ~ 1,
       TRUE                  ~ 0))
-
-```
-
-```{r add_google_fonts}
-
-font_add_google("Roboto Condensed", "roboto_con")
-font_add_google("Staatliches", "staat")
 
 ```
 
@@ -126,5 +132,205 @@ ggsave(
   width = 8, height = 6, units = "in")
 
 showtext_auto(FALSE)
+
+```
+
+## Dismissals by ball number
+
+```{r ball_number_faced}
+
+# Create new variable for ball number in each over
+ball_number_faced <- all_matches %>%
+  filter(season != "2015/16") %>%
+  mutate(
+    ball_num_in_over = sub(".*\\.", "", ball))
+
+# Summarise number of balls faced of each ball number, per batter
+ball_number_faced_summary <- ball_number_faced %>%
+  group_by(ball_num_in_over, striker) %>%
+  summarise(balls_faced = n(), .groups = "keep") %>%
+  ungroup()
+
+# Dismissals by ball number
+dismissals_by_ball_number <- ball_number_faced %>%
+  select(ball_num_in_over, striker, wicket_type) %>%
+  filter(!is.na(wicket_type)) %>%
+  group_by(ball_num_in_over, striker) %>%
+  summarise(dismissals_n = n(), .groups = "keep") %>%
+  ungroup()
+
+# Merge data
+dismissals_by_ball_number_summary <- left_join(
+  ball_number_faced_summary, dismissals_by_ball_number) %>%
+  tidyr::replace_na(list(dismissals_n = 0)) %>%
+  group_by(striker) %>%
+  mutate(total_balls_faced = sum(balls_faced)) %>%
+  ungroup() %>%
+  mutate(dismissals_pct = round(dismissals_n / balls_faced * 100, 2)) %>%
+  # Include those who have faced more than 200 balls total
+  filter(total_balls_faced >= 200) %>%
+  # Exclude balls beyond 6 - infrequent occurrences
+  filter(ball_num_in_over < 7)
+
+# Extract data for specific players
+# Healy
+dismissals_by_ball_number_summary_healy <- dismissals_by_ball_number_summary %>%
+  filter(striker == "AJ Healy")
+
+# Mooney
+dismissals_by_ball_number_summary_mooney <- dismissals_by_ball_number_summary %>%
+  filter(striker == "BL Mooney")
+
+# Lanning
+dismissals_by_ball_number_summary_lanning <- dismissals_by_ball_number_summary %>%
+  filter(striker == "MM Lanning")
+
+# Perry
+dismissals_by_ball_number_summary_perry <- dismissals_by_ball_number_summary %>%
+  filter(striker == "EA Perry")
+
+# Devine
+dismissals_by_ball_number_summary_devine <- dismissals_by_ball_number_summary %>%
+  filter(striker == "SFM Devine")
+
+# Knight
+dismissals_by_ball_number_summary_knight <- dismissals_by_ball_number_summary %>%
+  filter(striker == "HC Knight")
+
+```
+
+```{r plot_dismissals_by_ball_number}
+
+showtext_auto()
+
+plot_features <- list(
+  coord_cartesian(ylim = c(0, 10)),
+  theme_minimal(),
+  theme(
+    text = element_text(
+      size = 48, family = "roboto_con",
+      colour = "#FFFFFF"),
+    plot.title = element_text(family = "staat", margin=margin(0,0,15,0)),
+    plot.subtitle = element_text(family = "staat", margin=margin(0,0,15,0)),
+    plot.caption = element_markdown(size = NULL, margin=margin(15,0,0,0)),
+    axis.text = element_text(colour = "#FFFFFF"),
+    legend.position = "none",
+    panel.grid.major.y = element_line(linetype = "dashed"),
+    panel.grid.major.x = element_blank(),
+    panel.grid.minor = element_blank(),
+    plot.background = element_rect(
+      fill = paletteer_d("beyonce::X116")[3],
+      colour = NA),
+    panel.spacing = unit(2, "lines"),
+    plot.margin = unit(c(0.5,0.5,0.5,0.5), "cm"))
+  )
+
+# Healy
+p <- ggplot(dismissals_by_ball_number_summary,
+            aes(x = ball_num_in_over, y = dismissals_pct))
+p <- p + geom_boxplot(
+  fill = "#FFFFFF", colour = "#FFFFFF", size = 2, alpha = 0.25,
+  notch = TRUE, outlier.shape = NA, coef = 0)
+p <- p + geom_point(
+  data = dismissals_by_ball_number_summary_healy,
+  colour = paletteer_d("beyonce::X25")[5], size = 5.5)
+p <- p + labs(
+  title = "WBBL: % dismissals by ball number",
+  subtitle = "AJ Healy",
+  x = NULL, y = NULL)
+p <- p + plot_features
+p1 <- p
+# plot_dismissals_by_ball_num_healy <- p
+
+# Mooney
+p <- ggplot(dismissals_by_ball_number_summary,
+            aes(x = ball_num_in_over, y = dismissals_pct))
+p <- p + geom_boxplot(
+  fill = "#FFFFFF", colour = "#FFFFFF", size = 2, alpha = 0.25,
+  notch = TRUE, outlier.shape = NA, coef = 0)
+p <- p + geom_point(
+  data = dismissals_by_ball_number_summary_mooney,
+  colour = paletteer_d("NineteenEightyR::miami1")[5], size = 5.5)
+p <- p + labs(
+  subtitle = "BL Mooney",
+  x = NULL, y = NULL)
+p <- p + plot_features
+p2 <- p
+
+# Lanning
+p <- ggplot(dismissals_by_ball_number_summary,
+            aes(x = ball_num_in_over, y = dismissals_pct))
+p <- p + geom_boxplot(
+  fill = "#FFFFFF", colour = "#FFFFFF", size = 2, alpha = 0.25,
+  notch = TRUE, outlier.shape = NA, coef = 0)
+p <- p + geom_point(
+  data = dismissals_by_ball_number_summary_lanning,
+  colour = paletteer_d("beyonce::X93")[31], size = 5.5)
+p <- p + labs(
+  subtitle = "MM Lanning",
+  x = NULL, y = NULL)
+p <- p + plot_features
+p3 <- p
+
+# Perry
+p <- ggplot(dismissals_by_ball_number_summary,
+            aes(x = ball_num_in_over, y = dismissals_pct))
+p <- p + geom_boxplot(
+  fill = "#FFFFFF", colour = "#FFFFFF", size = 2, alpha = 0.25,
+  notch = TRUE, outlier.shape = NA, coef = 0)
+p <- p + geom_point(
+  data = dismissals_by_ball_number_summary_perry,
+  colour = paletteer_d("beyonce::X25")[5], size = 5.5)
+p <- p + labs(
+  subtitle = "EA Perry",
+  # caption = "",
+  x = NULL, y = NULL)
+p <- p + plot_features
+p4 <- p
+
+# Devine
+p <- ggplot(dismissals_by_ball_number_summary,
+            aes(x = ball_num_in_over, y = dismissals_pct))
+p <- p + geom_boxplot(
+  fill = "#FFFFFF", colour = "#FFFFFF", size = 2, alpha = 0.25,
+  notch = TRUE, outlier.shape = NA, coef = 0)
+p <- p + geom_point(
+  data = dismissals_by_ball_number_summary_devine,
+  colour = paletteer_d("NineteenEightyR::miami1")[5], size = 5.5)
+p <- p + labs(
+  subtitle = "SFM Devine",
+  # caption = "",
+  x = NULL, y = NULL)
+p <- p + plot_features
+p5 <- p
+
+# Knight
+p <- ggplot(dismissals_by_ball_number_summary,
+            aes(x = ball_num_in_over, y = dismissals_pct))
+p <- p + geom_boxplot(
+  fill = "#FFFFFF", colour = "#FFFFFF", size = 2, alpha = 0.25,
+  notch = TRUE, outlier.shape = NA, coef = 0)
+p <- p + geom_point(
+  data = dismissals_by_ball_number_summary_knight,
+  colour = paletteer_d("LaCroixColoR::Lime")[2], size = 5.5)
+p <- p + labs(
+  subtitle = "HC Knight",
+  caption = "**Source:** Cricsheet.org // **Plot:** @jacquietran",
+  x = NULL, y = NULL)
+p <- p + plot_features
+p6 <- p
+
+showtext_auto(FALSE)
+
+```
+
+```{r quilt_dismissals_by_ball_number}
+
+quilt_dismissals_by_ball_number <- (p1 + p2 + p3) / (p4 + p5 + p6)
+
+ggsave(
+  here("static/figs/dismissals_by_ball_num.png"),
+  last_plot(), device = "png", dpi = 300,
+  width = 12, height = 8, units = "in")
 
 ```
