@@ -1,0 +1,262 @@
+---
+title: '#WBBL07: Racing towards finals'
+author: Jacquie Tran
+date: '2021-11-06'
+slug: wbbl07-racing-towards-finals
+categories:
+  - On-field analyses
+tags:
+  - women's sport
+  - r stats
+  - sports analytics
+  - cricket
+draft: yes
+---
+
+# Introduction
+
+It's been a thrilling #WBBL07 so far - the competition seems well-balanced, with every team boasting world-class athletes alongside the young guns who are the next wave of Australian talent coming through.
+
+Coming off the back of the hotly contested Australia vs. India series, I have been glued to the TV and thought I might as well turn my attention to another screen instead - my computer screen - and take a closer look at some key performances so far this season.
+
+# Getting started
+
+I downloaded ball-by-ball data and match metadata from Cricsheet for the Women's Big Bash League (specifically using the CSV "Ashwin" format), focusing on games played so far in season 7 of the Women's Big Bash League (27 matches played between Oct 14 and Nov 3 2021).
+
+```{r load_libraries, message = FALSE}
+
+library(here)
+library(readr)
+library(dplyr)
+library(stringr)
+library(showtext)
+library(ggplot2)
+library(gghighlight)
+library(ggtext)
+library(paletteer)
+library(patchwork)
+
+```
+
+```{r import_data, message = FALSE}
+
+# Run custom functions to fetch data from Cricsheet.org ------------------------
+
+wbbl07_bbb <- fetch_cricsheet_bbb("wbbl") %>%
+  filter(season == "2021/22")
+wbbl07_match_info <- fetch_cricsheet_match_info("wbbl") %>%
+  filter(season == "2021/22")
+
+# Do a little tidying up first -------------------------------------------------
+
+wbbl07_match_info %>%
+  select(
+    match_id, winner, winner_runs, winner_wickets, method, outcome,
+    eliminator) %>%
+  mutate(
+    match_id = factor(match_id)) -> wbbl07_match_info_tidy
+
+wbbl07_bbb %>%
+  tidyr::separate(ball, c("over_num_extracted", "ball_num")) %>%
+  mutate(
+    match_id = factor(match_id),
+    over_num_numeric = as.numeric(over_num_extracted) + 1,
+    runs_scored = runs_off_bat + extras,
+    ball_num = as.numeric(ball_num),
+    wicket_type = case_when(
+      wicket_type == "" ~ NA_character_,
+      TRUE              ~ wicket_type)) %>%
+  group_by(match_id, innings) %>%
+  mutate(
+    temp_var = 1,
+    balls_cumulative = cumsum(temp_var),
+    runs_cumulative = cumsum(runs_scored),
+    runs_total = max(runs_cumulative)) %>%
+  ungroup() %>%
+  select(-temp_var) %>%
+  left_join(., wbbl07_match_info_tidy) %>%
+  mutate(
+    outcome_batting_team = case_when(
+      outcome %in% c("no result", "tie") ~ as.character(outcome),
+      winner == batting_team             ~ "won",
+      TRUE                               ~ "lost"),
+    outcome_bowling_team = case_when(
+      outcome %in% c("no result", "tie") ~ as.character(outcome),
+      winner == bowling_team             ~ "won",
+      TRUE                               ~ "lost")
+    ) -> wbbl07_bbb_tidy
+
+```
+
+# Team strike rate after wickets
+
+One tactical consideration that makes the shorter formats so fascinating is how to go about scoring runs after you've lost a wicket.
+
+With only 120 regulation balls bowled in a 20-over match:
+
+- How many balls do you take to get your eye in?
+- When do you decide to push on and swing the bat?
+- How does this differ with "game state", when the wickets and overs remaining equation changes?
+
+One way we can look at this is to examine patterns in team strike rate (runs scored for balls faced) across the course of an innings.
+
+```{r team_strike_rate}
+
+wbbl07_bbb_tidy %>%
+  # Exclude matches that ended with a Super Over
+  # and abandoned matches
+  filter(!outcome_batting_team %in% c("tie", "no result")) %>%
+  group_by(match_id, innings) %>%
+  mutate(
+    rolling_strike_rate = round(
+      runs_cumulative / balls_cumulative * 100, 1),
+    wicket_ball_num = case_when(
+      !is.na(wicket_type) ~ balls_cumulative,
+      TRUE                ~ NA_real_),
+    wicket_strike_rate = case_when(
+      !is.na(wicket_type) ~ rolling_strike_rate,
+      TRUE                ~ NA_real_),
+    innings_description = case_when(
+      innings == 1 ~ "Setting",
+      innings == 2 ~ "Chasing"),
+    match_details = glue::glue(
+      "{innings_description} vs. {bowling_team}\n({start_date})")) %>%
+  arrange(match_id, innings, balls_cumulative) %>%
+  mutate(
+    match_details = factor(
+      match_details, levels = unique(match_details))) -> team_strike_rate
+
+```
+
+## Plot: Renegades
+
+Let's take a look at the Melbourne Renegades, who currently sit at the top of the standings (as of Nov 6 2021):
+
+```{r add_google_fonts}
+
+font_add_google("Roboto Condensed", "roboto_con")
+font_add_google("Staatliches", "staat")
+
+```
+
+```{r plot_team_strike_rate_renegades}
+
+# Filter to Renegades' innings only
+team_strike_rate %>%
+  filter(
+    str_detect(batting_team, "Renegades")
+    ) -> team_strike_rate_renegades
+
+# Build plot
+p <- ggplot(
+  team_strike_rate_renegades,
+  aes(x = balls_cumulative, y = rolling_strike_rate))
+p <- p + facet_wrap(~ match_details, ncol = 4)
+p <- p + geom_hline(
+  yintercept = 100, linetype = "dashed", colour = "#CCCCCC")
+p <- p + geom_line(aes(colour = outcome_batting_team))
+p <- p + geom_point(
+  aes(x = team_strike_rate_renegades$wicket_ball_num,
+      y = team_strike_rate_renegades$wicket_strike_rate),
+      colour = "red", size = 3, alpha = 0.75)
+p <- p + scale_x_continuous(
+  breaks = seq(0, 120, by = 30))
+p <- p + coord_cartesian(ylim = c(0, 200))
+p <- p + theme_minimal()
+p <- p + theme(
+  panel.grid.major.y = element_blank(),
+  panel.grid.minor.y = element_blank(),
+  panel.grid.minor.x = element_blank())
+
+```
+
+## Plot: Sydney Thunder
+
+And now let's plot the same variables but for the Sydney Thunder, who have had a few losses to start their title defense and are currently at the bottom of the standings on net run rate:
+
+```{r plot_team_strike_rate_thunder}
+
+# Filter to Thunder innings only
+team_strike_rate %>%
+  filter(
+    str_detect(batting_team, "Thunder")
+    ) -> team_strike_rate_thunder
+
+# Build plot
+p <- ggplot(
+  team_strike_rate_thunder,
+  aes(x = balls_cumulative, y = rolling_strike_rate))
+p <- p + facet_wrap(~ match_details, ncol = 4)
+p <- p + geom_hline(
+  yintercept = 100, linetype = "dashed", colour = "#CCCCCC")
+p <- p + geom_line(aes(colour = outcome_batting_team))
+p <- p + geom_point(
+  aes(x = team_strike_rate_thunder$wicket_ball_num,
+      y = team_strike_rate_thunder$wicket_strike_rate),
+      colour = "red", size = 3, alpha = 0.75)
+p <- p + scale_x_continuous(
+  breaks = seq(0, 120, by = 30))
+p <- p + coord_cartesian(ylim = c(0, 200))
+p <- p + theme_minimal()
+p <- p + theme(
+  panel.grid.major.y = element_blank(),
+  panel.grid.minor.y = element_blank(),
+  panel.grid.minor.x = element_blank())
+
+```
+
+# Plot: Team strike rate from winning vs. losing teams
+
+```{r plot_team_strike_rate_all}
+
+# Build plot
+p <- ggplot(
+  team_strike_rate,
+  aes(x = balls_cumulative, y = rolling_strike_rate, group = match_id))
+p <- p + facet_grid(innings ~ outcome_batting_team)
+p <- p + geom_hline(
+  yintercept = 100, linetype = "dashed", colour = "#CCCCCC")
+p <- p + geom_line(aes(colour = outcome_batting_team))
+p <- p + geom_smooth(aes(group = outcome_batting_team), method = "loess")
+#p <- p + geom_point(
+#  aes(x = team_strike_rate$wicket_ball_num,
+#      y = team_strike_rate$wicket_strike_rate),
+#      colour = "red", size = 3, alpha = 0.75)
+p <- p + scale_x_continuous(
+  breaks = seq(0, 120, by = 30))
+p <- p + coord_cartesian(ylim = c(0, 200))
+p <- p + theme_minimal()
+p <- p + theme(
+  panel.grid.major.y = element_blank(),
+  panel.grid.minor.y = element_blank(),
+  panel.grid.minor.x = element_blank())
+
+```
+
+# Plot: Team strike rate by team
+
+```{r plot_team_strike_rate_all}
+
+# Build plot
+p <- ggplot(
+  team_strike_rate,
+  aes(x = balls_cumulative, y = rolling_strike_rate, group = match_id))
+p <- p + facet_grid(outcome_batting_team ~ batting_team)
+p <- p + geom_hline(
+  yintercept = 100, linetype = "dashed", colour = "#CCCCCC")
+p <- p + geom_line(aes(colour = outcome_batting_team))
+p <- p + geom_smooth(aes(group = outcome_batting_team), method = "loess")
+#p <- p + geom_point(
+#  aes(x = team_strike_rate$wicket_ball_num,
+#      y = team_strike_rate$wicket_strike_rate),
+#      colour = "red", size = 3, alpha = 0.75)
+p <- p + scale_x_continuous(
+  breaks = seq(0, 120, by = 30))
+p <- p + coord_cartesian(ylim = c(0, 200))
+p <- p + theme_minimal()
+p <- p + theme(
+  panel.grid.major.y = element_blank(),
+  panel.grid.minor.y = element_blank(),
+  panel.grid.minor.x = element_blank())
+
+```
