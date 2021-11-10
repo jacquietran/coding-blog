@@ -19,6 +19,8 @@ I downloaded ball-by-ball match data from Cricsheet for the Women's Big Bash Lea
 
 ```{r load_libraries, message = FALSE}
 
+knitr::opts_chunk$set(eval = FALSE)
+
 library(here)
 library(dplyr)
 library(ggplot2)

@@ -1,0 +1,298 @@
+---
+title: 'It''s #WBBL07 time! Analysing ball-by-ball data from past seasons'
+author: Jacquie Tran
+date: '2021-10-14'
+slug: analysing-wbbl-ball-by-ball-data
+categories:
+  - On-field analyses
+tags:
+  - women's sport
+  - r stats
+  - sports analytics
+  - cricket
+draft: yes
+---
+
+<script src="/rmarkdown-libs/header-attrs/header-attrs.js"></script>
+
+
+<div id="getting-started" class="section level1">
+<h1>Getting started</h1>
+<p>I downloaded ball-by-ball match data from Cricsheet for the 6 preceding seasons of the Women’s Big Bash League (264 matches). I chose to use the CSV “Ashwin” format.</p>
+<pre class="r"><code>knitr::opts_chunk$set(eval = FALSE)
+
+library(here)
+library(readr)
+library(dplyr)
+library(stringr)
+library(showtext)
+library(ggplot2)
+library(gghighlight)
+library(ggtext)
+library(paletteer)
+library(patchwork)</code></pre>
+<pre class="r"><code>all_matches &lt;- read_csv(
+  here(&quot;static/data/wbbl_01_to_06/all_matches.csv&quot;),
+  show_col_types = FALSE)</code></pre>
+<pre class="r"><code>font_add_google(&quot;Roboto Condensed&quot;, &quot;roboto_con&quot;)
+font_add_google(&quot;Staatliches&quot;, &quot;staat&quot;)</code></pre>
+</div>
+<div id="alyssa-healy" class="section level1">
+<h1>Alyssa Healy</h1>
+<div id="per-season-production" class="section level2">
+<h2>Per season production</h2>
+<p>Alyssa Healy compared to all players who have batted in 3+ innings in a season.</p>
+<p>Data from 2015/16 (WBBL01) excluded due to only having 10 matches worth of data in the Cricsheet spreadsheet.</p>
+<pre class="r"><code>batting_per_season &lt;- all_matches %&gt;%
+  # Exclude 2015/16 data - incomplete
+  filter(season != &quot;2015/16&quot;) %&gt;%
+  group_by(season, striker) %&gt;%
+  summarise(
+    innings_total = length(unique(match_id)),
+    runs_off_bat_total = sum(runs_off_bat),
+    balls_faced_total = length(ball),
+    dismissal_total = sum(!is.na(wicket_type)),
+    .groups = &quot;keep&quot;) %&gt;%
+  mutate(
+    runs_per_innings_avg = round(runs_off_bat_total / innings_total, 1),
+    batting_avg = round(runs_off_bat_total / dismissal_total, 1),
+    strike_rate = round(runs_off_bat_total / balls_faced_total * 100, 1)) %&gt;%
+  filter(innings_total &gt; 2)</code></pre>
+<pre class="r"><code>batting_per_season_healy &lt;- batting_per_season %&gt;%
+  mutate(
+    is_healy = case_when(
+      striker == &quot;AJ Healy&quot; ~ 1,
+      TRUE                  ~ 0))</code></pre>
+<pre class="r"><code>showtext_auto()
+
+p &lt;- ggplot(batting_per_season_healy,
+            aes(x = season, y = runs_per_innings_avg, group = striker, colour = is_healy))
+p &lt;- p + geom_line(size = 3, colour = paletteer_d(&quot;beyonce::X25&quot;)[5])
+p &lt;- p + gghighlight(
+  is_healy &gt; 0,
+  label_key = striker,
+  label_params = aes(
+    size = 16, force_pull = 0.1, nudge_y = 10, label.size = 2,
+    family = &quot;roboto_con&quot;, label.padding = 0.5,
+    fill = paletteer_d(&quot;beyonce::X116&quot;)[4],
+    colour = paletteer_d(&quot;beyonce::X25&quot;)[5]),
+  unhighlighted_params = aes(size = 1),
+  unhighlighted_colour = paletteer_d(&quot;beyonce::X73&quot;)[7])
+p &lt;- p + labs(
+  title = &quot;WBBL: Average runs scored per innings (3+ innings)&quot;,
+  x = NULL, y = NULL,
+  caption = &quot;**Source:** Cricsheet.org // **Plot:** @jacquietran&quot;)
+p &lt;- p + theme_minimal()
+p &lt;- p + theme(
+  text = element_text(
+    size = 48, family = &quot;roboto_con&quot;,
+    colour = &quot;#FFFFFF&quot;),
+  plot.title = element_text(family = &quot;staat&quot;, margin=margin(0,0,15,0)),
+  plot.caption = element_markdown(size = NULL, margin=margin(15,0,0,0)),
+  axis.text = element_text(colour = &quot;#FFFFFF&quot;),
+  legend.position = &quot;none&quot;,
+  panel.grid.major = element_line(linetype = &quot;dashed&quot;),
+  panel.grid.minor = element_blank(),
+  plot.background = element_rect(
+      fill = paletteer_d(&quot;beyonce::X116&quot;)[3],
+      colour = NA),
+  panel.spacing = unit(2, &quot;lines&quot;),
+  plot.margin = unit(c(0.5,0.5,0.5,0.5), &quot;cm&quot;))
+plot_healy_per_season &lt;- p
+
+plot_healy_per_season
+
+ggsave(
+  here(&quot;static/figs/runs_per_innings_healy.png&quot;),
+  last_plot(), device = &quot;png&quot;, dpi = 300,
+  width = 8, height = 6, units = &quot;in&quot;)
+
+showtext_auto(FALSE)</code></pre>
+</div>
+<div id="dismissals-by-ball-number" class="section level2">
+<h2>Dismissals by ball number</h2>
+<pre class="r"><code># Create new variable for ball number in each over
+ball_number_faced &lt;- all_matches %&gt;%
+  filter(season != &quot;2015/16&quot;) %&gt;%
+  mutate(
+    ball_num_in_over = sub(&quot;.*\\.&quot;, &quot;&quot;, ball))
+
+# Summarise number of balls faced of each ball number, per batter
+ball_number_faced_summary &lt;- ball_number_faced %&gt;%
+  group_by(ball_num_in_over, striker) %&gt;%
+  summarise(balls_faced = n(), .groups = &quot;keep&quot;) %&gt;%
+  ungroup()
+
+# Dismissals by ball number
+dismissals_by_ball_number &lt;- ball_number_faced %&gt;%
+  select(ball_num_in_over, striker, wicket_type) %&gt;%
+  filter(!is.na(wicket_type)) %&gt;%
+  group_by(ball_num_in_over, striker) %&gt;%
+  summarise(dismissals_n = n(), .groups = &quot;keep&quot;) %&gt;%
+  ungroup()
+
+# Merge data
+dismissals_by_ball_number_summary &lt;- left_join(
+  ball_number_faced_summary, dismissals_by_ball_number) %&gt;%
+  tidyr::replace_na(list(dismissals_n = 0)) %&gt;%
+  group_by(striker) %&gt;%
+  mutate(total_balls_faced = sum(balls_faced)) %&gt;%
+  ungroup() %&gt;%
+  mutate(dismissals_pct = round(dismissals_n / balls_faced * 100, 2)) %&gt;%
+  # Include those who have faced more than 200 balls total
+  filter(total_balls_faced &gt;= 200) %&gt;%
+  # Exclude balls beyond 6 - infrequent occurrences
+  filter(ball_num_in_over &lt; 7)
+
+# Extract data for specific players
+# Healy
+dismissals_by_ball_number_summary_healy &lt;- dismissals_by_ball_number_summary %&gt;%
+  filter(striker == &quot;AJ Healy&quot;)
+
+# Mooney
+dismissals_by_ball_number_summary_mooney &lt;- dismissals_by_ball_number_summary %&gt;%
+  filter(striker == &quot;BL Mooney&quot;)
+
+# Lanning
+dismissals_by_ball_number_summary_lanning &lt;- dismissals_by_ball_number_summary %&gt;%
+  filter(striker == &quot;MM Lanning&quot;)
+
+# Perry
+dismissals_by_ball_number_summary_perry &lt;- dismissals_by_ball_number_summary %&gt;%
+  filter(striker == &quot;EA Perry&quot;)
+
+# Devine
+dismissals_by_ball_number_summary_devine &lt;- dismissals_by_ball_number_summary %&gt;%
+  filter(striker == &quot;SFM Devine&quot;)
+
+# Knight
+dismissals_by_ball_number_summary_knight &lt;- dismissals_by_ball_number_summary %&gt;%
+  filter(striker == &quot;HC Knight&quot;)</code></pre>
+<pre class="r"><code>showtext_auto()
+
+plot_features &lt;- list(
+  coord_cartesian(ylim = c(0, 10)),
+  theme_minimal(),
+  theme(
+    text = element_text(
+      size = 48, family = &quot;roboto_con&quot;,
+      colour = &quot;#FFFFFF&quot;),
+    plot.title = element_text(family = &quot;staat&quot;, margin=margin(0,0,15,0)),
+    plot.subtitle = element_text(family = &quot;staat&quot;, margin=margin(0,0,15,0)),
+    plot.caption = element_markdown(size = NULL, margin=margin(15,0,0,0)),
+    axis.text = element_text(colour = &quot;#FFFFFF&quot;),
+    legend.position = &quot;none&quot;,
+    panel.grid.major.y = element_line(linetype = &quot;dashed&quot;),
+    panel.grid.major.x = element_blank(),
+    panel.grid.minor = element_blank(),
+    plot.background = element_rect(
+      fill = paletteer_d(&quot;beyonce::X116&quot;)[3],
+      colour = NA),
+    panel.spacing = unit(2, &quot;lines&quot;),
+    plot.margin = unit(c(0.5,0.5,0.5,0.5), &quot;cm&quot;))
+  )
+
+# Healy
+p &lt;- ggplot(dismissals_by_ball_number_summary,
+            aes(x = ball_num_in_over, y = dismissals_pct))
+p &lt;- p + geom_boxplot(
+  fill = &quot;#FFFFFF&quot;, colour = &quot;#FFFFFF&quot;, size = 2, alpha = 0.25,
+  notch = TRUE, outlier.shape = NA, coef = 0)
+p &lt;- p + geom_point(
+  data = dismissals_by_ball_number_summary_healy,
+  colour = paletteer_d(&quot;beyonce::X25&quot;)[5], size = 5.5)
+p &lt;- p + labs(
+  title = &quot;WBBL: % dismissals by ball number&quot;,
+  subtitle = &quot;AJ Healy&quot;,
+  x = NULL, y = NULL)
+p &lt;- p + plot_features
+p1 &lt;- p
+# plot_dismissals_by_ball_num_healy &lt;- p
+
+# Mooney
+p &lt;- ggplot(dismissals_by_ball_number_summary,
+            aes(x = ball_num_in_over, y = dismissals_pct))
+p &lt;- p + geom_boxplot(
+  fill = &quot;#FFFFFF&quot;, colour = &quot;#FFFFFF&quot;, size = 2, alpha = 0.25,
+  notch = TRUE, outlier.shape = NA, coef = 0)
+p &lt;- p + geom_point(
+  data = dismissals_by_ball_number_summary_mooney,
+  colour = paletteer_d(&quot;NineteenEightyR::miami1&quot;)[5], size = 5.5)
+p &lt;- p + labs(
+  subtitle = &quot;BL Mooney&quot;,
+  x = NULL, y = NULL)
+p &lt;- p + plot_features
+p2 &lt;- p
+
+# Lanning
+p &lt;- ggplot(dismissals_by_ball_number_summary,
+            aes(x = ball_num_in_over, y = dismissals_pct))
+p &lt;- p + geom_boxplot(
+  fill = &quot;#FFFFFF&quot;, colour = &quot;#FFFFFF&quot;, size = 2, alpha = 0.25,
+  notch = TRUE, outlier.shape = NA, coef = 0)
+p &lt;- p + geom_point(
+  data = dismissals_by_ball_number_summary_lanning,
+  colour = paletteer_d(&quot;beyonce::X93&quot;)[31], size = 5.5)
+p &lt;- p + labs(
+  subtitle = &quot;MM Lanning&quot;,
+  x = NULL, y = NULL)
+p &lt;- p + plot_features
+p3 &lt;- p
+
+# Perry
+p &lt;- ggplot(dismissals_by_ball_number_summary,
+            aes(x = ball_num_in_over, y = dismissals_pct))
+p &lt;- p + geom_boxplot(
+  fill = &quot;#FFFFFF&quot;, colour = &quot;#FFFFFF&quot;, size = 2, alpha = 0.25,
+  notch = TRUE, outlier.shape = NA, coef = 0)
+p &lt;- p + geom_point(
+  data = dismissals_by_ball_number_summary_perry,
+  colour = paletteer_d(&quot;beyonce::X25&quot;)[5], size = 5.5)
+p &lt;- p + labs(
+  subtitle = &quot;EA Perry&quot;,
+  # caption = &quot;&quot;,
+  x = NULL, y = NULL)
+p &lt;- p + plot_features
+p4 &lt;- p
+
+# Devine
+p &lt;- ggplot(dismissals_by_ball_number_summary,
+            aes(x = ball_num_in_over, y = dismissals_pct))
+p &lt;- p + geom_boxplot(
+  fill = &quot;#FFFFFF&quot;, colour = &quot;#FFFFFF&quot;, size = 2, alpha = 0.25,
+  notch = TRUE, outlier.shape = NA, coef = 0)
+p &lt;- p + geom_point(
+  data = dismissals_by_ball_number_summary_devine,
+  colour = paletteer_d(&quot;NineteenEightyR::miami1&quot;)[5], size = 5.5)
+p &lt;- p + labs(
+  subtitle = &quot;SFM Devine&quot;,
+  # caption = &quot;&quot;,
+  x = NULL, y = NULL)
+p &lt;- p + plot_features
+p5 &lt;- p
+
+# Knight
+p &lt;- ggplot(dismissals_by_ball_number_summary,
+            aes(x = ball_num_in_over, y = dismissals_pct))
+p &lt;- p + geom_boxplot(
+  fill = &quot;#FFFFFF&quot;, colour = &quot;#FFFFFF&quot;, size = 2, alpha = 0.25,
+  notch = TRUE, outlier.shape = NA, coef = 0)
+p &lt;- p + geom_point(
+  data = dismissals_by_ball_number_summary_knight,
+  colour = paletteer_d(&quot;LaCroixColoR::Lime&quot;)[2], size = 5.5)
+p &lt;- p + labs(
+  subtitle = &quot;HC Knight&quot;,
+  caption = &quot;**Source:** Cricsheet.org // **Plot:** @jacquietran&quot;,
+  x = NULL, y = NULL)
+p &lt;- p + plot_features
+p6 &lt;- p
+
+showtext_auto(FALSE)</code></pre>
+<pre class="r"><code>quilt_dismissals_by_ball_number &lt;- (p1 + p2 + p3) / (p4 + p5 + p6)
+
+ggsave(
+  here(&quot;static/figs/dismissals_by_ball_num.png&quot;),
+  last_plot(), device = &quot;png&quot;, dpi = 300,
+  width = 12, height = 8, units = &quot;in&quot;)</code></pre>
+</div>
+</div>

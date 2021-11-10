@@ -25,6 +25,8 @@ I downloaded ball-by-ball data and match metadata from Cricsheet for the Women's
 
 ```{r load_libraries, message = FALSE}
 
+knitr::opts_chunk$set(eval = FALSE)
+
 library(here)
 library(readr)
 library(dplyr)
@@ -235,7 +237,7 @@ p <- p + theme(
 
 # Plot: Team strike rate by team
 
-```{r plot_team_strike_rate_all}
+```{r plot_team_strike_rate_by_team}
 
 # Build plot
 p <- ggplot(

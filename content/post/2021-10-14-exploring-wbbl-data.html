@@ -1,0 +1,95 @@
+---
+title: 'EXPLORATION: It''s #WBBL07 time! Analysing ball-by-ball data from past seasons'
+author: Jacquie Tran
+date: '2021-10-14'
+slug: analysing-wbbl-ball-by-ball-data
+categories:
+  - On-field analyses
+tags:
+  - women's sport
+  - r stats
+  - sports analytics
+  - cricket
+draft: yes
+---
+
+<script src="/rmarkdown-libs/header-attrs/header-attrs.js"></script>
+
+
+<div id="getting-started" class="section level1">
+<h1>Getting started</h1>
+<p>I downloaded ball-by-ball match data from Cricsheet for the 6 preceding seasons of the Women’s Big Bash League (264 matches). I chose to use the CSV “Ashwin” format.</p>
+<pre class="r"><code>knitr::opts_chunk$set(eval = FALSE)
+
+library(here)
+library(readr)
+library(dplyr)
+library(ggplot2)</code></pre>
+<pre class="r"><code>all_matches &lt;- read_csv(
+  here(&quot;static/data/wbbl_01_to_06/all_matches.csv&quot;),
+  show_col_types = FALSE)</code></pre>
+</div>
+<div id="batting" class="section level1">
+<h1>Batting</h1>
+<div id="alyssa-healy" class="section level2">
+<h2>Alyssa Healy</h2>
+<pre class="r"><code>batting_healy &lt;- all_matches %&gt;%
+  filter(striker == &quot;AJ Healy&quot;)</code></pre>
+<p>Batting totals</p>
+<pre class="r"><code>batting_totals_healy &lt;- batting_healy %&gt;%
+  summarise(
+    innings_total = length(unique(match_id)),
+    runs_off_bat_total = sum(runs_off_bat),
+    dismissal_total = sum(!is.na(wicket_type)))</code></pre>
+<p>Per season totals</p>
+<pre class="r"><code>batting_per_season_healy &lt;- batting_healy %&gt;%
+  group_by(season) %&gt;%
+  summarise(
+    innings_total = length(unique(match_id)),
+    runs_off_bat_total = sum(runs_off_bat),
+    dismissal_total = sum(!is.na(wicket_type))) %&gt;%
+  mutate(
+    runs_per_innings_avg = runs_off_bat_total / innings_total,
+    batting_avg = runs_off_bat_total / dismissal_total)</code></pre>
+<p>Most frequent modes of dismissal</p>
+<pre class="r"><code>dismissal_summary_healy &lt;- batting_healy %&gt;%
+  filter(!is.na(wicket_type)) %&gt;%
+  group_by(wicket_type) %&gt;%
+  summarise(n = n())</code></pre>
+<p>Wickets lost to specific bowlers</p>
+<pre class="r"><code>wickets_to_bowlers_healy &lt;- batting_healy %&gt;%
+  filter(!is.na(wicket_type)) %&gt;%
+  group_by(bowler) %&gt;%
+  summarise(n = n()) %&gt;%
+  arrange(desc(n))</code></pre>
+</div>
+<div id="sophie-devine" class="section level2">
+<h2>Sophie Devine</h2>
+<pre class="r"><code>batting_devine &lt;- all_matches %&gt;%
+  filter(striker == &quot;SFM Devine&quot;)</code></pre>
+<p>Batting totals</p>
+<pre class="r"><code>batting_totals_devine &lt;- batting_devine %&gt;%
+  summarise(
+    innings_total = length(unique(match_id)),
+    runs_off_bat_total = sum(runs_off_bat),
+    dismissal_total = sum(!is.na(wicket_type)))</code></pre>
+<pre class="r"><code>batting_per_season_devine &lt;- batting_devine %&gt;%
+  group_by(season) %&gt;%
+  summarise(
+    innings_total = length(unique(match_id)),
+    runs_off_bat_total = sum(runs_off_bat),
+    dismissal_total = sum(!is.na(wicket_type))) %&gt;%
+  mutate(
+    runs_per_innings_avg = runs_off_bat_total / innings_total,
+    batting_avg = runs_off_bat_total / dismissal_total)</code></pre>
+</div>
+</div>
+<div id="bowling" class="section level1">
+<h1>Bowling</h1>
+<div id="molly-strano" class="section level2">
+<h2>Molly Strano</h2>
+</div>
+<div id="annabel-sutherland" class="section level2">
+<h2>Annabel Sutherland</h2>
+</div>
+</div>

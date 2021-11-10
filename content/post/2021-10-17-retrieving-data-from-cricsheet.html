@@ -1,0 +1,76 @@
+---
+title: 'Retrieving data from Cricsheet'
+author: Jacquie Tran
+date: '2021-10-17'
+slug: analysing-wbbl-ball-by-ball-data
+categories:
+  - On-field analyses
+tags:
+  - women's sport
+  - r stats
+  - sports analytics
+  - cricket
+draft: yes
+---
+
+<script src="/rmarkdown-libs/header-attrs/header-attrs.js"></script>
+
+
+<div id="getting-started" class="section level1">
+<h1>Getting started</h1>
+<p>I downloaded ball-by-ball match data from Cricsheet for the Women’s Big Bash League. I chose to use the CSV “Ashwin” format.</p>
+<pre class="r"><code>library(here)
+library(dplyr)
+library(ggplot2)
+
+# library(stringr)
+# library(showtext)
+# library(gghighlight)
+# library(ggtext)
+# library(paletteer)
+# library(patchwork)</code></pre>
+<pre class="r"><code>url &lt;- &quot;https://cricsheet.org/downloads/wbb_female_csv2.zip&quot;
+temp &lt;- tempfile()
+download.file(url, temp)
+unzip(temp, &quot;all_matches.csv&quot;, exdir = here(&quot;static/data/wbbl/&quot;))
+all_matches &lt;- read.csv(here(&quot;static/data/wbbl/all_matches.csv&quot;))
+unlink(temp)</code></pre>
+<pre class="r"><code># Focus on WBBL02-06 data only
+wbbl02_to_06_matches &lt;- all_matches %&gt;%
+  filter(!season %in% c(&quot;2015/16&quot;, &quot;2021/22&quot;))</code></pre>
+<pre class="r"><code>typical_dismissals &lt;- wbbl02_to_06_matches %&gt;%
+  filter(wicket_type != &quot;&quot;) %&gt;%
+  group_by(wicket_type) %&gt;%
+  summarise(dismissal_n = n()) %&gt;%
+  ungroup() %&gt;%
+  mutate(
+    total_dismissals = sum(dismissal_n),
+    dismissal_pct = round(
+      dismissal_n / total_dismissals * 100, 1)) %&gt;%
+  arrange(dismissal_pct)</code></pre>
+<pre class="r"><code># Strano
+typical_dismissals_strano &lt;- wbbl02_to_06_matches %&gt;%
+  filter(bowler == &quot;M Strano&quot;) %&gt;%
+  filter(wicket_type != &quot;&quot;) %&gt;%
+  group_by(wicket_type) %&gt;%
+  summarise(dismissal_n = n()) %&gt;%
+  ungroup() %&gt;%
+  mutate(
+    total_dismissals = sum(dismissal_n),
+    dismissal_pct = round(
+      dismissal_n / total_dismissals * 100, 1)) %&gt;%
+  arrange(dismissal_pct)
+
+# Jonassen
+typical_dismissals_jonassen &lt;- wbbl02_to_06_matches %&gt;%
+  filter(bowler == &quot;JL Jonassen&quot;) %&gt;%
+  filter(wicket_type != &quot;&quot;) %&gt;%
+  group_by(wicket_type) %&gt;%
+  summarise(dismissal_n = n()) %&gt;%
+  ungroup() %&gt;%
+  mutate(
+    total_dismissals = sum(dismissal_n),
+    dismissal_pct = round(
+      dismissal_n / total_dismissals * 100, 1)) %&gt;%
+  arrange(dismissal_pct)</code></pre>
+</div>

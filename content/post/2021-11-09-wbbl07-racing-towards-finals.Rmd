@@ -1,7 +1,7 @@
 ---
 title: '#WBBL07: Racing towards finals'
 author: Jacquie Tran
-date: '2021-11-09'
+date: '2021-11-10'
 slug: wbbl07-racing-towards-finals
 categories:
   - On-field analyses
@@ -19,11 +19,126 @@ It's been a thrilling #WBBL07 so far - the competition seems well-balanced, with
 
 Coming off the back of the hotly contested Australia vs. India series, I have been glued to the TV and thought I might as well turn my attention to another screen instead - my computer screen - and take a closer look at some key performances so far this season.
 
+Here's a little tour of some visualisations I've made recently using Women's Big Bash League (WBBL) data.
+
+# Alyssa Healy's WBBL batting record
+
+I use a few custom functions to retrieve data from [Cricsheet.org](https://cricsheet.org), and I'm continuing to work on them over [here](https://github.com/jacquietran/cricsheet). *(Buyer beware: they work if you know the right sequence of actions and say some nice things in the general direction of your RStudio IDE.)*
+
+```{r setup, message = FALSE}
+
+knitr::opts_chunk$set(eval = FALSE)
+
+library(here)
+library(readr)
+library(dplyr)
+library(stringr)
+library(showtext)
+library(ggplot2)
+library(gghighlight)
+library(ggtext)
+library(paletteer)
+
+```
+
+```{r retrieve_cricsheet_data}
+
+# Fetch ball-by-ball data
+wbbl_bbb <- fetch_cricsheet_bbb("wbbl")
+
+# Fetch match metadata
+wbbl_match_info <- fetch_cricsheet_match_info("wbbl")
+
+```
+
+What is there to say about Alyssa Healy that hasn't already been written by a far better writer than I? (If you haven't seen it, check out [this recent feature article by Adam Burnett](https://www.cricket.com.au/news/feature/alyssa-healy-australia-india-mitch-starc-vice-captain-sister-kareen-family-lanning-mott/2021-10-10).)
+
+She's a superstar at every level she plays at, so I wanted to visualise exactly what her production has been like throughout the WBBL seasons so far.
+
+```{r batting_per_season_healy}
+
+# Data from 2015/16 (WBBL01) excluded due to only having 10 matches worth of data in the Cricsheet spreadsheet.
+# Data from 2021/22 (WBBL07) excluded as season is in progress
+wbbl_bbb %>%
+  filter(!season %in% c("2015/16", "2021/22")) -> wbbl_bbb_tidy
+
+# Alyssa Healy compared to all players who have batted in 3+ innings in a season.
+wbbl_bbb_tidy %>%
+  group_by(season, striker) %>%
+  summarise(
+    innings_total = length(unique(match_id)),
+    runs_off_bat_total = sum(runs_off_bat),
+    balls_faced_total = length(ball),
+    # dismissal_total = sum(!is.na(wicket_type)),
+    .groups = "keep") %>%
+  mutate(
+    runs_per_innings_avg = round(runs_off_bat_total / innings_total, 1),
+    # batting_avg = round(runs_off_bat_total / dismissal_total, 1),
+    strike_rate = round(runs_off_bat_total / balls_faced_total * 100, 1)) %>%
+  filter(innings_total > 2) -> batting_per_season
+
+# Flag Healy's per season records
+batting_per_season %>%
+  mutate(
+    is_healy = case_when(
+      striker == "AJ Healy" ~ 1,
+      TRUE                  ~ 0)) -> batting_per_season_healy
+
+```
+
+```{r plot_healy_per_season, warning = FALSE, fig.height = 6, fig.width = 8}
+
+showtext_auto()
+
+p <- ggplot(batting_per_season_healy,
+            aes(x = season, y = runs_per_innings_avg,
+                group = striker, colour = is_healy))
+p <- p + geom_line(size = 3, colour = paletteer_d("beyonce::X25")[5])
+p <- p + gghighlight(
+  is_healy > 0,
+  label_key = striker,
+  label_params = aes(
+    size = 6, force_pull = 0.1, nudge_y = 10, label.size = 2,
+    family = "roboto_con", label.padding = 0.5,
+    fill = paletteer_d("beyonce::X116")[4],
+    colour = paletteer_d("beyonce::X25")[5]),
+  unhighlighted_params = aes(size = 1),
+  unhighlighted_colour = paletteer_d("beyonce::X73")[7])
+p <- p + labs(
+  title = "WBBL: Average runs scored per innings (3+ innings)",
+  x = NULL, y = NULL,
+  caption = "**Source:** Cricsheet.org // **Plot:** @jacquietran")
+p <- p + theme_minimal()
+p <- p + theme(
+  text = element_text(
+    size = 18, family = "roboto_con", colour = "#FFFFFF"),
+  plot.title = element_text(family = "staat", margin=margin(0,0,15,0)),
+  plot.caption = element_markdown(size = NULL, margin=margin(15,0,0,0)),
+  axis.text = element_text(colour = "#FFFFFF"),
+  legend.position = "none",
+  panel.grid.major = element_line(linetype = "dashed"),
+  panel.grid.minor = element_blank(),
+  plot.background = element_rect(
+      fill = paletteer_d("beyonce::X116")[3],
+      colour = NA),
+  panel.spacing = unit(2, "lines"),
+  plot.margin = unit(c(0.5,0.5,0.5,0.5), "cm"))
+plot_healy_per_season <- p
+
+plot_healy_per_season
+
+showtext_auto(FALSE)
+
+```
+
+
 # Getting started
 
-I downloaded ball-by-ball data and match metadata from Cricsheet for the Women's Big Bash League (specifically using the CSV "Ashwin" format), focusing on games played so far in season 7 of the Women's Big Bash League (32 matches played between Oct 14 and Nov 7 2021, excluding the match called off between the Hobart Hurricanes and the Adelaide Strikers).
+I downloaded ball-by-ball data and match metadata from Cricsheet for the Women's Big Bash League (specifically using the CSV "Ashwin" format), focusing on games played so far in season 7 of the WBBL (32 matches played between Oct 14 and Nov 7 2021, excluding the match called off between the Hobart Hurricanes and the Adelaide Strikers).
 
 ```{r load_libraries, message = FALSE}
+
+knitr::opts_chunk$set(eval = FALSE)
 
 library(here)
 library(readr)
