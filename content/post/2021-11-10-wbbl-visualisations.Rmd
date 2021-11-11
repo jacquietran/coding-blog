@@ -17,11 +17,11 @@ draft: yes
 
 It's been a thrilling #WBBL07 so far - the competition seems well-balanced, with every team boasting world-class athletes alongside the young guns who are the next wave of Australian talent coming through.
 
-Coming off the back of the hotly contested Australia vs. India series, I have been glued to the TV and thought I might as well turn my attention to another screen instead - my computer screen - and take a closer look at some key performances so far this season.
+Coming off the back of the hotly contested Australia vs. India series, I have been glued to the TV. I thought I might as well turn my attention to another screen instead - my computer screen - and take a closer look at some key performances so far this season.
 
 Here's a little tour of some visualisations I've made recently using Women's Big Bash League (WBBL) data.
 
-# Alyssa Healy's WBBL batting record
+# Getting started
 
 I use a few custom functions to retrieve data from [Cricsheet.org](https://cricsheet.org), and I'm continuing to work on them over [here](https://github.com/jacquietran/cricsheet). *(Buyer beware: they work if you know the right sequence of actions and say some nice things in the general direction of your RStudio IDE.)*
 
@@ -64,16 +64,34 @@ wbbl_match_info <- fetch_cricsheet_match_info("wbbl")
 
 ```
 
+## Alyssa Healy's WBBL batting record
+
 What is there to say about Alyssa Healy that hasn't already been written by a far better writer than I? (If you haven't seen it, check out [this recent feature article by Adam Burnett](https://www.cricket.com.au/news/feature/alyssa-healy-australia-india-mitch-starc-vice-captain-sister-kareen-family-lanning-mott/2021-10-10).)
 
-She's a superstar at every level she plays at, so I wanted to visualise exactly what her production has been like throughout the WBBL seasons so far.
+She's a superstar at every level she plays at, so I wanted to visualise her production across seasons, compared to other batters in the WBBL.
 
-```{r batting_per_season_healy}
+### Tidying the data
+
+On exploring the Cricsheet data, I noticed that there are only 10 matches from WBBL01 with ball-by-ball data, but there were 59 matches played in the 1st season of WBBL (per [Wikipedia](https://en.wikipedia.org/wiki/2015%E2%80%9316_Women%27s_Big_Bash_League_season)).
+
+Additionally, when I originally worked on this plot of [Healy vs. the world](https://twitter.com/jacquietran/status/1448534315202080773), it was mid-October and the first ball of #WBBL07 had yet to be bowled. Now, we are reproducing the chart as we are part-way through the current season, so the code below also omits data from any matches played so far in this 7th season.
+
+```{r tidy_bbb_data}
 
 # Data from 2015/16 (WBBL01) excluded due to only having 10 matches worth of data in the Cricsheet spreadsheet.
-# Data from 2021/22 (WBBL07) excluded as season is in progress
+# Data from 2021/22 (WBBL07) excluded as season is currently in progress.
 wbbl_bbb %>%
   filter(!season %in% c("2015/16", "2021/22")) -> wbbl_bbb_tidy
+
+```
+
+The ball-by-ball data hosted by Cricsheet provides a great starting point, but a little more tidying and wrangling is needed for the purposes of understanding batting performances across WBBL seasons.
+
+In cricket broadcasts, batting average is probably the most common statistic that commentators will reference to highlight how well a player performs with willow in hand. Batting average is calculated by taking runs scored over a period of time and dividing it by the number of dismissals (e.g., )
+
+Given the T20 format of the WBBL, I was more interested in 
+
+```{r batting_per_season_healy}
 
 # Alyssa Healy compared to all players who have batted in 3+ innings in a season.
 wbbl_bbb_tidy %>%
@@ -82,11 +100,9 @@ wbbl_bbb_tidy %>%
     innings_total = length(unique(match_id)),
     runs_off_bat_total = sum(runs_off_bat),
     balls_faced_total = length(ball),
-    # dismissal_total = sum(!is.na(wicket_type)),
     .groups = "keep") %>%
   mutate(
     runs_per_innings_avg = round(runs_off_bat_total / innings_total, 1),
-    # batting_avg = round(runs_off_bat_total / dismissal_total, 1),
     strike_rate = round(runs_off_bat_total / balls_faced_total * 100, 1)) %>%
   filter(innings_total > 2) -> batting_per_season
 
@@ -149,12 +165,11 @@ plot_healy_per_season
 
 ```
 
-```{r}
+```{r echo = FALSE}
 
 showtext_auto(FALSE)
 
 ```
-
 
 ## Dismissals by ball number
 
