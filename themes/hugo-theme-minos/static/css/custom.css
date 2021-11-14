@@ -1,0 +1,57 @@
+@import url('https://fonts.googleapis.com/css?family=Cabin+Condensed');
+@import url('https://fonts.googleapis.com/css?family=Barlow');
+
+header {
+  font-family: 'Cabin Condensed', sans-serif;
+}
+
+h1,
+h4,
+h5,
+h6 {
+  color: #ff1d91;
+  font-family: 'Cabin Condensed', sans-serif;
+}
+
+h2,
+h3 {
+  color: #ff1d91;
+  font-family: 'Cabin Condensed', sans-serif;
+}
+
+body {
+  font-family: 'Barlow', sans-serif;
+}
+
+a:link,
+a:visited {
+  color: #ff1d91;
+}
+
+a:active,
+a:hover {
+  color: #00b392;
+}
+
+#logo {
+  font-size: 32px;
+}
+
+#main-nav {
+  font-size: 22px;
+  float: right;
+}
+
+.main-nav-link {
+  font-weight: 300;
+}
+
+.article a:link,
+.article a:visited {
+  color: #ff1d91;
+}
+
+.article a:active,
+.article a:hover {
+  color: #00b392;
+}

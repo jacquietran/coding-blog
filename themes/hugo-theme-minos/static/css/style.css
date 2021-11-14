@@ -183,9 +183,9 @@ a.article-title,
 .article-entry .gist .gist-file .gist-meta a,
 .layout-wrap-inner .category-list a,
 .tag-cloud a {
-  color: #111;
   text-decoration: none;
   border-bottom: 1px dotted transparent;
+  color: #00b392;
 }
 .article-meta a:hover,
 a.article-title:hover,
@@ -201,10 +201,12 @@ a.article-title:hover,
 .article-entry .gist .gist-file .gist-meta a:hover,
 .layout-wrap-inner .category-list a:hover,
 .tag-cloud a:hover {
-  border-bottom-color: #000;
+  border-bottom-color: #00b392;
+  color: #00b392;
 }
 .article-entry a {
   border-bottom: 1px dotted #000;
+  color: #00b392;
 }
 .article-entry h1 {
   font-size: 2em;
@@ -585,7 +587,7 @@ a.article-title:hover,
   text-decoration: none;
 }
 .article-footer a:hover {
-  color: #111;
+  color: #00b392;
 }
 .article-tag-list-item {
   float: left;
@@ -913,6 +915,7 @@ a.article-title:hover,
 }
 .article-entry .gist .gist-file .gist-meta a:hover {
   text-decoration: underline;
+  color: #00b392;
 }
 pre .tag,
 pre .css .rules,
