@@ -1,7 +1,7 @@
 ---
-title: '#WBBL visualisations'
+title: 'Bash and crash cricket: Visualising ball-by-ball data from #WBBL'
 author: Jacquie Tran
-date: '2021-11-10'
+date: '2021-11-14'
 slug: wbbl-visualisations
 categories:
   - On-field analyses
@@ -10,7 +10,6 @@ tags:
   - r stats
   - sports analytics
   - cricket
-draft: yes
 ---
 
 # Introduction
@@ -19,11 +18,13 @@ It's been a thrilling #WBBL07 so far - the competition seems well-balanced, with
 
 Coming off the back of the hotly contested Australia vs. India series, I have been glued to the TV. I thought I might as well turn my attention to another screen instead - my computer screen - and take a closer look at some key performances so far this season.
 
-Here's a little tour of some visualisations I've made recently using Women's Big Bash League (WBBL) data.
+This post is a little tour of some visualisations I've made recently using Women's Big Bash League (WBBL) data. It's a long one, so use these links if you're inclined to skip ahead:
+
+- [Alyssa Healy's WBBL batting record](#healy)
+- [Dismissals by ball number](#dismissals)
+- ["Wiggly bois": Visualising team strike rates](#wigglybois)
 
 # Getting started
-
-I use a few custom functions to retrieve data from [Cricsheet.org](https://cricsheet.org), and I'm continuing to work on them over [here](https://github.com/jacquietran/cricsheet). *(Buyer beware: they work if you know the right sequence of actions and say some nice things in the general direction of your RStudio IDE.)*
 
 ```{r load_libraries, message = FALSE}
 
@@ -40,6 +41,8 @@ library(patchwork)
 
 ```
 
+I use a few custom functions to retrieve data from [Cricsheet.org](https://cricsheet.org), and I'm continuing to work on them over [here](https://github.com/jacquietran/cricsheet). *(Buyer beware: These custom functions "work" insofar as needing to cross your fingers and whisper sweet nothings in the general direction of RStudio while the functions run...)*
+
 ```{r import_csv, echo = FALSE, warning = FALSE}
 
 # Import Cricsheet data from static CSVs
@@ -53,7 +56,6 @@ wbbl_match_info <- readr::read_csv(
 
 ```
 
-
 ```{r retrieve_cricsheet_data, eval = FALSE}
 
 # Fetch ball-by-ball data
@@ -64,11 +66,13 @@ wbbl_match_info <- fetch_cricsheet_match_info("wbbl")
 
 ```
 
-## Alyssa Healy's WBBL batting record
+*****
+
+## Alyssa Healy's WBBL batting record {#healy}
 
 What is there to say about Alyssa Healy that hasn't already been written by a far better writer than I? (If you haven't seen it, check out [this recent feature article by Adam Burnett](https://www.cricket.com.au/news/feature/alyssa-healy-australia-india-mitch-starc-vice-captain-sister-kareen-family-lanning-mott/2021-10-10).)
 
-She's a superstar at every level she plays at, so I wanted to visualise her production across seasons, compared to other batters in the WBBL.
+She's a dangerous batter at every level she plays at, so I wanted to visualise her production across seasons, compared to other batters in the WBBL.
 
 ### Tidying the data
 
@@ -78,7 +82,8 @@ Additionally, when I originally worked on this plot of [Healy vs. the world](htt
 
 ```{r tidy_bbb_data}
 
-# Data from 2015/16 (WBBL01) excluded due to only having 10 matches worth of data in the Cricsheet spreadsheet.
+# Data from 2015/16 (WBBL01) excluded due to only having 10 matches worth of data
+# in the Cricsheet spreadsheet.
 # Data from 2021/22 (WBBL07) excluded as season is currently in progress.
 wbbl_bbb %>%
   filter(!season %in% c("2015/16", "2021/22")) -> wbbl_bbb_tidy
@@ -87,9 +92,11 @@ wbbl_bbb %>%
 
 The ball-by-ball data hosted by Cricsheet provides a great starting point, but a little more tidying and wrangling is needed for the purposes of understanding batting performances across WBBL seasons.
 
-In cricket broadcasts, batting average is probably the most common statistic that commentators will reference to highlight how well a player performs with willow in hand. Batting average is calculated by taking runs scored over a period of time and dividing it by the number of dismissals (e.g., )
+In cricket broadcasts, batting average is among the most common statistic that commentators will reference to highlight how well a player performs with willow in hand. Batting average is calculated by taking runs scored by a batter over a defined period of time and dividing it by the number of they have been dismissed over that same period.
 
-Given the T20 format of the WBBL, I was more interested in 
+With this formula, the batting average metric can produce a somewhat inflated measure of a batter's performance over time, because the denominator is dismissals and not total innings batted. On top of that, the WBBL season is relatively short - in season 7, there are 14 fixtured rounds, plus semi-finals and finals. So at maximum, a batter could play 16 innings in the current season. Others will bat far fewer innings than that hypothetical maximum, so 2 or 3 not-out innings can have a sizeable influence on batting average.
+
+All things considered, including the T20 format of the WBBL, I was more interested in Healy's "production" in the sense of average runs scored per innings.
 
 ```{r batting_per_season_healy}
 
@@ -115,17 +122,21 @@ batting_per_season %>%
 
 ```
 
+### Making a plot
+
 ```{r add_google_fonts}
 
+# Import fonts from Google Fonts
 font_add_google("Roboto Condensed", "roboto_con")
 font_add_google("Staatliches", "staat")
 
 ```
 
-```{r plot_healy_per_season, warning = FALSE, fig.height = 6, fig.width = 8}
+```{r plot_healy_per_season, warning = FALSE, fig.height = 6, fig.width = 9}
 
 showtext_auto()
 
+# Build plot
 p <- ggplot(batting_per_season_healy,
             aes(x = season, y = runs_per_innings_avg,
                 group = striker, colour = is_healy))
@@ -134,7 +145,7 @@ p <- p + gghighlight(
   is_healy > 0,
   label_key = striker,
   label_params = aes(
-    size = 6, force_pull = 0.1, nudge_y = 10, label.size = 2,
+    size = 12, force_pull = 0.1, nudge_y = 10, label.size = 2,
     family = "roboto_con", label.padding = 0.5,
     fill = paletteer_d("beyonce::X116")[4],
     colour = paletteer_d("beyonce::X25")[5]),
@@ -147,7 +158,7 @@ p <- p + labs(
 p <- p + theme_minimal()
 p <- p + theme(
   text = element_text(
-    size = 18, family = "roboto_con", colour = "#FFFFFF"),
+    size = 42, family = "roboto_con", colour = "#FFFFFF"),
   plot.title = element_text(family = "staat", margin=margin(0,0,15,0)),
   plot.caption = element_markdown(size = NULL, margin=margin(15,0,0,0)),
   axis.text = element_text(colour = "#FFFFFF"),
@@ -171,7 +182,23 @@ showtext_auto(FALSE)
 
 ```
 
-## Dismissals by ball number
+When plotting Healy's WBBL production against the rest of the comp, what I see is "run machine" - consistent, high-end output over the last 5 WBBL seasons.
+
+No hyperbole: there are few better than Alyssa Healy at the crease.
+
+*****
+
+## Dismissals by ball number {#dismissals}
+
+Aside from scoring runs, another important aspect of batting is not losing your wicket. So how hard is it really to get the best batters out?
+
+I would love to dive into this question using high-resolution data that reflects the biomechanics battle between bowlers and batters. Enter: Hawkeye...except that Hawkeye is only sporadically available for women's matches, even at the highest level. As far as I know, there are no publicly available Hawkeye data sets from WBBL matches. If I'm wrong, please tell me and point me towards the good goods!
+
+*([Cody Atkinson](https://twitter.com/CapitalCityCody/status/1448476292743983105) alerted me to the* `bounceR` *package by Richard Little, which enables access to Hawkeye data that does exist on the ICC and BCCI websites.)*
+
+### Tidying the data
+
+In the absence of fancy Hawkeye data from the WBBL, I took a simpler route through the Cricsheet ball-by-ball data to visualise how hard it is to take the wicket of the likes of Healy, Beth Mooney, Meg Lanning, Ellyse Perry, Sophie Devine, and Heather Knight.
 
 ```{r ball_number_faced}
 
@@ -194,9 +221,27 @@ dismissals_by_ball_number <- ball_number_faced %>%
   summarise(dismissals_n = n(), .groups = "keep") %>%
   ungroup()
 
-# Merge data
+```
+
+The code above shapes up the ball-by-ball data to record:
+
+- How many balls a batter has faced at each ball number in an over (1-6),
+- How many times a batter has been dismissed at each ball number.
+
+I made some editorial judgments too:
+
+- Excluded data from WBBL01 due to limited games from that season in the Cricsheet-hosted data
+- Excluded balls numbered 7+
+- League-wide data only includes batters who have faced 200+ balls total (across WBBL02-06, inclusive)
+
+With the ball-by-ball data prepared for the analysis question, we can then calculate league-wide and player-specific summary statistics for dismissals by ball number:
+
+```{r dismissals_by_ball_number}
+
+# Merge data and summarise to league-wide dismissals rate by ball number
 dismissals_by_ball_number_summary <- left_join(
-  ball_number_faced_summary, dismissals_by_ball_number) %>%
+  ball_number_faced_summary, dismissals_by_ball_number,
+  by = c("ball_num_in_over", "striker")) %>%
   tidyr::replace_na(list(dismissals_n = 0)) %>%
   group_by(striker) %>%
   mutate(total_balls_faced = sum(balls_faced)) %>%
@@ -234,19 +279,27 @@ dismissals_by_ball_number_summary_knight <- dismissals_by_ball_number_summary %>
 
 ```
 
+### Making plots
+
+Here's the code for building [the plot I tweeted out](https://twitter.com/jacquietran/status/1449247570656522241). I decided to build one plot per player of interest and then "quilt" the plots together using the `patchwork` package ([https://github.com/thomasp85/patchwork](https://github.com/thomasp85/patchwork)). I'm sure you could achieve the same / similar result using `ggplot2::facet_wrap()` but I just love using `patchwork`...
+
 ```{r plot_dismissals_by_ball_number}
+
+# Define consistent plot features ----------------------------------------------
 
 plot_features <- list(
   coord_cartesian(ylim = c(0, 10)),
   theme_minimal(),
   theme(
     text = element_text(
-      size = 18, family = "roboto_con",
-      colour = "#FFFFFF"),
-    plot.title = element_text(family = "staat", margin=margin(0,0,15,0)),
-    plot.subtitle = element_text(family = "staat", margin=margin(0,0,15,0)),
-    plot.caption = element_markdown(size = NULL, margin=margin(15,0,0,0)),
-    axis.text = element_text(colour = "#FFFFFF"),
+      family = "roboto_con", colour = "#FFFFFF"),
+    plot.title = element_text(
+      size = 28, family = "staat", margin=margin(0,0,15,0)),
+    plot.subtitle = element_text(
+      size = 36, family = "staat", margin=margin(0,0,15,0)),
+    plot.caption = element_markdown(
+      size = 24, margin=margin(15,0,0,0)),
+    axis.text = element_text(size = 24, colour = "#FFFFFF"),
     legend.position = "none",
     panel.grid.major.y = element_line(linetype = "dashed"),
     panel.grid.major.x = element_blank(),
@@ -257,6 +310,8 @@ plot_features <- list(
     panel.spacing = unit(2, "lines"),
     plot.margin = unit(c(0.5,0.5,0.5,0.5), "cm"))
   )
+
+# Build plots ------------------------------------------------------------------
 
 showtext_auto()
 
@@ -275,7 +330,6 @@ p <- p + labs(
   x = NULL, y = NULL)
 p <- p + plot_features
 p1 <- p
-# plot_dismissals_by_ball_num_healy <- p
 
 # Mooney
 p <- ggplot(dismissals_by_ball_number_summary,
@@ -318,7 +372,6 @@ p <- p + geom_point(
   colour = paletteer_d("beyonce::X25")[5], size = 3)
 p <- p + labs(
   subtitle = "EA Perry",
-  # caption = "",
   x = NULL, y = NULL)
 p <- p + plot_features
 p4 <- p
@@ -334,7 +387,6 @@ p <- p + geom_point(
   colour = paletteer_d("NineteenEightyR::miami1")[5], size = 3)
 p <- p + labs(
   subtitle = "SFM Devine",
-  # caption = "",
   x = NULL, y = NULL)
 p <- p + plot_features
 p5 <- p
@@ -357,9 +409,10 @@ p6 <- p
 
 ```
 
-```{r quilt_dismissals_by_ball_number}
+```{r quilt_dismissals_by_ball_number, fig.height = 6, fig.width = 9.5}
 
-# Quilt the plots
+# Quilt the plots --------------------------------------------------------------
+
 quilt_dismissals_by_ball_number <- (p1 + p2 + p3) / (p4 + p5 + p6)
 
 # Display the quilted plot
@@ -367,16 +420,41 @@ quilt_dismissals_by_ball_number
 
 ```
 
-```{r}
+```{r, echo = FALSE}
 
 showtext_auto(FALSE)
 
 ```
 
-## Wiggly bois
+My key observations (covered in [this tweet thread](https://twitter.com/jacquietran/status/1449247570656522241)):
 
-```{r}
+1. Lanning doesn't give much away on any ball number in an over - of balls faced at each ball number (1-6), her dismissals percentages range from 2.7-3.4%. Well under league medians of 4.3-5.1%.
+2. Perry is a stalwart too, but relative to her own standards, you might have a better shot bowling to her on balls 5 (2.7%) and 6 (3.4%) than earlier in an over (1.4-2.4%).
+3. Healy is obviously dangerous with how quickly she can accelerate her run-scoring, but is she susceptible on ball 5? (dismissed 7.1% out of balls faced vs. 4.7% as the league median for ball number 5)
+4. The opening partnership of Mooney / Devine is a scary prospect, reason #4182: they're both hard to shift from the crease. Devine's "worst" ball is ball number 3 (4.3%), Mooney's is ball number 5 (4.5%) - both are still below league medians (4.8% and 4.7%, respectively).
+5. Knight is stubborn for balls 1-3 (1.7-2.8%), looser than the league medians for balls 4 and 5 (7.7% and 5.5%, respectively), then clamps down again for ball 6 (3.2%).
 
+*****
+
+## "Wiggly bois": Visualising team strike rates {#wigglybois}
+
+Player and league summaries across seasons are great and all, but what really piques my interest with ball-by-ball / play-by-play data is using it to understand how matches unfold from moment to moment.
+
+The very nature of cricket's shortest format, T20, lends itself to batting aggression - recruiting for power hitters, aiming to demoralise the opposition by setting big targets, and building teams that bat deep. That last point is particularly important in T20 because aggressive batting means taking risks, and as long as there is risk taking by the batters, then the bowling side is in with a chance.
+
+Commentators will generally focus on player strike rates in T20; that is, how many runs a batter scores for the number of balls faced. For instance, power hitters like Sophie Devine routinely achieve strike rates over 120 (i.e., 120 runs scored per 100 balls) - we can think of this as a measure of scoring efficiency.
+
+A common perception is that snagging a wicket will slow down strike rates, but I wondered whether this is really true in the T20 context where the imperative to accelerate is paramount. Teams will also expect to lose some wickets in every innings, so I'd imagine they would recruit and train accordingly for a potent middle order and a tail that wags.
+
+Instead of looking at player strike rates, what can we learn by analysing *team strike rates*?
+
+### Tidying the data
+
+For a more granular focus, I created a subset from the Cricsheet data that includes matches played in season 7 of the WBBL. At the time I produced [my original visualisation](https://twitter.com/jacquietran/status/1458000166397480962), the ball-by-ball data included all games played up to 7 November 2021.
+
+```{r wbbl07_data}
+
+# Subset match metadata for WBB07 games
 wbbl_match_info %>%
   filter(season == "2021/22") %>%
   select(
@@ -385,6 +463,7 @@ wbbl_match_info %>%
   mutate(
     match_id = factor(match_id)) -> wbbl07_match_info_tidy
 
+# Subset ball-by-ball data for WBBL07 games
 wbbl_bbb %>%
   filter(season == "2021/22") %>%
   tidyr::separate(ball, c("over_num_extracted", "ball_num")) %>%
@@ -404,7 +483,8 @@ wbbl_bbb %>%
     runs_total = max(runs_cumulative)) %>%
   ungroup() %>%
   select(-temp_var) %>%
-  left_join(., wbbl07_match_info_tidy) %>%
+  # Merge match metadata and ball-by-ball data
+  left_join(., wbbl07_match_info_tidy, by = "match_id") %>%
   mutate(
     outcome_batting_team = case_when(
       outcome %in% c("no result", "tie") ~ as.character(outcome),
@@ -417,6 +497,8 @@ wbbl_bbb %>%
     ) -> wbbl07_bbb_tidy
 
 ```
+
+Using the WBBL07 data subset, I did some further tidying to calculate team strike rates per innings:
 
 ```{r team_strike_rate}
 
@@ -452,29 +534,40 @@ wbbl07_bbb_tidy %>%
 
 ```
 
+### Making plots
 
-```{r team_strike_rate_renegades, fig.height = 10, fig.width = 8, warning = FALSE}
+There's plenty that can be done with the `team_strike_rate` data which could warrant a dedicated exploration in itself. But I usually find that when I'm exploring a new analytical idea, it's easier for me to get a feel for what the data does and or doesn't highlight by going with a "small batch" approach.
 
-# Filter to Renegades' innings only
+With the Renegades at the top of the standings (as of 7 Nov), I focused on their team strike rates, a.k.a. *"wiggly bois"*:
+
+<center>
+<blockquote class="twitter-tweet"><p lang="en" dir="ltr">obsessed with these wiggly bois</p>&mdash; Alyssa (@alyssastweeting) <a href="https://twitter.com/alyssastweeting/status/1458000401291120641?ref_src=twsrc%5Etfw">November 9, 2021</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+</center>
+
+```{r team_strike_rate_renegades, fig.height = 11, fig.width = 9, warning = FALSE}
+
+# Filter to Renegades' innings only --------------------------------------------
+
 team_strike_rate %>%
   filter(
     str_detect(batting_team, "Renegades")
     ) -> team_strike_rate_renegades
 
+# Build plot -------------------------------------------------------------------
+
 showtext_auto()
 
-# Build plot
 p <- ggplot(
   team_strike_rate_renegades,
   aes(x = balls_cumulative, y = rolling_strike_rate))
 p <- p + facet_wrap(~ match_details, ncol = 3)
 p <- p + geom_hline(
   yintercept = 100, linetype = "dashed", colour = "#CCCCCC")
-p <- p + geom_line(aes(colour = outcome_batting_team))
+p <- p + geom_line(aes(colour = outcome_batting_team), size = 1.5)
 p <- p + geom_point(
   aes(x = team_strike_rate_renegades$wicket_ball_num,
       y = team_strike_rate_renegades$wicket_strike_rate),
-      colour = "red", size = 1, alpha = 0.75)
+      colour = "red", size = 3, alpha = 0.75)
 p <- p + labs(
   title = "WBBL07: Melbourne Renegades - Team strike rate (games up to 7 Nov 2021)",
   x = "Ball number in an innings", y = NULL,
@@ -488,7 +581,7 @@ p <- p + coord_cartesian(ylim = c(0, 200))
 p <- p + theme_minimal()
 p <- p + theme(
   text = element_text(
-    size = 18, family = "roboto_con",
+    size = 36, family = "roboto_con",
     colour = "#FFFFFF"),
   legend.position = "top",
   legend.title = element_blank(),
@@ -498,7 +591,7 @@ p <- p + theme(
   legend.spacing.y = unit(0, "cm"),
   plot.title = element_text(family = "staat", margin=margin(0,0,15,0)),
   plot.caption = element_markdown(size = NULL, margin=margin(15,0,0,0)),
-  strip.text = element_text(colour = "#FFFFFF", size = 12),
+  strip.text = element_text(colour = "#FFFFFF", size = 24),
   axis.text = element_text(colour = "#FFFFFF"),
   axis.title.x = element_text(margin=margin(15,0,0,0)),
   panel.grid.major.y = element_blank(),
@@ -518,7 +611,11 @@ plot_team_strike_rate_renegades
 
 ```
 
-```{r}
+The plots show the Renegades' team strike rate across each innings they've batted, with wicket occurrences overlaid. From a visual assessment, it looks like wickets have not dampened the enthusiasm of Renegades' batters for striking the ball - broadly speaking, it appears that, when the new batter comes in for the Renegades, they are often able to maintain the team's strike rate. In some games, they've even managed to accelerate after losing a wicket.
+
+Importantly, the Renegades have not lost many wickets in Powerplay overs this season, which puts them in a better position to push the scoring pace as an innings wears on with most of their wickets in hand.
+
+```{r, echo = FALSE}
 
 showtext_auto(FALSE)
 
