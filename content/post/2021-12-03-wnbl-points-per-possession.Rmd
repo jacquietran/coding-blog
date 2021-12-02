@@ -1,15 +1,15 @@
 ---
-title: "WNBL advanced stats: Points per possession"
+title: 'WNBL advanced stats: Points per possession'
 author: Jacquie Tran
 date: '2021-12-03'
 slug: wnbl-points-per-possession
 categories:
   - On-field analyses
 tags:
-  - wnbl
-  - r stats
+  - women's sport
+  - basketball
   - sports analytics
-  - sport science
+  - r stats
 ---
 
 # Introduction
