@@ -2,7 +2,7 @@
 title: 'WNBL advanced stats: Points per possession'
 author: Jacquie Tran
 date: '2021-12-03'
-slug: wnbl-points-per-possession
+slug: wnbl-ppp
 categories:
   - On-field analyses
 tags:
@@ -10,6 +10,7 @@ tags:
   - basketball
   - sports analytics
   - r stats
+draft: no
 ---
 
 # Introduction
