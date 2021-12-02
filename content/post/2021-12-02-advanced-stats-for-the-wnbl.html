@@ -1,0 +1,154 @@
+---
+title: Advanced stats for the WNBL
+author: Jacquie Tran
+date: '2021-12-02'
+slug: []
+categories:
+  - On-field analyses
+tags:
+  - wnbl
+  - r stats
+  - sports analytics
+  - sport science
+draft: yes
+---
+
+<script src="/rmarkdown-libs/header-attrs/header-attrs.js"></script>
+
+
+<div id="introduction" class="section level1">
+<h1>Introduction</h1>
+<p>Dean Oliver’s Four Factors: <a href="https://squared2020.com/2017/09/05/introduction-to-olivers-four-factors/" class="uri">https://squared2020.com/2017/09/05/introduction-to-olivers-four-factors/</a></p>
+<p>{wnblr} package includes live stats recorded from WNBL games, but doesn’t include “advanced” stats like effective field goal percentage, points per possession, etc.</p>
+<p>Paul Flynn (Assistant Coach, Melbourne Boomers) asked to see some specific advanced stats from WNBL play:</p>
+<blockquote class="twitter-tweet">
+<p lang="en" dir="ltr">
+Would be keen to view any data on points per possession, pace and correlating eFG% over the same period.
+</p>
+— Paul Flynn (<span class="citation">@paulflynn611</span>) <a href="https://twitter.com/paulflynn611/status/1466018173375836161?ref_src=twsrc%5Etfw">December 1, 2021</a>
+</blockquote>
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+</div>
+<div id="getting-started" class="section level1">
+<h1>Getting started</h1>
+<p>Load up the libraries we need. The {wnblr} package provides access to built-in data sets with game stats.</p>
+<pre class="r"><code># remotes::install_github(&quot;jacquietran/wnblr&quot;)
+library(wnblr)
+library(dplyr)</code></pre>
+<pre><code>## 
+## Attaching package: &#39;dplyr&#39;</code></pre>
+<pre><code>## The following objects are masked from &#39;package:stats&#39;:
+## 
+##     filter, lag</code></pre>
+<pre><code>## The following objects are masked from &#39;package:base&#39;:
+## 
+##     intersect, setdiff, setequal, union</code></pre>
+<pre class="r"><code>library(tidyr)
+library(ggplot2)
+library(ggbeeswarm)</code></pre>
+<pre><code>## Warning: package &#39;ggbeeswarm&#39; was built under R version 4.1.2</code></pre>
+</div>
+<div id="tidying-data" class="section level1">
+<h1>Tidying data</h1>
+<ul>
+<li>Points per possession: <a href="https://www.nbastuffer.com/analytics101/points-per-possession-ppp/" class="uri">https://www.nbastuffer.com/analytics101/points-per-possession-ppp/</a>
+<ul>
+<li>Possession: <a href="https://www.nbastuffer.com/analytics101/possession/" class="uri">https://www.nbastuffer.com/analytics101/possession/</a></li>
+</ul></li>
+<li>Pace: <a href="https://www.nbastuffer.com/analytics101/pace/" class="uri">https://www.nbastuffer.com/analytics101/pace/</a></li>
+<li>eFG%: <a href="https://www.nbastuffer.com/analytics101/effective-field-goal-percentage-efg/" class="uri">https://www.nbastuffer.com/analytics101/effective-field-goal-percentage-efg/</a></li>
+</ul>
+<p>Firstly, we need to calculate number of possessions.</p>
+<pre class="r"><code># Go through calculations step by step, but evaluate in one dplyr chain
+
+# Via NBAStuffer.com: Basic Possession Formula=0.96*[(Field Goal Attempts)+(Turnovers)+0.44*(Free Throw Attempts)-(Offensive Rebounds)]
+
+box_scores %&gt;%
+  mutate(
+    num_possessions = 0.96*(field_goals_attempted + turnovers + (0.44*free_throws_attempted) - rebounds_offensive))</code></pre>
+<pre class="r"><code># Via NBAStuffer.com: Points Per Possession =PTS/(FGA+0.44*FTA+TO)</code></pre>
+<pre class="r"><code># Via NBAStuffer.com: Pace Calculation Formula=[240/(Team Minutes)]*(Possessionteam+Possessionopponent)/2</code></pre>
+<pre class="r"><code># Via NBAStuffer.com: Effective Field Goal Percentage Formula=[(All Field Goals Made) + 0.5*(3P Field Goals Made)]/(All Field Goal Attempts)</code></pre>
+<div id="taking-a-closer-look---2020-season" class="section level2">
+<h2>Taking a closer look - 2020 season</h2>
+<pre class="r"><code># Focus on a few select variables ----------------------------------------------
+
+box_scores_advanced %&gt;%
+  filter(season == 2020) %&gt;%
+  select(
+    page_id, team_name, team_name_opp, points_total, points_total_opp,
+    team_result, minutes_numeric, contains(&quot;field_goals&quot;),
+    contains(&quot;three_pointers&quot;), contains(&quot;two_pointers&quot;),
+    contains(&quot;free_throws&quot;), contains(&quot;num_possessions&quot;), points_per_possession,
+    pace, efg_pct
+    ) -&gt; selected_stats_2020</code></pre>
+<p>High / low scoring rate / efficiency (high points per possession)</p>
+<pre class="r"><code># Wrangle summary stats
+selected_stats_2020 %&gt;%
+  group_by(team_name) %&gt;%
+  summarise(
+    points_per_possession_mean = round(
+      mean(points_per_possession), 3),
+    points_per_possession_sd = round(
+      sd(points_per_possession), 3),
+    points_per_possession_sd_lower = points_per_possession_mean - points_per_possession_sd,
+    points_per_possession_sd_higher = points_per_possession_mean + points_per_possession_sd) %&gt;%
+  ungroup() %&gt;%
+  mutate(
+    team_name = factor(
+      team_name, levels = c(
+        &quot;Bendigo Spirit&quot;,
+        &quot;Sydney Uni Flames&quot;,
+        &quot;Perth Lynx&quot;,
+        &quot;Adelaide Lightning&quot;,
+        &quot;UC Capitals&quot;,
+        &quot;Melbourne Boomers&quot;,
+        &quot;Townsville Fire&quot;,
+        &quot;Southside Flyers&quot;))
+    ) -&gt; points_per_possession_summarised
+
+# Wrangle game stats to order factor levels
+selected_stats_2020 %&gt;%
+  mutate(
+    team_name = factor(
+      team_name, levels = c(
+        &quot;Bendigo Spirit&quot;,
+        &quot;Sydney Uni Flames&quot;,
+        &quot;Perth Lynx&quot;,
+        &quot;Adelaide Lightning&quot;,
+        &quot;UC Capitals&quot;,
+        &quot;Melbourne Boomers&quot;,
+        &quot;Townsville Fire&quot;,
+        &quot;Southside Flyers&quot;))) %&gt;%
+  # Merge with summary stats
+  left_join(
+    ., points_per_possession_summarised
+    ) -&gt; points_per_possession</code></pre>
+<pre><code>## Joining, by = &quot;team_name&quot;</code></pre>
+<pre class="r"><code># Build plot
+p &lt;- ggplot(
+  points_per_possession,
+  aes(x = points_per_possession, y = team_name, colour = team_name))
+p &lt;- p + geom_jitter(height = 0.2, alpha = 0.5, size = 6)
+p &lt;- p + geom_point(
+  aes(x = points_per_possession_mean, y = team_name),
+  colour = &quot;#FFFFFF&quot;, size = 7)
+p &lt;- p + geom_linerange(
+  aes(xmin = points_per_possession_sd_lower,
+      xmax = points_per_possession_sd_higher),
+  colour = &quot;#FFFFFF&quot;, size = 1, linetype = &quot;dotted&quot;)
+p &lt;- p + geom_text(
+  aes(x = points_per_possession_mean, y = team_name,
+      label = points_per_possession_mean),
+  hjust = -0.25, vjust = -0.5, colour = &quot;#FFFFFF&quot;, fontface = &quot;bold&quot;, size = 6)
+p &lt;- p + ggdark::dark_mode()</code></pre>
+<pre><code>## Inverted geom defaults of fill and color/colour.
+## To change them back, use invert_geom_defaults().</code></pre>
+<pre class="r"><code>p &lt;- p + theme(
+  legend.position = &quot;none&quot;)</code></pre>
+<p>High / low pace teams?</p>
+<p>High / low effective field goal percentage (value for shots taken)</p>
+<p>Correlation between points per possession and eFG%</p>
+<p>Correlation between pace per 40 min and eFG%</p>
+</div>
+</div>
