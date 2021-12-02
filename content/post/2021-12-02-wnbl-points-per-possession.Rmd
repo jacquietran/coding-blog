@@ -1,8 +1,8 @@
 ---
 title: 'WNBL advanced stats: Points per possession'
 author: Jacquie Tran
-date: '2021-12-03'
-slug: wnbl-ppp
+date: '2021-12-02'
+slug: wnbl-points-per-possession
 categories:
   - On-field analyses
 tags:
