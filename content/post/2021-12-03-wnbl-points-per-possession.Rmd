@@ -10,7 +10,6 @@ tags:
   - r stats
   - sports analytics
   - sport science
-draft: yes
 ---
 
 # Introduction
