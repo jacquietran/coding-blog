@@ -1,0 +1,88 @@
+---
+title: 'WNBL advanced stats: Effective field goal percentage'
+author: Jacquie Tran
+date: '2021-12-06'
+slug: wnbl-efg-pct
+categories:
+  - On-field analyses
+tags:
+  - women's sport
+  - basketball
+  - sports analytics
+  - r stats
+draft: yes
+---
+
+# Introduction
+
+Let's take a look at **effective field goal percentages** in the WNBL, prompted by this tweet from Paul Flynn (Assistant Coach, Melbourne Boomers WNBL):
+
+<center><blockquote class="twitter-tweet"><p lang="en" dir="ltr">Would be keen to view any data on points per possession, pace and correlating eFG% over the same period.</p>&mdash; Paul Flynn (@paulflynn611) <a href="https://twitter.com/paulflynn611/status/1466018173375836161?ref_src=twsrc%5Etfw">December 1, 2021</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script></center>
+
+# Getting started
+
+## Load R libraries
+
+Load up the libraries we need. The `wnblr` package currently includes 4 built-in data sets with various game statistics. For this analysis, we're going to use the `box_scores` data which is recorded at the team-level and the `box_scores_detailed` data which is recorded at the player-level.
+
+```{r load_libraries, message = FALSE, warning = FALSE}
+
+# Install the development version of {wnblr} from Github
+# remotes::install_github("jacquietran/wnblr")
+
+# Load libraries
+library(wnblr)      # for retrieving WNBL game stats
+library(dplyr)      # for tidying data
+library(tidyr)      # for tidying data
+library(gt)         # for making data tables
+library(showtext)   # for loading custom fonts for plots
+library(ggplot2)    # for plotting
+library(ggbeeswarm) # for plotting
+library(ggtext)     # for formatting text in ggplot2 objects
+
+```
+
+## Tidying data
+
+**Effective field goal percentage** is...
+
+Per [NBAStuffer.com](), effective field goal percentage is calculated as follows:
+
+> Effective field goal percentage
+
+(Where: ...)
+
+```{r tidy_data, echo = FALSE, cache = TRUE}
+
+# Tidy up, including calculating new variables ---------------------------------
+
+box_scores %>%
+  mutate(
+    # Points per possession
+    points_per_possession = round(
+      (points_total / 
+         (field_goals_attempted + (0.44 * free_throws_attempted) + turnovers)),
+      3)) %>%
+  # Focus on a selection of variables
+  select(
+    season, page_id, team_name, team_name_opp, points_total, points_total_opp,
+    team_result, contains("field_goals"), contains("three_pointers"),
+    contains("two_pointers"), contains("free_throws"), points_per_possession
+    ) -> points_per_possession
+
+```
+
+# Analyses
+
+## Team eFG% in 2020
+
+## Player eFG% in 2020
+
+## Correlating points per possession and eFG%
+
+
+```{r, echo = FALSE}
+
+showtext_auto(FALSE)
+
+```
