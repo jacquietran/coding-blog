@@ -1,0 +1,326 @@
+---
+title: 'WNBL advanced stats: Effective field goal percentage'
+author: Jacquie Tran
+date: '2021-12-11'
+slug: wnbl-efg-pct
+categories:
+  - On-field analyses
+tags:
+  - women's sport
+  - basketball
+  - sports analytics
+  - r stats
+draft: yes
+---
+
+# Introduction
+
+Let's take a look at **effective field goal percentages** in the WNBL, prompted by this tweet from Paul Flynn (Assistant Coach, Melbourne Boomers WNBL):
+
+<center><blockquote class="twitter-tweet"><p lang="en" dir="ltr">Would be keen to view any data on points per possession, pace and correlating eFG% over the same period.</p>&mdash; Paul Flynn (@paulflynn611) <a href="https://twitter.com/paulflynn611/status/1466018173375836161?ref_src=twsrc%5Etfw">December 1, 2021</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script></center>
+
+# Getting started
+
+## Load R libraries
+
+Load up the libraries we need for this analysis.
+
+```{r load_libraries, message = FALSE, warning = FALSE}
+
+# Load libraries
+library(dplyr)      # for tidying data
+library(tidyr)      # for tidying data
+library(gt)         # for making data tables
+library(showtext)   # for loading custom fonts for plots
+library(ggplot2)    # for plotting
+library(ggbeeswarm) # for plotting
+library(ggtext)     # for formatting text in ggplot2 objects
+library(corrr)      # for running correlations
+
+```
+
+## Read data in
+
+We're going to use box scores data recorded at the team-level. (I'm making some fairly big changes to the way the `wnblr` package works, so for this blog post, I'm loading up data from a public GitHub repo where I am storing up-to-date WNBL game stats in .rds and .csv formats - huzzah!)
+
+```{r read_data_in}
+
+box_scores <- readRDS(url("https://github.com/jacquietran/wnblr_data/raw/main/data/box_scores.rds"))
+
+```
+
+## Tidying data
+
+**Effective field goal percentage** is a metric for evaluating the effectiveness of 2-pt and 3-pt shots.
+
+Per [NBAStuffer.com](https://www.nbastuffer.com/analytics101/effective-field-goal-percentage-efg/), effective field goal percentage is calculated as follows:
+
+> Effective field goal percentage = ((FGM) + 0.5*(3PM))/FGA
+
+(Where: FGM = Field goals made; 3PM = Three pointers made; FGA = Field goals attempted.)
+
+```{r tidy_data, echo = FALSE, cache = TRUE}
+
+# Tidy up, including calculating new variables ---------------------------------
+
+box_scores %>%
+  # Exclude games from 2021 season that is underway
+  filter(season != 2021) %>%
+  # Tidy up teams that changed names
+  mutate(
+    team_name_adj = case_when(
+      team_name == "West Coast Waves"  ~ "Perth Lynx",
+      team_name == "Dandenong Rangers" ~ "Southside Flyers",
+      TRUE                             ~ team_name),
+    team_name_opp_adj = case_when(
+      team_name_opp == "West Coast Waves"  ~ "Perth Lynx",
+      team_name_opp == "Dandenong Rangers" ~ "Southside Flyers",
+      TRUE                                 ~ team_name_opp)) %>%
+  # Focus on a selection of variables
+  select(
+    season, page_id, team_name_adj, team_name_opp_adj, points_total,
+    points_total_opp, team_result, contains("field_goals"),
+    contains("three_pointers"), contains("two_pointers"),
+    contains("free_throws"), points_per_possession, possessions,
+    possessions_opp, pace, efg_pct, efg_pct_opp) -> efg_tidy
+
+```
+
+# Exploratory analyses
+
+## eFG% in wins and losses from 2015-2020
+
+```{r}
+
+# Summarise efg_pct for wins and losses, across the seasons --------------------
+
+efg_tidy %>%
+  group_by(season, team_name_adj, team_result) %>%
+  summarise(
+    efg_pct_mean = mean(efg_pct), .groups = "keep") %>%
+  ungroup() -> efg_by_result_per_season
+
+```
+
+When summarised to mean values per result (win or loss) per team per season, the plots are not super interesting. For most teams, there's generally not a huge gap between their mean eFG% in wins vs. in losses.
+
+```{r}
+
+# Build plot
+p <- ggplot(
+  efg_by_result_per_season,
+  aes(x = season, y = efg_pct_mean, fill = team_result))
+p <- p + facet_wrap(~team_name_adj)
+p <- p + geom_bar(stat = "identity", position = "dodge")
+
+# Display plot
+p
+
+```
+
+## eFG% difference
+
+It makes sense that winning teams have higher eFG% - i.e., a team that scores more than their opponent also has better shooting performance...that's not very insightful though.
+
+Ultimately, invasion sports exhibit oppositional dynamics in practically every part of the game. The goal is to beat the other team, so the choices that you make are heavily influenced by what the opposition presents to you, what you see as their weaknesses or blindspots, and how these match up to your team's game strategy, team strengths, and trademarks.
+
+What might we learn by examining effective field goal percentage *difference*? That is, the percentage point difference between the eFG% values of opposing teams.
+
+```{r, fig.height = 6}
+
+# Wrangle data
+efg_tidy %>%
+  filter(season == 2020) %>%
+  mutate(
+    efg_pct_relative = efg_pct - efg_pct_opp) -> efg_tidy_2020
+
+# Build plot
+p <- ggplot(
+  efg_tidy_2020, aes(x = efg_pct_relative, y = team_name_opp_adj,
+                     colour = team_result))
+p <- p + facet_wrap(~team_name_adj, nrow = 4)
+p <- p + geom_vline(xintercept = 0, linetype = "dashed")
+p <- p + geom_point()
+p <- p + theme(
+  legend.position = "top")
+
+# Effective field goal percentage point difference
+p
+
+```
+
+Now things get a little more interesting. For the most part, dots on the right side of the dashed line at x = 0 (i.e.,zero difference between opposing team's eFG% values) are wins. This gives us some evidence to indicate that eFG% difference is an important contributor to winning (or losing).
+
+If you had no other game stats at hand, then positive eFG% difference values will tell you the match-winning team X out of X times (at least, based on 2020 season data).
+
+There are some interesting outliers that don't perfectly fit the pattern:
+
+- Too close to call?
+- Teams that got away with it:
+
+## eFG% and eFG% difference
+
+So, in the WNBL, it's not about shooting the lights out. But it can't all be about shooting better than your opponents on the day, either. If your eFG% is low in absolute terms, then it'll require a massive defensive effort to achieve a positive eFG% differential.
+
+I wondered if we might see a kind of "tipping point" by looking at the relationship between eFG% and eFG% difference. Let's see by looking at the 2020 season data!
+
+```{r}
+
+p <- ggplot(
+  efg_tidy_2020,
+  aes(x = efg_pct, y = efg_pct_relative, colour = team_result))
+# p <- p + facet_wrap(~team_name_adj, nrow = 4)
+# p <- p + geom_vline(xintercept = 0, linetype = "dashed")
+p <- p + geom_point()
+p <- p + theme(
+  legend.position = "top")
+
+p
+
+```
+
+# Relationship between eFG% and eFG% difference
+
+Let's see what we get when using the full whack of available data from 2014 to 2020.
+
+```{r}
+
+# Wrangle data
+efg_tidy %>%
+  mutate(
+    efg_pct_relative = efg_pct - efg_pct_opp) -> efg_pct_relative
+
+```
+
+```{r}
+
+# Build plot of efg_pct vs. efg_pct_relative
+p <- ggplot(
+  efg_pct_relative,
+  aes(x = efg_pct, y = efg_pct_relative))
+p <- p + facet_wrap(~season, nrow = 2)
+p <- p + geom_point(aes(colour = team_result))
+p <- p + geom_smooth(
+  data = efg_pct_relative,
+  aes(x = efg_pct, y = efg_pct_relative),
+  method = "lm")
+p <- p + theme(
+  legend.position = "top")
+
+p
+
+cor.test(efg_pct_relative$efg_pct, efg_pct_relative$efg_pct_relative)
+
+model <- lm(efg_pct_relative ~ efg_pct, data = efg_pct_relative)
+
+```
+
+Backwards interpretation: eFG% in game stats terms
+
+```{r}
+
+efg_pct_relative %>%
+  # Include records only from teams that had eFG% >= 0.45
+  filter(efg_pct >= 0.450) %>%
+  # Categorise eFG%
+  mutate(
+    efg_pct_category = case_when(
+      efg_pct >= 0.450 &
+        efg_pct < 0.500  ~ "eFG% = 0.450-0.500",
+      efg_pct >= 0.500 &
+        efg_pct < 0.550  ~ "eFG% = 0.500-0.550",
+      efg_pct >= 0.550 &
+        efg_pct < 0.600  ~ "eFG% = 0.550-0.600",
+      efg_pct >= 0.600 &
+        efg_pct < 0.650  ~ "eFG% = 0.600-0.650",
+      efg_pct >= 0.650 &
+        efg_pct < 0.700  ~ "eFG% = 0.650-0.700",
+      efg_pct >= 0.700 &
+        efg_pct < 0.750  ~ "eFG% = 0.700-0.750")) %>%
+  select(season, page_id, team_name_adj, team_name_opp_adj,
+         field_goals_made, three_pointers_made, two_pointers_made,
+         field_goals_attempted, efg_pct, efg_pct_category) %>%
+  pivot_longer(
+    cols = c("field_goals_made", "three_pointers_made",
+             "two_pointers_made", "field_goals_attempted"),
+    names_to = "key",
+    values_to = "value") -> efg_to_game_stats
+
+# Build plot
+p <- ggplot(
+  efg_to_game_stats,
+  aes(x = value, y = efg_pct_category))
+p <- p + facet_wrap(~key, nrow = 2, scales = "free_x")
+p <- p + geom_boxplot()
+# p <- p + ggbeeswarm::geom_quasirandom(groupOnX = FALSE, alpha = 0.2)
+
+```
+
+FGM = Field goals made; 3PM = Three pointers made; FGA = Field goals attempted.
+
+
+## Logistic regression
+
+```{r}
+
+efg_pct_relative %>%
+  mutate(
+    team_result_numeric = case_when(
+      team_result == "W" ~ 1,
+      team_result == "L" ~ 0)) -> efg_pct_relative_tidy
+
+# Build plot of efg_pct_relative vs. team result
+p <- ggplot(
+  efg_pct_relative_tidy,
+  aes(x = efg_pct_relative, y = team_result_numeric))
+p <- p + geom_point()
+p <- p + geom_smooth(
+  method="glm", # se=FALSE,
+  method.args = list(family=binomial))
+p <- p + scale_x_continuous(
+  limits = c(-0.45, 0.45),
+  breaks = seq(-0.4, 0.4, by = 0.1))
+p <- p + scale_y_continuous(
+  breaks = seq(0, 1, by = 0.1))
+
+p
+
+```
+
+```{r}
+
+# Build model
+model <- glm(
+  as.factor(team_result_numeric) ~ efg_pct_relative,
+  data = efg_pct_relative_tidy, family = binomial)
+
+summary(model)
+
+# Predict
+x <- data.frame(
+  efg_pct_relative = c(
+    0, 0.01, 0.02, 0.03, 0.04, 0.05, 0.06, 0.07, 0.08, 0.09, 0.1))
+
+pred <- predict(model, x, type = "response")
+
+x %>%
+  mutate(win_prob = round(pred, 2)) -> x_with_predicted_y
+
+```
+
+
+```{r}
+
+# For context, look for games with 1 percentage point difference in eFG%
+
+efg_pct_relative_tidy %>%
+  filter(efg_pct_relative > 0.098 &
+           efg_pct_relative < 0.102) %>%
+  View("1pp")
+
+efg_pct_relative_tidy %>%
+  filter(page_id == 311872) %>%
+  View()
+
+```
+
