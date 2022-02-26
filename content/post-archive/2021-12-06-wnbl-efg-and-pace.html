@@ -1,0 +1,205 @@
+---
+title: 'WNBL advanced stats: Effective field goal percentage'
+author: Jacquie Tran
+date: '2021-12-08'
+slug: wnbl-efg-pct
+categories:
+  - On-field analyses
+tags:
+  - women's sport
+  - basketball
+  - sports analytics
+  - r stats
+draft: yes
+---
+
+<script src="/rmarkdown-libs/header-attrs/header-attrs.js"></script>
+
+
+<div id="introduction" class="section level1">
+<h1>Introduction</h1>
+<p>Let’s take a look at <strong>effective field goal percentages</strong> in the WNBL, prompted by this tweet from Paul Flynn (Assistant Coach, Melbourne Boomers WNBL):</p>
+<center>
+<blockquote class="twitter-tweet">
+<p lang="en" dir="ltr">
+Would be keen to view any data on points per possession, pace and correlating eFG% over the same period.
+</p>
+— Paul Flynn (<span class="citation">@paulflynn611</span>) <a href="https://twitter.com/paulflynn611/status/1466018173375836161?ref_src=twsrc%5Etfw">December 1, 2021</a>
+</blockquote>
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+</center>
+</div>
+<div id="getting-started" class="section level1">
+<h1>Getting started</h1>
+<div id="load-r-libraries" class="section level2">
+<h2>Load R libraries</h2>
+<p>Load up the libraries we need for this analysis.</p>
+<pre class="r"><code># Load libraries
+library(dplyr)      # for tidying data
+library(tidyr)      # for tidying data
+library(gt)         # for making data tables
+library(showtext)   # for loading custom fonts for plots
+library(ggplot2)    # for plotting
+library(ggbeeswarm) # for plotting
+library(ggtext)     # for formatting text in ggplot2 objects
+library(corrr)      # for running correlations</code></pre>
+</div>
+<div id="read-data-in" class="section level2">
+<h2>Read data in</h2>
+<p>We’re going to use box scores data recorded at the team-level.</p>
+<pre class="r"><code>box_scores &lt;- readRDS(url(&quot;https://github.com/jacquietran/wnblr_data/raw/main/data/box_scores.rds&quot;))</code></pre>
+</div>
+<div id="tidying-data" class="section level2">
+<h2>Tidying data</h2>
+<p><strong>Effective field goal percentage</strong> is a metric for evaluating the effectiveness of 2-pt and 3-pt shots.</p>
+<p>Per <a href="https://www.nbastuffer.com/analytics101/effective-field-goal-percentage-efg/">NBAStuffer.com</a>, effective field goal percentage is calculated as follows:</p>
+<blockquote>
+<p>Effective field goal percentage = ((FGM) + 0.5*(3PM))/FGA</p>
+</blockquote>
+<p>(Where: FGM = Field goals made; 3PM = Three pointers made; FGA = Field goals attempted.)</p>
+</div>
+</div>
+<div id="analyses" class="section level1">
+<h1>Analyses</h1>
+<div id="efg-in-wins-and-losses-from-2015-2020" class="section level2">
+<h2>eFG% in wins and losses from 2015-2020</h2>
+<pre class="r"><code># Summarise efg_pct for wins and losses, across the seasons --------------------
+
+efg_tidy %&gt;%
+  group_by(season, team_name_adj, team_result) %&gt;%
+  summarise(
+    efg_pct_mean = mean(efg_pct), .groups = &quot;keep&quot;) %&gt;%
+  ungroup() -&gt; efg_by_result_per_season</code></pre>
+<p>When summarised to mean values per result (win or loss) per team per season, the plots are not super interesting. For most teams, there’s generally not a huge gap between their mean eFG% in wins vs. in losses.</p>
+<pre class="r"><code># Build plot
+p &lt;- ggplot(
+  efg_by_result_per_season,
+  aes(x = season, y = efg_pct_mean, fill = team_result))
+p &lt;- p + facet_wrap(~team_name_adj)
+p &lt;- p + geom_bar(stat = &quot;identity&quot;, position = &quot;dodge&quot;)
+
+# Display plot
+p</code></pre>
+<p><img src="/post/archive/2021-12-06-wnbl-efg-and-pace_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
+</div>
+<div id="efg-difference" class="section level2">
+<h2>eFG% difference</h2>
+<p>It makes sense that winning teams have higher eFG% - i.e., a team that scores more than their opponent also has better shooting performance…that’s not very insightful though.</p>
+<p>Ultimately, invasion sports exhibit oppositional dynamics in practically every part of the game. The goal is to beat the other team, so the choices that you make are heavily influenced by what the opposition presents to you, what you see as their weaknesses or blindspots, and how these match up to your team’s game strategy, team strengths, and trademarks.</p>
+<p>What might we learn by examining effective field goal percentage <em>difference</em>? That is, the percentage point difference between the eFG% values of opposing teams.</p>
+<pre class="r"><code># Wrangle data
+efg_tidy %&gt;%
+  filter(season == 2020) %&gt;%
+  mutate(
+    efg_pct_relative = efg_pct - efg_pct_opp) -&gt; efg_tidy_2020
+
+# Build plot
+p &lt;- ggplot(
+  efg_tidy_2020, aes(x = efg_pct_relative, y = team_name_opp_adj,
+                     colour = team_result))
+p &lt;- p + facet_wrap(~team_name_adj, nrow = 4)
+p &lt;- p + geom_vline(xintercept = 0, linetype = &quot;dashed&quot;)
+p &lt;- p + geom_point()
+p &lt;- p + theme(
+  legend.position = &quot;top&quot;)
+
+# Effective field goal percentage point difference
+p</code></pre>
+<p><img src="/post/archive/2021-12-06-wnbl-efg-and-pace_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
+<p>Now things get a little more interesting. For the most part, dots on the right side of the dashed line at x = 0 (i.e.,zero difference between opposing team’s eFG% values) are wins. This gives us some evidence to indicate that eFG% difference is an important contributor to winning (or losing).</p>
+<p>If you had no other game stats at hand, then positive eFG% difference values will tell you the match-winning team X out of X times (at least, based on 2020 season data).</p>
+<p>There are some interesting outliers that don’t perfectly fit the pattern:</p>
+<ul>
+<li>Too close to call?</li>
+<li>Teams that got away with it:</li>
+</ul>
+</div>
+<div id="efg-and-efg-difference" class="section level2">
+<h2>eFG% and eFG% difference</h2>
+<p>So, in the WNBL, it’s not about shooting the lights out. But it can’t all be about shooting better than your opponents on the day, either. If your eFG% is low in absolute terms, then it’ll require a massive defensive effort to achieve a positive eFG% differential.</p>
+<p>I wondered if we might see a kind of “tipping point” by looking at the relationship between eFG% and eFG% difference. Let’s see by looking at the 2020 season data!</p>
+<pre class="r"><code>p &lt;- ggplot(
+  efg_tidy_2020,
+  aes(x = efg_pct, y = efg_pct_relative, colour = team_result))
+# p &lt;- p + facet_wrap(~team_name_adj, nrow = 4)
+# p &lt;- p + geom_vline(xintercept = 0, linetype = &quot;dashed&quot;)
+p &lt;- p + geom_point()
+p &lt;- p + theme(
+  legend.position = &quot;top&quot;)</code></pre>
+<p>Looks like a great data set for some cluster analysis…maybe let’s try with the full whack of available data from 2014 to 2020.</p>
+<pre class="r"><code># Wrangle data
+efg_tidy %&gt;%
+  mutate(
+    efg_pct_relative = efg_pct - efg_pct_opp) -&gt; efg_pct_relative
+
+p &lt;- ggplot(
+  efg_pct_relative,
+  aes(x = efg_pct, y = efg_pct_relative, colour = team_result))
+p &lt;- p + geom_point()
+p &lt;- p + theme(
+  legend.position = &quot;top&quot;)</code></pre>
+</div>
+<div id="points-per-possession-averages-per-team-per-season" class="section level2">
+<h2>Points per possession averages per team per season</h2>
+<pre class="r"><code>efg_tidy %&gt;%
+  group_by(season, team_name_adj) %&gt;%
+  summarise(
+    points_per_possession_mean = mean(points_per_possession)) %&gt;%
+  ungroup() %&gt;%
+  arrange(season, desc(points_per_possession_mean)) %&gt;%
+  tidyr::pivot_wider(
+    id_cols = team_name_adj,
+    names_from = season,
+    values_from = points_per_possession_mean)</code></pre>
+<pre><code>## `summarise()` has grouped output by &#39;season&#39;. You can override using the `.groups` argument.</code></pre>
+<pre><code>## # A tibble: 9 x 8
+##   team_name_adj      `2014` `2015` `2016` `2017` `2018` `2019` `2020`
+##   &lt;chr&gt;               &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;
+## 1 Southside Flyers    0.902  0.822  0.873  0.785  0.834  0.912  1.06 
+## 2 Townsville Fire     0.896  0.891  0.858  0.878  0.843  0.841  0.935
+## 3 Sydney Uni Flames   0.875  0.897  0.911  0.866  0.794  0.858  0.76 
+## 4 Bendigo Spirit      0.865  0.835  0.815  0.775  0.803  0.849  0.716
+## 5 Melbourne Boomers   0.846  0.830  0.798  0.836  0.870  0.886  0.857
+## 6 UC Capitals         0.834  0.817  0.837  0.803  0.924  0.855  0.855
+## 7 Perth Lynx          0.778  0.848  0.875  0.888  0.862  0.870  0.793
+## 8 Adelaide Lightning  0.749  0.787  0.735  0.848  0.874  0.833  0.794
+## 9 SEQ Stars          NA      0.886 NA     NA     NA     NA     NA</code></pre>
+</div>
+</div>
+<div id="team-pace" class="section level1">
+<h1>Team pace</h1>
+<pre class="r"><code>efg_tidy %&gt;%
+  filter(team_name_adj != &quot;SEQ Stars&quot;) %&gt;%
+  group_by(season, team_name_adj, team_result) %&gt;%
+  summarise(pace_mean = mean(pace)) %&gt;%
+  ungroup() -&gt; pace_tidy</code></pre>
+<pre><code>## `summarise()` has grouped output by &#39;season&#39;, &#39;team_name_adj&#39;. You can override using the `.groups` argument.</code></pre>
+<pre class="r"><code>p &lt;- ggplot(pace_tidy, aes(x = season, y = pace_mean, colour = team_result))
+p &lt;- p + facet_wrap(~team_name_adj)
+p &lt;- p + geom_line()
+
+# Team average pace across seasons, in wins and losses
+p</code></pre>
+<p><img src="/post/archive/2021-12-06-wnbl-efg-and-pace_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
+<div id="correlating-points-per-possession-and-efg" class="section level2">
+<h2>Correlating points per possession and eFG%</h2>
+<pre class="r"><code>efg_tidy %&gt;%
+  select(points_per_possession, efg_pct) %&gt;%
+  correlate(method = &quot;pearson&quot;, use = &quot;pairwise.complete.obs&quot;) %&gt;%
+  filter(term == &quot;points_per_possession&quot;) %&gt;%
+  select(efg_pct) %&gt;%
+  mutate(efg_pct = round(efg_pct, 2)) %&gt;%
+  pull() -&gt; cor_ppp_vs_efg_pct</code></pre>
+<pre class="r"><code>p &lt;- ggplot(
+  efg_tidy, aes(x = points_per_possession, y = efg_pct))
+p &lt;- p + facet_wrap(~team_name)
+p &lt;- p + geom_point(size = 3, alpha = 0.5)
+p &lt;- p + geom_smooth(method = &quot;lm&quot;)</code></pre>
+</div>
+<div id="correlating-pace-and-efg" class="section level2">
+<h2>Correlating pace and eFG%</h2>
+</div>
+<div id="effective-field-goal-percentage-and-days-rest" class="section level2">
+<h2>Effective field goal percentage and days rest</h2>
+</div>
+</div>

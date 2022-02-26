@@ -1,0 +1,19 @@
+theme: "hugo-PaperMod"
+baseURL: https://underthehood.jacquietran.com
+languageCode: en-gb
+title: Under The Hood
+
+menu:
+    main:
+        - identifier: about
+          name: about
+          url: /about/
+          weight: 10
+        - identifier: posts
+          name: posts
+          url: /post/
+          weight: 20
+        - identifier: tags
+          name: tags
+          url: /tags/
+          weight: 30
