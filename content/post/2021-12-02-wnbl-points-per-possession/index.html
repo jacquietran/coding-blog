@@ -10,10 +10,8 @@ tags:
   - basketball
   - sports analytics
   - r stats
-draft: no
 ---
 
-<script src="{{< blogdown/postref >}}index_files/header-attrs/header-attrs.js"></script>
 
 
 <div id="introduction" class="section level1">
@@ -38,58 +36,9 @@ Would be keen to view any data on points per possession, pace and correlating eF
 <h2>Load R libraries</h2>
 <p>Load up the libraries we need. The <code>wnblr</code> package currently includes 4 built-in data sets with various game statistics. For this analysis, we’re going to use the <code>box_scores</code> data which is recorded at the team-level.</p>
 <pre class="r"><code># Install the development version of {wnblr} from Github
-remotes::install_github(&quot;jacquietran/wnblr&quot;)</code></pre>
-<pre><code>## rlang    (0.4.12 -&gt; 1.0.1) [CRAN]
-## glue     (1.5.1  -&gt; 1.6.2) [CRAN]
-## fansi    (0.5.0  -&gt; 1.0.2) [CRAN]
-## crayon   (1.4.2  -&gt; 1.5.0) [CRAN]
-## cli      (3.1.0  -&gt; 3.2.0) [CRAN]
-## pillar   (1.6.4  -&gt; 1.7.0) [CRAN]
-## magrittr (2.0.1  -&gt; 2.0.2) [CRAN]
-## package &#39;rlang&#39; successfully unpacked and MD5 sums checked
-## package &#39;glue&#39; successfully unpacked and MD5 sums checked
-## package &#39;fansi&#39; successfully unpacked and MD5 sums checked
-## package &#39;crayon&#39; successfully unpacked and MD5 sums checked
-## package &#39;cli&#39; successfully unpacked and MD5 sums checked
-## package &#39;pillar&#39; successfully unpacked and MD5 sums checked
-## package &#39;magrittr&#39; successfully unpacked and MD5 sums checked
-## 
-## The downloaded binary packages are in
-##  C:\Users\jacqu\AppData\Local\Temp\RtmpYlnQAc\downloaded_packages
-##   
-  
-  
-   checking for file &#39;C:\Users\jacqu\AppData\Local\Temp\RtmpYlnQAc\remotes522044dc202b\jacquietran-wnblr-d49169f/DESCRIPTION&#39; ...
-  
-v  checking for file &#39;C:\Users\jacqu\AppData\Local\Temp\RtmpYlnQAc\remotes522044dc202b\jacquietran-wnblr-d49169f/DESCRIPTION&#39;
-## 
-  
-  
-  
--  preparing &#39;wnblr&#39;: (504ms)
-##    checking DESCRIPTION meta-information ...
-  
-   checking DESCRIPTION meta-information ... 
-  
-v  checking DESCRIPTION meta-information
-## 
-  
-  
-  
--  checking for LF line-endings in source and make files and shell scripts
-## 
-  
--  checking for empty or unneeded directories
-## 
-  
-  
-  
--  building &#39;wnblr_0.1.0.tar.gz&#39;
-## 
-  
-   
-## </code></pre>
-<pre class="r"><code># Load libraries
+# remotes::install_github(&quot;jacquietran/wnblr&quot;)
+
+# Load libraries
 library(wnblr)      # for retrieving WNBL game stats
 library(dplyr)      # for tidying data
 library(tidyr)      # for tidying data
@@ -213,6 +162,8 @@ ppp_2020_summarised %&gt;%
   font-weight: initial;
   padding-top: 4px;
   padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
   border-bottom-color: #FFFFFF;
   border-bottom-width: 0;
 }
@@ -223,6 +174,8 @@ ppp_2020_summarised %&gt;%
   font-weight: initial;
   padding-top: 0;
   padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
   border-top-color: #FFFFFF;
   border-top-width: 0;
 }
@@ -301,7 +254,10 @@ ppp_2020_summarised %&gt;%
 }
 
 #obeqxntegs .gt_group_heading {
-  padding: 8px;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -373,7 +329,26 @@ ppp_2020_summarised %&gt;%
   border-right-style: solid;
   border-right-width: 2px;
   border-right-color: #D3D3D3;
-  padding-left: 12px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#obeqxntegs .gt_stub_row_group {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+  vertical-align: top;
+}
+
+#obeqxntegs .gt_row_group_first td {
+  border-top-width: 2px;
 }
 
 #obeqxntegs .gt_summary_row {
@@ -387,13 +362,22 @@ ppp_2020_summarised %&gt;%
 }
 
 #obeqxntegs .gt_first_summary_row {
+  border-top-style: solid;
+  border-top-color: #D3D3D3;
+}
+
+#obeqxntegs .gt_first_summary_row.thick {
+  border-top-width: 2px;
+}
+
+#obeqxntegs .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
   padding-right: 5px;
-  border-top-style: solid;
-  border-top-width: 2px;
-  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
 }
 
 #obeqxntegs .gt_grand_summary_row {
@@ -446,7 +430,10 @@ ppp_2020_summarised %&gt;%
 #obeqxntegs .gt_footnote {
   margin: 0px;
   font-size: 90%;
-  padding: 4px;
+  padding-left: 4px;
+  padding-right: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
 }
 
 #obeqxntegs .gt_sourcenotes {
@@ -465,7 +452,10 @@ ppp_2020_summarised %&gt;%
 
 #obeqxntegs .gt_sourcenote {
   font-size: 90%;
-  padding: 4px;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
 }
 
 #obeqxntegs .gt_left {
@@ -497,10 +487,43 @@ ppp_2020_summarised %&gt;%
   font-size: 65%;
 }
 
+#obeqxntegs .gt_two_val_uncert {
+  display: inline-block;
+  line-height: 1em;
+  text-align: right;
+  font-size: 60%;
+  vertical-align: -0.25em;
+  margin-left: 0.1em;
+}
+
 #obeqxntegs .gt_footnote_marks {
   font-style: italic;
   font-weight: normal;
-  font-size: 65%;
+  font-size: 75%;
+  vertical-align: 0.4em;
+}
+
+#obeqxntegs .gt_asterisk {
+  font-size: 100%;
+  vertical-align: 0;
+}
+
+#obeqxntegs .gt_slash_mark {
+  font-size: 0.7em;
+  line-height: 0.7em;
+  vertical-align: 0.15em;
+}
+
+#obeqxntegs .gt_fraction_numerator {
+  font-size: 0.6em;
+  line-height: 0.6em;
+  vertical-align: 0.45em;
+}
+
+#obeqxntegs .gt_fraction_denominator {
+  font-size: 0.6em;
+  line-height: 0.6em;
+  vertical-align: -0.05em;
 }
 </style>
 <table class="gt_table">

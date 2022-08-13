@@ -10,7 +10,6 @@ tags:
   - basketball
   - sports analytics
   - r stats
-draft: no
 ---
 
 # Introduction
