@@ -34,7 +34,7 @@ Load up the libraries we need. The `wnblr` package currently includes 4 built-in
 ```{r load_libraries, message = FALSE, warning = FALSE}
 
 # Install the development version of {wnblr} from Github
-remotes::install_github("jacquietran/wnblr")
+# remotes::install_github("jacquietran/wnblr")
 
 # Load libraries
 library(wnblr)      # for retrieving WNBL game stats
