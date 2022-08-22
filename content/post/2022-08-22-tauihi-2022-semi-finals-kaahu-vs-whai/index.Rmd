@@ -43,7 +43,7 @@ library(ggplot2)
 
 I'm using box scores data from all matches in the 2022 regular season, obtained from the [**Tauihi**](https://tauihi.basketball) website and soon to be available through the `wnblr` package - watch this space...
 
-```{r import_data, echo = FALSE}
+```{r import_data}
 
 u <- "https://github.com/jacquietran/wnblr_data/blob/main/data/box_scores.rds?raw=true"
 
