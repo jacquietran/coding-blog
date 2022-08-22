@@ -1,0 +1,216 @@
+---
+title: 'Tauihi 2022: Semi-final preview - Northern Kāhu vs. Mid-North Whai'
+author: Jacquie Tran
+date: '2022-08-22'
+slug: tauihi-2022-semi-finals-kaahu-vs-whai
+categories:
+  - On-field analyses
+tags:
+  - basketball
+  - women's sport
+  - tauihi
+  - r stats
+  - sports analytics
+draft: yes
+---
+
+
+
+<div id="introduction" class="section level1">
+<h1>Introduction</h1>
+<p>It’s a wonderful time of year - finals time!</p>
+<p>The first season of the <a href="https://tauihi.basketball"><strong>Tauihi Aotearoa</strong></a> women’s basketball league here in New Zealand has been a great success, at least from my point of view as a fan. Every team has competed hard, and the quality of play appears to have improved across the board as the season has gone on. The atmosphere in the stadiums has been lively, with plenty of bums on seats, and eyeballs on screens - every game has been shown live and in full on Sky Sports.</p>
+<p>For me, it’s been a thrill to watch two familiar faces from the WNBL - Tahlia Tupaea and Micaela Cocks - grow their games even further, stepping comfortably into their roles for the Northern Kāhu as prominent scoring threats and tone-setters. The quality of Tupaea and Cocks highlights the gap in standards between the Australian and New Zealand game, while at the same time, their presence and output in this homegrown competition also shows a way forward for what New Zealand women’s basketball could become with greater and more consistent investment and high quality competition, including exposure to international players and game styles.</p>
+<p>But the season isn’t over yet! We’re down to the last weekend: finals weekend. Before the inaugural Tauihi Aotearoa Champions are crowned, let’s take a look at Friday’s semi-final match-ups:</p>
+<ul>
+<li>Semi-final 1: Northern Kāhu (1st) vs. Mid-North Whai (4th)</li>
+<li>Semi-final 2: Tokomanawa Queens (2nd) vs. Mainland Pouākai (3rd)</li>
+</ul>
+<p>For this post, let’s take a look at the semi-final 1 match up: Kāhu vs. Whai.</p>
+</div>
+<div id="getting-started" class="section level1">
+<h1>Getting started</h1>
+<p>As per usual, we load up the relevant libraries to start.</p>
+<pre class="r"><code>library(dplyr)
+library(stringr)
+library(ggplot2)</code></pre>
+<p>I’m using box scores data from all matches in the 2022 regular season, obtained from the <a href="https://tauihi.basketball"><strong>Tauihi</strong></a> website and soon to be available through the <code>wnblr</code> package - watch this space…</p>
+</div>
+<div id="four-factors" class="section level1">
+<h1>Four Factors</h1>
+<p>Box scores are a mine of information, but I still gravitate towards Dean Oliver’s <a href="https://www.nbastuffer.com/analytics101/four-factors/"><strong>Four Factors</strong></a>. Sure, there is room for critique, as done well <a href="https://squared2020.com/2017/09/05/introduction-to-olivers-four-factors/"><strong>here by Justin Jacobs</strong></a>, but ultimately these metrics do provide insight into what contributes to team wins (and losses) through a simple representation of key game elements.</p>
+<p>The Four Factors are actually eight measures - each measure below is calculated for each opposing team in a match:</p>
+<ul>
+<li><em>Effective field goal percentage</em>, representing how well you shoot the ball.</li>
+<li><em>Turnover rate</em>, representing how well you take care of the ball.</li>
+<li><em>Offensive rebounding percentage</em>, representing how well you create second chances for your team in offense.</li>
+<li><em>Free throw rate</em>, representing how well you get to the foul line.</li>
+</ul>
+<div id="northern-kāhu" class="section level2">
+<h2>Northern Kāhu</h2>
+<p>The Kāhu finished up the regular season with a league-leading 10-2 record, including 9 straight wins to start the season before 2 losses in the row to the Tokomanawa Queens.</p>
+<pre class="r"><code># Subset to Kāhu box scores only
+box_scores_kaahu &lt;- box_scores_tauihi %&gt;%
+  filter(str_detect(team_name, &quot;Northern&quot;)) %&gt;%
+  select(
+    page_id, date_of_game, team_name, team_name_opp, points_total,
+    points_total_opp, points_margin, team_result, contains(&quot;efg_pct&quot;),
+    contains(&quot;turnover_rate&quot;), contains(&quot;rebounds_offensive_pct&quot;),
+    contains(&quot;free_throw_rate&quot;))
+
+four_factors_kaahu &lt;- box_scores_kaahu %&gt;%
+  select(
+    contains(&quot;efg_pct&quot;), contains(&quot;turnover_rate&quot;),
+    contains(&quot;rebounds_offensive_pct&quot;), contains(&quot;free_throw_rate&quot;)) %&gt;%
+  tidyr::pivot_longer(
+    cols = c(
+      &quot;efg_pct&quot;, &quot;efg_pct_opp&quot;, &quot;turnover_rate&quot;, &quot;turnover_rate_opp&quot;,
+      &quot;rebounds_offensive_pct&quot;, &quot;rebounds_offensive_pct_opp&quot;, &quot;free_throw_rate&quot;,
+      &quot;free_throw_rate_opp&quot;),
+    names_to = &quot;key&quot;,
+    values_to = &quot;value&quot;)
+
+# Four Factors: Calculate medians for the rest of the league
+four_factors_without_kaahu &lt;- box_scores_tauihi %&gt;%
+  filter(!str_detect(team_name, &quot;Northern&quot;)) %&gt;%
+  select(
+    page_id, date_of_game, team_name, team_name_opp, points_total,
+    points_total_opp, points_margin, team_result, contains(&quot;efg_pct&quot;),
+    contains(&quot;turnover_rate&quot;), contains(&quot;rebounds_offensive_pct&quot;),
+    contains(&quot;free_throw_rate&quot;)) %&gt;%
+  summarise_at(
+    vars(contains(&quot;efg_pct&quot;), contains(&quot;turnover_rate&quot;), contains(&quot;rebounds_offensive_pct&quot;),
+    contains(&quot;free_throw_rate&quot;)),
+    median) %&gt;%
+  tidyr::pivot_longer(
+    cols = c(
+      &quot;efg_pct&quot;, &quot;efg_pct_opp&quot;, &quot;turnover_rate&quot;, &quot;turnover_rate_opp&quot;,
+      &quot;rebounds_offensive_pct&quot;, &quot;rebounds_offensive_pct_opp&quot;, &quot;free_throw_rate&quot;,
+      &quot;free_throw_rate_opp&quot;),
+    names_to = &quot;key&quot;,
+    values_to = &quot;value&quot;)</code></pre>
+<pre class="r"><code>p &lt;- ggplot() +
+  geom_boxplot(
+    data = four_factors_kaahu %&gt;% filter(!str_detect(key, &quot;opp&quot;)),
+    aes(x = key, y = value),
+    outlier.shape = NA, width = 0.5) +
+  geom_point(
+    data = four_factors_kaahu %&gt;% filter(!str_detect(key, &quot;opp&quot;)),
+    aes(x = key, y = value),
+    size = 5, alpha = 0.7) +
+  geom_errorbar(
+    data = four_factors_without_kaahu %&gt;% filter(!str_detect(key, &quot;opp&quot;)),
+    aes(x = key, ymin = value, ymax = value),
+    linetype = &quot;dashed&quot;, colour = &quot;red&quot;, size = 2)
+plot_four_factors_kaahu &lt;- p
+
+plot_four_factors_kaahu</code></pre>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/plot_four_factors_kaahu-1.png" width="672" /></p>
+<p>The Kāhu are top of the table going into finals and with good reason: compared to the rest of the league, they have been powerhouses in shooting, getting to the stripe, and keeping the ball secure. But if you’ve watched their games this season, there is one area where they have been, unsurprisingly, a bit untidy - their rebounding.</p>
+<p>Let’s take a look at how opponents of the Kāhu have performed across the Four Factors:</p>
+<pre class="r"><code>p &lt;- ggplot() +
+  geom_boxplot(
+    data = four_factors_kaahu %&gt;% filter(str_detect(key, &quot;opp&quot;)),
+    aes(x = key, y = value),
+    outlier.shape = NA, width = 0.5) +
+  geom_point(
+    data = four_factors_kaahu %&gt;% filter(str_detect(key, &quot;opp&quot;)),
+    aes(x = key, y = value),
+    size = 5, alpha = 0.7) +
+  geom_errorbar(
+    data = four_factors_without_kaahu %&gt;% filter(str_detect(key, &quot;opp&quot;)),
+    aes(x = key, ymin = value, ymax = value),
+    linetype = &quot;dashed&quot;, colour = &quot;red&quot;, size = 2)
+plot_four_factors_kaahu_opponents &lt;- p
+
+plot_four_factors_kaahu_opponents</code></pre>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/plot_four_factors_kaahu_opponents-1.png" width="672" />
+Assessing the Four Factors of opposing teams gives a little window into the defensive profile of the Kāhu - and it’s a mixed bag. They are better than the rest of the league in keeping teams away from the foul line and opposing teams have a higher rate of turnovers against the Kāhu than they do against all other Tauihi teams. However, the Kāhu allow their opponents to score at a better clip than they do against the rest of the league, and they also give up offensive boards to their opponents at a higher rate than those opposing teams achieve against the rest of league. The statistics tell a story of a team that defends aggressively in the open floor, but appears to have its struggles in half-court defensive.</p>
+<p>Much of the Northern Kāhu’s success through the 2022 regular season is attributable to their offensive power - they can fill the bucket quickly, and while Tupaea and Cocks headline their scoring stats, the team is fortunate to have several very capable contributors besides who can add ~10-15 points with good ball movement and shot selection. With a championship up for grabs, the opportunity is for the Kāhu to find their groove defensively - especially to drive down their opponent’s quality of shots and minimise the second and third offensive chances that they sometimes give up to their competitors.</p>
+</div>
+<div id="mid-north-whai" class="section level2">
+<h2>Mid-North Whai</h2>
+<pre class="r"><code># Subset to Whai box scores only
+box_scores_whai &lt;- box_scores_tauihi %&gt;%
+  filter(str_detect(team_name, &quot;Whai&quot;)) %&gt;%
+  select(
+    page_id, date_of_game, team_name, team_name_opp, points_total,
+    points_total_opp, points_margin, team_result, contains(&quot;efg_pct&quot;),
+    contains(&quot;turnover_rate&quot;), contains(&quot;rebounds_offensive_pct&quot;),
+    contains(&quot;free_throw_rate&quot;))
+
+four_factors_whai &lt;- box_scores_whai %&gt;%
+  select(
+    contains(&quot;efg_pct&quot;), contains(&quot;turnover_rate&quot;),
+    contains(&quot;rebounds_offensive_pct&quot;), contains(&quot;free_throw_rate&quot;)) %&gt;%
+  tidyr::pivot_longer(
+    cols = c(
+      &quot;efg_pct&quot;, &quot;efg_pct_opp&quot;, &quot;turnover_rate&quot;, &quot;turnover_rate_opp&quot;,
+      &quot;rebounds_offensive_pct&quot;, &quot;rebounds_offensive_pct_opp&quot;, &quot;free_throw_rate&quot;,
+      &quot;free_throw_rate_opp&quot;),
+    names_to = &quot;key&quot;,
+    values_to = &quot;value&quot;)
+
+# Four Factors: Calculate medians for the rest of the league
+four_factors_without_whai &lt;- box_scores_tauihi %&gt;%
+  filter(!str_detect(team_name, &quot;Whai&quot;)) %&gt;%
+  select(
+    page_id, date_of_game, team_name, team_name_opp, points_total,
+    points_total_opp, points_margin, team_result, contains(&quot;efg_pct&quot;),
+    contains(&quot;turnover_rate&quot;), contains(&quot;rebounds_offensive_pct&quot;),
+    contains(&quot;free_throw_rate&quot;)) %&gt;%
+  summarise_at(
+    vars(contains(&quot;efg_pct&quot;), contains(&quot;turnover_rate&quot;), contains(&quot;rebounds_offensive_pct&quot;),
+    contains(&quot;free_throw_rate&quot;)),
+    median) %&gt;%
+  tidyr::pivot_longer(
+    cols = c(
+      &quot;efg_pct&quot;, &quot;efg_pct_opp&quot;, &quot;turnover_rate&quot;, &quot;turnover_rate_opp&quot;,
+      &quot;rebounds_offensive_pct&quot;, &quot;rebounds_offensive_pct_opp&quot;, &quot;free_throw_rate&quot;,
+      &quot;free_throw_rate_opp&quot;),
+    names_to = &quot;key&quot;,
+    values_to = &quot;value&quot;)</code></pre>
+<pre class="r"><code>p &lt;- ggplot() +
+  geom_boxplot(
+    data = four_factors_whai %&gt;% filter(!str_detect(key, &quot;opp&quot;)),
+    aes(x = key, y = value),
+    outlier.shape = NA, width = 0.5) +
+  geom_point(
+    data = four_factors_whai %&gt;% filter(!str_detect(key, &quot;opp&quot;)),
+    aes(x = key, y = value),
+    size = 5, alpha = 0.7) +
+  geom_errorbar(
+    data = four_factors_without_whai %&gt;% filter(!str_detect(key, &quot;opp&quot;)),
+    aes(x = key, ymin = value, ymax = value),
+    linetype = &quot;dashed&quot;, colour = &quot;red&quot;, size = 2)
+plot_four_factors_whai &lt;- p
+
+plot_four_factors_whai</code></pre>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/plot_four_factors_whai-1.png" width="672" />
+Points production is lower for the Whai than for the rest of league. However, what keeps them in it is their active presence on the offensive boards, which makes up somewhat for their lower shooting outputs by creating multiple chances to score. The Whai also do a better job than the rest of the league with minimising turnovers.</p>
+<pre class="r"><code>p &lt;- ggplot() +
+  geom_boxplot(
+    data = four_factors_whai %&gt;% filter(str_detect(key, &quot;opp&quot;)),
+    aes(x = key, y = value),
+    outlier.shape = NA, width = 0.5) +
+  geom_point(
+    data = four_factors_whai %&gt;% filter(str_detect(key, &quot;opp&quot;)),
+    aes(x = key, y = value),
+    size = 5, alpha = 0.7) +
+  geom_errorbar(
+    data = four_factors_without_whai %&gt;% filter(str_detect(key, &quot;opp&quot;)),
+    aes(x = key, ymin = value, ymax = value),
+    linetype = &quot;dashed&quot;, colour = &quot;red&quot;, size = 2)
+plot_four_factors_whai_opponents &lt;- p
+
+plot_four_factors_whai_opponents</code></pre>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/plot_four_factors_whai_opponents-1.png" width="672" /></p>
+<p>From their opponents’ Four Factors, we can see how strong the Whai are on the boards - they give away very few offensive rebounds, which, in combination with the previous chart, reflects their efforts on both the offensive and defensive glass. They also do a pretty good job of restricting shooting accuracy, with their opponents’ scoring below their typical rate when playing the rest of the league. However, they leak points from the free throw line.</p>
+</div>
+</div>
+<div id="head-to-head-kāhu-vs.-whai" class="section level1">
+<h1>Head-to-head: Kāhu vs. Whai</h1>
+<pre class="r"><code>kaahu_vs_whai &lt;- box_scores_tauihi %&gt;%
+  filter(str_detect(team_name, &quot;Northern&quot;) |
+           str_detect(team_name, &quot;Whai&quot;))</code></pre>
+</div>
