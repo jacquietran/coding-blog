@@ -1,0 +1,72 @@
+---
+title: Supercharged Ellyse Perry
+author: Jacquie Tran
+date: '2023-02-12'
+slug: []
+categories:
+  - On-field analyses
+tags:
+  - cricket
+  - r stats
+  - sport science
+  - sports analytics
+draft: yes
+---
+
+# Introduction
+
+# Set up
+
+```{r setup}
+
+# Load libraries
+library(cricketdata) # for retrieving cricket data from ESPNCricinfo
+library(dplyr)       # for tidying data
+library(janitor)     # for tidying data
+library(stringr)     # for tidying data
+library(ggplot2)     # for plotting
+
+```
+
+# T20 batting - career stats
+
+```{r}
+
+pez_id <- find_player_id("Ellyse Perry")$ID
+pez <- fetch_player_data(
+  pez_id, matchtype = "T20", activity = "batting") %>%
+  clean_names() %>%
+  filter(!is.na(runs)) %>%
+  mutate(
+    year = str_sub(date, 1, 4),
+    date = as.Date(date),
+    innings_count = row_number()) %>%
+  mutate_at(
+    c("bf", "x4s", "x6s", "sr", "pos", "inns", "year"),
+    as.numeric) %>%
+  mutate(
+    sr_above_thresholds = case_when(
+      sr < 120             ~ "below 120",
+      sr >= 120 & sr < 150 ~ "120-150",
+      sr >= 150            ~ "above 150"),
+    sr_above_thresholds = factor(
+      sr_above_thresholds,
+      levels = c("below 120", "120-150", "above 150")))
+
+```
+
+```{r}
+
+ggplot() +
+  geom_bar(
+    data = pez,
+    aes(x = innings_count, y = sr, fill = sr_above_thresholds),
+    stat = "identity") +
+  scale_fill_brewer(palette = "Dark2")
+
+```
+# International, club, and domestic
+
+- Sydney Sixers
+- Birmingham Phoenix
+
