@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>soccer on Under The Hood</title>
+    <link>https://underthehood.jacquietran.com/tags/soccer/</link>
+    <description>Recent content in soccer on Under The Hood</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-gb</language>
+    <lastBuildDate>Sat, 13 Aug 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://underthehood.jacquietran.com/tags/soccer/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>The rise of the Lionesses: Analysing Women&#39;s EURO 2022 performances using StatsBomb data</title>
+      <link>https://underthehood.jacquietran.com/post/analysing-womens-euro-2022-performances/</link>
+      <pubDate>Sat, 13 Aug 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://underthehood.jacquietran.com/post/analysing-womens-euro-2022-performances/</guid>
+      <description>IntroductionLike the shameless bandwagon-er that I am, I set aside my usual allegiances as an Australian, voluntarily woke up at an unmentionable hour in NZ time, and found myself cheering loudly for England as they brought home the Euros.
+Shortly after this momentous occasion, StatsBomb released a treasure trove of free data from the Euros tournament!
+Here are a few different ways I explored the data:
+Shot outcomes by teamCode here: https://github.</description>
+    </item>
+    
+    <item>
+      <title>How much do you get paid? Part III - Comparison by discipline</title>
+      <link>https://underthehood.jacquietran.com/post/how-much-do-you-get-paid-part-3/</link>
+      <pubDate>Thu, 04 Jan 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://underthehood.jacquietran.com/post/how-much-do-you-get-paid-part-3/</guid>
+      <description>IntroductionThis post is the third in a series - to get up to speed, have a read through the first post and the second post. In this series, I will show how I created the plots that Aiden published on Twitter here and here, alongside some commentary about the choices I made throughout the process and my own interpretations of the results.
+Getting startedLoad up the data and the libraries as we’ve done before.</description>
+    </item>
+    
+    <item>
+      <title>How much do you get paid? Part II - Job seniority</title>
+      <link>https://underthehood.jacquietran.com/post/how-much-do-you-get-paid-part-2/</link>
+      <pubDate>Wed, 03 Jan 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://underthehood.jacquietran.com/post/how-much-do-you-get-paid-part-2/</guid>
+      <description>IntroductionThis post is the second in a series; click here to read the first post if you haven’t already done so. In this series, I will show how I created the plots that Aiden Oakley published on Twitter here and here, alongside some commentary about the choices I made throughout the process and my own interpretations of the results.
+Getting startedWe’ll load the cleaned data in and load the necessary libraries as we did in the first post.</description>
+    </item>
+    
+    <item>
+      <title>How much do you get paid? Part I - An initial exploration</title>
+      <link>https://underthehood.jacquietran.com/post/how-much-do-you-get-paid-part-1/</link>
+      <pubDate>Tue, 02 Jan 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://underthehood.jacquietran.com/post/how-much-do-you-get-paid-part-1/</guid>
+      <description>The backstoryIt’s a touchy subject for many. Yet this question—how much do you get paid?—is at the core of the online questionnaire that was recently administered by Aiden Oakley (@ajoakley on Twitter). And it is a question that was willingly answered by over 100 sport scientists and strength &amp;amp; conditioning coaches who currently work for football (soccer) clubs in the UK.
+Why?
+This job advert says it all…</description>
+    </item>
+    
+  </channel>
+</rss>

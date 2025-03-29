@@ -1,0 +1,250 @@
+---
+title: New Year, Same Moons
+author: Jacquie Tran
+date: '2025-03-27'
+slug: []
+categories:
+  - On-field analyses
+tags:
+  - cricket
+  - r stats
+  - sport science
+  - sports analytics
+---
+
+# Introduction
+
+The Australian Women's Cricket team have wrapped up their very long international season for 2024/2025 with another T20 series sweep, this time winning 3-0 over the White Ferns.
+
+And who was at the centre of the action? Beth Mooney piling on the runs. Naturally.
+
+New year, same run scoring machine.
+
+Cricket Australia reported that, [in 2025, Moons has scored "575 runs at an average of 72"](https://www.cricket.com.au/news/4239115/georgia-voll-third-t20i-australia-new-zealand-wellington-opener-beth-mooney-australia-a-innings?tags=9037). Let's dig into the details of this scoring spree from the ever-metronomic Mooney.
+
+# Set up and retrieve data
+
+We'll use ball-by-ball data provided by Cricsheet.org, across the matches played by Australia in 2025 (T20Is, ODIs, and Test):
+
+```{r setup, message = FALSE}
+
+# Load libraries ---------------------------------------------------------------
+
+library(cricketdata) # for retrieving cricket data from ESPNCricinfo and Cricsheet
+library(dplyr)       # for tidying data
+library(gt)          # for visualising data tables
+library(showtext)    # for plotting
+library(ggplot2)     # for plotting
+
+```
+
+```{r retrieve_data, message = FALSE, cache = TRUE}
+
+# Retrieve ball-by-ball data ---------------------------------------------------
+
+# Women's T20Is
+t20s_bbb <- fetch_cricsheet(
+  type = "bbb",
+  competition = "t20s",
+  gender = "female")
+
+# Women's ODIs
+odis_bbb <- fetch_cricsheet(
+  type = "bbb",
+  competition = "odis",
+  gender = "female")
+
+# Women's Tests
+tests_bbb <- fetch_cricsheet(
+  type = "bbb",
+  competition = "tests",
+  gender = "female")
+
+```
+
+# Tidy the data
+
+Let's get the retrieved data sets into more focused subsets, focusing on balls where Beth Mooney was on strike:
+
+``` {r subset_and_bind_data}
+
+# Filter to matches played in 2025 and Beth Mooney on strike -------------------
+
+# T20s
+t20s_bbb_2025_mooney <- t20s_bbb %>%
+  filter(
+    start_date > "2025-01-01" & striker == "BL Mooney") %>%
+  mutate(
+    competition = "T20I",
+    start_date = as.character(start_date) # For binding purposes in next step
+    )
+
+# ODIs
+odis_bbb_2025_mooney <- odis_bbb %>%
+  filter(
+    start_date > "2025-01-01" & striker == "BL Mooney") %>%
+  mutate(competition = "ODI")
+
+# Test
+tests_bbb_2025_mooney <- tests_bbb %>%
+  filter(
+    start_date > "2025-01-01" & striker == "BL Mooney") %>%
+  mutate(competition = "Test")
+
+# Bind subsets into one data frame ---------------------------------------------
+
+mooney_in_2025 <- bind_rows(
+  t20s_bbb_2025_mooney, odis_bbb_2025_mooney, tests_bbb_2025_mooney)
+
+```
+
+# A glance off the pads: Batting stats by format
+
+```{r calculate_summary_stats}
+
+mooney_in_2025_summary <- mooney_in_2025 %>%
+  mutate(
+    match_innings_id = paste0(match_id, innings, sep = "_"),
+    is_ball_faced = case_when(
+      wides == 1 ~ 0, # Wides do not count as a ball faced by the batter
+      TRUE       ~ 1),
+    wicket_counting_helper = case_when(
+      player_dismissed == striker ~ 1,
+      TRUE                        ~ 0)) %>%
+  group_by(competition) %>%
+  summarise(
+    runs_off_bat = sum(runs_off_bat),
+    balls_faced = sum(is_ball_faced),
+    innings_batted = length(unique(match_innings_id)),
+    wickets_lost = sum(wicket_counting_helper),
+    .groups = "drop"
+  ) %>%
+  mutate(
+    average_in_2025 = round(runs_off_bat / wickets_lost, 2),
+    strike_rate = round(runs_off_bat / balls_faced * 100, 2))
+
+```
+
+```{r tabulate_summary_stats}
+
+mooney_in_2025_summary_table <- mooney_in_2025_summary %>%
+  gt(rowname_col = "competition") %>%
+  tab_header(
+    title = md("**Piling on the runs to see out the 2024/25 season**"),
+    subtitle = "Mooney's batting stats from internationals - January to March 2025") %>%
+  cols_label(
+    runs_off_bat = "Runs",
+    balls_faced = "Balls faced",
+    innings_batted = "Innings",
+    wickets_lost = "Wickets lost",
+    average_in_2025 = "Avg. in 2025",
+    strike_rate = "Strike rate") %>%
+  tab_style(
+    style = cell_fill(color = "#9AD4D6"),
+    locations = cells_body(
+      rows = competition == "T20I")) %>%
+  tab_source_note(
+    source_note = "Data source: Cricsheet.org")
+
+```
+
+When we look at Mooney's batting separated by format, we can see her dominance in recent T20s more clearly, where she averaged 95 runs with a strike rate of 154, accumulating nearly 400 runs across only 6 innings!
+
+```{r echo = FALSE}
+
+mooney_in_2025_summary_table
+
+```
+
+# When does Moons hit the gas?
+
+I was interested in whether there has been a pattern in when Moons tends to accelerate with her batting. Focusing on T20I innings, I decided to plot her cumulative runs scored against cumulative balls faced in each innings:
+
+```{r analyse_t20_scoring_rate}
+
+t20s_bbb_2025_mooney_tidy <- t20s_bbb_2025_mooney %>%
+  mutate(
+    is_ball_faced = case_when(
+      wides == 1 ~ 0, # Wides do not count as a ball faced by the batter
+      TRUE       ~ 1)) %>%
+  # Filter out wides
+  filter(is_ball_faced == 1) %>%
+  group_by(match_id) %>%
+  mutate(
+    balls_faced_cumulative = cumsum(is_ball_faced),
+    runs_scored_cumulative = cumsum(runs_off_bat)) %>%
+  ungroup() %>%
+  mutate(
+    balls_faced_grouping = case_when(
+      balls_faced_cumulative <= 10   ~ "1-10",
+      balls_faced_cumulative > 10 &
+        balls_faced_cumulative <= 20 ~ "11-20",
+      balls_faced_cumulative > 20 &
+        balls_faced_cumulative <= 30 ~ "21-30",
+      balls_faced_cumulative > 30 &
+        balls_faced_cumulative <= 40 ~ "31-40",
+      balls_faced_cumulative > 40 ~ "41+"))
+
+```
+
+```{r plot_t20_scoring_rate, message = FALSE}
+
+# Prep to plot -----------------------------------------------------------------
+
+# Turn on {showtext} functionality
+showtext_auto()
+
+# Add Google Fonts
+font_add_google("IBM Plex Sans Condensed", "plexc")
+
+# Build plot -------------------------------------------------------------------
+
+plot_t20_scoring_rate <- ggplot() +
+  geom_point(
+    data = t20s_bbb_2025_mooney_tidy,
+    aes(
+      x = balls_faced_cumulative, y = runs_scored_cumulative,
+      group = match_id),
+    size = 3, shape = 16, alpha = 0.2) +
+  geom_smooth(
+    data = t20s_bbb_2025_mooney_tidy,
+    aes(
+      x = balls_faced_cumulative, y = runs_scored_cumulative,
+      color = factor(balls_faced_grouping)),
+    method = "lm", se = F, linewidth = 2) +
+  labs(
+    title = "When does Beth Mooney hit the gas? From start to finish!",
+    subtitle = "Beth Mooney's batting in T20Is - January to March 2025",
+    x = "Balls faced (cumulative)",
+    y = "Runs scored (cumulative)",
+    caption = "Data source: Cricsheet.org") +
+  scale_colour_brewer(palette = "Dark2") +
+  theme_minimal() +
+  theme(
+    legend.position = "none",
+    text = element_text(family = "plexc"),
+    plot.title = element_text(size = rel(3), face = "bold"),
+    plot.subtitle = element_text(size = rel(2.5)),
+    plot.caption = element_text(
+      size = rel(2), margin = margin(t = 10)),
+    axis.title = element_text(size = rel(2.5)),
+    axis.text = element_text(size = rel(2))
+  )
+
+```
+
+I genuinely laughed out loud when I generated this plot:
+
+```{r echo = FALSE, message = FALSE}
+
+plot_t20_scoring_rate
+
+# Turn off {showtext} functionality
+showtext_auto(FALSE)
+
+```
+
+I plotted separate linear trendlines for balls 1-10, 11-20, 21-30, 31-40, and 40+. The slope of each trendline is pretty much the same! Which tells us that Moons' nickname of ["Ms Consistent"](https://www.cricket.com.au/news/4235969/beth-mooney-200-international-matches-australia-eden-park-auckland-first-t20-new-zealand-milestone-runs) is well-deserved in many ways - her rate of scoring in recent T20Is has been remarkably even right through an innings.
+
+There's only 6 T20I innings represented here, so it'd be worth including more innings to see if a more defined "acceleration phase" is evident or not. I'd also be interested to see what this plot looks like for other batters.
+

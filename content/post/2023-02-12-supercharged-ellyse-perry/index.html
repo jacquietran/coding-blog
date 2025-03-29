@@ -1,0 +1,65 @@
+---
+title: Supercharged Ellyse Perry
+author: Jacquie Tran
+date: '2023-02-12'
+slug: []
+categories:
+  - On-field analyses
+tags:
+  - cricket
+  - r stats
+  - sport science
+  - sports analytics
+draft: yes
+---
+
+
+
+<div id="introduction" class="section level1">
+<h1>Introduction</h1>
+</div>
+<div id="set-up" class="section level1">
+<h1>Set up</h1>
+<pre class="r"><code># Load libraries
+library(cricketdata) # for retrieving cricket data from ESPNCricinfo
+library(dplyr)       # for tidying data
+library(janitor)     # for tidying data
+library(stringr)     # for tidying data
+library(ggplot2)     # for plotting</code></pre>
+</div>
+<div id="t20-batting---career-stats" class="section level1">
+<h1>T20 batting - career stats</h1>
+<pre class="r"><code>pez_id &lt;- find_player_id(&quot;Ellyse Perry&quot;)$ID
+pez &lt;- fetch_player_data(
+  pez_id, matchtype = &quot;T20&quot;, activity = &quot;batting&quot;) %&gt;%
+  clean_names() %&gt;%
+  filter(!is.na(runs)) %&gt;%
+  mutate(
+    year = str_sub(date, 1, 4),
+    date = as.Date(date),
+    innings_count = row_number()) %&gt;%
+  mutate_at(
+    c(&quot;bf&quot;, &quot;x4s&quot;, &quot;x6s&quot;, &quot;sr&quot;, &quot;pos&quot;, &quot;inns&quot;, &quot;year&quot;),
+    as.numeric) %&gt;%
+  mutate(
+    sr_above_thresholds = case_when(
+      sr &lt; 120             ~ &quot;below 120&quot;,
+      sr &gt;= 120 &amp; sr &lt; 150 ~ &quot;120-150&quot;,
+      sr &gt;= 150            ~ &quot;above 150&quot;),
+    sr_above_thresholds = factor(
+      sr_above_thresholds,
+      levels = c(&quot;below 120&quot;, &quot;120-150&quot;, &quot;above 150&quot;)))</code></pre>
+<pre class="r"><code>ggplot() +
+  geom_bar(
+    data = pez,
+    aes(x = innings_count, y = sr, fill = sr_above_thresholds),
+    stat = &quot;identity&quot;) +
+  scale_fill_brewer(palette = &quot;Dark2&quot;)</code></pre>
+</div>
+<div id="international-club-and-domestic" class="section level1">
+<h1>International, club, and domestic</h1>
+<ul>
+<li>Sydney Sixers</li>
+<li>Birmingham Phoenix</li>
+</ul>
+</div>

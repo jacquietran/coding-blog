@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>women&#39;s sport on Under The Hood</title>
+    <link>https://underthehood.jacquietran.com/tags/womens-sport/</link>
+    <description>Recent content in women&#39;s sport on Under The Hood</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-gb</language>
+    <lastBuildDate>Sat, 13 Aug 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://underthehood.jacquietran.com/tags/womens-sport/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>The rise of the Lionesses: Analysing Women&#39;s EURO 2022 performances using StatsBomb data</title>
+      <link>https://underthehood.jacquietran.com/post/analysing-womens-euro-2022-performances/</link>
+      <pubDate>Sat, 13 Aug 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://underthehood.jacquietran.com/post/analysing-womens-euro-2022-performances/</guid>
+      <description>IntroductionLike the shameless bandwagon-er that I am, I set aside my usual allegiances as an Australian, voluntarily woke up at an unmentionable hour in NZ time, and found myself cheering loudly for England as they brought home the Euros.
+Shortly after this momentous occasion, StatsBomb released a treasure trove of free data from the Euros tournament!
+Here are a few different ways I explored the data:
+Shot outcomes by teamCode here: https://github.</description>
+    </item>
+    
+    <item>
+      <title>WNBL advanced stats: Points per possession</title>
+      <link>https://underthehood.jacquietran.com/post/wnbl-points-per-possession/</link>
+      <pubDate>Thu, 02 Dec 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://underthehood.jacquietran.com/post/wnbl-points-per-possession/</guid>
+      <description>IntroductionOn Tuesday, I launched the alpha version of the wnblr package, yahoooo!! (Guess I better write a blog post about that sometime.) wnblr currently contains live stats recorded from WNBL games played from 2014 to 2020, inclusive. You can find it here: https://github.com/jacquietran/wnblr
+Over on Twitter, I flagged down Paul Flynn (Assistant Coach, Melbourne Boomers WNBL) to take a look-see, and he asked for some specific advanced stats that can be derived from the standard game stats that are typically recorded (e.</description>
+    </item>
+    
+    <item>
+      <title>WNBL advanced stats: Points per possession</title>
+      <link>https://underthehood.jacquietran.com/post/wnbl-points-per-possession/</link>
+      <pubDate>Thu, 02 Dec 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://underthehood.jacquietran.com/post/wnbl-points-per-possession/</guid>
+      <description>IntroductionOn Tuesday, I launched the alpha version of the wnblr package, yahoooo!! (Guess I better write a blog post about that sometime.) wnblr currently contains live stats recorded from WNBL games played from 2014 to 2020, inclusive. You can find it here: https://github.com/jacquietran/wnblr
+Over on Twitter, I flagged down Paul Flynn (Assistant Coach, Melbourne Boomers WNBL) to take a look-see, and he asked for some specific advanced stats that can be derived from the standard game stats that are typically recorded (e.</description>
+    </item>
+    
+    <item>
+      <title>Bash and crash cricket: Visualising ball-by-ball data from #WBBL</title>
+      <link>https://underthehood.jacquietran.com/post/wbbl-visualisations/</link>
+      <pubDate>Sun, 14 Nov 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://underthehood.jacquietran.com/post/wbbl-visualisations/</guid>
+      <description>IntroductionIt’s been a thrilling #WBBL07 so far - the competition seems well-balanced, with every team boasting world-class athletes alongside the young guns who are the next wave of Australian talent coming through.
+Coming off the back of the hotly contested Australia vs. India series, I have been glued to the TV. I thought I might as well turn my attention to another screen instead - my computer screen - and take a closer look at some key performances so far this season.</description>
+    </item>
+    
+  </channel>
+</rss>

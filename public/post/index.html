@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>Posts | Under The Hood</title>
+<meta name="keywords" content="" />
+<meta name="description" content="Posts - Under The Hood">
+<meta name="author" content="">
+<link rel="canonical" href="https://underthehood.jacquietran.com/post/" />
+<link crossorigin="anonymous" href="/assets/css/stylesheet.min.c88963fe2d79462000fd0fb1b3737783c32855d340583e4523343f8735c787f0.css" integrity="sha256-yIlj/i15RiAA/Q&#43;xs3N3g8MoVdNAWD5FIzQ/hzXHh/A=" rel="preload stylesheet" as="style">
+<link rel="icon" href="https://underthehood.jacquietran.com/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="https://underthehood.jacquietran.com/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://underthehood.jacquietran.com/favicon-32x32.png">
+<link rel="apple-touch-icon" href="https://underthehood.jacquietran.com/apple-touch-icon.png">
+<link rel="mask-icon" href="https://underthehood.jacquietran.com/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" type="application/rss+xml" href="https://underthehood.jacquietran.com/post/index.xml">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --hljs-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript><meta property="og:title" content="Posts" />
+<meta property="og:description" content="" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://underthehood.jacquietran.com/post/" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Posts"/>
+<meta name="twitter:description" content=""/>
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "Posts",
+      "item": "https://underthehood.jacquietran.com/post/"
+    }
+  ]
+}
+</script>
+</head>
+
+<body class="list" id="top">
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add('dark');
+    } else if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="https://underthehood.jacquietran.com" accesskey="h" title="Under The Hood (Alt + H)">Under The Hood</a>
+            <span class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </span>
+        </div>
+        <ul id="menu">
+            <li>
+                <a href="https://underthehood.jacquietran.com/about/" title="about">
+                    <span>about</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://underthehood.jacquietran.com/post/" title="posts">
+                    <span class="active">posts</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://underthehood.jacquietran.com/tags/" title="tags">
+                    <span>tags</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main"> 
+<header class="page-header">
+  <h1>Posts</h1>
+</header>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2>New Year, Same Moons
+    </h2>
+  </header>
+  <section class="entry-content">
+    <p>IntroductionThe Australian Women’s Cricket team have wrapped up their very long international season for 2024/2025 with another T20 series sweep, this time winning 3-0 over the White Ferns.
+And who was at the centre of the action? Beth Mooney piling on the runs. Naturally.
+New year, same run scoring machine.
+Cricket Australia reported that, in 2025, Moons has scored “575 runs at an average of 72”. Let’s dig into the details of this scoring spree from the ever-metronomic Mooney....</p>
+  </section>
+  <footer class="entry-footer"><span title='2025-03-27 00:00:00 +0000 UTC'>March 27, 2025</span>&nbsp;·&nbsp;Jacquie Tran</footer>
+  <a class="entry-link" aria-label="post link to New Year, Same Moons" href="https://underthehood.jacquietran.com/post/2025-03-26-new-year-same-moons/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2>The rise of the Lionesses: Analysing Women&#39;s EURO 2022 performances using StatsBomb data
+    </h2>
+  </header>
+  <section class="entry-content">
+    <p>IntroductionLike the shameless bandwagon-er that I am, I set aside my usual allegiances as an Australian, voluntarily woke up at an unmentionable hour in NZ time, and found myself cheering loudly for England as they brought home the Euros.
+Shortly after this momentous occasion, StatsBomb released a treasure trove of free data from the Euros tournament!
+Here are a few different ways I explored the data:
+Shot outcomes by teamCode here: https://github....</p>
+  </section>
+  <footer class="entry-footer"><span title='2022-08-13 00:00:00 +0000 UTC'>August 13, 2022</span>&nbsp;·&nbsp;Jacquie Tran</footer>
+  <a class="entry-link" aria-label="post link to The rise of the Lionesses: Analysing Women&#39;s EURO 2022 performances using StatsBomb data" href="https://underthehood.jacquietran.com/post/analysing-womens-euro-2022-performances/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2>WNBL advanced stats: Points per possession
+    </h2>
+  </header>
+  <section class="entry-content">
+    <p>IntroductionOn Tuesday, I launched the alpha version of the wnblr package, yahoooo!! (Guess I better write a blog post about that sometime.) wnblr currently contains live stats recorded from WNBL games played from 2014 to 2020, inclusive. You can find it here: https://github.com/jacquietran/wnblr
+Over on Twitter, I flagged down Paul Flynn (Assistant Coach, Melbourne Boomers WNBL) to take a look-see, and he asked for some specific advanced stats that can be derived from the standard game stats that are typically recorded (e....</p>
+  </section>
+  <footer class="entry-footer"><span title='2021-12-02 00:00:00 +0000 UTC'>December 2, 2021</span>&nbsp;·&nbsp;Jacquie Tran</footer>
+  <a class="entry-link" aria-label="post link to WNBL advanced stats: Points per possession" href="https://underthehood.jacquietran.com/post/wnbl-points-per-possession/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2>WNBL advanced stats: Points per possession
+    </h2>
+  </header>
+  <section class="entry-content">
+    <p>IntroductionOn Tuesday, I launched the alpha version of the wnblr package, yahoooo!! (Guess I better write a blog post about that sometime.) wnblr currently contains live stats recorded from WNBL games played from 2014 to 2020, inclusive. You can find it here: https://github.com/jacquietran/wnblr
+Over on Twitter, I flagged down Paul Flynn (Assistant Coach, Melbourne Boomers WNBL) to take a look-see, and he asked for some specific advanced stats that can be derived from the standard game stats that are typically recorded (e....</p>
+  </section>
+  <footer class="entry-footer"><span title='2021-12-02 00:00:00 +0000 UTC'>December 2, 2021</span>&nbsp;·&nbsp;Jacquie Tran</footer>
+  <a class="entry-link" aria-label="post link to WNBL advanced stats: Points per possession" href="https://underthehood.jacquietran.com/post/wnbl-points-per-possession/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2>Bash and crash cricket: Visualising ball-by-ball data from #WBBL
+    </h2>
+  </header>
+  <section class="entry-content">
+    <p>IntroductionIt’s been a thrilling #WBBL07 so far - the competition seems well-balanced, with every team boasting world-class athletes alongside the young guns who are the next wave of Australian talent coming through.
+Coming off the back of the hotly contested Australia vs. India series, I have been glued to the TV. I thought I might as well turn my attention to another screen instead - my computer screen - and take a closer look at some key performances so far this season....</p>
+  </section>
+  <footer class="entry-footer"><span title='2021-11-14 00:00:00 +0000 UTC'>November 14, 2021</span>&nbsp;·&nbsp;Jacquie Tran</footer>
+  <a class="entry-link" aria-label="post link to Bash and crash cricket: Visualising ball-by-ball data from #WBBL" href="https://underthehood.jacquietran.com/post/wbbl-visualisations/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2>Getting to know the fitzRoy package (AFL game statistics)
+    </h2>
+  </header>
+  <section class="entry-content">
+    <p>(source: Wikimedia)I shifted across the ditch early in 2018 to take up a role with High Performance Sport New Zealand. Remarkably, the one-year anniversary of our arrival here is right on the door step; I’ve learned so much in that time, particularly around qualitative methods and analyses. I enjoy the richness of insight that can be drawn from analysing text data, but a part of me does miss getting to work with numbers as much as I used to....</p>
+  </section>
+  <footer class="entry-footer"><span title='2019-01-12 00:00:00 +0000 UTC'>January 12, 2019</span>&nbsp;·&nbsp;Jacquie Tran</footer>
+  <a class="entry-link" aria-label="post link to Getting to know the fitzRoy package (AFL game statistics)" href="https://underthehood.jacquietran.com/post/fitzroy-r-package-australian-football/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2>How much do you get paid? Part III - Comparison by discipline
+    </h2>
+  </header>
+  <section class="entry-content">
+    <p>IntroductionThis post is the third in a series - to get up to speed, have a read through the first post and the second post. In this series, I will show how I created the plots that Aiden published on Twitter here and here, alongside some commentary about the choices I made throughout the process and my own interpretations of the results.
+Getting startedLoad up the data and the libraries as we’ve done before....</p>
+  </section>
+  <footer class="entry-footer"><span title='2018-01-04 00:00:00 +0000 UTC'>January 4, 2018</span>&nbsp;·&nbsp;Jacquie Tran</footer>
+  <a class="entry-link" aria-label="post link to How much do you get paid? Part III - Comparison by discipline" href="https://underthehood.jacquietran.com/post/how-much-do-you-get-paid-part-3/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2>How much do you get paid? Part II - Job seniority
+    </h2>
+  </header>
+  <section class="entry-content">
+    <p>IntroductionThis post is the second in a series; click here to read the first post if you haven’t already done so. In this series, I will show how I created the plots that Aiden Oakley published on Twitter here and here, alongside some commentary about the choices I made throughout the process and my own interpretations of the results.
+Getting startedWe’ll load the cleaned data in and load the necessary libraries as we did in the first post....</p>
+  </section>
+  <footer class="entry-footer"><span title='2018-01-03 00:00:00 +0000 UTC'>January 3, 2018</span>&nbsp;·&nbsp;Jacquie Tran</footer>
+  <a class="entry-link" aria-label="post link to How much do you get paid? Part II - Job seniority" href="https://underthehood.jacquietran.com/post/how-much-do-you-get-paid-part-2/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2>How much do you get paid? Part I - An initial exploration
+    </h2>
+  </header>
+  <section class="entry-content">
+    <p>The backstoryIt’s a touchy subject for many. Yet this question—how much do you get paid?—is at the core of the online questionnaire that was recently administered by Aiden Oakley (@ajoakley on Twitter). And it is a question that was willingly answered by over 100 sport scientists and strength &amp; conditioning coaches who currently work for football (soccer) clubs in the UK.
+Why?
+This job advert says it all…...</p>
+  </section>
+  <footer class="entry-footer"><span title='2018-01-02 00:00:00 +0000 UTC'>January 2, 2018</span>&nbsp;·&nbsp;Jacquie Tran</footer>
+  <a class="entry-link" aria-label="post link to How much do you get paid? Part I - An initial exploration" href="https://underthehood.jacquietran.com/post/how-much-do-you-get-paid-part-1/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2>My coding origin story
+    </h2>
+  </header>
+  <section class="entry-content">
+    <p>I often get asked questions about how long I’ve been coding for, how I got started, whether I have completed any formal studies in programming / computer science, and so on. The reality is that my path is far from linear. Most of what I’ve learned to date has been more opportunistic than strategic, curiosity-driven rather than being part of a master plan to acquire professional skills for the workplace. To illustrate, it might help to go back to the beginning, to tell my coding origin story…...</p>
+  </section>
+  <footer class="entry-footer"><span title='2017-10-01 00:00:00 +0000 UTC'>October 1, 2017</span>&nbsp;·&nbsp;Jacquie Tran</footer>
+  <a class="entry-link" aria-label="post link to My coding origin story" href="https://underthehood.jacquietran.com/post/my-coding-origin-story/"></a>
+</article>
+    </main>
+    
+<footer class="footer">
+    <span>&copy; 2025 <a href="https://underthehood.jacquietran.com">Under The Hood</a></span>
+    <span>
+        Powered by
+        <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &
+        <a href="https://git.io/hugopapermod" rel="noopener" target="_blank">PaperMod</a>
+    </span>
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+</body>
+
+</html>

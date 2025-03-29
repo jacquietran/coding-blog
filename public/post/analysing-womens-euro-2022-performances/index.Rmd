@@ -1,0 +1,49 @@
+---
+title: "The rise of the Lionesses: Analysing Women's EURO 2022 performances using
+  StatsBomb data"
+author: Jacquie Tran
+date: '2022-08-13'
+slug: analysing-womens-euro-2022-performances
+categories:
+  - On-field analyses
+tags:
+  - football
+  - r stats
+  - soccer
+  - sports analytics
+  - women's sport
+---
+
+# Introduction
+
+Like the shameless bandwagon-er that I am, I set aside my usual allegiances as an Australian, voluntarily woke up at an unmentionable hour in NZ time, and found myself cheering loudly for [England as they brought home the Euros](https://www.theguardian.com/football/2022/aug/02/pride-of-the-lionesses-englands-road-to-euro-2022-glory-in-pictures).
+
+Shortly after this momentous occasion, [StatsBomb released a treasure trove of free data from the Euros tournament](https://statsbomb.com/articles/soccer/statsbomb-release-free-360-data-womens-euro-2022-available-now/)!
+
+Here are a few different ways I explored the data:
+
+# Shot outcomes by team
+
+Code here: https://github.com/jacquietran/womens_euro_2022/blob/main/R/eda.R
+
+![](/img/post/weuro_2022_shot_outcomes.png)
+
+# Passing map: Lucy Bronze - England
+
+Code here: https://github.com/jacquietran/womens_euro_2022/blob/main/R/bronze_pass_map.R
+
+![](/img/post/weuro_2022_passes_bronze_combined.png)
+
+# Player passing networks
+
+## Leah Williamson
+
+Code here: https://github.com/jacquietran/womens_euro_2022/blob/main/R/williamson_pass_networks.R
+
+![](/img/post/weuro_2022_passes_williamson_combined.png)
+
+## Beth Mead
+
+Code here: https://github.com/jacquietran/womens_euro_2022/blob/main/R/mead_pass_networks.R
+
+![](/img/post/weuro_2022_passes_mead_combined.png)

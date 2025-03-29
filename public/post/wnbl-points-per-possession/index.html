@@ -1,0 +1,894 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>WNBL advanced stats: Points per possession | Under The Hood</title>
+<meta name="keywords" content="women&#39;s sport, basketball, sports analytics, r stats" />
+<meta name="description" content="IntroductionOn Tuesday, I launched the alpha version of the wnblr package, yahoooo!! (Guess I better write a blog post about that sometime.) wnblr currently contains live stats recorded from WNBL games played from 2014 to 2020, inclusive. You can find it here: https://github.com/jacquietran/wnblr
+Over on Twitter, I flagged down Paul Flynn (Assistant Coach, Melbourne Boomers WNBL) to take a look-see, and he asked for some specific advanced stats that can be derived from the standard game stats that are typically recorded (e.">
+<meta name="author" content="Jacquie Tran">
+<link rel="canonical" href="https://underthehood.jacquietran.com/post/wnbl-points-per-possession/" />
+<link crossorigin="anonymous" href="/assets/css/stylesheet.min.c88963fe2d79462000fd0fb1b3737783c32855d340583e4523343f8735c787f0.css" integrity="sha256-yIlj/i15RiAA/Q&#43;xs3N3g8MoVdNAWD5FIzQ/hzXHh/A=" rel="preload stylesheet" as="style">
+<script defer crossorigin="anonymous" src="/assets/js/highlight.min.7680afc38aa6b15ddf158a4f3780b7b1f7dde7e91d26f073e6229bb7a0793c92.js" integrity="sha256-doCvw4qmsV3fFYpPN4C3sffd5&#43;kdJvBz5iKbt6B5PJI="
+    onload="hljs.initHighlightingOnLoad();"></script>
+<link rel="icon" href="https://underthehood.jacquietran.com/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="https://underthehood.jacquietran.com/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://underthehood.jacquietran.com/favicon-32x32.png">
+<link rel="apple-touch-icon" href="https://underthehood.jacquietran.com/apple-touch-icon.png">
+<link rel="mask-icon" href="https://underthehood.jacquietran.com/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --hljs-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript><meta property="og:title" content="WNBL advanced stats: Points per possession" />
+<meta property="og:description" content="IntroductionOn Tuesday, I launched the alpha version of the wnblr package, yahoooo!! (Guess I better write a blog post about that sometime.) wnblr currently contains live stats recorded from WNBL games played from 2014 to 2020, inclusive. You can find it here: https://github.com/jacquietran/wnblr
+Over on Twitter, I flagged down Paul Flynn (Assistant Coach, Melbourne Boomers WNBL) to take a look-see, and he asked for some specific advanced stats that can be derived from the standard game stats that are typically recorded (e." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://underthehood.jacquietran.com/post/wnbl-points-per-possession/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2021-12-02T00:00:00&#43;00:00" />
+<meta property="article:modified_time" content="2021-12-02T00:00:00&#43;00:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="WNBL advanced stats: Points per possession"/>
+<meta name="twitter:description" content="IntroductionOn Tuesday, I launched the alpha version of the wnblr package, yahoooo!! (Guess I better write a blog post about that sometime.) wnblr currently contains live stats recorded from WNBL games played from 2014 to 2020, inclusive. You can find it here: https://github.com/jacquietran/wnblr
+Over on Twitter, I flagged down Paul Flynn (Assistant Coach, Melbourne Boomers WNBL) to take a look-see, and he asked for some specific advanced stats that can be derived from the standard game stats that are typically recorded (e."/>
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "Posts",
+      "item": "https://underthehood.jacquietran.com/post/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  3 ,
+      "name": "WNBL advanced stats: Points per possession",
+      "item": "https://underthehood.jacquietran.com/post/wnbl-points-per-possession/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "WNBL advanced stats: Points per possession",
+  "name": "WNBL advanced stats: Points per possession",
+  "description": "Introduction\rOn Tuesday, I launched the alpha version of the wnblr package, yahoooo!! (Guess I better write a blog post about that sometime.) wnblr currently contains live stats recorded from WNBL games played from 2014 to 2020, inclusive. You can find it here: https://github.com/jacquietran/wnblr\nOver on Twitter, I flagged down Paul Flynn (Assistant Coach, Melbourne Boomers WNBL) to take a look-see, and he asked for some specific advanced stats that can be derived from the standard game stats that are typically recorded (e.",
+  "keywords": [
+    "women's sport", "basketball", "sports analytics", "r stats"
+  ],
+  "articleBody": "\r\rIntroduction\rOn Tuesday, I launched the alpha version of the wnblr package, yahoooo!! (Guess I better write a blog post about that sometime.) wnblr currently contains live stats recorded from WNBL games played from 2014 to 2020, inclusive. You can find it here: https://github.com/jacquietran/wnblr\nOver on Twitter, I flagged down Paul Flynn (Assistant Coach, Melbourne Boomers WNBL) to take a look-see, and he asked for some specific advanced stats that can be derived from the standard game stats that are typically recorded (e.g., box score stats like points scored, number of rebounds, and so on):\n\rWould be keen to view any data on points per possession, pace and correlating eFG% over the same period.\r— Paul Flynn (@paulflynn611) December 1, 2021\r\r\r\rFirst cab off the rank: points per possession.\n(Don’t worry, coach: I’ll get to the other metrics in due course!)\n\rGetting started\rLoad R libraries\rLoad up the libraries we need. The wnblr package currently includes 4 built-in data sets with various game statistics. For this analysis, we’re going to use the box_scores data which is recorded at the team-level.\n# Install the development version of {wnblr} from Github\r# remotes::install_github(\"jacquietran/wnblr\")\r# Load libraries\rlibrary(wnblr) # for retrieving WNBL game stats\rlibrary(dplyr) # for tidying data\rlibrary(tidyr) # for tidying data\rlibrary(gt) # for making data tables\rlibrary(showtext) # for loading custom fonts for plots\rlibrary(ggplot2) # for plotting\rlibrary(ggbeeswarm) # for plotting\rlibrary(ggtext) # for formatting text in ggplot2 objects\r\rTidying data\rThe points per possession metric is what it says on the tin: the number of points that a team scores per possession. Higher values are better. Values over 1 mean that a team has managed to score at least 1 point for each possession, which would come about from giving up fewer turnovers and having fewer missed shots that are rebounded by the opposition.\nPer NBAStuffer.com, points per possession is calculated as follows:\n\rPoints per possession = PTS / (FGA + (0.44 * FTA) + TO)\n\r(Where: PTS = Total points scored; FGA = Field goals attempted; FTA = Free throws attempted; TO = Turnovers)\n\rTaking a closer look at the 2020 season\rWith the 2021 WNBL season kicking off this weekend, it might be worth looking at how teams performed on the points_per_possession metric in the 2020 regular season.\n# Subset to games in the 2020 season -------------------------------------------\rpoints_per_possession %%\rfilter(season == 2020) %%\r# Exclude finals games\rfilter(!page_id %in% c(\r\"1809808\", \"1809807\", \"1809809\", \"1809810\")\r) - ppp_2020\r# Calculate summary stats ------------------------------------------------------\rppp_2020 %%\rgroup_by(team_name) %%\rsummarise(\rpoints_per_possession_mean = round(\rmean(points_per_possession), 3),\rpoints_per_possession_sd = round(\rsd(points_per_possession), 3),\rpoints_per_possession_sd_lower = points_per_possession_mean -\rpoints_per_possession_sd,\rpoints_per_possession_sd_higher = points_per_possession_mean +\rpoints_per_possession_sd) %%\rungroup() - ppp_2020_summarised\rWe can get a sense of which teams typically had high or low scoring efficiency by looking at whole-season summary stats. The table below shows each team’s mean (i.e., averages) and standard deviation (SD) for points per possession.\n# Present summary stats in a table ---------------------------------------------\rppp_2020_summarised %%\rselect(team_name, points_per_possession_mean, points_per_possession_sd) %%\rarrange(desc(points_per_possession_mean)) %%\r# Rename columns for human readability\rrename(\rTeam = team_name,\rMean = points_per_possession_mean,\rSD = points_per_possession_sd) %%\rgt() %%\rdata_color(\rcolumns = \"Mean\",\rcolors = scales::col_numeric(\rpalette = c(\"#ffeec2\", \"#ee6f00\"),\rdomain = c(min(Mean), max(Mean)))) %%\rdata_color(\rcolumns = \"SD\",\rcolors = scales::col_numeric(\rpalette = c(\"#b6d8ff\", \"#3090ff\"),\rdomain = c(min(SD), max(SD)))) %%\rtab_spanner(\rlabel = \"Points per possession\",\rcolumns = c(Mean, SD)) %%\rtab_source_note(\rsource_note = md(\r\"**Data source:** {wnblr} R package and WNBL.com.au | **Table:** @jacquietran\")\r) %%\rtab_options(\rtable.width = pct(70))\rhtml {\rfont-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;\r}\r#ucixnzhxoi .gt_table {\rdisplay: table;\rborder-collapse: collapse;\rmargin-left: auto;\rmargin-right: auto;\rcolor: #333333;\rfont-size: 16px;\rfont-weight: normal;\rfont-style: normal;\rbackground-color: #FFFFFF;\rwidth: 70%;\rborder-top-style: solid;\rborder-top-width: 2px;\rborder-top-color: #A8A8A8;\rborder-right-style: none;\rborder-right-width: 2px;\rborder-right-color: #D3D3D3;\rborder-bottom-style: solid;\rborder-bottom-width: 2px;\rborder-bottom-color: #A8A8A8;\rborder-left-style: none;\rborder-left-width: 2px;\rborder-left-color: #D3D3D3;\r}\r#ucixnzhxoi .gt_heading {\rbackground-color: #FFFFFF;\rtext-align: center;\rborder-bottom-color: #FFFFFF;\rborder-left-style: none;\rborder-left-width: 1px;\rborder-left-color: #D3D3D3;\rborder-right-style: none;\rborder-right-width: 1px;\rborder-right-color: #D3D3D3;\r}\r#ucixnzhxoi .gt_title {\rcolor: #333333;\rfont-size: 125%;\rfont-weight: initial;\rpadding-top: 4px;\rpadding-bottom: 4px;\rborder-bottom-color: #FFFFFF;\rborder-bottom-width: 0;\r}\r#ucixnzhxoi .gt_subtitle {\rcolor: #333333;\rfont-size: 85%;\rfont-weight: initial;\rpadding-top: 0;\rpadding-bottom: 6px;\rborder-top-color: #FFFFFF;\rborder-top-width: 0;\r}\r#ucixnzhxoi .gt_bottom_border {\rborder-bottom-style: solid;\rborder-bottom-width: 2px;\rborder-bottom-color: #D3D3D3;\r}\r#ucixnzhxoi .gt_col_headings {\rborder-top-style: solid;\rborder-top-width: 2px;\rborder-top-color: #D3D3D3;\rborder-bottom-style: solid;\rborder-bottom-width: 2px;\rborder-bottom-color: #D3D3D3;\rborder-left-style: none;\rborder-left-width: 1px;\rborder-left-color: #D3D3D3;\rborder-right-style: none;\rborder-right-width: 1px;\rborder-right-color: #D3D3D3;\r}\r#ucixnzhxoi .gt_col_heading {\rcolor: #333333;\rbackground-color: #FFFFFF;\rfont-size: 100%;\rfont-weight: normal;\rtext-transform: inherit;\rborder-left-style: none;\rborder-left-width: 1px;\rborder-left-color: #D3D3D3;\rborder-right-style: none;\rborder-right-width: 1px;\rborder-right-color: #D3D3D3;\rvertical-align: bottom;\rpadding-top: 5px;\rpadding-bottom: 6px;\rpadding-left: 5px;\rpadding-right: 5px;\roverflow-x: hidden;\r}\r#ucixnzhxoi .gt_column_spanner_outer {\rcolor: #333333;\rbackground-color: #FFFFFF;\rfont-size: 100%;\rfont-weight: normal;\rtext-transform: inherit;\rpadding-top: 0;\rpadding-bottom: 0;\rpadding-left: 4px;\rpadding-right: 4px;\r}\r#ucixnzhxoi .gt_column_spanner_outer:first-child {\rpadding-left: 0;\r}\r#ucixnzhxoi .gt_column_spanner_outer:last-child {\rpadding-right: 0;\r}\r#ucixnzhxoi .gt_column_spanner {\rborder-bottom-style: solid;\rborder-bottom-width: 2px;\rborder-bottom-color: #D3D3D3;\rvertical-align: bottom;\rpadding-top: 5px;\rpadding-bottom: 5px;\roverflow-x: hidden;\rdisplay: inline-block;\rwidth: 100%;\r}\r#ucixnzhxoi .gt_group_heading {\rpadding: 8px;\rcolor: #333333;\rbackground-color: #FFFFFF;\rfont-size: 100%;\rfont-weight: initial;\rtext-transform: inherit;\rborder-top-style: solid;\rborder-top-width: 2px;\rborder-top-color: #D3D3D3;\rborder-bottom-style: solid;\rborder-bottom-width: 2px;\rborder-bottom-color: #D3D3D3;\rborder-left-style: none;\rborder-left-width: 1px;\rborder-left-color: #D3D3D3;\rborder-right-style: none;\rborder-right-width: 1px;\rborder-right-color: #D3D3D3;\rvertical-align: middle;\r}\r#ucixnzhxoi .gt_empty_group_heading {\rpadding: 0.5px;\rcolor: #333333;\rbackground-color: #FFFFFF;\rfont-size: 100%;\rfont-weight: initial;\rborder-top-style: solid;\rborder-top-width: 2px;\rborder-top-color: #D3D3D3;\rborder-bottom-style: solid;\rborder-bottom-width: 2px;\rborder-bottom-color: #D3D3D3;\rvertical-align: middle;\r}\r#ucixnzhxoi .gt_from_md  :first-child {\rmargin-top: 0;\r}\r#ucixnzhxoi .gt_from_md  :last-child {\rmargin-bottom: 0;\r}\r#ucixnzhxoi .gt_row {\rpadding-top: 8px;\rpadding-bottom: 8px;\rpadding-left: 5px;\rpadding-right: 5px;\rmargin: 10px;\rborder-top-style: solid;\rborder-top-width: 1px;\rborder-top-color: #D3D3D3;\rborder-left-style: none;\rborder-left-width: 1px;\rborder-left-color: #D3D3D3;\rborder-right-style: none;\rborder-right-width: 1px;\rborder-right-color: #D3D3D3;\rvertical-align: middle;\roverflow-x: hidden;\r}\r#ucixnzhxoi .gt_stub {\rcolor: #333333;\rbackground-color: #FFFFFF;\rfont-size: 100%;\rfont-weight: initial;\rtext-transform: inherit;\rborder-right-style: solid;\rborder-right-width: 2px;\rborder-right-color: #D3D3D3;\rpadding-left: 12px;\r}\r#ucixnzhxoi .gt_summary_row {\rcolor: #333333;\rbackground-color: #FFFFFF;\rtext-transform: inherit;\rpadding-top: 8px;\rpadding-bottom: 8px;\rpadding-left: 5px;\rpadding-right: 5px;\r}\r#ucixnzhxoi .gt_first_summary_row {\rpadding-top: 8px;\rpadding-bottom: 8px;\rpadding-left: 5px;\rpadding-right: 5px;\rborder-top-style: solid;\rborder-top-width: 2px;\rborder-top-color: #D3D3D3;\r}\r#ucixnzhxoi .gt_grand_summary_row {\rcolor: #333333;\rbackground-color: #FFFFFF;\rtext-transform: inherit;\rpadding-top: 8px;\rpadding-bottom: 8px;\rpadding-left: 5px;\rpadding-right: 5px;\r}\r#ucixnzhxoi .gt_first_grand_summary_row {\rpadding-top: 8px;\rpadding-bottom: 8px;\rpadding-left: 5px;\rpadding-right: 5px;\rborder-top-style: double;\rborder-top-width: 6px;\rborder-top-color: #D3D3D3;\r}\r#ucixnzhxoi .gt_striped {\rbackground-color: rgba(128, 128, 128, 0.05);\r}\r#ucixnzhxoi .gt_table_body {\rborder-top-style: solid;\rborder-top-width: 2px;\rborder-top-color: #D3D3D3;\rborder-bottom-style: solid;\rborder-bottom-width: 2px;\rborder-bottom-color: #D3D3D3;\r}\r#ucixnzhxoi .gt_footnotes {\rcolor: #333333;\rbackground-color: #FFFFFF;\rborder-bottom-style: none;\rborder-bottom-width: 2px;\rborder-bottom-color: #D3D3D3;\rborder-left-style: none;\rborder-left-width: 2px;\rborder-left-color: #D3D3D3;\rborder-right-style: none;\rborder-right-width: 2px;\rborder-right-color: #D3D3D3;\r}\r#ucixnzhxoi .gt_footnote {\rmargin: 0px;\rfont-size: 90%;\rpadding: 4px;\r}\r#ucixnzhxoi .gt_sourcenotes {\rcolor: #333333;\rbackground-color: #FFFFFF;\rborder-bottom-style: none;\rborder-bottom-width: 2px;\rborder-bottom-color: #D3D3D3;\rborder-left-style: none;\rborder-left-width: 2px;\rborder-left-color: #D3D3D3;\rborder-right-style: none;\rborder-right-width: 2px;\rborder-right-color: #D3D3D3;\r}\r#ucixnzhxoi .gt_sourcenote {\rfont-size: 90%;\rpadding: 4px;\r}\r#ucixnzhxoi .gt_left {\rtext-align: left;\r}\r#ucixnzhxoi .gt_center {\rtext-align: center;\r}\r#ucixnzhxoi .gt_right {\rtext-align: right;\rfont-variant-numeric: tabular-nums;\r}\r#ucixnzhxoi .gt_font_normal {\rfont-weight: normal;\r}\r#ucixnzhxoi .gt_font_bold {\rfont-weight: bold;\r}\r#ucixnzhxoi .gt_font_italic {\rfont-style: italic;\r}\r#ucixnzhxoi .gt_super {\rfont-size: 65%;\r}\r#ucixnzhxoi .gt_footnote_marks {\rfont-style: italic;\rfont-weight: normal;\rfont-size: 65%;\r}\r\r\rTeam\rPoints per possession\r\r\r\rMean\rSD\r\r\rSouthside Flyers\r1.057\r0.117\rTownsville Fire\r0.935\r0.118\rMelbourne Boomers\r0.866\r0.120\rUC Capitals\r0.865\r0.117\rAdelaide Lightning\r0.794\r0.114\rPerth Lynx\r0.793\r0.142\rSydney Uni Flames\r0.760\r0.120\rBendigo Spirit\r0.716\r0.123\r\r\rData source: {wnblr} R package and WNBL.com.au | Table: @jacquietran\r\r\r\r\rIn the 2020 regular season, the Southside Flyers were far and away the most efficient scoring team, in terms of converting possessions to points. They were the only team to average over 1 point per possession across the season (although Townsville got close).\n\rPoints per possession at the per-game level\rSummary stats are useful, but their very nature is blunt: condensing team performance across multiple games into a singular numbers. So…why not have both?\n# Merge per-game stats with summary stats\rleft_join(ppp_2020, ppp_2020_summarised,\rby = \"team_name\") %%\r# Create a column for labelling means\rmutate(\rppp_mean_label = format(\rpoints_per_possession_mean, nsmall = 3)) %%\r# Set order of factor levels in team_name\rmutate(\rteam_name = factor(\rteam_name, levels = c(\r\"Bendigo Spirit\",\r\"Sydney Uni Flames\",\r\"Perth Lynx\",\r\"Adelaide Lightning\",\r\"UC Capitals\",\r\"Melbourne Boomers\",\r\"Townsville Fire\",\r\"Southside Flyers\"))) - ppp_2020_tidy\rWith the summary stats and per game stats merged, we can visualise points per possession for each team and each game played in the 2020 season, alongside each team’s mean and standard deviation values for points per possession.\n# Set custom elements up -------------------------------------------------------\r# Import Google Fonts\rfont_add_google(name = \"Exo 2\", family = \"exo\")\rfont_add_google(name = \"Fira Sans Extra Condensed\", family = \"firacondensed\")\r# Set palette for fill based on uniform colours\rteam_pal_fill \rWe get more of the story when we combine per-game numbers and season averages for each team. A few things that I noticed from plotting points per possession:\n\rSouthside’s worst was not that bad: Southside’s worst record was 0.821 points per possession, in a loss to the Melbourne Boomers. This mark would still be good enough for 5th best in the league if ranked alongside team season averages.\rWhich Perth Lynx will show up today? The summary stats table above shows that Perth had the largest standard deviation of all teams. By plotting per-game stats, the spread of their points-per-possession performances becomes clear.\r\rTheir worst per-game performance was the worst of all teams in the 2020 season (even poorer than the worst showing from Bendigo, the wooden-spooners).\rTheir best performance was 1.083 points per possession in a win against Bendigo.\r\rMaximising reward for effort: The top 4 teams on average points per possession were—as you may have guessed—also the top 4 teams on the ladder. In 2020, teams needed to be scoring at least 0.86 points per possession, on average, to qualify for finals.\r\r\r\r",
+  "wordCount" : "2037",
+  "inLanguage": "en",
+  "datePublished": "2021-12-02T00:00:00Z",
+  "dateModified": "2021-12-02T00:00:00Z",
+  "author":{
+    "@type": "Person",
+    "name": "Jacquie Tran"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://underthehood.jacquietran.com/post/wnbl-points-per-possession/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Under The Hood",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://underthehood.jacquietran.com/favicon.ico"
+    }
+  }
+}
+</script>
+</head>
+
+<body class="" id="top">
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add('dark');
+    } else if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="https://underthehood.jacquietran.com" accesskey="h" title="Under The Hood (Alt + H)">Under The Hood</a>
+            <span class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </span>
+        </div>
+        <ul id="menu">
+            <li>
+                <a href="https://underthehood.jacquietran.com/about/" title="about">
+                    <span>about</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://underthehood.jacquietran.com/post/" title="posts">
+                    <span>posts</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://underthehood.jacquietran.com/tags/" title="tags">
+                    <span>tags</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    
+    <h1 class="post-title">
+      WNBL advanced stats: Points per possession
+    </h1>
+    <div class="post-meta"><span title='2021-12-02 00:00:00 +0000 UTC'>December 2, 2021</span>&nbsp;·&nbsp;Jacquie Tran
+
+</div>
+  </header> 
+  <div class="post-content">
+<script src="https://underthehood.jacquietran.com/post/wnbl-points-per-possession/index_files/header-attrs/header-attrs.js"></script>
+
+
+<div id="introduction" class="section level1">
+<h1>Introduction</h1>
+<p>On Tuesday, I launched the alpha version of the <code>wnblr</code> package, yahoooo!! (Guess I better write a blog post about that sometime.) <code>wnblr</code> currently contains live stats recorded from WNBL games played from 2014 to 2020, inclusive. You can find it here: <a href="https://github.com/jacquietran/wnblr" class="uri">https://github.com/jacquietran/wnblr</a></p>
+<p>Over on Twitter, I flagged down Paul Flynn (Assistant Coach, Melbourne Boomers WNBL) to take a look-see, and he asked for some specific advanced stats that can be derived from the standard game stats that are typically recorded (e.g., box score stats like points scored, number of rebounds, and so on):</p>
+<center>
+<blockquote class="twitter-tweet">
+<p lang="en" dir="ltr">
+Would be keen to view any data on points per possession, pace and correlating eFG% over the same period.
+</p>
+— Paul Flynn (<span class="citation">@paulflynn611</span>) <a href="https://twitter.com/paulflynn611/status/1466018173375836161?ref_src=twsrc%5Etfw">December 1, 2021</a>
+</blockquote>
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+</center>
+<p>First cab off the rank: <strong>points per possession.</strong></p>
+<p>(Don’t worry, coach: I’ll get to the other metrics in due course!)</p>
+</div>
+<div id="getting-started" class="section level1">
+<h1>Getting started</h1>
+<div id="load-r-libraries" class="section level2">
+<h2>Load R libraries</h2>
+<p>Load up the libraries we need. The <code>wnblr</code> package currently includes 4 built-in data sets with various game statistics. For this analysis, we’re going to use the <code>box_scores</code> data which is recorded at the team-level.</p>
+<pre class="r"><code># Install the development version of {wnblr} from Github
+# remotes::install_github(&quot;jacquietran/wnblr&quot;)
+
+# Load libraries
+library(wnblr)      # for retrieving WNBL game stats
+library(dplyr)      # for tidying data
+library(tidyr)      # for tidying data
+library(gt)         # for making data tables
+library(showtext)   # for loading custom fonts for plots
+library(ggplot2)    # for plotting
+library(ggbeeswarm) # for plotting
+library(ggtext)     # for formatting text in ggplot2 objects</code></pre>
+</div>
+<div id="tidying-data" class="section level2">
+<h2>Tidying data</h2>
+<p>The <strong>points per possession</strong> metric is what it says on the tin: the number of points that a team scores per possession. Higher values are better. Values over 1 mean that a team has managed to score at least 1 point for each possession, which would come about from giving up fewer turnovers and having fewer missed shots that are rebounded by the opposition.</p>
+<p>Per <a href="https://www.nbastuffer.com/analytics101/points-per-possession-ppp/">NBAStuffer.com</a>, points per possession is calculated as follows:</p>
+<blockquote>
+<p>Points per possession = PTS / (FGA + (0.44 * FTA) + TO)</p>
+</blockquote>
+<p>(Where: PTS = Total points scored; FGA = Field goals attempted; FTA = Free throws attempted; TO = Turnovers)</p>
+</div>
+<div id="taking-a-closer-look-at-the-2020-season" class="section level2">
+<h2>Taking a closer look at the 2020 season</h2>
+<p>With the 2021 WNBL season kicking off this weekend, it might be worth looking at how teams performed on the <code>points_per_possession</code> metric in the 2020 regular season.</p>
+<pre class="r"><code># Subset to games in the 2020 season -------------------------------------------
+
+points_per_possession %&gt;%
+  filter(season == 2020) %&gt;%
+  # Exclude finals games
+  filter(!page_id %in% c(
+    &quot;1809808&quot;, &quot;1809807&quot;, &quot;1809809&quot;, &quot;1809810&quot;)
+    ) -&gt; ppp_2020
+
+# Calculate summary stats ------------------------------------------------------
+
+ppp_2020 %&gt;%
+  group_by(team_name) %&gt;%
+  summarise(
+    points_per_possession_mean = round(
+      mean(points_per_possession), 3),
+    points_per_possession_sd = round(
+      sd(points_per_possession), 3),
+    points_per_possession_sd_lower = points_per_possession_mean -
+      points_per_possession_sd,
+    points_per_possession_sd_higher = points_per_possession_mean +
+      points_per_possession_sd) %&gt;%
+  ungroup() -&gt; ppp_2020_summarised</code></pre>
+<p>We can get a sense of which teams typically had high or low scoring efficiency by looking at whole-season summary stats. The table below shows each team’s mean (i.e., averages) and standard deviation (SD) for points per possession.</p>
+<pre class="r"><code># Present summary stats in a table ---------------------------------------------
+
+ppp_2020_summarised %&gt;%
+  select(team_name, points_per_possession_mean, points_per_possession_sd) %&gt;%
+  arrange(desc(points_per_possession_mean)) %&gt;%
+  # Rename columns for human readability
+  rename(
+    Team = team_name,
+    Mean = points_per_possession_mean,
+    SD = points_per_possession_sd) %&gt;%
+  gt() %&gt;%
+  data_color(
+    columns = &quot;Mean&quot;,
+    colors = scales::col_numeric(
+      palette = c(&quot;#ffeec2&quot;, &quot;#ee6f00&quot;),
+      domain = c(min(Mean), max(Mean)))) %&gt;%
+  data_color(
+    columns = &quot;SD&quot;,
+    colors = scales::col_numeric(
+      palette = c(&quot;#b6d8ff&quot;, &quot;#3090ff&quot;),
+      domain = c(min(SD), max(SD)))) %&gt;%
+  tab_spanner(
+    label = &quot;Points per possession&quot;,
+    columns = c(Mean, SD)) %&gt;%
+  tab_source_note(
+    source_note = md(
+      &quot;**Data source:** {wnblr} R package and WNBL.com.au | **Table:** @jacquietran&quot;)
+    ) %&gt;%
+  tab_options(
+    table.width = pct(70))</code></pre>
+<div id="ucixnzhxoi" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>html {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
+}
+
+#ucixnzhxoi .gt_table {
+  display: table;
+  border-collapse: collapse;
+  margin-left: auto;
+  margin-right: auto;
+  color: #333333;
+  font-size: 16px;
+  font-weight: normal;
+  font-style: normal;
+  background-color: #FFFFFF;
+  width: 70%;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #A8A8A8;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #A8A8A8;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+}
+
+#ucixnzhxoi .gt_heading {
+  background-color: #FFFFFF;
+  text-align: center;
+  border-bottom-color: #FFFFFF;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#ucixnzhxoi .gt_title {
+  color: #333333;
+  font-size: 125%;
+  font-weight: initial;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  border-bottom-color: #FFFFFF;
+  border-bottom-width: 0;
+}
+
+#ucixnzhxoi .gt_subtitle {
+  color: #333333;
+  font-size: 85%;
+  font-weight: initial;
+  padding-top: 0;
+  padding-bottom: 6px;
+  border-top-color: #FFFFFF;
+  border-top-width: 0;
+}
+
+#ucixnzhxoi .gt_bottom_border {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#ucixnzhxoi .gt_col_headings {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#ucixnzhxoi .gt_col_heading {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  overflow-x: hidden;
+}
+
+#ucixnzhxoi .gt_column_spanner_outer {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+#ucixnzhxoi .gt_column_spanner_outer:first-child {
+  padding-left: 0;
+}
+
+#ucixnzhxoi .gt_column_spanner_outer:last-child {
+  padding-right: 0;
+}
+
+#ucixnzhxoi .gt_column_spanner {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  overflow-x: hidden;
+  display: inline-block;
+  width: 100%;
+}
+
+#ucixnzhxoi .gt_group_heading {
+  padding: 8px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#ucixnzhxoi .gt_empty_group_heading {
+  padding: 0.5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#ucixnzhxoi .gt_from_md > :first-child {
+  margin-top: 0;
+}
+
+#ucixnzhxoi .gt_from_md > :last-child {
+  margin-bottom: 0;
+}
+
+#ucixnzhxoi .gt_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin: 10px;
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  overflow-x: hidden;
+}
+
+#ucixnzhxoi .gt_stub {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 12px;
+}
+
+#ucixnzhxoi .gt_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#ucixnzhxoi .gt_first_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+}
+
+#ucixnzhxoi .gt_grand_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#ucixnzhxoi .gt_first_grand_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: double;
+  border-top-width: 6px;
+  border-top-color: #D3D3D3;
+}
+
+#ucixnzhxoi .gt_striped {
+  background-color: rgba(128, 128, 128, 0.05);
+}
+
+#ucixnzhxoi .gt_table_body {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#ucixnzhxoi .gt_footnotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#ucixnzhxoi .gt_footnote {
+  margin: 0px;
+  font-size: 90%;
+  padding: 4px;
+}
+
+#ucixnzhxoi .gt_sourcenotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#ucixnzhxoi .gt_sourcenote {
+  font-size: 90%;
+  padding: 4px;
+}
+
+#ucixnzhxoi .gt_left {
+  text-align: left;
+}
+
+#ucixnzhxoi .gt_center {
+  text-align: center;
+}
+
+#ucixnzhxoi .gt_right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+#ucixnzhxoi .gt_font_normal {
+  font-weight: normal;
+}
+
+#ucixnzhxoi .gt_font_bold {
+  font-weight: bold;
+}
+
+#ucixnzhxoi .gt_font_italic {
+  font-style: italic;
+}
+
+#ucixnzhxoi .gt_super {
+  font-size: 65%;
+}
+
+#ucixnzhxoi .gt_footnote_marks {
+  font-style: italic;
+  font-weight: normal;
+  font-size: 65%;
+}
+</style>
+<table class="gt_table">
+  
+  <thead class="gt_col_headings">
+    <tr>
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="2" colspan="1">Team</th>
+      <th class="gt_center gt_columns_top_border gt_column_spanner_outer" rowspan="1" colspan="2">
+        <span class="gt_column_spanner">Points per possession</span>
+      </th>
+    </tr>
+    <tr>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1">Mean</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1">SD</th>
+    </tr>
+  </thead>
+  <tbody class="gt_table_body">
+    <tr><td class="gt_row gt_left">Southside Flyers</td>
+<td class="gt_row gt_right" style="background-color: #EE6F00; color: #000000;">1.057</td>
+<td class="gt_row gt_right" style="background-color: #ACD0FF; color: #000000;">0.117</td></tr>
+    <tr><td class="gt_row gt_left">Townsville Fire</td>
+<td class="gt_row gt_right" style="background-color: #FB9E52; color: #000000;">0.935</td>
+<td class="gt_row gt_right" style="background-color: #A8CDFF; color: #000000;">0.118</td></tr>
+    <tr><td class="gt_row gt_left">Melbourne Boomers</td>
+<td class="gt_row gt_right" style="background-color: #FFB775; color: #000000;">0.866</td>
+<td class="gt_row gt_right" style="background-color: #A1C8FF; color: #000000;">0.120</td></tr>
+    <tr><td class="gt_row gt_left">UC Capitals</td>
+<td class="gt_row gt_right" style="background-color: #FFB776; color: #000000;">0.865</td>
+<td class="gt_row gt_right" style="background-color: #ACD0FF; color: #000000;">0.117</td></tr>
+    <tr><td class="gt_row gt_left">Adelaide Lightning</td>
+<td class="gt_row gt_right" style="background-color: #FFD19A; color: #000000;">0.794</td>
+<td class="gt_row gt_right" style="background-color: #B6D8FF; color: #000000;">0.114</td></tr>
+    <tr><td class="gt_row gt_left">Perth Lynx</td>
+<td class="gt_row gt_right" style="background-color: #FFD29A; color: #000000;">0.793</td>
+<td class="gt_row gt_right" style="background-color: #3090FF; color: #000000;">0.142</td></tr>
+    <tr><td class="gt_row gt_left">Sydney Uni Flames</td>
+<td class="gt_row gt_right" style="background-color: #FFDEAB; color: #000000;">0.760</td>
+<td class="gt_row gt_right" style="background-color: #A1C8FF; color: #000000;">0.120</td></tr>
+    <tr><td class="gt_row gt_left">Bendigo Spirit</td>
+<td class="gt_row gt_right" style="background-color: #FFEEC2; color: #000000;">0.716</td>
+<td class="gt_row gt_right" style="background-color: #96C0FF; color: #000000;">0.123</td></tr>
+  </tbody>
+  <tfoot class="gt_sourcenotes">
+    <tr>
+      <td class="gt_sourcenote" colspan="3"><strong>Data source:</strong> {wnblr} R package and WNBL.com.au | <strong>Table:</strong> @jacquietran</td>
+    </tr>
+  </tfoot>
+  
+</table>
+</div>
+<p>In the 2020 regular season, the Southside Flyers were far and away the most efficient scoring team, in terms of converting possessions to points. They were the only team to average over 1 point per possession across the season (although Townsville got close).</p>
+</div>
+<div id="points-per-possession-at-the-per-game-level" class="section level2">
+<h2>Points per possession at the per-game level</h2>
+<p>Summary stats are useful, but their very nature is blunt: condensing team performance across multiple games into a singular numbers. So…why not have both?</p>
+<pre class="r"><code># Merge per-game stats with summary stats
+left_join(ppp_2020, ppp_2020_summarised,
+          by = &quot;team_name&quot;) %&gt;%
+  # Create a column for labelling means
+  mutate(
+    ppp_mean_label = format(
+      points_per_possession_mean, nsmall = 3)) %&gt;%
+  # Set order of factor levels in team_name
+  mutate(
+    team_name = factor(
+      team_name, levels = c(
+        &quot;Bendigo Spirit&quot;,
+        &quot;Sydney Uni Flames&quot;,
+        &quot;Perth Lynx&quot;,
+        &quot;Adelaide Lightning&quot;,
+        &quot;UC Capitals&quot;,
+        &quot;Melbourne Boomers&quot;,
+        &quot;Townsville Fire&quot;,
+        &quot;Southside Flyers&quot;))) -&gt; ppp_2020_tidy</code></pre>
+<p>With the summary stats and per game stats merged, we can visualise points per possession for each team and each game played in the 2020 season, alongside each team’s mean and standard deviation values for points per possession.</p>
+<pre class="r"><code># Set custom elements up -------------------------------------------------------
+
+# Import Google Fonts
+font_add_google(name = &quot;Exo 2&quot;, family = &quot;exo&quot;)
+font_add_google(name = &quot;Fira Sans Extra Condensed&quot;, family = &quot;firacondensed&quot;)
+
+# Set palette for fill based on uniform colours
+team_pal_fill &lt;- c(
+  &quot;Southside Flyers&quot; = &quot;#53bae7&quot;,
+  &quot;Townsville Fire&quot; = &quot;#ed771f&quot;,
+  &quot;Melbourne Boomers&quot; = &quot;#3f0b5d&quot;,
+  &quot;UC Capitals&quot; = &quot;#00b5e2&quot;,
+  &quot;Adelaide Lightning&quot; = &quot;#f64e99&quot;,
+  &quot;Perth Lynx&quot; = &quot;#fe0000&quot;,
+  &quot;Sydney Uni Flames&quot; = &quot;#1c2a59&quot;,
+  &quot;Bendigo Spirit&quot; = &quot;#2a6dfc&quot;)
+
+# Set palette for colour based on uniform colours
+team_pal_colour &lt;- c(
+  &quot;Southside Flyers&quot; = &quot;#FFFFFF&quot;,
+  &quot;Townsville Fire&quot; = &quot;#000000&quot;,
+  &quot;Melbourne Boomers&quot; = &quot;#f4ee20&quot;,
+  &quot;UC Capitals&quot; = &quot;#000000&quot;,
+  &quot;Adelaide Lightning&quot; = &quot;#0e1f4a&quot;,
+  &quot;Perth Lynx&quot; = &quot;#000000&quot;,
+  &quot;Sydney Uni Flames&quot; = &quot;#fbc549&quot;,
+  &quot;Bendigo Spirit&quot; = &quot;#ffc438&quot;)
+
+# Build plot -------------------------------------------------------------------
+
+showtext_auto()
+
+p &lt;- ggplot(
+  ppp_2020_tidy,
+  aes(x = points_per_possession, y = team_name,
+      colour = team_name, fill = team_name))
+p &lt;- p + geom_jitter(
+  height = 0.2, shape = 21, alpha = 0.5, size = 7, stroke = 1)
+p &lt;- p + geom_linerange(
+  aes(xmin = points_per_possession_sd_lower,
+      xmax = points_per_possession_sd_higher),
+  colour = &quot;#FFFFFF&quot;, size = 1, linetype = &quot;dotted&quot;)
+p &lt;- p + geom_point(
+  aes(x = points_per_possession_mean, y = team_name),
+  colour = &quot;#FFFFFF&quot;, shape = 10, size = 6, stroke = 1.5)
+p &lt;- p + geom_text(
+  aes(x = points_per_possession_mean, y = team_name,
+      label = ppp_mean_label),
+  hjust = -0.3, vjust = -0.4, colour = &quot;#000000&quot;, fontface = &quot;bold&quot;,
+  size = 12, family = &quot;firacondensed&quot;, alpha = 0.2)
+p &lt;- p + geom_text(
+  aes(x = points_per_possession_mean, y = team_name,
+      label = ppp_mean_label),
+  hjust = -0.25, vjust = -0.5, colour = &quot;#FFFFFF&quot;, fontface = &quot;bold&quot;,
+  size = 12, family = &quot;firacondensed&quot;)
+p &lt;- p + scale_x_continuous(
+  limits = c(0.5, 1.3),
+  breaks = seq(0.6, 1.2, by = 0.2))
+p &lt;- p + scale_fill_manual(values = team_pal_fill)
+p &lt;- p + scale_colour_manual(values = team_pal_colour)
+p &lt;- p + labs(
+  title = &quot;Off to a Flyer in the 2020 WNBL season&quot;,
+  subtitle = &quot;Filled points = per-game values. Cross hairs = season averages. Dotted lines = ±1SD.&quot;,
+  x = NULL, y = NULL,
+  caption = &quot;**Data source:** {wnblr} &amp; WNBL.com.au | **Plot:** @jacquietran&quot;)
+p &lt;- p + ggdark::dark_mode()
+p &lt;- p + theme(
+  text = element_text(
+    size = 48, family = &quot;firacondensed&quot;, colour = &quot;#FFFFFF&quot;),
+  plot.title = element_text(
+    size = 48, family = &quot;exo&quot;, face = &quot;bold&quot;),
+  plot.subtitle = element_text(
+    size = 28, family = &quot;firacondensed&quot;, margin=margin(0,0,15,0)),
+  plot.caption = element_markdown(size = NULL, margin=margin(15,0,0,0)),
+  axis.text = element_text(colour = &quot;#FFFFFF&quot;),
+  plot.margin = unit(c(0.5,0.5,0.5,0.5), &quot;cm&quot;),
+  legend.position = &quot;none&quot;)
+plot_ppp_2020 &lt;- p
+
+# Display plot
+# showtext_auto(FALSE) is run after the plot has been displayed
+plot_ppp_2020</code></pre>
+<p><img src="https://underthehood.jacquietran.com/post/wnbl-points-per-possession/index_files/figure-html/plot_ppp_2020-1.png" width="864" /></p>
+<p>We get more of the story when we combine per-game numbers and season averages for each team. A few things that I noticed from plotting points per possession:</p>
+<ul>
+<li><strong>Southside’s worst was not that bad:</strong> Southside’s worst record was 0.821 points per possession, in a loss to the Melbourne Boomers. This mark would still be good enough for 5th best in the league if ranked alongside team season averages.</li>
+<li><strong>Which Perth Lynx will show up today?</strong> The summary stats table above shows that Perth had the largest standard deviation of all teams. By plotting per-game stats, the spread of their points-per-possession performances becomes clear.
+<ul>
+<li>Their worst per-game performance was the worst of all teams in the 2020 season (even poorer than the worst showing from Bendigo, the wooden-spooners).</li>
+<li>Their best performance was 1.083 points per possession in a win against Bendigo.</li>
+</ul></li>
+<li><strong>Maximising reward for effort:</strong> The top 4 teams on average points per possession were—as you may have guessed—also the top 4 teams on the ladder. In 2020, teams needed to be scoring at least 0.86 points per possession, on average, to qualify for finals.</li>
+</ul>
+</div>
+</div>
+
+
+  </div>
+
+  <footer class="post-footer">
+    <ul class="post-tags">
+      <li><a href="https://underthehood.jacquietran.com/tags/womens-sport/">women&#39;s sport</a></li>
+      <li><a href="https://underthehood.jacquietran.com/tags/basketball/">basketball</a></li>
+      <li><a href="https://underthehood.jacquietran.com/tags/sports-analytics/">sports analytics</a></li>
+      <li><a href="https://underthehood.jacquietran.com/tags/r-stats/">r stats</a></li>
+    </ul>
+  </footer>
+</article>
+    </main>
+    
+<footer class="footer">
+    <span>&copy; 2025 <a href="https://underthehood.jacquietran.com">Under The Hood</a></span>
+    <span>
+        Powered by
+        <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &
+        <a href="https://git.io/hugopapermod" rel="noopener" target="_blank">PaperMod</a>
+    </span>
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+</body>
+
+</html>

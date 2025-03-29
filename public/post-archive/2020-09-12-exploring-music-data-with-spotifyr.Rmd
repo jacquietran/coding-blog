@@ -1,0 +1,99 @@
+---
+title: Exploring music data with {spotifyr}
+author: Jacquie Tran
+date: '2020-09-12'
+slug: exploring-music-data-with-spotifyr
+categories:
+  - Music
+tags:
+  - music
+  - spotifyr
+draft: yes
+---
+
+Load up the necessary R packages.
+
+```{r load_libraries, message = FALSE}
+
+library(spotifyr)
+library(dplyr)
+library(tidyr)
+library(ggplot2)
+
+```
+
+Retrieve data using the Spotify API.
+
+```{r import_data}
+
+# API authentication details already stored as environment variables
+
+# Retrieve access token
+access_token <- get_spotify_access_token()
+
+# Retrieve audio features of selected playlists
+# that I listen to while running
+playlists_for_running <- get_playlist_audio_features(
+  username = "jacquietran",
+  playlist_uris = c("51vGYzueZGouaZm1ZqcKDP", # Aug 2020
+                    "0KZbG6sTuMvBMNVc6g0Xbt", # Summer runnin'
+                    "66mV0cj4SIGF89AfyP2UKM"), # Run things
+    authorization = access_token)
+
+```
+
+Tidy up the data we've retrieved to focus on only the variables we need.
+
+```{r tidy_data}
+
+playlists_for_running %>%
+  select(playlist_id, playlist_name, danceability, energy, key, key_name, mode,
+         mode_name, key_mode, loudness, speechiness, acousticness,
+         instrumentalness, liveness, valence, tempo, track.id, time_signature,
+         track.artists, track.name) %>%
+  unnest(track.artists) %>%
+  select(-href, -id, -type, -uri, -external_urls.spotify) %>%
+  rename(track_artists = name) -> playlists_for_running_tidy
+
+```
+
+Create a subset of the tidy data that focuses on the audio feature variables, and reshapes it into long format for plotting.
+
+```{r audio_features}
+
+# Subset to audio features -----------------------------------------------------
+
+playlists_for_running_tidy %>%
+  select(-contains("key"), -contains("mode"), -time_signature) %>%
+  pivot_longer(
+    cols = c("danceability", "energy", "loudness", "speechiness",
+             "acousticness", "instrumentalness", "liveness", "valence",
+             "tempo"),
+    names_to = "audio_feature_name",
+    values_to = "audio_feature_value") -> playlists_audio_features_long
+
+```
+
+Build a plot to compare the audio features of the 3 playlists I usually choose from when I'm going for a run.
+
+```{r plot}
+
+# Build plot -------------------------------------------------------------------
+
+p <- ggplot(
+  playlists_audio_features_long,
+  aes(x = audio_feature_value, y = playlist_name,
+      group = playlist_name, colour = audio_feature_name))
+p <- p + facet_wrap(~ audio_feature_name, nrow = 3, scales = "free_x")
+p <- p + geom_boxplot(
+  width = 0.75, size = 1, outlier.size = -1)
+p <- p + geom_jitter(
+  height = 0.2, alpha = 0.25)
+p <- p + theme(
+  legend.position = "none",
+  panel.spacing = unit("1", "lines"))
+
+# Display plot -----------------------------------------------------------------
+p
+
+```

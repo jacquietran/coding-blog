@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>How much do you get paid? Part III - Comparison by discipline | Under The Hood</title>
+<meta name="keywords" content="sport science, strength and conditioning, football, salaries, soccer" />
+<meta name="description" content="IntroductionThis post is the third in a series - to get up to speed, have a read through the first post and the second post. In this series, I will show how I created the plots that Aiden published on Twitter here and here, alongside some commentary about the choices I made throughout the process and my own interpretations of the results.
+Getting startedLoad up the data and the libraries as we’ve done before.">
+<meta name="author" content="Jacquie Tran">
+<link rel="canonical" href="https://underthehood.jacquietran.com/post/how-much-do-you-get-paid-part-3/" />
+<link crossorigin="anonymous" href="/assets/css/stylesheet.min.c88963fe2d79462000fd0fb1b3737783c32855d340583e4523343f8735c787f0.css" integrity="sha256-yIlj/i15RiAA/Q&#43;xs3N3g8MoVdNAWD5FIzQ/hzXHh/A=" rel="preload stylesheet" as="style">
+<script defer crossorigin="anonymous" src="/assets/js/highlight.min.7680afc38aa6b15ddf158a4f3780b7b1f7dde7e91d26f073e6229bb7a0793c92.js" integrity="sha256-doCvw4qmsV3fFYpPN4C3sffd5&#43;kdJvBz5iKbt6B5PJI="
+    onload="hljs.initHighlightingOnLoad();"></script>
+<link rel="icon" href="https://underthehood.jacquietran.com/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="https://underthehood.jacquietran.com/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://underthehood.jacquietran.com/favicon-32x32.png">
+<link rel="apple-touch-icon" href="https://underthehood.jacquietran.com/apple-touch-icon.png">
+<link rel="mask-icon" href="https://underthehood.jacquietran.com/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --hljs-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript><meta property="og:title" content="How much do you get paid? Part III - Comparison by discipline" />
+<meta property="og:description" content="IntroductionThis post is the third in a series - to get up to speed, have a read through the first post and the second post. In this series, I will show how I created the plots that Aiden published on Twitter here and here, alongside some commentary about the choices I made throughout the process and my own interpretations of the results.
+Getting startedLoad up the data and the libraries as we’ve done before." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://underthehood.jacquietran.com/post/how-much-do-you-get-paid-part-3/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2018-01-04T00:00:00&#43;00:00" />
+<meta property="article:modified_time" content="2018-01-04T00:00:00&#43;00:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="How much do you get paid? Part III - Comparison by discipline"/>
+<meta name="twitter:description" content="IntroductionThis post is the third in a series - to get up to speed, have a read through the first post and the second post. In this series, I will show how I created the plots that Aiden published on Twitter here and here, alongside some commentary about the choices I made throughout the process and my own interpretations of the results.
+Getting startedLoad up the data and the libraries as we’ve done before."/>
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "Posts",
+      "item": "https://underthehood.jacquietran.com/post/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  3 ,
+      "name": "How much do you get paid? Part III - Comparison by discipline",
+      "item": "https://underthehood.jacquietran.com/post/how-much-do-you-get-paid-part-3/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "How much do you get paid? Part III - Comparison by discipline",
+  "name": "How much do you get paid? Part III - Comparison by discipline",
+  "description": "Introduction\rThis post is the third in a series - to get up to speed, have a read through the first post and the second post. In this series, I will show how I created the plots that Aiden published on Twitter here and here, alongside some commentary about the choices I made throughout the process and my own interpretations of the results.\n\rGetting started\rLoad up the data and the libraries as we’ve done before.",
+  "keywords": [
+    "sport science", "strength and conditioning", "football", "salaries", "soccer"
+  ],
+  "articleBody": "\r\r\rIntroduction\rThis post is the third in a series - to get up to speed, have a read through the first post and the second post. In this series, I will show how I created the plots that Aiden published on Twitter here and here, alongside some commentary about the choices I made throughout the process and my own interpretations of the results.\n\rGetting started\rLoad up the data and the libraries as we’ve done before.\nlibrary(readr)\rlibrary(knitr)\rlibrary(kableExtra)\rlibrary(ggplot2)\rlibrary(dplyr)\r# Read the data into R\rdataSource \r\rSalaries by league and by discipline\rLet’s compare how sport scientists and S\u0026C coaches are paid in the different leagues.\n# Subset of data frame to exclude dept == NA\rsoccerSalariesData3 %\rfilter(!is.na(dept))\rsoccerSalariesData3$dept \r\rNote: P = Premier League, SP = Scottish Premiership, C = Championship, L1 = League 1, L2 = League 2.\r\rHere is the breakdown of median salaries:\n# Calculate median salaries by league and discipline\rmedianSalariesByLeagueAndDept %\rgroup_by(leagueOfFirstTeam, dept) %%\rsummarise(median = median(salaryGBP, na.rm = TRUE))\r# Reorder values by $dept, then by $leagueOfFirstTeam\rmedianSalariesByLeagueAndDept %\rkable(\"html\") %%\rkable_styling()\r\r\rLeague in which first team plays\r\rDiscipline\r\rMedian salary (GBP, £)\r\r\r\r\r\rPremier League\r\rS\u0026C\r\r25000\r\r\r\rChampionship\r\r\r26500\r\r\r\rLeague 1\r\r\r25000\r\r\r\rLeague 2\r\r\r20000\r\r\r\rPremier League\r\rSport Science\r\r20000\r\r\r\rScottish Premiership\r\r\r26000\r\r\r\rChampionship\r\r\r21000\r\r\r\rLeague 1\r\r\r18500\r\r\r\rLeague 2\r\r\r13000\r\r\r\rPremier League\r\rBoth\r\r7200\r\r\r\rChampionship\r\r\r21000\r\r\r\rLeague 1\r\r\r17000\r\r\r\rLeague 2\r\r\r16000\r\r\r\r\rKey findings\r1. Within-league within-discipline variation is substantial in most cases. Where there is not considerable variation, it is probably due to limited representation within that particular sub-group (e.g., Scottish Premiership sport scientists). Some variation is to be expected, since respondents of different job seniority levels completed the survey. However, the salary variation seen here is in tens of thousands of British Pounds! Seeing this does not breed confidence that a systematic process is used to set performance staff salaries.\nIn real terms, this means that there are individuals performing similar duties for clubs competing in the same league, but somehow these individuals are being paid wildly different salaries. For instance, three respondents are Lead Academy S\u0026C Coaches for Premier League clubs with salaries of £19,000, £22,000, and £30,000. Similarly, several respondents are Head Academy Sport Scientists for Championship clubs; the lowest salary among them is £27,000 while the highest is £40,000.\nWithin-league within-discipline variance could be partly accounted for by differences in qualifications, however 80 out of the 102 respondents hold postgraduate degrees (e.g., Postgraduate Certificate, Masters, PhD). It could also represent varying levels of experience or years of service at a particular club, but unfortunately these items were not included in the questionnaire.\n2. Within four of the five leagues, S\u0026C coaches are generally paid higher salaries than sport scientists. For League 2, the comparison between disciplines is tenuous because of the small number of responses within each discipline (S\u0026C coaches at League 2 = 1, sport scientists at League 2 = 5). No respondents were S\u0026C coaches working for Scottish Premiership clubs.\n3. For S\u0026C coaches and sport scientists, the typical salary for those working in League 1 clubs is not remarkably different to those working for clubs in higher tier leagues (e.g., Premier League, Championship). In part 1 of this series, we plotted salaries by league and by ‘competitive level’ (whether a respondent works for their club’s first team or academy program). This earlier analysis seemed to show a ‘salary gradient’, where typical salaries decreased linearly from higher to lower tier leagues. This pattern is not so clear in this case. However, the true nature of differences or non-differences between leagues would become more apparent with more survey responses, particularly from individuals who fit into the underrepresented sub-groups.\n4. A small number of individuals fulfill roles than span both S\u0026C and sport science disciplines. Given that we’re talking about n = 6 here, I’m less focused on the reported salaries as such. What I am interested in is the nature of these dual roles. Is an individual’s workload split between the two disciplines (e.g., 0.5 S\u0026C and 0.5 sport science, or some other proportions)? Are such jobs, in reality, two jobs rolled into one, each of them requiring more than a typical half-time commitment? Or are we just more verbose with our job titles, while retaining the features of jobs from previous eras? Maybe the catch-all ‘Fitness Trainer’ title has simply been replaced by ‘S\u0026C Coach / Sport Scientist’!\nGiving consideration to these questions is not just an exercise in discussing semantics (although I do love semantics). Addressing them is crucial for ensuring that individuals in such roles:\n\rHave sustainable distribution of workloads;\rAre appropriately valued for their specialist knowledge and skills, and possibly wide-ranging responsibilities (e.g., are these individuals considered ‘expert’ in both disciplines, or are they considered to be ‘jacks of all trades’?); and\rAre paid at a level that corresponds with the breadth and depth of their skills, and appreciates the unique challenges faced by those employed in dual roles.\r\r\rExplore the data on your own\rIf you’d like to take a look at the data and try your hand at creating / modifying these plots, visit this GitHub repository.\nConstructive feedback and comments welcome - get in touch with me via Twitter: @jacquietran.\n\r\r",
+  "wordCount" : "1147",
+  "inLanguage": "en",
+  "datePublished": "2018-01-04T00:00:00Z",
+  "dateModified": "2018-01-04T00:00:00Z",
+  "author":{
+    "@type": "Person",
+    "name": "Jacquie Tran"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://underthehood.jacquietran.com/post/how-much-do-you-get-paid-part-3/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Under The Hood",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://underthehood.jacquietran.com/favicon.ico"
+    }
+  }
+}
+</script>
+</head>
+
+<body class="" id="top">
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add('dark');
+    } else if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="https://underthehood.jacquietran.com" accesskey="h" title="Under The Hood (Alt + H)">Under The Hood</a>
+            <span class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </span>
+        </div>
+        <ul id="menu">
+            <li>
+                <a href="https://underthehood.jacquietran.com/about/" title="about">
+                    <span>about</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://underthehood.jacquietran.com/post/" title="posts">
+                    <span>posts</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://underthehood.jacquietran.com/tags/" title="tags">
+                    <span>tags</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    
+    <h1 class="post-title">
+      How much do you get paid? Part III - Comparison by discipline
+    </h1>
+    <div class="post-meta"><span title='2018-01-04 00:00:00 +0000 UTC'>January 4, 2018</span>&nbsp;·&nbsp;Jacquie Tran
+
+</div>
+  </header> 
+  <div class="post-content">
+<script src="https://underthehood.jacquietran.com/post/how-much-do-you-get-paid-part-3/index_files/header-attrs/header-attrs.js"></script>
+<script src="https://underthehood.jacquietran.com/post/how-much-do-you-get-paid-part-3/index_files/kePrint/kePrint.js"></script>
+<link href="https://underthehood.jacquietran.com/post/how-much-do-you-get-paid-part-3/index_files/lightable/lightable.css" rel="stylesheet" />
+
+
+<p><img src="/img/post/170314-F-MA978-058.JPG" /></p>
+<div id="introduction" class="section level1">
+<h1>Introduction</h1>
+<p>This post is the <strong>third</strong> in a series - to get up to speed, have a read through <a href="/2018/01/02/how-much-do-you-get-paid-part-1.html/">the first post</a> and <a href="/2018/01/03/how-much-do-you-get-paid-part-2.html/">the second post</a>. In this series, I will show how I created the plots that Aiden published on Twitter <a href="https://www.twitter.com/ajoakley/status/944564698166513665/">here</a> and <a href="https://twitter.com/ajoakley/status/944936008285552642/">here</a>, alongside some commentary about the choices I made throughout the process and my own interpretations of the results.</p>
+</div>
+<div id="getting-started" class="section level1">
+<h1>Getting started</h1>
+<p>Load up the data and the libraries <a href="/2018/01/02/how-much-do-you-get-paid-part-1.html/">as we’ve done before</a>.</p>
+<pre class="r"><code>library(readr)
+library(knitr)
+library(kableExtra)
+library(ggplot2)
+library(dplyr)
+
+# Read the data into R
+dataSource &lt;- &quot;https://raw.githubusercontent.com/jacquietran/soccerSalariesDataPublic/master/soccerSalariesDataPublic.csv&quot;
+soccerSalariesData &lt;- read_delim(dataSource, delim = &quot;,&quot;, col_names = TRUE, col_types = NULL)</code></pre>
+</div>
+<div id="salaries-by-league-and-by-discipline" class="section level1">
+<h1>Salaries by league and by discipline</h1>
+<p>Let’s compare how sport scientists and S&amp;C coaches are paid in the different leagues.</p>
+<pre class="r"><code># Subset of data frame to exclude dept == NA
+soccerSalariesData3 &lt;- soccerSalariesData %&gt;%
+    filter(!is.na(dept))
+soccerSalariesData3$dept &lt;- recode(
+    soccerSalariesData3$dept,
+    `Physical Performance` = &quot;S&amp;C&quot;)
+
+# Set factor levels
+soccerSalariesData3$dept &lt;- factor(
+    soccerSalariesData3$dept,
+    levels = c(&quot;S&amp;C&quot;, &quot;Sport Science&quot;, &quot;Both&quot;))
+soccerSalariesData3$leagueOfFirstTeam &lt;- factor(
+    soccerSalariesData3$leagueOfFirstTeam,
+    levels = c(
+        &quot;Premier League&quot;, &quot;Scottish Premiership&quot;, &quot;Championship&quot;, &quot;League 1&quot;, &quot;League 2&quot;))
+
+# Create object to store axis labels with line breaks
+labelsLeague &lt;- c(&quot;PL&quot;, &quot;SP&quot;, &quot;C&quot;, &quot;L1&quot;, &quot;L2&quot;)
+
+# Create a list to store common theme options for use across plots
+plotFeatures &lt;- theme(
+    plot.title = element_text(size = 16),
+    plot.subtitle = element_text(size = 14),
+    axis.title.x = element_blank(),
+  axis.text.x = element_text(size = 11),
+    axis.title.y = element_text(size = 16),
+    axis.text.y = element_text(size = 11),
+    legend.position = &quot;none&quot;)
+
+p &lt;- ggplot(soccerSalariesData3, aes(x = leagueOfFirstTeam, y = salaryGBP))
+p &lt;- p + facet_wrap(~dept)
+p &lt;- p + geom_boxplot(outlier.shape = NA, coef = 0)
+p &lt;- p + geom_point(alpha = 1/4, size = 4, aes(colour = leagueOfFirstTeam))
+p &lt;- p + scale_y_continuous(
+    limits = c(0, 60000),
+    breaks = seq(0, 60000, by = 10000))
+p &lt;- p + scale_x_discrete(labels = labelsLeague)
+p &lt;- p + labs(
+    title = &quot;UK soccer salaries of support staff&quot;,
+    subtitle = &quot;By league and by discipline&quot;,
+    y = &quot;Salary (GBP)&quot;)
+p &lt;- p + plotFeatures
+salaryByLeagueAndDept &lt;- p
+
+# Display the plot
+salaryByLeagueAndDept</code></pre>
+<p><img src="https://underthehood.jacquietran.com/post/how-much-do-you-get-paid-part-3/index_files/figure-html/plotByLeagueAndDiscipline-1.png" width="864" style="display: block; margin: auto;" /></p>
+<center>
+Note: P = Premier League, SP = Scottish Premiership, C = Championship, L1 = League 1, L2 = League 2.
+</center>
+<p>Here is the breakdown of median salaries:</p>
+<pre class="r"><code># Calculate median salaries by league and discipline
+medianSalariesByLeagueAndDept &lt;- soccerSalariesData3 %&gt;%
+    group_by(leagueOfFirstTeam, dept) %&gt;%
+    summarise(median = median(salaryGBP, na.rm = TRUE))
+
+# Reorder values by $dept, then by $leagueOfFirstTeam
+medianSalariesByLeagueAndDept &lt;- medianSalariesByLeagueAndDept[order(
+    medianSalariesByLeagueAndDept$dept, medianSalariesByLeagueAndDept$leagueOfFirstTeam), ]
+
+# Remove duplicate values in $dept for aesthetic purposes
+medianSalariesByLeagueAndDept$dept &lt;- c(
+    &quot;S&amp;C&quot;, rep(&quot;&quot;, times = 3),
+    &quot;Sport Science&quot;, rep(&quot;&quot;, times = 4),
+    &quot;Both&quot;, rep(&quot;&quot;, times = 3))
+
+# Rename variables for aesthetic purposes
+colnames(medianSalariesByLeagueAndDept) &lt;- c(
+    &quot;League in which first team plays&quot;, &quot;Discipline&quot;, &quot;Median salary (GBP, £)&quot;)
+
+# Display the table
+medianSalariesByLeagueAndDept %&gt;%
+    kable(&quot;html&quot;) %&gt;%
+    kable_styling()</code></pre>
+<table class="table" style="margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+League in which first team plays
+</th>
+<th style="text-align:left;">
+Discipline
+</th>
+<th style="text-align:right;">
+Median salary (GBP, £)
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Premier League
+</td>
+<td style="text-align:left;">
+S&amp;C
+</td>
+<td style="text-align:right;">
+25000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Championship
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:right;">
+26500
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+League 1
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:right;">
+25000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+League 2
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:right;">
+20000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Premier League
+</td>
+<td style="text-align:left;">
+Sport Science
+</td>
+<td style="text-align:right;">
+20000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Scottish Premiership
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:right;">
+26000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Championship
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:right;">
+21000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+League 1
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:right;">
+18500
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+League 2
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:right;">
+13000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Premier League
+</td>
+<td style="text-align:left;">
+Both
+</td>
+<td style="text-align:right;">
+7200
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Championship
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:right;">
+21000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+League 1
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:right;">
+17000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+League 2
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:right;">
+16000
+</td>
+</tr>
+</tbody>
+</table>
+<div id="key-findings" class="section level2">
+<h2>Key findings</h2>
+<p><strong>1. Within-league within-discipline variation is substantial in most cases.</strong> Where there is not considerable variation, it is probably due to limited representation within that particular sub-group (e.g., Scottish Premiership sport scientists). Some variation is to be expected, since respondents of different <a href="/2018/01/03/how-much-do-you-get-paid-part-2.html/">job seniority levels</a> completed the survey. However, the salary variation seen here is in tens of thousands of British Pounds! Seeing this does not breed confidence that a systematic process is used to set performance staff salaries.</p>
+<p>In real terms, this means that there are individuals performing similar duties for clubs competing in the same league, but somehow these individuals are being paid wildly different salaries. For instance, three respondents are Lead Academy S&amp;C Coaches for Premier League clubs with salaries of £19,000, £22,000, and £30,000. Similarly, several respondents are Head Academy Sport Scientists for Championship clubs; the lowest salary among them is £27,000 while the highest is £40,000.</p>
+<p>Within-league within-discipline variance could be partly accounted for by differences in qualifications, however 80 out of the 102 respondents hold postgraduate degrees (e.g., Postgraduate Certificate, Masters, PhD). It could also represent varying levels of experience or years of service at a particular club, but unfortunately these items were not included in the questionnaire.</p>
+<p><strong>2. Within four of the five leagues, S&amp;C coaches are generally paid higher salaries than sport scientists.</strong> For League 2, the comparison between disciplines is tenuous because of the small number of responses within each discipline (S&amp;C coaches at League 2 = 1, sport scientists at League 2 = 5). No respondents were S&amp;C coaches working for Scottish Premiership clubs.</p>
+<p><strong>3. For S&amp;C coaches and sport scientists, the typical salary for those working in League 1 clubs is not remarkably different to those working for clubs in higher tier leagues (e.g., Premier League, Championship).</strong> In <a href="/2018/01/02/how-much-do-you-get-paid-part-1/">part 1</a> of this series, we plotted salaries by league and by ‘competitive level’ (whether a respondent works for their club’s first team or academy program). This earlier analysis seemed to show a ‘salary gradient’, where typical salaries decreased linearly from higher to lower tier leagues. This pattern is <em>not</em> so clear in this case. However, the true nature of differences or non-differences between leagues would become more apparent with more survey responses, particularly from individuals who fit into the underrepresented sub-groups.</p>
+<p><strong>4. A small number of individuals fulfill roles than span both S&amp;C and sport science disciplines.</strong> Given that we’re talking about n = 6 here, I’m less focused on the reported salaries as such. What I <em>am</em> interested in is the nature of these dual roles. Is an individual’s workload split between the two disciplines (e.g., 0.5 S&amp;C and 0.5 sport science, or some other proportions)? Are such jobs, in reality, two jobs rolled into one, each of them requiring more than a typical half-time commitment? Or are we just more verbose with our job titles, while retaining the features of jobs from previous eras? Maybe the catch-all ‘Fitness Trainer’ title has simply been replaced by ‘S&amp;C Coach / Sport Scientist’!</p>
+<p>Giving consideration to these questions is not just an exercise in discussing semantics (although I do love semantics). Addressing them is crucial for ensuring that individuals in such roles:</p>
+<ul>
+<li>Have sustainable distribution of workloads;</li>
+<li>Are appropriately valued for their specialist knowledge and skills, and possibly wide-ranging responsibilities (e.g., are these individuals considered ‘expert’ in both disciplines, or are they considered to be ‘jacks of all trades’?); and</li>
+<li>Are paid at a level that corresponds with the breadth and depth of their skills, and appreciates the unique challenges faced by those employed in dual roles.</li>
+</ul>
+</div>
+<div id="explore-the-data-on-your-own" class="section level2">
+<h2>Explore the data on your own</h2>
+<p>If you’d like to take a look at the data and try your hand at creating / modifying these plots, visit this <a href="www.github.com/jacquietran/soccerSalariesDataPublic">GitHub repository</a>.</p>
+<p><a href="https://www.twitter.com/jacquietran/">Constructive feedback and comments welcome</a> - get in touch with me via Twitter: <strong><span class="citation">@jacquietran</span></strong>.</p>
+</div>
+</div>
+
+
+  </div>
+
+  <footer class="post-footer">
+    <ul class="post-tags">
+      <li><a href="https://underthehood.jacquietran.com/tags/sport-science/">sport science</a></li>
+      <li><a href="https://underthehood.jacquietran.com/tags/strength-and-conditioning/">strength and conditioning</a></li>
+      <li><a href="https://underthehood.jacquietran.com/tags/football/">football</a></li>
+      <li><a href="https://underthehood.jacquietran.com/tags/salaries/">salaries</a></li>
+      <li><a href="https://underthehood.jacquietran.com/tags/soccer/">soccer</a></li>
+    </ul>
+  </footer>
+</article>
+    </main>
+    
+<footer class="footer">
+    <span>&copy; 2025 <a href="https://underthehood.jacquietran.com">Under The Hood</a></span>
+    <span>
+        Powered by
+        <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &
+        <a href="https://git.io/hugopapermod" rel="noopener" target="_blank">PaperMod</a>
+    </span>
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+</body>
+
+</html>

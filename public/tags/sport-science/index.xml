@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>sport science on Under The Hood</title>
+    <link>https://underthehood.jacquietran.com/tags/sport-science/</link>
+    <description>Recent content in sport science on Under The Hood</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-gb</language>
+    <lastBuildDate>Thu, 27 Mar 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://underthehood.jacquietran.com/tags/sport-science/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>New Year, Same Moons</title>
+      <link>https://underthehood.jacquietran.com/post/2025-03-26-new-year-same-moons/</link>
+      <pubDate>Thu, 27 Mar 2025 00:00:00 +0000</pubDate>
+      
+      <guid>https://underthehood.jacquietran.com/post/2025-03-26-new-year-same-moons/</guid>
+      <description>IntroductionThe Australian Women’s Cricket team have wrapped up their very long international season for 2024/2025 with another T20 series sweep, this time winning 3-0 over the White Ferns.
+And who was at the centre of the action? Beth Mooney piling on the runs. Naturally.
+New year, same run scoring machine.
+Cricket Australia reported that, in 2025, Moons has scored “575 runs at an average of 72”. Let’s dig into the details of this scoring spree from the ever-metronomic Mooney.</description>
+    </item>
+    
+    <item>
+      <title>How much do you get paid? Part III - Comparison by discipline</title>
+      <link>https://underthehood.jacquietran.com/post/how-much-do-you-get-paid-part-3/</link>
+      <pubDate>Thu, 04 Jan 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://underthehood.jacquietran.com/post/how-much-do-you-get-paid-part-3/</guid>
+      <description>IntroductionThis post is the third in a series - to get up to speed, have a read through the first post and the second post. In this series, I will show how I created the plots that Aiden published on Twitter here and here, alongside some commentary about the choices I made throughout the process and my own interpretations of the results.
+Getting startedLoad up the data and the libraries as we’ve done before.</description>
+    </item>
+    
+    <item>
+      <title>How much do you get paid? Part II - Job seniority</title>
+      <link>https://underthehood.jacquietran.com/post/how-much-do-you-get-paid-part-2/</link>
+      <pubDate>Wed, 03 Jan 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://underthehood.jacquietran.com/post/how-much-do-you-get-paid-part-2/</guid>
+      <description>IntroductionThis post is the second in a series; click here to read the first post if you haven’t already done so. In this series, I will show how I created the plots that Aiden Oakley published on Twitter here and here, alongside some commentary about the choices I made throughout the process and my own interpretations of the results.
+Getting startedWe’ll load the cleaned data in and load the necessary libraries as we did in the first post.</description>
+    </item>
+    
+    <item>
+      <title>How much do you get paid? Part I - An initial exploration</title>
+      <link>https://underthehood.jacquietran.com/post/how-much-do-you-get-paid-part-1/</link>
+      <pubDate>Tue, 02 Jan 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://underthehood.jacquietran.com/post/how-much-do-you-get-paid-part-1/</guid>
+      <description>The backstoryIt’s a touchy subject for many. Yet this question—how much do you get paid?—is at the core of the online questionnaire that was recently administered by Aiden Oakley (@ajoakley on Twitter). And it is a question that was willingly answered by over 100 sport scientists and strength &amp;amp; conditioning coaches who currently work for football (soccer) clubs in the UK.
+Why?
+This job advert says it all…</description>
+    </item>
+    
+  </channel>
+</rss>

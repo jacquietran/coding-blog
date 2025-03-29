@@ -1,0 +1,860 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>How much do you get paid? Part I - An initial exploration | Under The Hood</title>
+<meta name="keywords" content="sport science, strength and conditioning, soccer, football, salaries" />
+<meta name="description" content="The backstoryIt’s a touchy subject for many. Yet this question—how much do you get paid?—is at the core of the online questionnaire that was recently administered by Aiden Oakley (@ajoakley on Twitter). And it is a question that was willingly answered by over 100 sport scientists and strength &amp; conditioning coaches who currently work for football (soccer) clubs in the UK.
+Why?
+This job advert says it all…">
+<meta name="author" content="Jacquie Tran">
+<link rel="canonical" href="https://underthehood.jacquietran.com/post/how-much-do-you-get-paid-part-1/" />
+<link crossorigin="anonymous" href="/assets/css/stylesheet.min.c88963fe2d79462000fd0fb1b3737783c32855d340583e4523343f8735c787f0.css" integrity="sha256-yIlj/i15RiAA/Q&#43;xs3N3g8MoVdNAWD5FIzQ/hzXHh/A=" rel="preload stylesheet" as="style">
+<script defer crossorigin="anonymous" src="/assets/js/highlight.min.7680afc38aa6b15ddf158a4f3780b7b1f7dde7e91d26f073e6229bb7a0793c92.js" integrity="sha256-doCvw4qmsV3fFYpPN4C3sffd5&#43;kdJvBz5iKbt6B5PJI="
+    onload="hljs.initHighlightingOnLoad();"></script>
+<link rel="icon" href="https://underthehood.jacquietran.com/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="https://underthehood.jacquietran.com/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://underthehood.jacquietran.com/favicon-32x32.png">
+<link rel="apple-touch-icon" href="https://underthehood.jacquietran.com/apple-touch-icon.png">
+<link rel="mask-icon" href="https://underthehood.jacquietran.com/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --hljs-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript><meta property="og:title" content="How much do you get paid? Part I - An initial exploration" />
+<meta property="og:description" content="The backstoryIt’s a touchy subject for many. Yet this question—how much do you get paid?—is at the core of the online questionnaire that was recently administered by Aiden Oakley (@ajoakley on Twitter). And it is a question that was willingly answered by over 100 sport scientists and strength &amp; conditioning coaches who currently work for football (soccer) clubs in the UK.
+Why?
+This job advert says it all…" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://underthehood.jacquietran.com/post/how-much-do-you-get-paid-part-1/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2018-01-02T00:00:00&#43;00:00" />
+<meta property="article:modified_time" content="2018-01-02T00:00:00&#43;00:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="How much do you get paid? Part I - An initial exploration"/>
+<meta name="twitter:description" content="The backstoryIt’s a touchy subject for many. Yet this question—how much do you get paid?—is at the core of the online questionnaire that was recently administered by Aiden Oakley (@ajoakley on Twitter). And it is a question that was willingly answered by over 100 sport scientists and strength &amp; conditioning coaches who currently work for football (soccer) clubs in the UK.
+Why?
+This job advert says it all…"/>
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "Posts",
+      "item": "https://underthehood.jacquietran.com/post/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  3 ,
+      "name": "How much do you get paid? Part I - An initial exploration",
+      "item": "https://underthehood.jacquietran.com/post/how-much-do-you-get-paid-part-1/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "How much do you get paid? Part I - An initial exploration",
+  "name": "How much do you get paid? Part I - An initial exploration",
+  "description": "The backstory\rIt’s a touchy subject for many. Yet this question—how much do you get paid?—is at the core of the online questionnaire that was recently administered by Aiden Oakley (@ajoakley on Twitter). And it is a question that was willingly answered by over 100 sport scientists and strength \u0026amp; conditioning coaches who currently work for football (soccer) clubs in the UK.\nWhy?\nThis job advert says it all…",
+  "keywords": [
+    "sport science", "strength and conditioning", "soccer", "football", "salaries"
+  ],
+  "articleBody": "\r\r\rThe backstory\rIt’s a touchy subject for many. Yet this question—how much do you get paid?—is at the core of the online questionnaire that was recently administered by Aiden Oakley (@ajoakley on Twitter). And it is a question that was willingly answered by over 100 sport scientists and strength \u0026 conditioning coaches who currently work for football (soccer) clubs in the UK.\nWhy?\nThis job advert says it all…\n\rThis is shocking! \"Dear Candidate, please spend £27,000 on BSc, then £1000 on ASCC, to be paid less than half of this. Oh, and the players earn your salary in one week.\" 🤔🤔🤔 pic.twitter.com/6efKtAaaQl\r— Rob Chave (@Robchave7) December 14, 2017\r\r\r\rBlackpool FC was roundly criticised for advertising such a position for a measly £12,000 per annum. The UK Strength \u0026 Conditioning Association then withdrew this job posting from their website. Regrettably, this is not a one-off. Blackpool happened to rightly draw the ire of the Twitter crowd on this occasion, but many of us working in sport have seen too many job ads just like this in our global industry.\nSo what is the current state of play when it comes to salaries in UK soccer?\nAiden set out to explore this question via a simple survey:\n\rOff the back of Blackpoolgate are any S\u0026C's/Sport Scientists willing to fill in a short questionnaire on salaries in football. Open to Premier League - League 2 and Scottish Premiership clubs,1st team \u0026 Academy.Will be shared on Twitter anonymously. Plz RT https://t.co/Gcyqiu0MP2\r— Aiden Oakley (@ajoakley) December 16, 2017\r\r\r\rAfter a fortnight, 100+ responses were received. I put my hand up to help with visualising the data. This post is the first in a series where I will show how I created the plots that Aiden published on Twitter here and here, alongside some commentary about the choices I made throughout the process and my own interpretations of the results.\n\rGetting started\rLet’s load the cleaned data in and load the necessary libraries. Note: Some variables were omitted during the data cleaning process to protect the anonymity of respondents.\n# Load libraries\rlibrary(readr)\rlibrary(knitr)\rlibrary(kableExtra)\rlibrary(ggplot2)\rlibrary(dplyr)\r# Read the data into R\rdataSource \rNow that we have the cleaned data loaded in, we can begin to examine it. The data set has 16 variables and 102 responses. For pedants like me, I’ve also included a data dictionary below.\n# Examine first few observations of the data set\rhead(soccerSalariesData)\r## # A tibble: 6 x 16\r## responseID country leagueOfFirstTeam levelOfWork position dept partTime\r##        ## 1 1 England Championship 1st Team Coach Sport Scie~  ## 2 2 England Championship 1st Team Head S\u0026C  ## 3 3 England Championship 1st Team Coach S\u0026C  ## 4 4 England Championship 1st Team    ## 5 5 England Championship 1st Team Head Sport Scie~  ## 6 6 England Championship Academy Head Sport Scie~  ## # ... with 9 more variables: academyCategory , ageGroupAllPhases ,\r## # ageGroupPDPhase , ageGroupYDPhase , ageGroupFPhase ,\r## # reportedSalaryGBP , salaryGBP , highestQual ,\r## # highestQualCategory \r\r\rVariable name\r\rDescription\r\rData type\r\r\r\r\r\rresponseID\r\rID number for respondent\r\rNumeric\r\r\r\rcountry\r\rCountry in which the respondent’s club competes\r\rCategorical - England, Scotland\r\r\r\rleagueOfFirstTeam\r\rLeague that the club’s first team plays in\r\rCategorical - Premier League, Scottish Premiership, Championship, League 1, League 2\r\r\r\rlevelOfWork\r\rLevel of respondent’s work - categorical: 1st Team, Academy\r\rCategorical: 1st Team, Academy\r\r\r\rposition\r\rRespondent’s position\r\rCategorical: Head (of department), Lead (senior staff member in a particular discipline), Coach (not Head or Lead positions), Intern, NA\r\r\r\rdept\r\rRespondent’s department / discipline\r\rCategorical: Sport Science, S\u0026C (Strength \u0026 Conditioning), or Both\r\r\r\rpartTime\r\rVariable for identifying individuals who noted they are part-time employed at their club\r\rString: Known part-time staff noted as ‘Part Time’\r\r\r\racademyCategory\r\rFor those working at Academy level, the Academy category status (according to designations by the Football Association (FA) or the Scottish Football Association\r\rCategorical: 1, 2, 3, SFA Elite, Development\r\r\r\rageGroupAllPhases\r\rFor those working at Academy level, whether they support athletes across all Academy phases (as per age group designations set by the FA)\r\rLogical: TRUE, FALSE\r\r\r\rageGroupPDPhase\r\rFor those working at Academy level, whether they support athletes in the Professional Development phase (U17s and older)\r\rLogical: TRUE, FALSE\r\r\r\rageGroupYDPhase\r\rFor those working at Academy level, whether they support athletes in the Youth Development phase (U12s to U16s, inclusive)\r\rLogical: TRUE, FALSE\r\r\r\rageGroupFPhase\r\rFor those working at Academy level, whether they support athletes in the Foundation Phase (U9s to U11s, inclusive)\r\rLogical: TRUE, FALSE\r\r\r\rreportedSalaryGBP\r\rReported salary\r\rNumeric - currency, GBP (£)\r\r\r\rsalaryGBP\r\rSalary, including reported values and estimated values based on additional comments provided by respondent (e.g., salary in GBP estimated based on conversion from another currency)\r\rNumeric - currency, (£)\r\r\r\rhighestQual\r\rRespondent’s highest qualification - text as entered by participant\r\rString\r\r\r\rhighestQualCategory\r\rRespondent’s highest qualification (categorical format)\r\rCategorical: PhD, Postgraduate (higher than Bachelor but below PhD), Undergraduate, Unclear (based on respondent’s entry)\r\r\r\r\r\rSalaries by league\rIn this post, I will attempt to answer one simple question: What are the reported salaries of performance support staff working in UK soccer clubs when categorised by league?\n(It’s worth noting here that this refers to the league in which the club’s first team plays, so it may not be the league that the respondent may predominantly work within, e.g., if they support the Academy programs.)\nAfter a quick exploration when I first started working with this data set, I noticed that salaries varied considerably between respondents. To capture this, I decided to build box plots (to represent ‘typical’ salaries within a particular category), overlaid with a scatter plot where each dot represents one respondent. I also chose to present the the x axis categories such that the leagues progress from higher tier to lower tier as your gaze moves left to right.\n# Set factor levels\rsoccerSalariesData$leagueOfFirstTeam \rWhat about median reported salaries?\n# Calculate median salary by league in which first team plays\rmedianSalariesByLeague %\rgroup_by(leagueOfFirstTeam) %%\rsummarise(median = median(salaryGBP, na.rm = TRUE))\r# Rename variables for aesthetic purposes\rcolnames(medianSalariesByLeague) %\rkable(\"html\") %%\rkable_styling()\r\r\rLeague in which first team plays\r\rMedian salary (GBP, £)\r\r\r\r\r\rPremier League\r\r23930\r\r\r\rScottish Premiership\r\r26000\r\r\r\rChampionship\r\r22250\r\r\r\rLeague 1\r\r21000\r\r\r\rLeague 2\r\r16000\r\r\r\r\rKey findings\r1. Across the board, typical reported salaries are low.\n\rGiven that 80 respondents were qualified at Masters or PhD level, these figures seem low. Such individuals might be competitive for university lecturer positions. Coventry University is advertising for an Assistant Lecturer in Sport and Exercise Science with a stated salary range of ~£26,000–£35,000 per annum. Meanwhile, a Lecturer / Senior Lecturer in Research Methods role at Nottingham Trent will pay somewhere in the range of ~£33,000–£48,000 per annum.\rFYI the UK’s National Living Wage for individuals aged 25 and over is £7.50 per hour (as from April 2017). With some ‘back of the napkin’ math, this works out to a full-time salary of approximately £12,600 per annum - calculated as £7.50 per hour x (35 hours / week) x (48 weeks / year).\rFor the Australians among us (puts hand up), the typical salary for a performance support staff member working for a Scottish Premiership team—£26,000—works out to roughly $45,000 AUD (based on the exchange rate on 28/12/2017). Level A academics are paid approximately $64,000–$86,000 and Level B academics are paid approximately $91,000–$18,0000 (according to Deakin’s pay scales froeffective m April 2016).\r\rDave Carolan wrote on Twitter that the data set lacks representation from sport scientists and S\u0026C coaches in English football who earn £100,000+ per annum. This is a fair critique of the data set. Several responses from higher-paid individuals certainly would increase the typical salaries seen here.\n\rGreat work Aiden. I believe that the lack of representation of the £100k+ club should be acknowledged. They exist in the PL \u0026 some Champ.\r— Dave Carolan (@davecarolan) January 1, 2018\r\r\r\rIt’s important to capture the true nature of things, but the existence of some better remunerated roles does not take away from the 41 individuals who completed this small survey and reported being paid £20,000 or less. I’d argue that the push for fair wages is chiefly about i) the sustainability and credibility of the industry entire (“Pay peanuts, get monkeys!””), and ii) protecting the most vulnerable, such as those in the early stages of their career trying to get off the internship carousel. If you’re in the ‘£100k+ club’, being underpaid is probably not your personal current experience, although it may have been in the early days of your career. Hopefully, though, you care enough about the industry as a whole to want all individuals to be fairly paid for the work they’ve done (to gain the skills, experience, and qualifications needed to succeed in a given role), and the work they do (in this case, looking after the health, well-being, development, and performance of young men and women through football).\n2. Performance support staff working for Scottish Premiership teams appear to be paid slghtly better than their counterparts in the Premier League. Having said that, it’s quite possible that this difference may be due to the small sub-sample of respondents in the Scottish Premiership category (n = 6).\n3. There is considerable variation within most leagues.\n\rThe ‘£0’ salaries have been left in the data set as a handful of (unpaid!!!) interns completed the questionnaire. Even if you were to remove these data points, though, sizeable variation remains. Also, the median is robust to outliers, so typical salaries do not change or change by a negligible amount when interns are excluded from the data set.\rThis is partially due to some respondents working part-time in their roles. It was possible to identify whether some individuals were working part-time, based on the data entered by some participants, but the questionnaire itself did not explicitly ask this question.\r\r\r\rSalaries by league and competitive level\rWe can drill down further, plotting the data by league and by competitive level; that is, whether respondents work for their club’s first team or academy.\n# Build the plot\rp \rMeanwhile, median salaries now look like this:\n# Calculate median salaries by league and competitive level\rmedianSalariesByLeagueAndCompLevel %\rgroup_by(leagueOfFirstTeam, levelOfWork) %%\rsummarise(median = median(salaryGBP, na.rm = TRUE))\r# Order by $levelOfWork, then $leagueOfFirstTeam\rmedianSalariesByLeagueAndCompLevel %\rkable(\"html\") %%\rkable_styling()\r\r\rLeague in which first team plays\r\rCompetitive level\r\rMedian salary (GBP, £)\r\r\r\r\r\rPremier League\r\r1st Team\r\r40000\r\r\r\rScottish Premiership\r\r\r31250\r\r\r\rChampionship\r\r\r28000\r\r\r\rLeague 1\r\r\r26000\r\r\r\rLeague 2\r\r\r16500\r\r\r\rPremier League\r\rAcademy\r\r23860\r\r\r\rScottish Premiership\r\r\r25000\r\r\r\rChampionship\r\r\r22000\r\r\r\rLeague 1\r\r\r18000\r\r\r\rLeague 2\r\r\r16000\r\r\r\r\rKey findings\rCategorising by league and by what I’ve termed ‘competitive level’ (first team vs. academy) helps to better visualise the salary gradient across the different leagues. This segmentation of the data gives us a better look at salary breakdowns, but also divides the relatively small sample into even smaller sub-groups. For instance, there were only 2 respondents who work for a Scottish Premiership first team, and only 3 respondents who work for a League 2 academy. Anyway, the data is the data, so let’s press on while keeping in mind that the results seen here may not hold with a larger sample and more representation within each sub-group.\nKeeping the aforementioned caveats in mind, the results suggest that:\n1. The typical salary of Premier League first team support staff (£40,000) is higher than for those who work for Scottish Premiership first teams (£31,250).\n2. The differences between leagues are stark in terms of first team staff salaries, while the gradient is not so steep when it comes to academy staff salaries.\n\r\rWhat’s next?\rIn the second post of this series, I will delve into whether staff salaries differ when the sample is categorised into sub-groups by level of job seniority. Stay tuned!\n\r",
+  "wordCount" : "2324",
+  "inLanguage": "en",
+  "datePublished": "2018-01-02T00:00:00Z",
+  "dateModified": "2018-01-02T00:00:00Z",
+  "author":{
+    "@type": "Person",
+    "name": "Jacquie Tran"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://underthehood.jacquietran.com/post/how-much-do-you-get-paid-part-1/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Under The Hood",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://underthehood.jacquietran.com/favicon.ico"
+    }
+  }
+}
+</script>
+</head>
+
+<body class="" id="top">
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add('dark');
+    } else if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="https://underthehood.jacquietran.com" accesskey="h" title="Under The Hood (Alt + H)">Under The Hood</a>
+            <span class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </span>
+        </div>
+        <ul id="menu">
+            <li>
+                <a href="https://underthehood.jacquietran.com/about/" title="about">
+                    <span>about</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://underthehood.jacquietran.com/post/" title="posts">
+                    <span>posts</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://underthehood.jacquietran.com/tags/" title="tags">
+                    <span>tags</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    
+    <h1 class="post-title">
+      How much do you get paid? Part I - An initial exploration
+    </h1>
+    <div class="post-meta"><span title='2018-01-02 00:00:00 +0000 UTC'>January 2, 2018</span>&nbsp;·&nbsp;Jacquie Tran
+
+</div>
+  </header> 
+  <div class="post-content">
+<script src="https://underthehood.jacquietran.com/post/how-much-do-you-get-paid-part-1/index_files/header-attrs/header-attrs.js"></script>
+<script src="https://underthehood.jacquietran.com/post/how-much-do-you-get-paid-part-1/index_files/kePrint/kePrint.js"></script>
+<link href="https://underthehood.jacquietran.com/post/how-much-do-you-get-paid-part-1/index_files/lightable/lightable.css" rel="stylesheet" />
+
+
+<div id="the-backstory" class="section level1">
+<h1>The backstory</h1>
+<p>It’s a touchy subject for many. Yet this question—how much do you get paid?—is at the core of the online questionnaire that was recently administered by <a href="https://www.twitter.com/ajoakley/">Aiden Oakley</a> (<strong><span class="citation">@ajoakley</span></strong> on Twitter). And it is a question that was willingly answered by over 100 sport scientists and strength &amp; conditioning coaches who currently work for football (soccer) clubs in the UK.</p>
+<p>Why?</p>
+<p>This job advert says it all…</p>
+<center>
+<blockquote class="twitter-tweet" data-lang="en">
+<p lang="en" dir="ltr">
+This is shocking! "Dear Candidate, please spend £27,000 on BSc, then £1000 on ASCC, to be paid less than half of this. Oh, and the players earn your salary in one week." 🤔🤔🤔 <a href="https://t.co/6efKtAaaQl">pic.twitter.com/6efKtAaaQl</a>
+</p>
+— Rob Chave (<span class="citation">@Robchave7</span>) <a href="https://twitter.com/Robchave7/status/941234320034824192?ref_src=twsrc%5Etfw">December 14, 2017</a>
+</blockquote>
+</center>
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+<p>Blackpool FC was roundly criticised for advertising such a position for a measly £12,000 per annum. The UK Strength &amp; Conditioning Association then withdrew this job posting from their website. Regrettably, this is not a one-off. Blackpool happened to rightly draw the ire of the Twitter crowd on this occasion, but many of us working in sport have seen too many job ads just like this in our global industry.</p>
+<p>So what is the current state of play when it comes to salaries in UK soccer?</p>
+<p>Aiden set out to explore this question via a simple survey:</p>
+<center>
+<blockquote class="twitter-tweet" data-lang="en">
+<p lang="en" dir="ltr">
+Off the back of Blackpoolgate are any S&amp;C's/Sport Scientists willing to fill in a short questionnaire on salaries in football. Open to Premier League - League 2 and Scottish Premiership clubs,1st team &amp; Academy.Will be shared on Twitter anonymously. Plz RT <a href="https://t.co/Gcyqiu0MP2">https://t.co/Gcyqiu0MP2</a>
+</p>
+— Aiden Oakley (<span class="citation">@ajoakley</span>) <a href="https://twitter.com/ajoakley/status/942004931279536128?ref_src=twsrc%5Etfw">December 16, 2017</a>
+</blockquote>
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+</center>
+<p>After a fortnight, 100+ responses were received. I put my hand up to help with visualising the data. This post is the first in a series where I will show how I created the plots that Aiden published on Twitter <a href="https://www.twitter.com/ajoakley/status/944564698166513665/">here</a> and <a href="https://twitter.com/ajoakley/status/944936008285552642/">here</a>, alongside some commentary about the choices I made throughout the process and my own interpretations of the results.</p>
+</div>
+<div id="getting-started" class="section level1">
+<h1>Getting started</h1>
+<p>Let’s load the cleaned data in and load the necessary libraries. <em>Note: Some variables were omitted during the data cleaning process to protect the anonymity of respondents.</em></p>
+<pre class="r"><code># Load libraries
+library(readr)
+library(knitr)
+library(kableExtra)
+library(ggplot2)
+library(dplyr)
+
+# Read the data into R
+dataSource &lt;- &quot;https://raw.githubusercontent.com/jacquietran/soccerSalariesDataPublic/master/soccerSalariesDataPublic.csv&quot;
+soccerSalariesData &lt;- read_delim(dataSource, delim = &quot;,&quot;, col_names = TRUE, col_types = NULL)</code></pre>
+<p>Now that we have the cleaned data loaded in, we can begin to examine it. The data set has 16 variables and 102 responses. For pedants like me, I’ve also included a data dictionary below.</p>
+<pre class="r"><code># Examine first few observations of the data set
+head(soccerSalariesData)</code></pre>
+<pre><code>## # A tibble: 6 x 16
+##   responseID country leagueOfFirstTeam levelOfWork position dept        partTime
+##        &lt;dbl&gt; &lt;chr&gt;   &lt;chr&gt;             &lt;chr&gt;       &lt;chr&gt;    &lt;chr&gt;       &lt;chr&gt;   
+## 1          1 England Championship      1st Team    Coach    Sport Scie~ &lt;NA&gt;    
+## 2          2 England Championship      1st Team    Head     S&amp;C         &lt;NA&gt;    
+## 3          3 England Championship      1st Team    Coach    S&amp;C         &lt;NA&gt;    
+## 4          4 England Championship      1st Team    &lt;NA&gt;     &lt;NA&gt;        &lt;NA&gt;    
+## 5          5 England Championship      1st Team    Head     Sport Scie~ &lt;NA&gt;    
+## 6          6 England Championship      Academy     Head     Sport Scie~ &lt;NA&gt;    
+## # ... with 9 more variables: academyCategory &lt;chr&gt;, ageGroupAllPhases &lt;lgl&gt;,
+## #   ageGroupPDPhase &lt;lgl&gt;, ageGroupYDPhase &lt;lgl&gt;, ageGroupFPhase &lt;lgl&gt;,
+## #   reportedSalaryGBP &lt;dbl&gt;, salaryGBP &lt;dbl&gt;, highestQual &lt;chr&gt;,
+## #   highestQualCategory &lt;chr&gt;</code></pre>
+<table class="table" style="margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+Variable name
+</th>
+<th style="text-align:left;">
+Description
+</th>
+<th style="text-align:left;">
+Data type
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+responseID
+</td>
+<td style="text-align:left;">
+ID number for respondent
+</td>
+<td style="text-align:left;">
+Numeric
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+country
+</td>
+<td style="text-align:left;">
+Country in which the respondent’s club competes
+</td>
+<td style="text-align:left;">
+Categorical - England, Scotland
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+leagueOfFirstTeam
+</td>
+<td style="text-align:left;">
+League that the club’s first team plays in
+</td>
+<td style="text-align:left;">
+Categorical - Premier League, Scottish Premiership, Championship, League 1, League 2
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+levelOfWork
+</td>
+<td style="text-align:left;">
+Level of respondent’s work - categorical: 1st Team, Academy
+</td>
+<td style="text-align:left;">
+Categorical: 1st Team, Academy
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+position
+</td>
+<td style="text-align:left;">
+Respondent’s position
+</td>
+<td style="text-align:left;">
+Categorical: Head (of department), Lead (senior staff member in a particular discipline), Coach (not Head or Lead positions), Intern, NA
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+dept
+</td>
+<td style="text-align:left;">
+Respondent’s department / discipline
+</td>
+<td style="text-align:left;">
+Categorical: Sport Science, S&amp;C (Strength &amp; Conditioning), or Both
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+partTime
+</td>
+<td style="text-align:left;">
+Variable for identifying individuals who noted they are part-time employed at their club
+</td>
+<td style="text-align:left;">
+String: Known part-time staff noted as ‘Part Time’
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+academyCategory
+</td>
+<td style="text-align:left;">
+For those working at Academy level, the Academy category status (according to designations by the Football Association (FA) or the Scottish Football Association
+</td>
+<td style="text-align:left;">
+Categorical: 1, 2, 3, SFA Elite, Development
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+ageGroupAllPhases
+</td>
+<td style="text-align:left;">
+For those working at Academy level, whether they support athletes across all Academy phases (as per age group designations set by the FA)
+</td>
+<td style="text-align:left;">
+Logical: TRUE, FALSE
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+ageGroupPDPhase
+</td>
+<td style="text-align:left;">
+For those working at Academy level, whether they support athletes in the Professional Development phase (U17s and older)
+</td>
+<td style="text-align:left;">
+Logical: TRUE, FALSE
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+ageGroupYDPhase
+</td>
+<td style="text-align:left;">
+For those working at Academy level, whether they support athletes in the Youth Development phase (U12s to U16s, inclusive)
+</td>
+<td style="text-align:left;">
+Logical: TRUE, FALSE
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+ageGroupFPhase
+</td>
+<td style="text-align:left;">
+For those working at Academy level, whether they support athletes in the Foundation Phase (U9s to U11s, inclusive)
+</td>
+<td style="text-align:left;">
+Logical: TRUE, FALSE
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+reportedSalaryGBP
+</td>
+<td style="text-align:left;">
+Reported salary
+</td>
+<td style="text-align:left;">
+Numeric - currency, GBP (£)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+salaryGBP
+</td>
+<td style="text-align:left;">
+Salary, including reported values and estimated values based on additional comments provided by respondent (e.g., salary in GBP estimated based on conversion from another currency)
+</td>
+<td style="text-align:left;">
+Numeric - currency, (£)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+highestQual
+</td>
+<td style="text-align:left;">
+Respondent’s highest qualification - text as entered by participant
+</td>
+<td style="text-align:left;">
+String
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+highestQualCategory
+</td>
+<td style="text-align:left;">
+Respondent’s highest qualification (categorical format)
+</td>
+<td style="text-align:left;">
+Categorical: PhD, Postgraduate (higher than Bachelor but below PhD), Undergraduate, Unclear (based on respondent’s entry)
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="salaries-by-league" class="section level1">
+<h1>Salaries by league</h1>
+<p>In this post, I will attempt to answer one simple question: <strong>What are the reported salaries of performance support staff working in UK soccer clubs when categorised by league?</strong></p>
+<p>(It’s worth noting here that this refers to the league in which the club’s first team plays, so it may not be the league that the respondent may predominantly work within, e.g., if they support the Academy programs.)</p>
+<p>After a quick exploration when I first started working with this data set, I noticed that salaries varied considerably between respondents. To capture this, I decided to build box plots (to represent ‘typical’ salaries within a particular category), overlaid with a scatter plot where each dot represents one respondent. I also chose to present the the x axis categories such that the leagues progress from higher tier to lower tier as your gaze moves left to right.</p>
+<pre class="r"><code># Set factor levels
+soccerSalariesData$leagueOfFirstTeam &lt;- factor(
+    soccerSalariesData$leagueOfFirstTeam,
+    levels = c(
+        &quot;Premier League&quot;, &quot;Scottish Premiership&quot;, &quot;Championship&quot;, &quot;League 1&quot;, &quot;League 2&quot;))
+
+# Create object to store axis labels with line breaks
+labelsLeague &lt;- c(
+    &quot;Premier\nLeague&quot;, &quot;Scottish\nPremiership&quot;, &quot;Championship&quot;, &quot;League 1&quot;, &quot;League 2&quot;)
+
+# Create a list to store common theme options for use across plots
+plotFeatures &lt;- theme(
+    plot.title = element_text(size = 16),
+    plot.subtitle = element_text(size = 14),
+    axis.title.x = element_blank(),
+  axis.text.x = element_text(size = 11),
+    axis.title.y = element_text(size = 16),
+    axis.text.y = element_text(size = 11),
+    legend.position = &quot;none&quot;)
+
+# Build the plot
+p &lt;- ggplot(soccerSalariesData, aes(x = leagueOfFirstTeam, y = salaryGBP))
+p &lt;- p + geom_boxplot(outlier.shape = NA, coef = 0)
+p &lt;- p + geom_point(alpha = 1/4, size = 4, aes(colour = leagueOfFirstTeam))
+p &lt;- p + scale_y_continuous(
+    limits = c(0, 60000),
+    breaks = seq(0, 60000, by = 10000))
+p &lt;- p + scale_x_discrete(labels = labelsLeague)
+p &lt;- p + labs(
+    title = &quot;UK soccer salaries of support staff&quot;,
+    subtitle = &quot;By league that the first team plays in&quot;,
+    y = &quot;Salary (GBP)&quot;)
+p &lt;- p + plotFeatures
+salaryByLeague &lt;- p
+
+# Display the plot
+salaryByLeague</code></pre>
+<p><img src="https://underthehood.jacquietran.com/post/how-much-do-you-get-paid-part-1/index_files/figure-html/plotByLeague-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>What about median reported salaries?</p>
+<pre class="r"><code># Calculate median salary by league in which first team plays
+medianSalariesByLeague &lt;- soccerSalariesData %&gt;%
+    group_by(leagueOfFirstTeam) %&gt;%
+    summarise(median = median(salaryGBP, na.rm = TRUE))
+
+# Rename variables for aesthetic purposes
+colnames(medianSalariesByLeague) &lt;- c(
+    &quot;League in which first team plays&quot;, &quot;Median salary (GBP, £)&quot;)
+
+# Display the table
+medianSalariesByLeague %&gt;%
+    kable(&quot;html&quot;) %&gt;%
+    kable_styling()</code></pre>
+<table class="table" style="margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+League in which first team plays
+</th>
+<th style="text-align:right;">
+Median salary (GBP, £)
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Premier League
+</td>
+<td style="text-align:right;">
+23930
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Scottish Premiership
+</td>
+<td style="text-align:right;">
+26000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Championship
+</td>
+<td style="text-align:right;">
+22250
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+League 1
+</td>
+<td style="text-align:right;">
+21000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+League 2
+</td>
+<td style="text-align:right;">
+16000
+</td>
+</tr>
+</tbody>
+</table>
+<div id="key-findings" class="section level2">
+<h2>Key findings</h2>
+<p><strong>1. Across the board, typical reported salaries are low.</strong></p>
+<ul>
+<li>Given that 80 respondents were qualified at Masters or PhD level, these figures seem low. Such individuals might be competitive for university lecturer positions. <a href="https://staffrecruitment.coventry.ac.uk/tlive_webrecruitment/wrd/run/ETREC107GF.open?VACANCY_ID=954467Gmbh&amp;WVID=1861420Izv&amp;LANG=USA&amp;utm_source=Indeed&amp;utm_medium=organic&amp;utm_campaign=Indeed">Coventry University</a> is advertising for an Assistant Lecturer in Sport and Exercise Science with a stated salary range of ~£26,000–£35,000 per annum. Meanwhile, a Lecturer / Senior Lecturer in Research Methods role at <a href="https://vacancies.ntu.ac.uk/displayjob.aspx?jobid=4698">Nottingham Trent</a> will pay somewhere in the range of ~£33,000–£48,000 per annum.</li>
+<li>FYI the <a href="https://www.gov.uk/national-minimum-wage-rates">UK’s National Living Wage</a> for individuals aged 25 and over is £7.50 per hour (as from April 2017). With some ‘back of the napkin’ math, this works out to a full-time salary of approximately £12,600 per annum - calculated as £7.50 per hour x (35 hours / week) x (48 weeks / year).</li>
+<li>For the Australians among us (<em>puts hand up</em>), the typical salary for a performance support staff member working for a Scottish Premiership team—£26,000—works out to roughly $45,000 AUD (based on the exchange rate on 28/12/2017). Level A academics are paid approximately $64,000–$86,000 and Level B academics are paid approximately $91,000–$18,0000 (according to <a href="https://www.deakin.edu.au/__data/assets/pdf_file/0018/41472/salary-rates-academic.pdf">Deakin’s pay scales</a> froeffective m April 2016).</li>
+</ul>
+<p><a href="https://twitter.com/davecarolan/status/947739503027998720">Dave Carolan</a> wrote on Twitter that the data set lacks representation from sport scientists and S&amp;C coaches in English football who earn £100,000+ per annum. This is a fair critique of the data set. Several responses from higher-paid individuals certainly would increase the typical salaries seen here.</p>
+<center>
+<blockquote class="twitter-tweet" data-conversation="none" data-lang="en">
+<p lang="en" dir="ltr">
+Great work Aiden. I believe that the lack of representation of the £100k+ club should be acknowledged. They exist in the PL &amp; some Champ.
+</p>
+— Dave Carolan (<span class="citation">@davecarolan</span>) <a href="https://twitter.com/davecarolan/status/947739503027998720?ref_src=twsrc%5Etfw">January 1, 2018</a>
+</blockquote>
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+</center>
+<p>It’s important to capture the true nature of things, but the existence of some better remunerated roles does not take away from the 41 individuals who completed this small survey and reported being paid £20,000 or less. I’d argue that the push for fair wages is chiefly about i) the sustainability and credibility of the industry entire (<em>“Pay peanuts, get monkeys!”</em>”), and ii) protecting the most vulnerable, such as those in the early stages of their career trying to get off the internship carousel. If you’re in the ‘£100k+ club’, being underpaid is probably not your personal current experience, although it may have been in the early days of your career. Hopefully, though, you care enough about the industry as a whole to want <em>all</em> individuals to be fairly paid for the work they’ve done (to gain the skills, experience, and qualifications needed to succeed in a given role), and the work they do (in this case, looking after the health, well-being, development, and performance of young men and women through football).</p>
+<p><strong>2. Performance support staff working for Scottish Premiership teams appear to be paid slghtly better than their counterparts in the Premier League.</strong> Having said that, it’s quite possible that this difference may be due to the small sub-sample of respondents in the Scottish Premiership category (n = 6).</p>
+<p><strong>3. There is considerable variation within most leagues.</strong></p>
+<ul>
+<li>The ‘£0’ salaries have been left in the data set as a handful of (unpaid!!!) interns completed the questionnaire. Even if you were to remove these data points, though, sizeable variation remains. Also, the median is robust to outliers, so typical salaries do not change or change by a negligible amount when interns are excluded from the data set.</li>
+<li>This is partially due to some respondents working part-time in their roles. It was possible to identify whether some individuals were working part-time, based on the data entered by some participants, but the questionnaire itself did not explicitly ask this question.</li>
+</ul>
+</div>
+</div>
+<div id="salaries-by-league-and-competitive-level" class="section level1">
+<h1>Salaries by league and competitive level</h1>
+<p>We can drill down further, plotting the data by league <em>and</em> by competitive level; that is, whether respondents work for their club’s first team or academy.</p>
+<pre class="r"><code># Build the plot
+p &lt;- ggplot(soccerSalariesData, aes(x = leagueOfFirstTeam, y = salaryGBP))
+p &lt;- p + facet_wrap(~levelOfWork)
+p &lt;- p + geom_boxplot(outlier.shape = NA, coef = 0)
+p &lt;- p + geom_point(alpha = 1/4, size = 4, aes(colour = leagueOfFirstTeam))
+p &lt;- p + scale_y_continuous(
+    limits = c(0, 60000),
+    breaks = seq(0, 60000, by = 10000))
+p &lt;- p + scale_x_discrete(labels = labelsLeague)
+p &lt;- p + labs(
+    title = &quot;UK soccer salaries of support staff&quot;,
+    subtitle = &quot;First Team vs. Academy&quot;,
+    y = &quot;Salary (GBP)&quot;)
+p &lt;- p + plotFeatures
+salaryByLeagueAndCompLevel &lt;- p
+
+# Display the plot
+salaryByLeagueAndCompLevel</code></pre>
+<p><img src="https://underthehood.jacquietran.com/post/how-much-do-you-get-paid-part-1/index_files/figure-html/plotByLeagueAndCompLevel-1.png" width="960" style="display: block; margin: auto;" /></p>
+<p>Meanwhile, median salaries now look like this:</p>
+<pre class="r"><code># Calculate median salaries by league and competitive level
+medianSalariesByLeagueAndCompLevel &lt;- soccerSalariesData %&gt;%
+    group_by(leagueOfFirstTeam, levelOfWork) %&gt;%
+    summarise(median = median(salaryGBP, na.rm = TRUE))
+
+# Order by $levelOfWork, then $leagueOfFirstTeam
+medianSalariesByLeagueAndCompLevel &lt;- medianSalariesByLeagueAndCompLevel[order(
+    medianSalariesByLeagueAndCompLevel$levelOfWork,
+    medianSalariesByLeagueAndCompLevel$leagueOfFirstTeam), ]
+
+# Revalue duplicates in $levelOfWork for aesthetic purposes
+medianSalariesByLeagueAndCompLevel$levelOfWork &lt;- ifelse(
+    duplicated(medianSalariesByLeagueAndCompLevel$levelOfWork),
+    &quot;&quot;, medianSalariesByLeagueAndCompLevel$levelOfWork)
+
+# Rename variables for aesthetic purposes
+colnames(medianSalariesByLeagueAndCompLevel) &lt;- c(
+    &quot;League in which first team plays&quot;, &quot;Competitive level&quot;, &quot;Median salary (GBP, £)&quot;)
+
+# Display the table
+medianSalariesByLeagueAndCompLevel %&gt;%
+    kable(&quot;html&quot;) %&gt;%
+    kable_styling()</code></pre>
+<table class="table" style="margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+League in which first team plays
+</th>
+<th style="text-align:left;">
+Competitive level
+</th>
+<th style="text-align:right;">
+Median salary (GBP, £)
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Premier League
+</td>
+<td style="text-align:left;">
+1st Team
+</td>
+<td style="text-align:right;">
+40000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Scottish Premiership
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:right;">
+31250
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Championship
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:right;">
+28000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+League 1
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:right;">
+26000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+League 2
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:right;">
+16500
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Premier League
+</td>
+<td style="text-align:left;">
+Academy
+</td>
+<td style="text-align:right;">
+23860
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Scottish Premiership
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:right;">
+25000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Championship
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:right;">
+22000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+League 1
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:right;">
+18000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+League 2
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:right;">
+16000
+</td>
+</tr>
+</tbody>
+</table>
+<div id="key-findings-1" class="section level2">
+<h2>Key findings</h2>
+<p>Categorising by league and by what I’ve termed ‘competitive level’ (first team vs. academy) helps to better visualise the salary gradient across the different leagues. This segmentation of the data gives us a better look at salary breakdowns, but also divides the relatively small sample into even smaller sub-groups. For instance, there were only 2 respondents who work for a Scottish Premiership first team, and only 3 respondents who work for a League 2 academy. Anyway, the data is the data, so let’s press on while keeping in mind that <em>the results seen here may not hold with a larger sample and more representation within each sub-group.</em></p>
+<p>Keeping the aforementioned caveats in mind, the results suggest that:</p>
+<p><strong>1. The typical salary of Premier League first team support staff (£40,000) is higher than for those who work for Scottish Premiership first teams (£31,250).</strong></p>
+<p><strong>2. The differences between leagues are stark in terms of first team staff salaries, while the gradient is not so steep when it comes to academy staff salaries.</strong></p>
+</div>
+</div>
+<div id="whats-next" class="section level1">
+<h1>What’s next?</h1>
+<p>In the second post of this series, I will delve into whether staff salaries differ when the sample is categorised into sub-groups by level of job seniority. Stay tuned!</p>
+</div>
+
+
+  </div>
+
+  <footer class="post-footer">
+    <ul class="post-tags">
+      <li><a href="https://underthehood.jacquietran.com/tags/sport-science/">sport science</a></li>
+      <li><a href="https://underthehood.jacquietran.com/tags/strength-and-conditioning/">strength and conditioning</a></li>
+      <li><a href="https://underthehood.jacquietran.com/tags/soccer/">soccer</a></li>
+      <li><a href="https://underthehood.jacquietran.com/tags/football/">football</a></li>
+      <li><a href="https://underthehood.jacquietran.com/tags/salaries/">salaries</a></li>
+    </ul>
+  </footer>
+</article>
+    </main>
+    
+<footer class="footer">
+    <span>&copy; 2025 <a href="https://underthehood.jacquietran.com">Under The Hood</a></span>
+    <span>
+        Powered by
+        <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &
+        <a href="https://git.io/hugopapermod" rel="noopener" target="_blank">PaperMod</a>
+    </span>
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+</body>
+
+</html>

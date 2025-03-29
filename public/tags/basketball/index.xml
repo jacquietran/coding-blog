@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>basketball on Under The Hood</title>
+    <link>https://underthehood.jacquietran.com/tags/basketball/</link>
+    <description>Recent content in basketball on Under The Hood</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-gb</language>
+    <lastBuildDate>Thu, 02 Dec 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://underthehood.jacquietran.com/tags/basketball/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>WNBL advanced stats: Points per possession</title>
+      <link>https://underthehood.jacquietran.com/post/wnbl-points-per-possession/</link>
+      <pubDate>Thu, 02 Dec 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://underthehood.jacquietran.com/post/wnbl-points-per-possession/</guid>
+      <description>IntroductionOn Tuesday, I launched the alpha version of the wnblr package, yahoooo!! (Guess I better write a blog post about that sometime.) wnblr currently contains live stats recorded from WNBL games played from 2014 to 2020, inclusive. You can find it here: https://github.com/jacquietran/wnblr
+Over on Twitter, I flagged down Paul Flynn (Assistant Coach, Melbourne Boomers WNBL) to take a look-see, and he asked for some specific advanced stats that can be derived from the standard game stats that are typically recorded (e.</description>
+    </item>
+    
+    <item>
+      <title>WNBL advanced stats: Points per possession</title>
+      <link>https://underthehood.jacquietran.com/post/wnbl-points-per-possession/</link>
+      <pubDate>Thu, 02 Dec 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://underthehood.jacquietran.com/post/wnbl-points-per-possession/</guid>
+      <description>IntroductionOn Tuesday, I launched the alpha version of the wnblr package, yahoooo!! (Guess I better write a blog post about that sometime.) wnblr currently contains live stats recorded from WNBL games played from 2014 to 2020, inclusive. You can find it here: https://github.com/jacquietran/wnblr
+Over on Twitter, I flagged down Paul Flynn (Assistant Coach, Melbourne Boomers WNBL) to take a look-see, and he asked for some specific advanced stats that can be derived from the standard game stats that are typically recorded (e.</description>
+    </item>
+    
+  </channel>
+</rss>

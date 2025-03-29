@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>Categories on Under The Hood</title>
+    <link>https://underthehood.jacquietran.com/categories/</link>
+    <description>Recent content in Categories on Under The Hood</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-gb</language>
+    <lastBuildDate>Thu, 27 Mar 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://underthehood.jacquietran.com/categories/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>On-field analyses</title>
+      <link>https://underthehood.jacquietran.com/categories/on-field-analyses/</link>
+      <pubDate>Thu, 27 Mar 2025 00:00:00 +0000</pubDate>
+      
+      <guid>https://underthehood.jacquietran.com/categories/on-field-analyses/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Off-field analyses</title>
+      <link>https://underthehood.jacquietran.com/categories/off-field-analyses/</link>
+      <pubDate>Thu, 04 Jan 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://underthehood.jacquietran.com/categories/off-field-analyses/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>General ramblings</title>
+      <link>https://underthehood.jacquietran.com/categories/general-ramblings/</link>
+      <pubDate>Sun, 01 Oct 2017 00:00:00 +0000</pubDate>
+      
+      <guid>https://underthehood.jacquietran.com/categories/general-ramblings/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>

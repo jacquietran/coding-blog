@@ -17,7 +17,7 @@ draft: yes
 
 # Set up
 
-```{r setup}
+```{r setup, eval = FALSE}
 
 # Load libraries
 library(cricketdata) # for retrieving cricket data from ESPNCricinfo
@@ -30,7 +30,7 @@ library(ggplot2)     # for plotting
 
 # T20 batting - career stats
 
-```{r}
+```{r eval = FALSE}
 
 pez_id <- find_player_id("Ellyse Perry")$ID
 pez <- fetch_player_data(
@@ -55,7 +55,7 @@ pez <- fetch_player_data(
 
 ```
 
-```{r}
+```{r eval = FALSE}
 
 ggplot() +
   geom_bar(

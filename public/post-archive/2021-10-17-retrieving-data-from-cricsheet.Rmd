@@ -1,0 +1,100 @@
+---
+title: 'Retrieving data from Cricsheet'
+author: Jacquie Tran
+date: '2021-10-17'
+slug: analysing-wbbl-ball-by-ball-data
+categories:
+  - On-field analyses
+tags:
+  - women's sport
+  - r stats
+  - sports analytics
+  - cricket
+draft: yes
+---
+
+# Getting started
+
+I downloaded ball-by-ball match data from Cricsheet for the Women's Big Bash League. I chose to use the CSV "Ashwin" format.
+
+```{r load_libraries, message = FALSE}
+
+knitr::opts_chunk$set(eval = FALSE)
+
+library(here)
+library(dplyr)
+library(ggplot2)
+
+# library(stringr)
+# library(showtext)
+# library(gghighlight)
+# library(ggtext)
+# library(paletteer)
+# library(patchwork)
+
+```
+
+```{r retrieve_data, message = FALSE}
+
+url <- "https://cricsheet.org/downloads/wbb_female_csv2.zip"
+temp <- tempfile()
+download.file(url, temp)
+unzip(temp, "all_matches.csv", exdir = here("static/data/wbbl/"))
+all_matches <- read.csv(here("static/data/wbbl/all_matches.csv"))
+unlink(temp)
+
+```
+
+```{r wbbl02_to_06}
+
+# Focus on WBBL02-06 data only
+wbbl02_to_06_matches <- all_matches %>%
+  filter(!season %in% c("2015/16", "2021/22"))
+
+```
+
+```{r typical dismissal types}
+
+typical_dismissals <- wbbl02_to_06_matches %>%
+  filter(wicket_type != "") %>%
+  group_by(wicket_type) %>%
+  summarise(dismissal_n = n()) %>%
+  ungroup() %>%
+  mutate(
+    total_dismissals = sum(dismissal_n),
+    dismissal_pct = round(
+      dismissal_n / total_dismissals * 100, 1)) %>%
+  arrange(dismissal_pct)
+
+```
+
+```{r typical_dismissals_by_bowler}
+
+# Strano
+typical_dismissals_strano <- wbbl02_to_06_matches %>%
+  filter(bowler == "M Strano") %>%
+  filter(wicket_type != "") %>%
+  group_by(wicket_type) %>%
+  summarise(dismissal_n = n()) %>%
+  ungroup() %>%
+  mutate(
+    total_dismissals = sum(dismissal_n),
+    dismissal_pct = round(
+      dismissal_n / total_dismissals * 100, 1)) %>%
+  arrange(dismissal_pct)
+
+# Jonassen
+typical_dismissals_jonassen <- wbbl02_to_06_matches %>%
+  filter(bowler == "JL Jonassen") %>%
+  filter(wicket_type != "") %>%
+  group_by(wicket_type) %>%
+  summarise(dismissal_n = n()) %>%
+  ungroup() %>%
+  mutate(
+    total_dismissals = sum(dismissal_n),
+    dismissal_pct = round(
+      dismissal_n / total_dismissals * 100, 1)) %>%
+  arrange(dismissal_pct)
+
+```
+

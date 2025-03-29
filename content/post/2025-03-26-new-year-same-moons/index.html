@@ -1,0 +1,697 @@
+---
+title: New Year, Same Moons
+author: Jacquie Tran
+date: '2025-03-27'
+slug: []
+categories:
+  - On-field analyses
+tags:
+  - cricket
+  - r stats
+  - sport science
+  - sports analytics
+---
+
+
+
+<div id="introduction" class="section level1">
+<h1>Introduction</h1>
+<p>The Australian Women’s Cricket team have wrapped up their very long international season for 2024/2025 with another T20 series sweep, this time winning 3-0 over the White Ferns.</p>
+<p>And who was at the centre of the action? Beth Mooney piling on the runs. Naturally.</p>
+<p>New year, same run scoring machine.</p>
+<p>Cricket Australia reported that, <a href="https://www.cricket.com.au/news/4239115/georgia-voll-third-t20i-australia-new-zealand-wellington-opener-beth-mooney-australia-a-innings?tags=9037">in 2025, Moons has scored “575 runs at an average of 72”</a>. Let’s dig into the details of this scoring spree from the ever-metronomic Mooney.</p>
+</div>
+<div id="set-up-and-retrieve-data" class="section level1">
+<h1>Set up and retrieve data</h1>
+<p>We’ll use ball-by-ball data provided by Cricsheet.org, across the matches played by Australia in 2025 (T20Is, ODIs, and Test):</p>
+<pre class="r"><code># Load libraries ---------------------------------------------------------------
+
+library(cricketdata) # for retrieving cricket data from ESPNCricinfo and Cricsheet</code></pre>
+<pre><code>## Warning: package &#39;cricketdata&#39; was built under R version 4.4.2</code></pre>
+<pre class="r"><code>library(dplyr)       # for tidying data
+library(gt)          # for visualising data tables</code></pre>
+<pre><code>## Warning: package &#39;gt&#39; was built under R version 4.4.2</code></pre>
+<pre class="r"><code>library(showtext)    # for plotting
+library(ggplot2)     # for plotting</code></pre>
+<pre class="r"><code># Retrieve ball-by-ball data ---------------------------------------------------
+
+# Women&#39;s T20Is
+t20s_bbb &lt;- fetch_cricsheet(
+  type = &quot;bbb&quot;,
+  competition = &quot;t20s&quot;,
+  gender = &quot;female&quot;)
+
+# Women&#39;s ODIs
+odis_bbb &lt;- fetch_cricsheet(
+  type = &quot;bbb&quot;,
+  competition = &quot;odis&quot;,
+  gender = &quot;female&quot;)
+
+# Women&#39;s Tests
+tests_bbb &lt;- fetch_cricsheet(
+  type = &quot;bbb&quot;,
+  competition = &quot;tests&quot;,
+  gender = &quot;female&quot;)</code></pre>
+</div>
+<div id="tidy-the-data" class="section level1">
+<h1>Tidy the data</h1>
+<p>Let’s get the retrieved data sets into more focused subsets, focusing on balls where Beth Mooney was on strike:</p>
+<pre class="r"><code># Filter to matches played in 2025 and Beth Mooney on strike -------------------
+
+# T20s
+t20s_bbb_2025_mooney &lt;- t20s_bbb %&gt;%
+  filter(
+    start_date &gt; &quot;2025-01-01&quot; &amp; striker == &quot;BL Mooney&quot;) %&gt;%
+  mutate(
+    competition = &quot;T20I&quot;,
+    start_date = as.character(start_date) # For binding purposes in next step
+    )
+
+# ODIs
+odis_bbb_2025_mooney &lt;- odis_bbb %&gt;%
+  filter(
+    start_date &gt; &quot;2025-01-01&quot; &amp; striker == &quot;BL Mooney&quot;) %&gt;%
+  mutate(competition = &quot;ODI&quot;)
+
+# Test
+tests_bbb_2025_mooney &lt;- tests_bbb %&gt;%
+  filter(
+    start_date &gt; &quot;2025-01-01&quot; &amp; striker == &quot;BL Mooney&quot;) %&gt;%
+  mutate(competition = &quot;Test&quot;)
+
+# Bind subsets into one data frame ---------------------------------------------
+
+mooney_in_2025 &lt;- bind_rows(
+  t20s_bbb_2025_mooney, odis_bbb_2025_mooney, tests_bbb_2025_mooney)</code></pre>
+</div>
+<div id="a-glance-off-the-pads-batting-stats-by-format" class="section level1">
+<h1>A glance off the pads: Batting stats by format</h1>
+<pre class="r"><code>mooney_in_2025_summary &lt;- mooney_in_2025 %&gt;%
+  mutate(
+    match_innings_id = paste0(match_id, innings, sep = &quot;_&quot;),
+    is_ball_faced = case_when(
+      wides == 1 ~ 0, # Wides do not count as a ball faced by the batter
+      TRUE       ~ 1),
+    wicket_counting_helper = case_when(
+      player_dismissed == striker ~ 1,
+      TRUE                        ~ 0)) %&gt;%
+  group_by(competition) %&gt;%
+  summarise(
+    runs_off_bat = sum(runs_off_bat),
+    balls_faced = sum(is_ball_faced),
+    innings_batted = length(unique(match_innings_id)),
+    wickets_lost = sum(wicket_counting_helper),
+    .groups = &quot;drop&quot;
+  ) %&gt;%
+  mutate(
+    average_in_2025 = round(runs_off_bat / wickets_lost, 2),
+    strike_rate = round(runs_off_bat / balls_faced * 100, 2))</code></pre>
+<pre class="r"><code>mooney_in_2025_summary_table &lt;- mooney_in_2025_summary %&gt;%
+  gt(rowname_col = &quot;competition&quot;) %&gt;%
+  tab_header(
+    title = md(&quot;**Piling on the runs to see out the 2024/25 season**&quot;),
+    subtitle = &quot;Mooney&#39;s batting stats from internationals - January to March 2025&quot;) %&gt;%
+  cols_label(
+    runs_off_bat = &quot;Runs&quot;,
+    balls_faced = &quot;Balls faced&quot;,
+    innings_batted = &quot;Innings&quot;,
+    wickets_lost = &quot;Wickets lost&quot;,
+    average_in_2025 = &quot;Avg. in 2025&quot;,
+    strike_rate = &quot;Strike rate&quot;) %&gt;%
+  tab_style(
+    style = cell_fill(color = &quot;#9AD4D6&quot;),
+    locations = cells_body(
+      rows = competition == &quot;T20I&quot;)) %&gt;%
+  tab_source_note(
+    source_note = &quot;Data source: Cricsheet.org&quot;)</code></pre>
+<p>When we look at Mooney’s batting separated by format, we can see her dominance in recent T20s more clearly, where she averaged 95 runs with a strike rate of 154, accumulating nearly 400 runs across only 6 innings!</p>
+<div id="xspanibohe" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#xspanibohe table {
+  font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#xspanibohe thead, #xspanibohe tbody, #xspanibohe tfoot, #xspanibohe tr, #xspanibohe td, #xspanibohe th {
+  border-style: none;
+}
+
+#xspanibohe p {
+  margin: 0;
+  padding: 0;
+}
+
+#xspanibohe .gt_table {
+  display: table;
+  border-collapse: collapse;
+  line-height: normal;
+  margin-left: auto;
+  margin-right: auto;
+  color: #333333;
+  font-size: 16px;
+  font-weight: normal;
+  font-style: normal;
+  background-color: #FFFFFF;
+  width: auto;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #A8A8A8;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #A8A8A8;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+}
+
+#xspanibohe .gt_caption {
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+#xspanibohe .gt_title {
+  color: #333333;
+  font-size: 125%;
+  font-weight: initial;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-color: #FFFFFF;
+  border-bottom-width: 0;
+}
+
+#xspanibohe .gt_subtitle {
+  color: #333333;
+  font-size: 85%;
+  font-weight: initial;
+  padding-top: 3px;
+  padding-bottom: 5px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-color: #FFFFFF;
+  border-top-width: 0;
+}
+
+#xspanibohe .gt_heading {
+  background-color: #FFFFFF;
+  text-align: center;
+  border-bottom-color: #FFFFFF;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#xspanibohe .gt_bottom_border {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#xspanibohe .gt_col_headings {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#xspanibohe .gt_col_heading {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  overflow-x: hidden;
+}
+
+#xspanibohe .gt_column_spanner_outer {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+#xspanibohe .gt_column_spanner_outer:first-child {
+  padding-left: 0;
+}
+
+#xspanibohe .gt_column_spanner_outer:last-child {
+  padding-right: 0;
+}
+
+#xspanibohe .gt_column_spanner {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  overflow-x: hidden;
+  display: inline-block;
+  width: 100%;
+}
+
+#xspanibohe .gt_spanner_row {
+  border-bottom-style: hidden;
+}
+
+#xspanibohe .gt_group_heading {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  text-align: left;
+}
+
+#xspanibohe .gt_empty_group_heading {
+  padding: 0.5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#xspanibohe .gt_from_md > :first-child {
+  margin-top: 0;
+}
+
+#xspanibohe .gt_from_md > :last-child {
+  margin-bottom: 0;
+}
+
+#xspanibohe .gt_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin: 10px;
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  overflow-x: hidden;
+}
+
+#xspanibohe .gt_stub {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#xspanibohe .gt_stub_row_group {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+  vertical-align: top;
+}
+
+#xspanibohe .gt_row_group_first td {
+  border-top-width: 2px;
+}
+
+#xspanibohe .gt_row_group_first th {
+  border-top-width: 2px;
+}
+
+#xspanibohe .gt_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#xspanibohe .gt_first_summary_row {
+  border-top-style: solid;
+  border-top-color: #D3D3D3;
+}
+
+#xspanibohe .gt_first_summary_row.thick {
+  border-top-width: 2px;
+}
+
+#xspanibohe .gt_last_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#xspanibohe .gt_grand_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#xspanibohe .gt_first_grand_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: double;
+  border-top-width: 6px;
+  border-top-color: #D3D3D3;
+}
+
+#xspanibohe .gt_last_grand_summary_row_top {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: double;
+  border-bottom-width: 6px;
+  border-bottom-color: #D3D3D3;
+}
+
+#xspanibohe .gt_striped {
+  background-color: rgba(128, 128, 128, 0.05);
+}
+
+#xspanibohe .gt_table_body {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#xspanibohe .gt_footnotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#xspanibohe .gt_footnote {
+  margin: 0px;
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#xspanibohe .gt_sourcenotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#xspanibohe .gt_sourcenote {
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#xspanibohe .gt_left {
+  text-align: left;
+}
+
+#xspanibohe .gt_center {
+  text-align: center;
+}
+
+#xspanibohe .gt_right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+#xspanibohe .gt_font_normal {
+  font-weight: normal;
+}
+
+#xspanibohe .gt_font_bold {
+  font-weight: bold;
+}
+
+#xspanibohe .gt_font_italic {
+  font-style: italic;
+}
+
+#xspanibohe .gt_super {
+  font-size: 65%;
+}
+
+#xspanibohe .gt_footnote_marks {
+  font-size: 75%;
+  vertical-align: 0.4em;
+  position: initial;
+}
+
+#xspanibohe .gt_asterisk {
+  font-size: 100%;
+  vertical-align: 0;
+}
+
+#xspanibohe .gt_indent_1 {
+  text-indent: 5px;
+}
+
+#xspanibohe .gt_indent_2 {
+  text-indent: 10px;
+}
+
+#xspanibohe .gt_indent_3 {
+  text-indent: 15px;
+}
+
+#xspanibohe .gt_indent_4 {
+  text-indent: 20px;
+}
+
+#xspanibohe .gt_indent_5 {
+  text-indent: 25px;
+}
+
+#xspanibohe .katex-display {
+  display: inline-flex !important;
+  margin-bottom: 0.75em !important;
+}
+
+#xspanibohe div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+  height: 0px !important;
+}
+</style>
+<table class="gt_table" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
+  <thead>
+    <tr class="gt_heading">
+      <td colspan="7" class="gt_heading gt_title gt_font_normal" style><span class='gt_from_md'><strong>Piling on the runs to see out the 2024/25 season</strong></span></td>
+    </tr>
+    <tr class="gt_heading">
+      <td colspan="7" class="gt_heading gt_subtitle gt_font_normal gt_bottom_border" style>Mooney's batting stats from internationals - January to March 2025</td>
+    </tr>
+    <tr class="gt_col_headings">
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="a::stub"></th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="runs_off_bat">Runs</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="balls_faced">Balls faced</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="innings_batted">Innings</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="wickets_lost">Wickets lost</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="average_in_2025">Avg. in 2025</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="strike_rate">Strike rate</th>
+    </tr>
+  </thead>
+  <tbody class="gt_table_body">
+    <tr><th id="stub_1_1" scope="row" class="gt_row gt_left gt_stub">ODI</th>
+<td headers="stub_1_1 runs_off_bat" class="gt_row gt_right">90</td>
+<td headers="stub_1_1 balls_faced" class="gt_row gt_right">109</td>
+<td headers="stub_1_1 innings_batted" class="gt_row gt_right">3</td>
+<td headers="stub_1_1 wickets_lost" class="gt_row gt_right">3</td>
+<td headers="stub_1_1 average_in_2025" class="gt_row gt_right">30.00</td>
+<td headers="stub_1_1 strike_rate" class="gt_row gt_right">82.57</td></tr>
+    <tr><th id="stub_1_2" scope="row" class="gt_row gt_left gt_stub">T20I</th>
+<td headers="stub_1_2 runs_off_bat" class="gt_row gt_right" style="background-color: #9AD4D6;">379</td>
+<td headers="stub_1_2 balls_faced" class="gt_row gt_right" style="background-color: #9AD4D6;">246</td>
+<td headers="stub_1_2 innings_batted" class="gt_row gt_right" style="background-color: #9AD4D6;">6</td>
+<td headers="stub_1_2 wickets_lost" class="gt_row gt_right" style="background-color: #9AD4D6;">4</td>
+<td headers="stub_1_2 average_in_2025" class="gt_row gt_right" style="background-color: #9AD4D6;">94.75</td>
+<td headers="stub_1_2 strike_rate" class="gt_row gt_right" style="background-color: #9AD4D6;">154.07</td></tr>
+    <tr><th id="stub_1_3" scope="row" class="gt_row gt_left gt_stub">Test</th>
+<td headers="stub_1_3 runs_off_bat" class="gt_row gt_right">106</td>
+<td headers="stub_1_3 balls_faced" class="gt_row gt_right">173</td>
+<td headers="stub_1_3 innings_batted" class="gt_row gt_right">1</td>
+<td headers="stub_1_3 wickets_lost" class="gt_row gt_right">1</td>
+<td headers="stub_1_3 average_in_2025" class="gt_row gt_right">106.00</td>
+<td headers="stub_1_3 strike_rate" class="gt_row gt_right">61.27</td></tr>
+  </tbody>
+  <tfoot class="gt_sourcenotes">
+    <tr>
+      <td class="gt_sourcenote" colspan="7">Data source: Cricsheet.org</td>
+    </tr>
+  </tfoot>
+  
+</table>
+</div>
+</div>
+<div id="when-does-moons-hit-the-gas" class="section level1">
+<h1>When does Moons hit the gas?</h1>
+<p>I was interested in whether there has been a pattern in when Moons tends to accelerate with her batting. Focusing on T20I innings, I decided to plot her cumulative runs scored against cumulative balls faced in each innings:</p>
+<pre class="r"><code>t20s_bbb_2025_mooney_tidy &lt;- t20s_bbb_2025_mooney %&gt;%
+  mutate(
+    is_ball_faced = case_when(
+      wides == 1 ~ 0, # Wides do not count as a ball faced by the batter
+      TRUE       ~ 1)) %&gt;%
+  # Filter out wides
+  filter(is_ball_faced == 1) %&gt;%
+  group_by(match_id) %&gt;%
+  mutate(
+    balls_faced_cumulative = cumsum(is_ball_faced),
+    runs_scored_cumulative = cumsum(runs_off_bat)) %&gt;%
+  ungroup() %&gt;%
+  mutate(
+    balls_faced_grouping = case_when(
+      balls_faced_cumulative &lt;= 10   ~ &quot;1-10&quot;,
+      balls_faced_cumulative &gt; 10 &amp;
+        balls_faced_cumulative &lt;= 20 ~ &quot;11-20&quot;,
+      balls_faced_cumulative &gt; 20 &amp;
+        balls_faced_cumulative &lt;= 30 ~ &quot;21-30&quot;,
+      balls_faced_cumulative &gt; 30 &amp;
+        balls_faced_cumulative &lt;= 40 ~ &quot;31-40&quot;,
+      balls_faced_cumulative &gt; 40 ~ &quot;41+&quot;))</code></pre>
+<pre class="r"><code># Prep to plot -----------------------------------------------------------------
+
+# Turn on {showtext} functionality
+showtext_auto()
+
+# Add Google Fonts
+font_add_google(&quot;IBM Plex Sans Condensed&quot;, &quot;plexc&quot;)
+
+# Build plot -------------------------------------------------------------------
+
+plot_t20_scoring_rate &lt;- ggplot() +
+  geom_point(
+    data = t20s_bbb_2025_mooney_tidy,
+    aes(
+      x = balls_faced_cumulative, y = runs_scored_cumulative,
+      group = match_id),
+    size = 3, shape = 16, alpha = 0.2) +
+  geom_smooth(
+    data = t20s_bbb_2025_mooney_tidy,
+    aes(
+      x = balls_faced_cumulative, y = runs_scored_cumulative,
+      color = factor(balls_faced_grouping)),
+    method = &quot;lm&quot;, se = F, linewidth = 2) +
+  labs(
+    title = &quot;When does Beth Mooney hit the gas? From start to finish!&quot;,
+    subtitle = &quot;Beth Mooney&#39;s batting in T20Is - January to March 2025&quot;,
+    x = &quot;Balls faced (cumulative)&quot;,
+    y = &quot;Runs scored (cumulative)&quot;,
+    caption = &quot;Data source: Cricsheet.org&quot;) +
+  scale_colour_brewer(palette = &quot;Dark2&quot;) +
+  theme_minimal() +
+  theme(
+    legend.position = &quot;none&quot;,
+    text = element_text(family = &quot;plexc&quot;),
+    plot.title = element_text(size = rel(3), face = &quot;bold&quot;),
+    plot.subtitle = element_text(size = rel(2.5)),
+    plot.caption = element_text(
+      size = rel(2), margin = margin(t = 10)),
+    axis.title = element_text(size = rel(2.5)),
+    axis.text = element_text(size = rel(2))
+  )</code></pre>
+<p>I genuinely laughed out loud when I generated this plot:</p>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
+<p>I plotted separate linear trendlines for balls 1-10, 11-20, 21-30, 31-40, and 40+. The slope of each trendline is pretty much the same! Which tells us that Moons’ nickname of <a href="https://www.cricket.com.au/news/4235969/beth-mooney-200-international-matches-australia-eden-park-auckland-first-t20-new-zealand-milestone-runs">“Ms Consistent”</a> is well-deserved in many ways - her rate of scoring in recent T20Is has been remarkably even right through an innings.</p>
+<p>There’s only 6 T20I innings represented here, so it’d be worth including more innings to see if a more defined “acceleration phase” is evident or not. I’d also be interested to see what this plot looks like for other batters.</p>
+</div>
